@@ -3,7 +3,8 @@ A shooter game with abilities!
 
 ## TODOs: 
 - [ ] Player Movement
-    - [ ] Basic Movement
+    - [X] Basic Movement
+    - [X] Move Look
     - [ ] Jump
     - [ ] Crouch
     - [ ] Slide
