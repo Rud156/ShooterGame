@@ -23,8 +23,9 @@ namespace Player
 
         [Header("Crouch/Slide")]
         [SerializeField] private float m_crouchWalkSpeed;
-        [SerializeField] private float m_slideSpeed;
         [SerializeField] private float m_crouchCapsuleHeight;
+        [SerializeField] private float m_slideSpeed;
+        [SerializeField] private float m_slideDuration;
 
         [Header("Components")]
         [SerializeField] private float m_capsuleLerpSpeed;
@@ -40,13 +41,15 @@ namespace Player
         private bool m_isRunKeyPressed = false;
         private bool m_isJumpKeyPressed = false;
         private bool m_isCrouchPressed = false;
-        private float m_currentStateMoveVelocity;
+        public float m_currentStateMoveVelocity;
 
         private float m_capsuleStartHeight = 0;
         private float m_capsuleTargetHeight = 0;
         private float m_capsuleLerpAmount = 0;
 
-        private List<PlayerState> m_playerStateStack;
+        public float m_currentSlideDuration = 0;
+
+        public List<PlayerState> m_playerStateStack;
         private bool m_isGrounded = false;
 
         #region Unity Functions
@@ -162,8 +165,8 @@ namespace Player
             }
             else if (m_isCrouchPressed)
             {
-                // Put into slide state
-                Debug.Log("Player Should Slide Here...");
+                m_isCrouchPressed = false;
+                PushTopPlayerState(PlayerState.Slide);
             }
 
             m_currentStateMoveVelocity = m_horizontalRunSpeed;
@@ -194,6 +197,21 @@ namespace Player
 
         private void UpdateSlideState()
         {
+            if (m_isRunKeyPressed)
+            {
+                PopTopPlayerState();
+            }
+
+            m_horizontalInput.x = 0;
+            m_horizontalInput.y = 1;
+
+            m_currentStateMoveVelocity = m_slideSpeed;
+            m_currentSlideDuration -= Time.fixedDeltaTime;
+
+            if (m_currentSlideDuration <= 0)
+            {
+                PopTopPlayerState();
+            }
         }
 
         private void UpdateHorizontalMovement()
@@ -262,6 +280,10 @@ namespace Player
             {
                 PopTopPlayerState();
                 return;
+            }
+            else if (m_playerStateStack[^1] == PlayerState.Slide)
+            {
+                PopTopPlayerState();
             }
 
             m_characterVelocity.y += m_jumpVelocity;
@@ -372,14 +394,48 @@ namespace Player
         {
             m_playerStateStack.Add(playerState);
             SetupCapsuleSizeForState();
+
+            switch (playerState)
+            {
+                case PlayerState.Idle:
+                    break;
+
+                case PlayerState.Walk:
+                    break;
+
+                case PlayerState.Run:
+                    break;
+
+                case PlayerState.Crouch:
+                    break;
+
+                case PlayerState.Slide:
+                    m_currentSlideDuration = m_slideDuration;
+                    break;
+            }
         }
 
         private void PopTopPlayerState()
         {
             PlayerState topState = m_playerStateStack[^1];
-            if (topState == PlayerState.Crouch)
+            switch (topState)
             {
-                m_isCrouchPressed = false;
+                case PlayerState.Idle:
+                    break;
+
+                case PlayerState.Walk:
+                    break;
+
+                case PlayerState.Run:
+                    m_isRunKeyPressed = false;
+                    break;
+
+                case PlayerState.Crouch:
+                    m_isCrouchPressed = false;
+                    break;
+
+                case PlayerState.Slide:
+                    break;
             }
 
             m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
