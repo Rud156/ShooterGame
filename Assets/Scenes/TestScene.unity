@@ -220,12 +220,6 @@ Transform:
   m_Father: {fileID: 1468371613}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &330585546 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 330585546, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-    type: 3}
-  m_PrefabInstance: {fileID: 7975099697220874104}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,41 +1556,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_rotationSpeed
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_cameraTransform
-      value: 
-      objectReference: {fileID: 330585546}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_maxCameraXAngle
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_minCameraXAngle
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_horizontalRunSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_horizontalMoveSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_horizontalWalkSpeed
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7975099698339277557, guid: 1d5cfca1358ba2b40b64c9c81f831490,
         type: 3}

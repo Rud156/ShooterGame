@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using UnityEngine;
 using Utils;
 
@@ -12,8 +13,15 @@ namespace Player
         [SerializeField] private float m_maxCameraXAngle;
         [SerializeField] private float m_minCameraXAngle;
 
+        [Header("Jump/Grounded")]
+        [SerializeField] private float m_jumpVelocity;
+        [SerializeField] private float m_gravityMultiplier;
+        [SerializeField] private LayerMask m_groundedCheckMask;
+        [SerializeField] private float m_groundedCheckDistance;
+
         [Header("Components")]
         [SerializeField] private Transform m_cameraTransform;
+        [SerializeField] private Transform m_groundedCheckPoint;
 
         private CharacterController m_characterController;
         private Vector3 m_characterVelocity = Vector3.zero;
@@ -22,12 +30,18 @@ namespace Player
         private Vector2 m_horizontalInput = Vector2.zero;
         private Vector2 m_mouseInput = Vector2.zero;
         private bool m_isRunKeyPressed = false;
+        private bool m_isJumpKeyPressed = false;
+
+        private bool m_isGrounded = false;
 
         #region Unity Functions
 
         private void Start()
         {
             m_characterController = GetComponent<CharacterController>();
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         private void Update()
@@ -38,8 +52,14 @@ namespace Player
 
         private void FixedUpdate()
         {
-            UpdateHorizontalMovement();
             UpdateMouseMovement();
+            UpdateGroundedState();
+
+            UpdateHorizontalMovement();
+            HandleJumpInput();
+            ProcessGlobalGravity();
+            ApplyFinalPlayerMovement();
+
         }
 
         #endregion Unity Functions
@@ -56,10 +76,44 @@ namespace Player
 
             m_characterVelocity.x = groundedMovement.x;
             m_characterVelocity.z = groundedMovement.z;
-            m_characterController.Move(m_characterVelocity * Time.fixedDeltaTime);
         }
 
         #endregion Player Horizontal Movement
+
+        #region Player Vertical Movement
+
+        private void UpdateGroundedState()
+        {
+            bool isGrounded = Physics.Raycast(m_groundedCheckPoint.position, Vector3.down, out RaycastHit hit, m_groundedCheckDistance, m_groundedCheckMask);
+            if (isGrounded && !m_isGrounded)
+            {
+                m_characterVelocity.y = 0;
+            }
+            m_isGrounded = isGrounded;
+        }
+
+        private void HandleJumpInput()
+        {
+            if (!m_isJumpKeyPressed || !m_isGrounded)
+            {
+                return;
+            }
+
+            m_characterVelocity.y += m_jumpVelocity;
+            m_isJumpKeyPressed = false;
+        }
+
+        private void ProcessGlobalGravity()
+        {
+            if (!m_isGrounded)
+            {
+                m_characterVelocity.y += Physics.gravity.y * m_gravityMultiplier;
+            }
+        }
+
+        private void ApplyFinalPlayerMovement() => m_characterController.Move(m_characterVelocity * Time.fixedDeltaTime);
+
+        #endregion
 
         #region Player Mouse Movement
 
@@ -101,7 +155,19 @@ namespace Player
             m_horizontalInput.x = moveX;
             m_horizontalInput.y = moveZ;
 
-            m_isRunKeyPressed = Input.GetKey(InputKeys.Run);
+            if (moveZ <= 0)
+            {
+                m_isRunKeyPressed = false;
+            }
+            else if (Input.GetKeyDown(InputKeys.Run))
+            {
+                m_isRunKeyPressed = true;
+            }
+
+            if (Input.GetKeyDown(InputKeys.Jump))
+            {
+                m_isJumpKeyPressed = true;
+            }
         }
 
         private void UpdateMouseInput()
@@ -110,6 +176,17 @@ namespace Player
             float mouseY = -Input.GetAxisRaw(InputKeys.MouseY);
             m_mouseInput.x = mouseX;
             m_mouseInput.y = mouseY;
+        }
+
+        private void ClearInputs()
+        {
+            m_mouseInput.x = 0;
+            m_mouseInput.y = 0;
+
+            m_horizontalInput.x = 0;
+            m_horizontalInput.y = 0;
+            m_isRunKeyPressed = false;
+            m_isJumpKeyPressed = false;
         }
 
         #endregion Input
