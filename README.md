@@ -5,8 +5,8 @@ A shooter game with abilities!
 - [ ] Player Movement
     - [X] Basic Movement
     - [X] Move Look
-    - [ ] Jump
-    - [ ] Crouch
+    - [X] Jump
+    - [X] Crouch
     - [ ] Slide
 - [ ] Weapon System
     - [ ] Customizable Spray

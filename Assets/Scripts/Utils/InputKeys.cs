@@ -13,6 +13,6 @@ namespace Utils
         // Movement Keys
         public const KeyCode Jump = KeyCode.Space;
         public const KeyCode Run = KeyCode.LeftShift;
-        public const KeyCode Crouch = KeyCode.RightControl;
+        public const KeyCode Crouch = KeyCode.LeftControl;
     }
 }

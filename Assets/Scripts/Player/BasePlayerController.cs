@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -9,15 +9,22 @@ namespace Player
         [Header("Basic Movement")]
         [SerializeField] private float m_horizontalRunSpeed;
         [SerializeField] private float m_horizontalWalkSpeed;
+        [SerializeField] private float m_defaultCapsuleHeight;
         [SerializeField] private float m_rotationSpeed;
         [SerializeField] private float m_maxCameraXAngle;
         [SerializeField] private float m_minCameraXAngle;
 
         [Header("Jump/Grounded")]
+        [SerializeField] private float m_airControlMultiplier;
         [SerializeField] private float m_jumpVelocity;
         [SerializeField] private float m_gravityMultiplier;
         [SerializeField] private LayerMask m_groundedCheckMask;
         [SerializeField] private float m_groundedCheckDistance;
+
+        [Header("Crouch/Slide")]
+        [SerializeField] private float m_crouchWalkSpeed;
+        [SerializeField] private float m_slideSpeed;
+        [SerializeField] private float m_crouchCapsuleHeight;
 
         [Header("Components")]
         [SerializeField] private Transform m_cameraTransform;
@@ -31,7 +38,10 @@ namespace Player
         private Vector2 m_mouseInput = Vector2.zero;
         private bool m_isRunKeyPressed = false;
         private bool m_isJumpKeyPressed = false;
+        private bool m_isCrouchPressed = false;
+        private float m_currentStateMoveVelocity;
 
+        private List<PlayerState> m_playerStateStack;
         private bool m_isGrounded = false;
 
         #region Unity Functions
@@ -39,9 +49,12 @@ namespace Player
         private void Start()
         {
             m_characterController = GetComponent<CharacterController>();
+            m_playerStateStack = new List<PlayerState>();
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            PushTopPlayerState(PlayerState.Idle);
         }
 
         private void Update()
@@ -55,8 +68,8 @@ namespace Player
             UpdateMouseMovement();
             UpdateGroundedState();
 
-            UpdateHorizontalMovement();
-            HandleJumpInput();
+            UpdatePlayerMovement();
+            ProcessJumpInput();
             ProcessGlobalGravity();
             ApplyFinalPlayerMovement();
 
@@ -64,7 +77,116 @@ namespace Player
 
         #endregion Unity Functions
 
+        #region Player Movement
+
+        private void UpdatePlayerMovement()
+        {
+            switch (m_playerStateStack[^1])
+            {
+                case PlayerState.Idle:
+                    UpdateIdleState();
+                    break;
+
+                case PlayerState.Walk:
+                    UpdateWalkState();
+                    break;
+
+                case PlayerState.Run:
+                    UpdateRunState();
+                    break;
+
+                case PlayerState.Crouch:
+                    UpdateCrouchState();
+                    break;
+
+                case PlayerState.Slide:
+                    UpdateSlideState();
+                    break;
+            }
+
+            UpdateHorizontalMovement();
+        }
+
         #region Player Horizontal Movement
+
+        private void UpdateIdleState()
+        {
+            if (m_isCrouchPressed)
+            {
+                PushTopPlayerState(PlayerState.Crouch);
+            }
+            else if (!HasNoDirectionalInput())
+            {
+                PushTopPlayerState(PlayerState.Walk);
+            }
+
+            m_currentStateMoveVelocity = 0;
+        }
+
+        private void UpdateWalkState()
+        {
+            if (m_isRunKeyPressed)
+            {
+                PushTopPlayerState(PlayerState.Run);
+            }
+            else if (m_isCrouchPressed)
+            {
+                PushTopPlayerState(PlayerState.Crouch);
+            }
+            else if (HasNoDirectionalInput())
+            {
+                PopTopPlayerState();
+            }
+
+            m_currentStateMoveVelocity = m_horizontalWalkSpeed;
+            if (!m_isGrounded)
+            {
+                m_currentStateMoveVelocity *= m_airControlMultiplier;
+            }
+        }
+
+        private void UpdateRunState()
+        {
+            if (HasNoDirectionalInput() || !m_isRunKeyPressed)
+            {
+                PopTopPlayerState();
+            }
+            else if (m_isCrouchPressed)
+            {
+                // Put into slide state
+                Debug.Log("Player Should Slide Here...");
+            }
+
+            m_currentStateMoveVelocity = m_horizontalRunSpeed;
+            if (!m_isGrounded)
+            {
+                m_currentStateMoveVelocity *= m_airControlMultiplier;
+            }
+        }
+
+        private void UpdateCrouchState()
+        {
+            if (m_isRunKeyPressed)
+            {
+                PopTopPlayerState();
+                PushTopPlayerState(PlayerState.Run);
+            }
+            else if (!m_isCrouchPressed)
+            {
+                PopTopPlayerState();
+            }
+
+            m_currentStateMoveVelocity = m_crouchWalkSpeed;
+            if (HasNoDirectionalInput())
+            {
+                m_currentStateMoveVelocity = 0;
+            }
+        }
+
+        private void UpdateSlideState()
+        {
+
+        }
 
         private void UpdateHorizontalMovement()
         {
@@ -72,7 +194,7 @@ namespace Player
             Vector3 right = transform.right;
             Vector3 groundedMovement = forward * m_horizontalInput.y + right * m_horizontalInput.x;
             groundedMovement.y = 0;
-            groundedMovement = groundedMovement.normalized * (m_isRunKeyPressed ? m_horizontalRunSpeed : m_horizontalWalkSpeed);
+            groundedMovement = groundedMovement.normalized * m_currentStateMoveVelocity;
 
             m_characterVelocity.x = groundedMovement.x;
             m_characterVelocity.z = groundedMovement.z;
@@ -84,7 +206,7 @@ namespace Player
 
         private void UpdateGroundedState()
         {
-            bool isGrounded = Physics.Raycast(m_groundedCheckPoint.position, Vector3.down, out RaycastHit hit, m_groundedCheckDistance, m_groundedCheckMask);
+            bool isGrounded = Physics.Raycast(m_groundedCheckPoint.position, Vector3.down, m_groundedCheckDistance, m_groundedCheckMask);
             if (isGrounded && !m_isGrounded)
             {
                 m_characterVelocity.y = 0;
@@ -92,10 +214,16 @@ namespace Player
             m_isGrounded = isGrounded;
         }
 
-        private void HandleJumpInput()
+        private void ProcessJumpInput()
         {
             if (!m_isJumpKeyPressed || !m_isGrounded)
             {
+                return;
+            }
+
+            if (m_playerStateStack[^1] == PlayerState.Crouch)
+            {
+                PopTopPlayerState();
                 return;
             }
 
@@ -146,6 +274,8 @@ namespace Player
 
         #endregion Player Mouse Movement
 
+        #endregion
+
         #region Input
 
         private void UpdateBasicKeyboardInput()
@@ -161,14 +291,21 @@ namespace Player
             }
             else if (Input.GetKeyDown(InputKeys.Run))
             {
-                m_isRunKeyPressed = true;
+                m_isRunKeyPressed = !m_isRunKeyPressed;
             }
 
             if (Input.GetKeyDown(InputKeys.Jump))
             {
                 m_isJumpKeyPressed = true;
             }
+
+            if (Input.GetKeyDown(InputKeys.Crouch))
+            {
+                m_isCrouchPressed = !m_isCrouchPressed;
+            }
         }
+
+        private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(m_horizontalInput.x, 0) && ExtensionFunctions.IsNearlyEqual(m_horizontalInput.y, 0);
 
         private void UpdateMouseInput()
         {
@@ -187,8 +324,60 @@ namespace Player
             m_horizontalInput.y = 0;
             m_isRunKeyPressed = false;
             m_isJumpKeyPressed = false;
+            m_isCrouchPressed = false;
         }
 
         #endregion Input
+
+        #region Player State
+
+        private void PushTopPlayerState(PlayerState playerState)
+        {
+            m_playerStateStack.Add(playerState);
+            SetupCurrentStateDefaults();
+        }
+
+        private void PopTopPlayerState()
+        {
+            m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
+            SetupCurrentStateDefaults();
+        }
+
+        private void SetupCurrentStateDefaults()
+        {
+            switch (m_playerStateStack[^1])
+            {
+                case PlayerState.Idle:
+                    m_characterController.height = m_defaultCapsuleHeight;
+                    break;
+
+                case PlayerState.Walk:
+                    m_characterController.height = m_defaultCapsuleHeight;
+                    break;
+
+                case PlayerState.Run:
+                    m_characterController.height = m_defaultCapsuleHeight;
+                    break;
+
+                case PlayerState.Crouch:
+                    m_characterController.height = m_crouchCapsuleHeight;
+                    break;
+
+                case PlayerState.Slide:
+                    m_characterController.height = m_crouchCapsuleHeight;
+                    break;
+            }
+        }
+
+        public enum PlayerState
+        {
+            Idle,
+            Walk,
+            Run,
+            Crouch,
+            Slide
+        };
+
+        #endregion
     }
 }
