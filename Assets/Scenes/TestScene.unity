@@ -1557,16 +1557,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_airControlMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_defaultCapsuleHeight
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7975099698339277557, guid: 1d5cfca1358ba2b40b64c9c81f831490,
         type: 3}
       propertyPath: m_Name

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
@@ -27,6 +28,7 @@ namespace Player
         [SerializeField] private float m_crouchCapsuleHeight;
 
         [Header("Components")]
+        [SerializeField] private float m_capsuleLerpSpeed;
         [SerializeField] private Transform m_cameraTransform;
         [SerializeField] private Transform m_groundedCheckPoint;
 
@@ -41,6 +43,10 @@ namespace Player
         private bool m_isCrouchPressed = false;
         private float m_currentStateMoveVelocity;
 
+        private float m_capsuleStartHeight = 0;
+        private float m_capsuleTargetHeight = 0;
+        private float m_capsuleLerpAmount = 0;
+
         private List<PlayerState> m_playerStateStack;
         private bool m_isGrounded = false;
 
@@ -50,6 +56,10 @@ namespace Player
         {
             m_characterController = GetComponent<CharacterController>();
             m_playerStateStack = new List<PlayerState>();
+
+            m_capsuleStartHeight = 2;
+            m_capsuleTargetHeight = 2;
+            m_capsuleLerpAmount = 1;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -72,7 +82,6 @@ namespace Player
             ProcessJumpInput();
             ProcessGlobalGravity();
             ApplyFinalPlayerMovement();
-
         }
 
         #endregion Unity Functions
@@ -105,6 +114,7 @@ namespace Player
             }
 
             UpdateHorizontalMovement();
+            UpdateCapsuleSizeAndPosition();
         }
 
         #region Player Horizontal Movement
@@ -198,6 +208,35 @@ namespace Player
 
             m_characterVelocity.x = groundedMovement.x;
             m_characterVelocity.z = groundedMovement.z;
+        }
+
+        private void UpdateCapsuleSizeAndPosition()
+        {
+            if (m_capsuleLerpAmount >= 1)
+            {
+                return;
+            }
+
+            m_capsuleLerpAmount += m_capsuleLerpSpeed * Time.fixedDeltaTime;
+            if (m_capsuleLerpAmount >= 1)
+            {
+                m_capsuleLerpAmount = 1;
+            }
+
+            float lastHeight = m_characterController.height;
+            float lerpedHeight = Mathf.Lerp(m_capsuleStartHeight, m_capsuleTargetHeight, m_capsuleLerpAmount);
+
+            m_characterController.height = lerpedHeight;
+            m_characterController.enabled = false;
+
+            Vector3 position = m_characterController.transform.position;
+            Vector3 groundCheckLocPosition = m_groundedCheckPoint.localPosition;
+            float computedHeight = (lerpedHeight - lastHeight) / 2;
+
+            m_characterController.transform.position = new Vector3(position.x, position.y + computedHeight, position.z);
+            m_groundedCheckPoint.localPosition = new Vector3(groundCheckLocPosition.x, groundCheckLocPosition.y - computedHeight, groundCheckLocPosition.z);
+
+            m_characterController.enabled = true;
         }
 
         #endregion Player Horizontal Movement
@@ -334,39 +373,48 @@ namespace Player
         private void PushTopPlayerState(PlayerState playerState)
         {
             m_playerStateStack.Add(playerState);
-            SetupCurrentStateDefaults();
+            SetupCapsuleSizeForState();
         }
 
         private void PopTopPlayerState()
         {
+            PlayerState topState = m_playerStateStack[^1];
+            if (topState == PlayerState.Crouch)
+            {
+                m_isCrouchPressed = false;
+            }
+
             m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
-            SetupCurrentStateDefaults();
+            SetupCapsuleSizeForState();
         }
 
-        private void SetupCurrentStateDefaults()
+        private void SetupCapsuleSizeForState()
         {
+            m_capsuleStartHeight = m_capsuleTargetHeight;
             switch (m_playerStateStack[^1])
             {
                 case PlayerState.Idle:
-                    m_characterController.height = m_defaultCapsuleHeight;
+                    m_capsuleTargetHeight = m_defaultCapsuleHeight;
                     break;
 
                 case PlayerState.Walk:
-                    m_characterController.height = m_defaultCapsuleHeight;
+                    m_capsuleTargetHeight = m_defaultCapsuleHeight;
                     break;
 
                 case PlayerState.Run:
-                    m_characterController.height = m_defaultCapsuleHeight;
+                    m_capsuleTargetHeight = m_defaultCapsuleHeight;
                     break;
 
                 case PlayerState.Crouch:
-                    m_characterController.height = m_crouchCapsuleHeight;
+                    m_capsuleTargetHeight = m_crouchCapsuleHeight;
                     break;
 
                 case PlayerState.Slide:
-                    m_characterController.height = m_crouchCapsuleHeight;
+                    m_capsuleTargetHeight = m_crouchCapsuleHeight;
                     break;
             }
+
+            m_capsuleLerpAmount = 0;
         }
 
         public enum PlayerState
