@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
@@ -195,7 +194,6 @@ namespace Player
 
         private void UpdateSlideState()
         {
-
         }
 
         private void UpdateHorizontalMovement()
@@ -280,7 +278,7 @@ namespace Player
 
         private void ApplyFinalPlayerMovement() => m_characterController.Move(m_characterVelocity * Time.fixedDeltaTime);
 
-        #endregion
+        #endregion Player Vertical Movement
 
         #region Player Mouse Movement
 
@@ -313,7 +311,7 @@ namespace Player
 
         #endregion Player Mouse Movement
 
-        #endregion
+        #endregion Player Movement
 
         #region Input
 
@@ -426,6 +424,6 @@ namespace Player
             Slide
         };
 
-        #endregion
+        #endregion Player State
     }
 }
