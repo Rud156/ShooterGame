@@ -8,6 +8,7 @@ A shooter game with abilities!
     - [X] Jump
     - [X] Crouch
     - [ ] Slide
+    - [ ] Animations
 - [ ] Weapon System
     - [ ] Customizable Spray
     - [ ] Frame Rate Independent Shooting
