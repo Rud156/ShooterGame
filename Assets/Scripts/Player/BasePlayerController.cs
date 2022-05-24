@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using Utils.Input;
+using Utils.Misc;
 
 namespace Player
 {
@@ -34,13 +36,12 @@ namespace Player
 
         private CharacterController m_characterController;
         private Vector3 m_characterVelocity = Vector3.zero;
-        private Vector2 m_cameraRotation = Vector2.zero;
 
         private Vector2 m_horizontalInput = Vector2.zero;
         private Vector2 m_mouseInput = Vector2.zero;
-        private bool m_isRunKeyPressed = false;
-        private bool m_isJumpKeyPressed = false;
-        private bool m_isCrouchPressed = false;
+        private PlayerInputKey m_isRunKeyPressed;
+        private PlayerInputKey m_isJumpKeyPressed;
+        private PlayerInputKey m_isCrouchPressed;
         public float m_currentStateMoveVelocity;
 
         private float m_capsuleStartHeight = 0;
@@ -63,6 +64,10 @@ namespace Player
             m_capsuleTargetHeight = 2;
             m_capsuleLerpAmount = 1;
 
+            m_isRunKeyPressed = new PlayerInputKey() { isNewState = false, keyPressed = false };
+            m_isCrouchPressed = new PlayerInputKey() { isNewState = false, keyPressed = false };
+            m_isJumpKeyPressed = new PlayerInputKey() { isNewState = false, keyPressed = false };
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -84,6 +89,8 @@ namespace Player
             ProcessJumpInput();
             ProcessGlobalGravity();
             ApplyFinalPlayerMovement();
+
+            MarkFrameInputsAsRead();
         }
 
         #endregion Unity Functions
@@ -123,7 +130,9 @@ namespace Player
 
         private void UpdateIdleState()
         {
-            if (m_isCrouchPressed)
+            m_currentStateMoveVelocity = 0;
+
+            if (m_isCrouchPressed.isNewState && m_isCrouchPressed.keyPressed)
             {
                 PushTopPlayerState(PlayerState.Crouch);
             }
@@ -131,17 +140,21 @@ namespace Player
             {
                 PushTopPlayerState(PlayerState.Walk);
             }
-
-            m_currentStateMoveVelocity = 0;
         }
 
         private void UpdateWalkState()
         {
-            if (m_isRunKeyPressed)
+            m_currentStateMoveVelocity = m_horizontalWalkSpeed;
+            if (!m_isGrounded)
+            {
+                m_currentStateMoveVelocity *= m_airControlMultiplier;
+            }
+
+            if (m_isRunKeyPressed.isNewState && m_isRunKeyPressed.keyPressed)
             {
                 PushTopPlayerState(PlayerState.Run);
             }
-            else if (m_isCrouchPressed)
+            else if (m_isCrouchPressed.isNewState && m_isCrouchPressed.keyPressed)
             {
                 PushTopPlayerState(PlayerState.Crouch);
             }
@@ -149,68 +162,66 @@ namespace Player
             {
                 PopTopPlayerState();
             }
-
-            m_currentStateMoveVelocity = m_horizontalWalkSpeed;
-            if (!m_isGrounded)
-            {
-                m_currentStateMoveVelocity *= m_airControlMultiplier;
-            }
         }
 
         private void UpdateRunState()
         {
-            if (HasNoDirectionalInput() || !m_isRunKeyPressed)
-            {
-                PopTopPlayerState();
-            }
-            else if (m_isCrouchPressed)
-            {
-                m_isCrouchPressed = false;
-                PushTopPlayerState(PlayerState.Slide);
-            }
-
             m_currentStateMoveVelocity = m_horizontalRunSpeed;
             if (!m_isGrounded)
             {
                 m_currentStateMoveVelocity *= m_airControlMultiplier;
             }
+
+            if (HasNoDirectionalInput() || (m_isRunKeyPressed.isNewState && !m_isRunKeyPressed.keyPressed))
+            {
+                PopTopPlayerState();
+            }
+            else if (m_isCrouchPressed.isNewState && m_isCrouchPressed.keyPressed)
+            {
+                m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
+                PopTopPlayerState();
+                PushTopPlayerState(PlayerState.Slide);
+            }
         }
 
         private void UpdateCrouchState()
         {
-            if (m_isRunKeyPressed)
-            {
-                PopTopPlayerState();
-                PushTopPlayerState(PlayerState.Run);
-            }
-            else if (!m_isCrouchPressed)
-            {
-                PopTopPlayerState();
-            }
-
             m_currentStateMoveVelocity = m_crouchWalkSpeed;
             if (HasNoDirectionalInput())
             {
                 m_currentStateMoveVelocity = 0;
             }
+
+            if (m_isRunKeyPressed.isNewState && m_isRunKeyPressed.keyPressed)
+            {
+                PopTopPlayerState();
+                PushTopPlayerState(PlayerState.Run);
+            }
+            else if (m_isCrouchPressed.isNewState && !m_isCrouchPressed.keyPressed)
+            {
+                PopTopPlayerState();
+            }
         }
 
         private void UpdateSlideState()
         {
-            if (m_isRunKeyPressed)
-            {
-                PopTopPlayerState();
-            }
-
             m_horizontalInput.x = 0;
             m_horizontalInput.y = 1;
 
-            m_currentStateMoveVelocity = m_slideSpeed;
+            float slideDurationRatio = 1 - m_currentSlideDuration / m_slideDuration;
+            float mappedSlideSpeed = Mathf.Lerp(m_slideSpeed, 0, slideDurationRatio);
+            m_currentStateMoveVelocity = mappedSlideSpeed;
             m_currentSlideDuration -= Time.fixedDeltaTime;
 
             if (m_currentSlideDuration <= 0)
             {
                 PopTopPlayerState();
+                PushTopPlayerState(PlayerState.Crouch);
+            }
+            else if (m_isRunKeyPressed.isNewState && m_isRunKeyPressed.isNewState)
+            {
+                PopTopPlayerState();
+                PushTopPlayerState(PlayerState.Slide);
             }
         }
 
@@ -271,7 +282,8 @@ namespace Player
 
         private void ProcessJumpInput()
         {
-            if (!m_isJumpKeyPressed || !m_isGrounded)
+            bool isValidJumpPressed = m_isJumpKeyPressed.isNewState && m_isJumpKeyPressed.keyPressed;
+            if (!isValidJumpPressed || !m_isGrounded)
             {
                 return;
             }
@@ -287,7 +299,7 @@ namespace Player
             }
 
             m_characterVelocity.y += m_jumpVelocity;
-            m_isJumpKeyPressed = false;
+            m_isJumpKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
         }
 
         private void ProcessGlobalGravity()
@@ -306,29 +318,40 @@ namespace Player
 
         private void UpdateMouseMovement()
         {
-            m_cameraRotation.y += m_mouseInput.x * m_rotationSpeed * Time.fixedDeltaTime;
-            m_cameraRotation.x += m_mouseInput.y * m_rotationSpeed * Time.fixedDeltaTime;
-            m_cameraRotation.x = ExtensionFunctions.To360Angle(m_cameraRotation.x);
+            Vector3 cameraRotation = m_cameraTransform.rotation.eulerAngles;
+            cameraRotation.y += m_mouseInput.x * m_rotationSpeed * Time.fixedDeltaTime;
+            cameraRotation.x += m_mouseInput.y * m_rotationSpeed * Time.fixedDeltaTime;
+            cameraRotation.x = ExtensionFunctions.To360Angle(cameraRotation.x);
 
             // Clamp X Rotation
-            if (m_cameraRotation.x >= 0 && m_cameraRotation.x <= 180)
+            if (cameraRotation.x >= 0 && cameraRotation.x <= 180)
             {
-                if (m_cameraRotation.x > m_maxCameraXAngle)
+                if (cameraRotation.x > m_maxCameraXAngle)
                 {
-                    m_cameraRotation.x = m_maxCameraXAngle;
+                    cameraRotation.x = m_maxCameraXAngle;
                 }
             }
-            else if (m_cameraRotation.x > 180 && m_cameraRotation.x <= 360)
+            else if (cameraRotation.x > 180 && cameraRotation.x <= 360)
             {
-                float negatedAngle = m_cameraRotation.x - 360;
+                float negatedAngle = cameraRotation.x - 360;
                 if (negatedAngle < m_minCameraXAngle)
                 {
-                    m_cameraRotation.x = m_minCameraXAngle;
+                    cameraRotation.x = m_minCameraXAngle;
                 }
             }
 
-            transform.rotation = Quaternion.Euler(0, m_cameraRotation.y, 0);
-            m_cameraTransform.localRotation = Quaternion.Euler(m_cameraRotation.x, 0, 0);
+            // Only move the camera when sliding...
+            if (m_playerStateStack[^1] == PlayerState.Slide)
+            {
+                m_cameraTransform.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
+                float localYRotation = m_cameraTransform.localEulerAngles.y;
+                m_cameraTransform.localRotation = Quaternion.Euler(cameraRotation.x, localYRotation, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
+                m_cameraTransform.localRotation = Quaternion.Euler(cameraRotation.x, 0, 0);
+            }
         }
 
         #endregion Player Mouse Movement
@@ -346,21 +369,21 @@ namespace Player
 
             if (moveZ <= 0)
             {
-                m_isRunKeyPressed = false;
+                m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
             }
             else if (Input.GetKeyDown(InputKeys.Run))
             {
-                m_isRunKeyPressed = !m_isRunKeyPressed;
+                m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = !m_isRunKeyPressed.keyPressed };
             }
 
             if (Input.GetKeyDown(InputKeys.Jump))
             {
-                m_isJumpKeyPressed = true;
+                m_isJumpKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = true };
             }
 
             if (Input.GetKeyDown(InputKeys.Crouch))
             {
-                m_isCrouchPressed = !m_isCrouchPressed;
+                m_isCrouchPressed = new PlayerInputKey() { isNewState = true, keyPressed = !m_isCrouchPressed.keyPressed };
             }
         }
 
@@ -374,16 +397,16 @@ namespace Player
             m_mouseInput.y = mouseY;
         }
 
-        private void ClearInputs()
+        private void MarkFrameInputsAsRead()
         {
             m_mouseInput.x = 0;
             m_mouseInput.y = 0;
 
             m_horizontalInput.x = 0;
             m_horizontalInput.y = 0;
-            m_isRunKeyPressed = false;
-            m_isJumpKeyPressed = false;
-            m_isCrouchPressed = false;
+            m_isRunKeyPressed.isNewState = false;
+            m_isJumpKeyPressed.isNewState = false;
+            m_isCrouchPressed.isNewState = false;
         }
 
         #endregion Input
@@ -413,6 +436,8 @@ namespace Player
                     m_currentSlideDuration = m_slideDuration;
                     break;
             }
+
+            Debug.Log($"Pushed State: {playerState}");
         }
 
         private void PopTopPlayerState()
@@ -427,24 +452,33 @@ namespace Player
                     break;
 
                 case PlayerState.Run:
-                    m_isRunKeyPressed = false;
+                    m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
                     break;
 
                 case PlayerState.Crouch:
-                    m_isCrouchPressed = false;
+                    m_isCrouchPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
                     break;
 
                 case PlayerState.Slide:
+                    {
+                        // Reset Camera after slide
+                        float cameraXRotation = m_cameraTransform.localRotation.eulerAngles.x;
+                        transform.rotation = Quaternion.Euler(0, m_cameraTransform.rotation.y, 0);
+                        Debug.Log($"Global Rotation: {m_cameraTransform.rotation.y}, Local Rotation: {m_cameraTransform.localRotation.y}");
+                        m_cameraTransform.localRotation = Quaternion.Euler(cameraXRotation, 0, 0);
+                    }
                     break;
             }
 
             m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
             SetupCapsuleSizeForState();
+
+            Debug.Log($"Popped State: {topState}");
         }
 
         private void SetupCapsuleSizeForState()
         {
-            m_capsuleStartHeight = m_capsuleTargetHeight;
+            m_capsuleStartHeight = m_characterController.height;
             switch (m_playerStateStack[^1])
             {
                 case PlayerState.Idle:

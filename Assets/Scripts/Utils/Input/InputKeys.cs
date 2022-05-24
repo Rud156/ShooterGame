@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Utils
+namespace Utils.Input
 {
     public class InputKeys : MonoBehaviour
     {

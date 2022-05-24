@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Utils
+namespace Utils.Misc
 {
     public static class ExtensionFunctions
     {

@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.77, z: 0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -229,11 +229,15 @@ MonoBehaviour:
     m_Bits: 55
   m_groundedCheckDistance: 0.75
   m_crouchWalkSpeed: 3.5
-  m_slideSpeed: 18
   m_crouchCapsuleHeight: 1
+  m_slideSpeed: 18
+  m_slideDuration: 1.75
   m_capsuleLerpSpeed: 7
   m_cameraTransform: {fileID: 330585546}
   m_groundedCheckPoint: {fileID: 1281640488}
+  m_currentStateMoveVelocity: 0
+  m_currentSlideDuration: 0
+  m_playerStateStack: 
 --- !u!1001 &7975099697081729563
 PrefabInstance:
   m_ObjectHideFlags: 0
