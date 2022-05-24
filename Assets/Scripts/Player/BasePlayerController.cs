@@ -463,8 +463,7 @@ namespace Player
                     {
                         // Reset Camera after slide
                         float cameraXRotation = m_cameraTransform.localRotation.eulerAngles.x;
-                        transform.rotation = Quaternion.Euler(0, m_cameraTransform.rotation.y, 0);
-                        Debug.Log($"Global Rotation: {m_cameraTransform.rotation.y}, Local Rotation: {m_cameraTransform.localRotation.y}");
+                        transform.rotation = Quaternion.Euler(0, m_cameraTransform.rotation.eulerAngles.y, 0);
                         m_cameraTransform.localRotation = Quaternion.Euler(cameraXRotation, 0, 0);
                     }
                     break;
