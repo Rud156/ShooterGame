@@ -179,7 +179,6 @@ namespace Player
             else if (m_isCrouchPressed.isNewState && m_isCrouchPressed.keyPressed)
             {
                 m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
-                PopTopPlayerState();
                 PushTopPlayerState(PlayerState.Slide);
             }
         }
@@ -215,13 +214,13 @@ namespace Player
 
             if (m_currentSlideDuration <= 0)
             {
+                RemovePlayerState(PlayerState.Run);
                 PopTopPlayerState();
                 PushTopPlayerState(PlayerState.Crouch);
             }
             else if (m_isRunKeyPressed.isNewState && m_isRunKeyPressed.isNewState)
             {
                 PopTopPlayerState();
-                PushTopPlayerState(PlayerState.Slide);
             }
         }
 
@@ -291,7 +290,6 @@ namespace Player
             if (m_playerStateStack[^1] == PlayerState.Crouch)
             {
                 PopTopPlayerState();
-                return;
             }
             else if (m_playerStateStack[^1] == PlayerState.Slide)
             {
@@ -369,7 +367,8 @@ namespace Player
 
             if (moveZ <= 0)
             {
-                m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
+                bool isNewState = m_isRunKeyPressed.keyPressed != false;
+                m_isRunKeyPressed = new PlayerInputKey() { isNewState = isNewState, keyPressed = false };
             }
             else if (Input.GetKeyDown(InputKeys.Run))
             {
@@ -436,14 +435,38 @@ namespace Player
                     m_currentSlideDuration = m_slideDuration;
                     break;
             }
-
-            Debug.Log($"Pushed State: {playerState}");
         }
 
         private void PopTopPlayerState()
         {
             PlayerState topState = m_playerStateStack[^1];
-            switch (topState)
+            ResetPlayerStatePoppedData(topState);
+            m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
+            SetupCapsuleSizeForState();
+        }
+
+        private void RemovePlayerState(PlayerState playerState)
+        {
+            bool removed = false;
+            for (int i = m_playerStateStack.Count - 1; i >= 0; i--)
+            {
+                if (m_playerStateStack[i] == playerState)
+                {
+                    removed = true;
+                    m_playerStateStack.RemoveAt(i);
+                }
+            }
+
+            if (removed)
+            {
+                ResetPlayerStatePoppedData(playerState);
+                SetupCapsuleSizeForState();
+            }
+        }
+
+        private void ResetPlayerStatePoppedData(PlayerState playerState)
+        {
+            switch (playerState)
             {
                 case PlayerState.Idle:
                     break;
@@ -468,11 +491,6 @@ namespace Player
                     }
                     break;
             }
-
-            m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
-            SetupCapsuleSizeForState();
-
-            Debug.Log($"Popped State: {topState}");
         }
 
         private void SetupCapsuleSizeForState()
