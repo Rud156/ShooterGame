@@ -32,6 +32,7 @@ namespace Player
         [SerializeField] private float m_capsuleLerpSpeed;
         [SerializeField] private Transform m_cameraTransform;
         [SerializeField] private Transform m_groundedCheckPoint;
+        [SerializeField] private List<Transform> m_rayCastTransforms;
 
         private CharacterController m_characterController;
         private Vector3 m_characterVelocity = Vector3.zero;
@@ -255,12 +256,14 @@ namespace Player
             m_characterController.enabled = false;
 
             Vector3 position = m_characterController.transform.position;
-            Vector3 groundCheckLocPosition = m_groundedCheckPoint.localPosition;
             float computedHeight = (lerpedHeight - lastHeight) / 2;
 
             m_characterController.transform.position = new Vector3(position.x, position.y + computedHeight, position.z);
-            m_groundedCheckPoint.localPosition = new Vector3(groundCheckLocPosition.x, groundCheckLocPosition.y - computedHeight, groundCheckLocPosition.z);
-
+            foreach (Transform rayCastTransform in m_rayCastTransforms)
+            {
+                Vector3 localPosition = rayCastTransform.localPosition;
+                rayCastTransform.localPosition = new Vector3(localPosition.x, localPosition.y - computedHeight, localPosition.z);
+            }
             m_characterController.enabled = true;
         }
 
