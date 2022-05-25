@@ -39,9 +39,9 @@ namespace Player
 
         private Vector2 m_horizontalInput = Vector2.zero;
         private Vector2 m_mouseInput = Vector2.zero;
-        private PlayerInputKey m_isRunKeyPressed;
-        private PlayerInputKey m_isJumpKeyPressed;
-        private PlayerInputKey m_isCrouchPressed;
+        private PlayerInputKey m_runKey;
+        private PlayerInputKey m_jumpKey;
+        private PlayerInputKey m_crouchKey;
         public float m_currentStateMoveVelocity;
 
         private float m_capsuleStartHeight = 0;
@@ -64,9 +64,9 @@ namespace Player
             m_capsuleTargetHeight = 2;
             m_capsuleLerpAmount = 1;
 
-            m_isRunKeyPressed = new PlayerInputKey() { isNewState = false, keyPressed = false };
-            m_isCrouchPressed = new PlayerInputKey() { isNewState = false, keyPressed = false };
-            m_isJumpKeyPressed = new PlayerInputKey() { isNewState = false, keyPressed = false };
+            m_runKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            m_crouchKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            m_jumpKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -132,7 +132,7 @@ namespace Player
         {
             m_currentStateMoveVelocity = 0;
 
-            if (m_isCrouchPressed.isNewState && m_isCrouchPressed.keyPressed)
+            if (m_crouchKey.keyPressedThisFrame)
             {
                 PushTopPlayerState(PlayerState.Crouch);
             }
@@ -150,11 +150,11 @@ namespace Player
                 m_currentStateMoveVelocity *= m_airControlMultiplier;
             }
 
-            if (m_isRunKeyPressed.isNewState && m_isRunKeyPressed.keyPressed)
+            if (m_runKey.keyPressedThisFrame)
             {
                 PushTopPlayerState(PlayerState.Run);
             }
-            else if (m_isCrouchPressed.isNewState && m_isCrouchPressed.keyPressed)
+            else if (m_crouchKey.keyPressedThisFrame)
             {
                 PushTopPlayerState(PlayerState.Crouch);
             }
@@ -172,13 +172,12 @@ namespace Player
                 m_currentStateMoveVelocity *= m_airControlMultiplier;
             }
 
-            if (HasNoDirectionalInput() || (m_isRunKeyPressed.isNewState && !m_isRunKeyPressed.keyPressed))
+            if (HasNoDirectionalInput() || m_horizontalInput.y <= 0 || m_runKey.keyPressedThisFrame)
             {
                 PopTopPlayerState();
             }
-            else if (m_isCrouchPressed.isNewState && m_isCrouchPressed.keyPressed)
+            else if (m_crouchKey.keyPressedThisFrame)
             {
-                m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
                 PushTopPlayerState(PlayerState.Slide);
             }
         }
@@ -191,12 +190,12 @@ namespace Player
                 m_currentStateMoveVelocity = 0;
             }
 
-            if (m_isRunKeyPressed.isNewState && m_isRunKeyPressed.keyPressed)
+            if (m_runKey.keyPressedThisFrame)
             {
                 PopTopPlayerState();
                 PushTopPlayerState(PlayerState.Run);
             }
-            else if (m_isCrouchPressed.isNewState && !m_isCrouchPressed.keyPressed)
+            else if (m_crouchKey.keyPressedThisFrame)
             {
                 PopTopPlayerState();
             }
@@ -218,7 +217,7 @@ namespace Player
                 PopTopPlayerState();
                 PushTopPlayerState(PlayerState.Crouch);
             }
-            else if (m_isRunKeyPressed.isNewState && m_isRunKeyPressed.isNewState)
+            else if (m_runKey.keyPressedThisFrame)
             {
                 PopTopPlayerState();
             }
@@ -281,7 +280,7 @@ namespace Player
 
         private void ProcessJumpInput()
         {
-            bool isValidJumpPressed = m_isJumpKeyPressed.isNewState && m_isJumpKeyPressed.keyPressed;
+            bool isValidJumpPressed = m_jumpKey.keyPressedThisFrame;
             if (!isValidJumpPressed || !m_isGrounded)
             {
                 return;
@@ -297,7 +296,6 @@ namespace Player
             }
 
             m_characterVelocity.y += m_jumpVelocity;
-            m_isJumpKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
         }
 
         private void ProcessGlobalGravity()
@@ -365,25 +363,9 @@ namespace Player
             m_horizontalInput.x = moveX;
             m_horizontalInput.y = moveZ;
 
-            if (moveZ <= 0)
-            {
-                bool isNewState = m_isRunKeyPressed.keyPressed != false;
-                m_isRunKeyPressed = new PlayerInputKey() { isNewState = isNewState, keyPressed = false };
-            }
-            else if (Input.GetKeyDown(InputKeys.Run))
-            {
-                m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = !m_isRunKeyPressed.keyPressed };
-            }
-
-            if (Input.GetKeyDown(InputKeys.Jump))
-            {
-                m_isJumpKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = true };
-            }
-
-            if (Input.GetKeyDown(InputKeys.Crouch))
-            {
-                m_isCrouchPressed = new PlayerInputKey() { isNewState = true, keyPressed = !m_isCrouchPressed.keyPressed };
-            }
+            m_runKey.UpdateInputData(InputKeys.Run);
+            m_jumpKey.UpdateInputData(InputKeys.Jump);
+            m_crouchKey.UpdateInputData(InputKeys.Crouch);
         }
 
         private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(m_horizontalInput.x, 0) && ExtensionFunctions.IsNearlyEqual(m_horizontalInput.y, 0);
@@ -400,12 +382,12 @@ namespace Player
         {
             m_mouseInput.x = 0;
             m_mouseInput.y = 0;
-
             m_horizontalInput.x = 0;
             m_horizontalInput.y = 0;
-            m_isRunKeyPressed.isNewState = false;
-            m_isJumpKeyPressed.isNewState = false;
-            m_isCrouchPressed.isNewState = false;
+
+            m_runKey.ResetPerFrameInput();
+            m_jumpKey.ResetPerFrameInput();
+            m_crouchKey.ResetPerFrameInput();
         }
 
         #endregion Input
@@ -475,11 +457,9 @@ namespace Player
                     break;
 
                 case PlayerState.Run:
-                    m_isRunKeyPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
                     break;
 
                 case PlayerState.Crouch:
-                    m_isCrouchPressed = new PlayerInputKey() { isNewState = true, keyPressed = false };
                     break;
 
                 case PlayerState.Slide:
