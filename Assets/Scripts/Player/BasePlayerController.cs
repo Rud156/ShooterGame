@@ -7,6 +7,8 @@ namespace Player
 {
     public class BasePlayerController : MonoBehaviour
     {
+        private const float GROUND_ANGLE_NORMAL = 90;
+
         [Header("Basic Movement")]
         [SerializeField] private float m_horizontalRunSpeed;
         [SerializeField] private float m_horizontalWalkSpeed;
@@ -22,11 +24,21 @@ namespace Player
         [SerializeField] private LayerMask m_groundedCheckMask;
         [SerializeField] private float m_groundedCheckDistance;
 
-        [Header("Crouch/Slide")]
+        [Header("Crouch")]
         [SerializeField] private float m_crouchWalkSpeed;
         [SerializeField] private float m_crouchCapsuleHeight;
+
+        [Header("Slide")]
         [SerializeField] private float m_slideSpeed;
         [SerializeField] private float m_slideDuration;
+        [SerializeField] private Transform m_slideWallCheckPoint;
+        [SerializeField] private float m_slideWallCheckDistance;
+        [SerializeField] private Transform m_slideSlopeCheckPoint;
+        [SerializeField] private float m_slideNormalCheckDistance;
+        [SerializeField] private float m_slideMinSlopeExtensionAngle;
+        [SerializeField] private float m_slideMaxSlopeExtensionAngle;
+        [SerializeField] private float m_slideMaxSlopeSpeed;
+        [SerializeField] private float m_slideUpwardTimeReductionMultiplier;
 
         [Header("Components")]
         [SerializeField] private float m_capsuleLerpSpeed;
@@ -211,6 +223,33 @@ namespace Player
             float mappedSlideSpeed = Mathf.Lerp(m_slideSpeed, 0, slideDurationRatio);
             m_currentStateMoveVelocity = mappedSlideSpeed;
             m_currentSlideDuration -= Time.fixedDeltaTime;
+
+            // Stop slide when the Raycast hits wall or something...
+            if (Physics.Raycast(m_slideWallCheckPoint.position, transform.forward, m_slideWallCheckDistance, m_groundedCheckMask))
+            {
+                m_currentSlideDuration = 0;
+            }
+
+            // Change Sliding Speed and Duration Based on Slope
+            if (Physics.Raycast(m_slideSlopeCheckPoint.position, Vector3.down, out RaycastHit hit, m_slideNormalCheckDistance, m_groundedCheckMask))
+            {
+                Debug.DrawRay(m_slideSlopeCheckPoint.position, Vector3.down * m_slideNormalCheckDistance, Color.green);
+                float normalAngle = Vector3.Angle(transform.forward, hit.normal);
+                normalAngle = GROUND_ANGLE_NORMAL - normalAngle;
+                Debug.Log($"Normal: {hit.normal}, Angle: {normalAngle}");
+
+                if (normalAngle > m_slideMinSlopeExtensionAngle)
+                {
+                    float mappedSlidingSpeed = ExtensionFunctions.Map(normalAngle, m_slideMinSlopeExtensionAngle, m_slideMaxSlopeExtensionAngle,
+                                        m_slideSpeed, m_slideMaxSlopeSpeed);
+                    m_currentStateMoveVelocity = mappedSlidingSpeed;
+                    m_currentSlideDuration = m_slideDuration;
+                }
+                else if (normalAngle < 0) // This means they are sliding up a hill
+                {
+                    m_currentSlideDuration -= Time.fixedDeltaTime * m_slideUpwardTimeReductionMultiplier;
+                }
+            }
 
             if (m_currentSlideDuration <= 0)
             {

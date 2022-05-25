@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 40384556}
   m_Layer: 6
-  m_Name: Slide Foward Check
+  m_Name: Slide Wall Check
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_horizontalRunSpeed: 15
   m_horizontalWalkSpeed: 7.5
   m_defaultCapsuleHeight: 2
-  m_rotationSpeed: 70
+  m_rotationSpeed: 140
   m_maxCameraXAngle: 90
   m_minCameraXAngle: -90
   m_airControlMultiplier: 1
@@ -296,6 +296,14 @@ MonoBehaviour:
   m_crouchCapsuleHeight: 1
   m_slideSpeed: 18
   m_slideDuration: 1.75
+  m_slideWallCheckPoint: {fileID: 40384556}
+  m_slideWallCheckDistance: 0.75
+  m_slideSlopeCheckPoint: {fileID: 1078637262}
+  m_slideNormalCheckDistance: 0.75
+  m_slideMinSlopeExtensionAngle: 12
+  m_slideMaxSlopeExtensionAngle: 75
+  m_slideMaxSlopeSpeed: 25
+  m_slideUpwardTimeReductionMultiplier: 3
   m_capsuleLerpSpeed: 7
   m_cameraTransform: {fileID: 330585546}
   m_groundedCheckPoint: {fileID: 1281640488}
