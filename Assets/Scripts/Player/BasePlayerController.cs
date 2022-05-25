@@ -236,7 +236,6 @@ namespace Player
                 Debug.DrawRay(m_slideSlopeCheckPoint.position, Vector3.down * m_slideNormalCheckDistance, Color.green);
                 float normalAngle = Vector3.Angle(transform.forward, hit.normal);
                 normalAngle = GROUND_ANGLE_NORMAL - normalAngle;
-                Debug.Log($"Normal: {hit.normal}, Angle: {normalAngle}");
 
                 if (normalAngle > m_slideMinSlopeExtensionAngle)
                 {
