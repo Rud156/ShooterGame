@@ -7,7 +7,8 @@ A shooter game with abilities!
     - [X] Move Look
     - [X] Jump
     - [X] Crouch
-    - [ ] Slide
+    - [X] Slide
+    - [ ] Movement Polish
     - [ ] Animations
 - [ ] Weapon System
     - [ ] Customizable Spray
