@@ -18,11 +18,14 @@ namespace Player
         [SerializeField] private float m_minCameraXAngle;
 
         [Header("Jump/Grounded")]
-        [SerializeField] private float m_airControlMultiplier;
         [SerializeField] private float m_jumpVelocity;
         [SerializeField] private float m_gravityMultiplier;
         [SerializeField] private LayerMask m_groundedCheckMask;
         [SerializeField] private float m_groundedCheckDistance;
+
+        [Header("Air Control")]
+        [SerializeField] private float m_airControlMultiplier;
+        [SerializeField] private float m_airMovementSpeed;
 
         [Header("Crouch")]
         [SerializeField] private float m_crouchWalkSpeed;
@@ -133,6 +136,10 @@ namespace Player
                 case PlayerState.Slide:
                     UpdateSlideState();
                     break;
+
+                case PlayerState.Falling:
+                    UpdateFallingState();
+                    break;
             }
 
             UpdateHorizontalMovement();
@@ -158,10 +165,6 @@ namespace Player
         private void UpdateWalkState()
         {
             m_currentStateMoveVelocity = m_horizontalWalkSpeed;
-            if (!m_isGrounded)
-            {
-                m_currentStateMoveVelocity *= m_airControlMultiplier;
-            }
 
             if (m_runKey.keyPressedThisFrame)
             {
@@ -180,10 +183,6 @@ namespace Player
         private void UpdateRunState()
         {
             m_currentStateMoveVelocity = m_horizontalRunSpeed;
-            if (!m_isGrounded)
-            {
-                m_currentStateMoveVelocity *= m_airControlMultiplier;
-            }
 
             if (HasNoDirectionalInput() || m_horizontalInput.y <= 0 || m_runKey.keyPressedThisFrame)
             {
@@ -240,7 +239,7 @@ namespace Player
                 if (normalAngle > m_slideMinSlopeExtensionAngle)
                 {
                     float mappedSlidingSpeed = ExtensionFunctions.Map(normalAngle, m_slideMinSlopeExtensionAngle, m_slideMaxSlopeExtensionAngle,
-                                        m_slideSpeed, m_slideMaxSlopeSpeed);
+                                                m_slideSpeed, m_slideMaxSlopeSpeed);
                     m_currentStateMoveVelocity = mappedSlidingSpeed;
                     m_currentSlideDuration = m_slideDuration;
                 }
@@ -266,12 +265,25 @@ namespace Player
         {
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
-            Vector3 groundedMovement = forward * m_horizontalInput.y + right * m_horizontalInput.x;
-            groundedMovement.y = 0;
-            groundedMovement = groundedMovement.normalized * m_currentStateMoveVelocity;
 
-            m_characterVelocity.x = groundedMovement.x;
-            m_characterVelocity.z = groundedMovement.z;
+            if (m_playerStateStack[^1] != PlayerState.Falling)
+            {
+                Vector3 groundedMovement = forward * m_horizontalInput.y + right * m_horizontalInput.x;
+                groundedMovement.y = 0;
+                groundedMovement = groundedMovement.normalized * m_currentStateMoveVelocity;
+
+                m_characterVelocity.x = groundedMovement.x;
+                m_characterVelocity.z = groundedMovement.z;
+            }
+            else
+            {
+                Vector3 airMovement = forward * m_horizontalInput.y + right * m_horizontalInput.x;
+                airMovement.y = 0;
+                airMovement = airMovement.normalized * m_airControlMultiplier * m_airMovementSpeed;
+
+                m_characterVelocity.x += airMovement.x;
+                m_characterVelocity.z += airMovement.z;
+            }
         }
 
         private void UpdateCapsuleSizeAndPosition()
@@ -316,6 +328,16 @@ namespace Player
             {
                 m_characterVelocity.y = 0;
             }
+
+            if (!isGrounded && m_playerStateStack[^1] != PlayerState.Falling)
+            {
+                PushTopPlayerState(PlayerState.Falling);
+            }
+            else if (isGrounded && m_playerStateStack[^1] == PlayerState.Falling)
+            {
+                PopTopPlayerState();
+            }
+
             m_isGrounded = isGrounded;
         }
 
@@ -337,6 +359,11 @@ namespace Player
             }
 
             m_characterVelocity.y += m_jumpVelocity;
+        }
+
+        private void UpdateFallingState()
+        {
+
         }
 
         private void ProcessGlobalGravity()
@@ -457,6 +484,9 @@ namespace Player
                 case PlayerState.Slide:
                     m_currentSlideDuration = m_slideDuration;
                     break;
+
+                case PlayerState.Falling:
+                    break;
             }
         }
 
@@ -511,6 +541,9 @@ namespace Player
                         m_cameraTransform.localRotation = Quaternion.Euler(cameraXRotation, 0, 0);
                     }
                     break;
+
+                case PlayerState.Falling:
+                    break;
             }
         }
 
@@ -538,6 +571,10 @@ namespace Player
                 case PlayerState.Slide:
                     m_capsuleTargetHeight = m_crouchCapsuleHeight;
                     break;
+
+                case PlayerState.Falling:
+                    m_capsuleTargetHeight = m_defaultCapsuleHeight;
+                    break;
             }
 
             m_capsuleLerpAmount = 0;
@@ -549,7 +586,8 @@ namespace Player
             Walk,
             Run,
             Crouch,
-            Slide
+            Slide,
+            Falling
         };
 
         #endregion Player State

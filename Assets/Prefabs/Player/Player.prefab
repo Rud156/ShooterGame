@@ -285,7 +285,7 @@ MonoBehaviour:
   m_rotationSpeed: 140
   m_maxCameraXAngle: 90
   m_minCameraXAngle: -90
-  m_airControlMultiplier: 1
+  m_airControlMultiplier: 0.3
   m_jumpVelocity: 15
   m_gravityMultiplier: 0.1
   m_groundedCheckMask:
