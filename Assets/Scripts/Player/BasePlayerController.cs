@@ -67,6 +67,7 @@ namespace Player
 
         public List<PlayerState> m_playerStateStack;
         private bool m_isGrounded = false;
+        public PlayerDirection m_primaryInputWhenLastOnGround;
 
         #region Unity Functions
 
@@ -74,6 +75,7 @@ namespace Player
         {
             m_characterController = GetComponent<CharacterController>();
             m_playerStateStack = new List<PlayerState>();
+            m_primaryInputWhenLastOnGround = PlayerDirection.None;
 
             m_capsuleStartHeight = 2;
             m_capsuleTargetHeight = 2;
@@ -274,14 +276,32 @@ namespace Player
 
                 m_characterVelocity.x = groundedMovement.x;
                 m_characterVelocity.z = groundedMovement.z;
+                m_primaryInputWhenLastOnGround = GetPrimaryDirectionFromInput();
             }
             else
             {
-                Vector3 airMovement = forward * m_horizontalInput.y + right * m_horizontalInput.x;
+                Vector2 horizontalInputCopy = m_horizontalInput;
+                if (m_primaryInputWhenLastOnGround == PlayerDirection.Forward && m_horizontalInput.y > 0)
+                {
+                    horizontalInputCopy.y = 0;
+                }
+                else if (m_primaryInputWhenLastOnGround == PlayerDirection.Backward && m_horizontalInput.y < 0)
+                {
+                    horizontalInputCopy.y = 0;
+                }
+                else if (m_primaryInputWhenLastOnGround == PlayerDirection.Left && m_horizontalInput.x < 0)
+                {
+                    horizontalInputCopy.x = 0;
+                }
+                else if (m_primaryInputWhenLastOnGround == PlayerDirection.Right && m_horizontalInput.x > 0)
+                {
+                    horizontalInputCopy.x = 0;
+                }
+
+                Vector3 airMovement = forward * horizontalInputCopy.y + right * horizontalInputCopy.x;
                 airMovement.y = 0;
                 airMovement = airMovement.normalized * m_airControlMultiplier * m_airMovementSpeed;
 
-                // TODO: Think of a way to prevent speeding of the characters when they press Forward and Jump...
                 m_characterVelocity.x += airMovement.x;
                 m_characterVelocity.z += airMovement.z;
             }
@@ -593,5 +613,48 @@ namespace Player
         };
 
         #endregion Player State
+
+        #region Player Direction
+
+        public enum PlayerDirection
+        {
+            None,
+            Forward,
+            Backward,
+            Left,
+            Right
+        };
+
+        private PlayerDirection GetPrimaryDirectionFromInput()
+        {
+            if (m_horizontalInput.y != 0)
+            {
+                if (m_horizontalInput.y > 0)
+                {
+                    return PlayerDirection.Forward;
+                }
+                else
+                {
+                    return PlayerDirection.Backward;
+                }
+            }
+            else if (m_horizontalInput.x != 0)
+            {
+                if (m_horizontalInput.x < 0)
+                {
+                    return PlayerDirection.Left;
+                }
+                else
+                {
+                    return PlayerDirection.Right;
+                }
+            }
+            else
+            {
+                return PlayerDirection.None;
+            }
+        }
+
+        #endregion
     }
 }

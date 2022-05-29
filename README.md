@@ -10,8 +10,8 @@ A shooter game with abilities!
     - [X] Slide
     - [ ] Movement Polish
       - [X] Slide should respect slopes and increase speed
-      - [ ] Jump should keep momentum in air
-      - [ ] Slide should not activate in air
+      - [X] Jump should keep momentum in air
+      - [X] Slide should not activate in air
       - [ ] Make a better level to test mechanics
       - [ ] Jump needs to feel a bit lighter
     - [ ] Animations
