@@ -50,7 +50,7 @@ namespace Player
         [SerializeField] private List<Transform> m_rayCastTransforms;
 
         private CharacterController m_characterController;
-        private Vector3 m_characterVelocity = Vector3.zero;
+        public Vector3 m_characterVelocity = Vector3.zero;
 
         private Vector2 m_horizontalInput = Vector2.zero;
         private Vector2 m_mouseInput = Vector2.zero;
@@ -281,6 +281,7 @@ namespace Player
                 airMovement.y = 0;
                 airMovement = airMovement.normalized * m_airControlMultiplier * m_airMovementSpeed;
 
+                // TODO: Think of a way to prevent speeding of the characters when they press Forward and Jump...
                 m_characterVelocity.x += airMovement.x;
                 m_characterVelocity.z += airMovement.z;
             }
@@ -333,10 +334,6 @@ namespace Player
             {
                 PushTopPlayerState(PlayerState.Falling);
             }
-            else if (isGrounded && m_playerStateStack[^1] == PlayerState.Falling)
-            {
-                PopTopPlayerState();
-            }
 
             m_isGrounded = isGrounded;
         }
@@ -363,7 +360,10 @@ namespace Player
 
         private void UpdateFallingState()
         {
-
+            if (m_isGrounded)
+            {
+                PopTopPlayerState();
+            }
         }
 
         private void ProcessGlobalGravity()
@@ -497,6 +497,8 @@ namespace Player
             m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
             SetupCapsuleSizeForState();
         }
+
+        private PlayerState GetPlayerStateAtIndex(int index) => m_playerStateStack[index];
 
         private void RemovePlayerState(PlayerState playerState)
         {
