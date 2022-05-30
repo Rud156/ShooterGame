@@ -8,13 +8,13 @@ A shooter game with abilities!
     - [X] Jump
     - [X] Crouch
     - [X] Slide
-    - [ ] Movement Polish
+    - [X] Movement Polish
       - [X] Slide should respect slopes and increase speed
       - [X] Jump should keep momentum in air
       - [X] Slide should not activate in air
       - [X] Jump needs to feel a bit lighter
-      - [ ] Make a better level to test mechanics
     - [ ] Animations
+    - [ ] Make a better level to test mechanics
 - [ ] Weapon System
     - [ ] Customizable Spray
     - [ ] Frame Rate Independent Shooting
