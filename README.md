@@ -12,8 +12,8 @@ A shooter game with abilities!
       - [X] Slide should respect slopes and increase speed
       - [X] Jump should keep momentum in air
       - [X] Slide should not activate in air
+      - [X] Jump needs to feel a bit lighter
       - [ ] Make a better level to test mechanics
-      - [ ] Jump needs to feel a bit lighter
     - [ ] Animations
 - [ ] Weapon System
     - [ ] Customizable Spray

@@ -11,6 +11,7 @@ namespace Player
 
         [Header("Basic Movement")]
         [SerializeField] private float m_horizontalRunSpeed;
+
         [SerializeField] private float m_horizontalWalkSpeed;
         [SerializeField] private float m_defaultCapsuleHeight;
         [SerializeField] private float m_rotationSpeed;
@@ -19,20 +20,22 @@ namespace Player
 
         [Header("Jump/Grounded")]
         [SerializeField] private float m_jumpVelocity;
+
         [SerializeField] private float m_gravityMultiplier;
         [SerializeField] private LayerMask m_groundedCheckMask;
         [SerializeField] private float m_groundedCheckDistance;
 
         [Header("Air Control")]
         [SerializeField] private float m_airControlMultiplier;
-        [SerializeField] private float m_airMovementSpeed;
 
         [Header("Crouch")]
         [SerializeField] private float m_crouchWalkSpeed;
+
         [SerializeField] private float m_crouchCapsuleHeight;
 
         [Header("Slide")]
         [SerializeField] private float m_slideSpeed;
+
         [SerializeField] private float m_slideDuration;
         [SerializeField] private Transform m_slideWallCheckPoint;
         [SerializeField] private float m_slideWallCheckDistance;
@@ -45,29 +48,29 @@ namespace Player
 
         [Header("Components")]
         [SerializeField] private float m_capsuleLerpSpeed;
+
         [SerializeField] private Transform m_cameraTransform;
         [SerializeField] private Transform m_groundedCheckPoint;
         [SerializeField] private List<Transform> m_rayCastTransforms;
 
         private CharacterController m_characterController;
-        public Vector3 m_characterVelocity = Vector3.zero;
+        private Vector3 m_characterVelocity = Vector3.zero;
 
         private Vector2 m_horizontalInput = Vector2.zero;
         private Vector2 m_mouseInput = Vector2.zero;
         private PlayerInputKey m_runKey;
         private PlayerInputKey m_jumpKey;
         private PlayerInputKey m_crouchKey;
-        public float m_currentStateMoveVelocity;
+        private float m_currentStateMoveVelocity;
 
         private float m_capsuleStartHeight = 0;
         private float m_capsuleTargetHeight = 0;
         private float m_capsuleLerpAmount = 0;
 
-        public float m_currentSlideDuration = 0;
+        private float m_currentSlideDuration = 0;
 
-        public List<PlayerState> m_playerStateStack;
+        private List<PlayerState> m_playerStateStack;
         private bool m_isGrounded = false;
-        public PlayerDirection m_primaryInputWhenLastOnGround;
 
         #region Unity Functions
 
@@ -75,7 +78,6 @@ namespace Player
         {
             m_characterController = GetComponent<CharacterController>();
             m_playerStateStack = new List<PlayerState>();
-            m_primaryInputWhenLastOnGround = PlayerDirection.None;
 
             m_capsuleStartHeight = 2;
             m_capsuleTargetHeight = 2;
@@ -276,34 +278,19 @@ namespace Player
 
                 m_characterVelocity.x = groundedMovement.x;
                 m_characterVelocity.z = groundedMovement.z;
-                m_primaryInputWhenLastOnGround = GetPrimaryDirectionFromInput();
             }
             else
             {
-                Vector2 horizontalInputCopy = m_horizontalInput;
-                if (m_primaryInputWhenLastOnGround == PlayerDirection.Forward && m_horizontalInput.y > 0)
-                {
-                    horizontalInputCopy.y = 0;
-                }
-                else if (m_primaryInputWhenLastOnGround == PlayerDirection.Backward && m_horizontalInput.y < 0)
-                {
-                    horizontalInputCopy.y = 0;
-                }
-                else if (m_primaryInputWhenLastOnGround == PlayerDirection.Left && m_horizontalInput.x < 0)
-                {
-                    horizontalInputCopy.x = 0;
-                }
-                else if (m_primaryInputWhenLastOnGround == PlayerDirection.Right && m_horizontalInput.x > 0)
-                {
-                    horizontalInputCopy.x = 0;
-                }
-
-                Vector3 airMovement = forward * horizontalInputCopy.y + right * horizontalInputCopy.x;
+                Vector3 airMovement = forward * m_horizontalInput.y + right * m_horizontalInput.x;
                 airMovement.y = 0;
-                airMovement = airMovement.normalized * m_airControlMultiplier * m_airMovementSpeed;
+                airMovement = m_airControlMultiplier * m_currentStateMoveVelocity * airMovement.normalized;
 
-                m_characterVelocity.x += airMovement.x;
-                m_characterVelocity.z += airMovement.z;
+                airMovement.x += m_characterVelocity.x;
+                airMovement.z += m_characterVelocity.z;
+                airMovement = airMovement.normalized * m_currentStateMoveVelocity;
+
+                m_characterVelocity.x = airMovement.x;
+                m_characterVelocity.z = airMovement.z;
             }
         }
 
@@ -613,48 +600,5 @@ namespace Player
         };
 
         #endregion Player State
-
-        #region Player Direction
-
-        public enum PlayerDirection
-        {
-            None,
-            Forward,
-            Backward,
-            Left,
-            Right
-        };
-
-        private PlayerDirection GetPrimaryDirectionFromInput()
-        {
-            if (m_horizontalInput.y != 0)
-            {
-                if (m_horizontalInput.y > 0)
-                {
-                    return PlayerDirection.Forward;
-                }
-                else
-                {
-                    return PlayerDirection.Backward;
-                }
-            }
-            else if (m_horizontalInput.x != 0)
-            {
-                if (m_horizontalInput.x < 0)
-                {
-                    return PlayerDirection.Left;
-                }
-                else
-                {
-                    return PlayerDirection.Right;
-                }
-            }
-            else
-            {
-                return PlayerDirection.None;
-            }
-        }
-
-        #endregion
     }
 }
