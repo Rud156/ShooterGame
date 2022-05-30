@@ -11,7 +11,6 @@ namespace Player
 
         [Header("Basic Movement")]
         [SerializeField] private float m_horizontalRunSpeed;
-
         [SerializeField] private float m_horizontalWalkSpeed;
         [SerializeField] private float m_defaultCapsuleHeight;
         [SerializeField] private float m_rotationSpeed;
@@ -20,7 +19,6 @@ namespace Player
 
         [Header("Jump/Grounded")]
         [SerializeField] private float m_jumpVelocity;
-
         [SerializeField] private float m_gravityMultiplier;
         [SerializeField] private LayerMask m_groundedCheckMask;
         [SerializeField] private float m_groundedCheckDistance;
@@ -30,12 +28,10 @@ namespace Player
 
         [Header("Crouch")]
         [SerializeField] private float m_crouchWalkSpeed;
-
         [SerializeField] private float m_crouchCapsuleHeight;
 
         [Header("Slide")]
         [SerializeField] private float m_slideSpeed;
-
         [SerializeField] private float m_slideDuration;
         [SerializeField] private Transform m_slideWallCheckPoint;
         [SerializeField] private float m_slideWallCheckDistance;
@@ -48,7 +44,6 @@ namespace Player
 
         [Header("Components")]
         [SerializeField] private float m_capsuleLerpSpeed;
-
         [SerializeField] private Transform m_cameraTransform;
         [SerializeField] private Transform m_groundedCheckPoint;
         [SerializeField] private List<Transform> m_rayCastTransforms;
