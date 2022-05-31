@@ -14,10 +14,11 @@ A shooter game with abilities!
       - [X] Slide should not activate in air
       - [X] Jump needs to feel a bit lighter
     - [ ] Animations
-    - [ ] Make a better level to test mechanics
 - [ ] Weapon System
     - [ ] Customizable Spray
     - [ ] Frame Rate Independent Shooting
+- [ ] Make a Level to Test/Play Basic Mechanics
 - [ ] Multiplayer
     - [ ] Player Movement Sync
     - [ ] Weapon Sync
+- [ ] Make a Level to play Multiplayer On

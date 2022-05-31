@@ -68,11 +68,8 @@ namespace Player
         private bool m_isGrounded = false;
 
         public delegate void PlayerStatePushed(PlayerState playerState);
-
         public delegate void PlayerStatePopped(PlayerState playerState);
-
         public delegate void PlayerJumped();
-
         public delegate void PlayerGroundedChanged(bool previousGrounded, bool currentGrounded);
 
         public PlayerStatePushed OnPlayerStatePushed;
@@ -350,6 +347,7 @@ namespace Player
                 PushTopPlayerState(PlayerState.Falling);
             }
 
+            OnPlayerGroundedChanged?.Invoke(m_isGrounded, isGrounded);
             m_isGrounded = isGrounded;
         }
 
@@ -371,6 +369,7 @@ namespace Player
             }
 
             m_characterVelocity.y += m_jumpVelocity;
+            OnPlayerJumped?.Invoke();
         }
 
         private void UpdateFallingState()
@@ -509,6 +508,8 @@ namespace Player
                 case PlayerState.Falling:
                     break;
             }
+
+            OnPlayerStatePushed?.Invoke(playerState);
         }
 
         private void PopTopPlayerState()
@@ -517,9 +518,8 @@ namespace Player
             ResetPlayerStatePoppedData(topState);
             m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
             SetupCapsuleSizeForState();
+            OnPlayerStatePopped?.Invoke(topState);
         }
-
-        private PlayerState GetPlayerStateAtIndex(int index) => m_playerStateStack[index];
 
         private void RemovePlayerState(PlayerState playerState)
         {

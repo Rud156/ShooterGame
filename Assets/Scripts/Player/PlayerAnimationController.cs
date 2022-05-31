@@ -79,6 +79,8 @@ namespace Player
                     m_playerAnimator.SetBool(FALLING_ANIM_PARAM, true);
                     break;
             }
+
+            Debug.Log($"Player State Pushed: {playerState}");
         }
 
         private void HandlePlayerStatePopped(BasePlayerController.PlayerState playerState)
@@ -109,9 +111,15 @@ namespace Player
                     m_playerAnimator.SetBool(FALLING_ANIM_PARAM, false);
                     break;
             }
+
+            Debug.Log($"Player State Popped: {playerState}");
         }
 
-        private void HandleJumpPressed() => m_playerAnimator.SetTrigger(JUMP_ANIM_PARAM);
+        private void HandleJumpPressed()
+        {
+            m_playerAnimator.SetTrigger(JUMP_ANIM_PARAM);
+            Debug.Log("Player Jumped");
+        }
 
         private void HandleGroundedStatusChanged(bool previousGrounded, bool currentGrounded)
         {
@@ -120,6 +128,8 @@ namespace Player
             {
                 m_playerAnimator.SetTrigger(LANDING_ANIM_PARAM);
             }
+
+            Debug.Log($"Player Landed. Previous State: {previousGrounded}, Current State: {currentGrounded}");
         }
 
         #endregion Animations
