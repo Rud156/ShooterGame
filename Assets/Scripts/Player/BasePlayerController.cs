@@ -67,6 +67,19 @@ namespace Player
         private List<PlayerState> m_playerStateStack;
         private bool m_isGrounded = false;
 
+        public delegate void PlayerStatePushed(PlayerState playerState);
+
+        public delegate void PlayerStatePopped(PlayerState playerState);
+
+        public delegate void PlayerJumped();
+
+        public delegate void PlayerGroundedChanged(bool previousGrounded, bool currentGrounded);
+
+        public PlayerStatePushed OnPlayerStatePushed;
+        public PlayerStatePopped OnPlayerStatePopped;
+        public PlayerJumped OnPlayerJumped;
+        public PlayerGroundedChanged OnPlayerGroundedChanged;
+
         #region Unity Functions
 
         private void Start()
@@ -421,6 +434,12 @@ namespace Player
         }
 
         #endregion Player Mouse Movement
+
+        #region Extra Data
+
+        public Vector2 GetPlayerInputVector() => m_horizontalInput;
+
+        #endregion Extra Data
 
         #endregion Player Movement
 
