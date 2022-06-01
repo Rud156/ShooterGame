@@ -11,6 +11,7 @@ namespace Player
         private readonly int WALK_ANIM_PARAM = Animator.StringToHash("Walk");
         private readonly int RUN_ANIM_PARAM = Animator.StringToHash("Run");
         private readonly int CROUCH_ANIM_PARAM = Animator.StringToHash("Crouch");
+        private readonly int CROUCH_IDLE_ANIM_PARAM = Animator.StringToHash("Crouch Idle");
         private readonly int JUMP_ANIM_PARAM = Animator.StringToHash("Jump");
         private readonly int SLIDE_ANIM_PARAM = Animator.StringToHash("Slide");
         private readonly int FALLING_ANIM_PARAM = Animator.StringToHash("Falling");
@@ -43,6 +44,19 @@ namespace Player
         private void FixedUpdate()
         {
             Vector2 playerHorizontalInput = m_playerController.GetPlayerInputVector();
+
+            if (m_playerController.GetTopPlayerState() == BasePlayerController.PlayerState.Crouch)
+            {
+                if (playerHorizontalInput.x == 0 && playerHorizontalInput.y == 0)
+                {
+                    m_playerAnimator.SetBool(CROUCH_IDLE_ANIM_PARAM, true);
+                }
+                else
+                {
+                    m_playerAnimator.SetBool(CROUCH_IDLE_ANIM_PARAM, false);
+                }
+            }
+
             m_playerAnimator.SetFloat(HORIZONTAL_ANIM_PARAM, playerHorizontalInput.x);
             m_playerAnimator.SetFloat(VERTICAL_ANIM_PARAM, playerHorizontalInput.y);
         }
@@ -51,8 +65,28 @@ namespace Player
 
         #region Animations
 
-        private void HandlePlayerStatePushed(BasePlayerController.PlayerState playerState)
+        private void HandlePlayerStatePushed(BasePlayerController.PlayerState pushedState)
         {
+            SetAnimatorBoolStateActive(pushedState);
+            Debug.Log($"Player State Pushed: {pushedState}");
+        }
+
+        private void HandlePlayerStatePopped(BasePlayerController.PlayerState poppedState, BasePlayerController.PlayerState nextTopState)
+        {
+            SetAnimatorBoolStateActive(nextTopState);
+            Debug.Log($"Player State Popped: {poppedState}");
+        }
+
+        private void SetAnimatorBoolStateActive(BasePlayerController.PlayerState playerState)
+        {
+            m_playerAnimator.SetBool(IDLE_ANIM_PARAM, false);
+            m_playerAnimator.SetBool(WALK_ANIM_PARAM, false);
+            m_playerAnimator.SetBool(RUN_ANIM_PARAM, false);
+            m_playerAnimator.SetBool(CROUCH_ANIM_PARAM, false);
+            m_playerAnimator.SetBool(CROUCH_IDLE_ANIM_PARAM, false);
+            m_playerAnimator.SetBool(SLIDE_ANIM_PARAM, false);
+            m_playerAnimator.SetBool(FALLING_ANIM_PARAM, false);
+
             switch (playerState)
             {
                 case BasePlayerController.PlayerState.Idle:
@@ -79,40 +113,6 @@ namespace Player
                     m_playerAnimator.SetBool(FALLING_ANIM_PARAM, true);
                     break;
             }
-
-            Debug.Log($"Player State Pushed: {playerState}");
-        }
-
-        private void HandlePlayerStatePopped(BasePlayerController.PlayerState playerState)
-        {
-            switch (playerState)
-            {
-                case BasePlayerController.PlayerState.Idle:
-                    m_playerAnimator.SetBool(IDLE_ANIM_PARAM, false);
-                    break;
-
-                case BasePlayerController.PlayerState.Walk:
-                    m_playerAnimator.SetBool(WALK_ANIM_PARAM, false);
-                    break;
-
-                case BasePlayerController.PlayerState.Run:
-                    m_playerAnimator.SetBool(RUN_ANIM_PARAM, false);
-                    break;
-
-                case BasePlayerController.PlayerState.Crouch:
-                    m_playerAnimator.SetBool(CROUCH_ANIM_PARAM, false);
-                    break;
-
-                case BasePlayerController.PlayerState.Slide:
-                    m_playerAnimator.SetBool(SLIDE_ANIM_PARAM, false);
-                    break;
-
-                case BasePlayerController.PlayerState.Falling:
-                    m_playerAnimator.SetBool(FALLING_ANIM_PARAM, false);
-                    break;
-            }
-
-            Debug.Log($"Player State Popped: {playerState}");
         }
 
         private void HandleJumpPressed()

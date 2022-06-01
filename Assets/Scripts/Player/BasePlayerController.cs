@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils.Input;
@@ -67,8 +68,8 @@ namespace Player
         private List<PlayerState> m_playerStateStack;
         private bool m_isGrounded = false;
 
-        public delegate void PlayerStatePushed(PlayerState playerState);
-        public delegate void PlayerStatePopped(PlayerState playerState);
+        public delegate void PlayerStatePushed(PlayerState pushedState);
+        public delegate void PlayerStatePopped(PlayerState poppedState, PlayerState nextTopState);
         public delegate void PlayerJumped();
         public delegate void PlayerGroundedChanged(bool previousGrounded, bool currentGrounded);
 
@@ -518,7 +519,7 @@ namespace Player
             ResetPlayerStatePoppedData(topState);
             m_playerStateStack.RemoveAt(m_playerStateStack.Count - 1);
             SetupCapsuleSizeForState();
-            OnPlayerStatePopped?.Invoke(topState);
+            OnPlayerStatePopped?.Invoke(topState, m_playerStateStack[^1]);
         }
 
         private void RemovePlayerState(PlayerState playerState)
@@ -539,6 +540,8 @@ namespace Player
                 SetupCapsuleSizeForState();
             }
         }
+
+        public PlayerState GetTopPlayerState() => m_playerStateStack[^1];
 
         private void ResetPlayerStatePoppedData(PlayerState playerState)
         {
