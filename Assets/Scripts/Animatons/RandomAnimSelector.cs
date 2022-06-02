@@ -12,8 +12,7 @@ namespace Animations
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             int randomIndex = Random.Range(m_minAnimIndex, m_maxAnimIndex + 1);
-            animator.SetFloat(m_animVariableName, randomIndex);
-
+            animator.SetInteger(m_animVariableName, randomIndex);
         }
     }
 }

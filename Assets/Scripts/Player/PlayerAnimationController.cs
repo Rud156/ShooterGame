@@ -127,9 +127,8 @@ namespace Player
             if (!previousGrounded && currentGrounded)
             {
                 m_playerAnimator.SetTrigger(LANDING_ANIM_PARAM);
+                Debug.Log($"Player Landed. Previous State: {previousGrounded}, Current State: {currentGrounded}");
             }
-
-            Debug.Log($"Player Landed. Previous State: {previousGrounded}, Current State: {currentGrounded}");
         }
 
         #endregion Animations
