@@ -14,6 +14,8 @@ A shooter game with abilities!
       - [X] Slide should not activate in air
       - [X] Jump needs to feel a bit lighter
     - [ ] Animations
+        - [X] Basic Player Animations for all states
+        - [ ] Try to see if the animations can be a bit polished up
 - [ ] Weapon System
     - [ ] Customizable Spray
     - [ ] Frame Rate Independent Shooting

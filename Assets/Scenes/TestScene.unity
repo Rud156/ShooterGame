@@ -432,12 +432,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532739024}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &831306882 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9036281571833040041, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-    type: 3}
-  m_PrefabInstance: {fileID: 7975099697220874104}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2445,16 +2439,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_rayCastTransforms.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7975099698339277547, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_rayCastTransforms.Array.data[3]
-      value: 
-      objectReference: {fileID: 831306882}
     - target: {fileID: 7975099698339277557, guid: 1d5cfca1358ba2b40b64c9c81f831490,
         type: 3}
       propertyPath: m_Name
