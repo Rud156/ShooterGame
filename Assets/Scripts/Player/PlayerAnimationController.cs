@@ -11,7 +11,6 @@ namespace Player
         private readonly int WALK_ANIM_PARAM = Animator.StringToHash("Walk");
         private readonly int RUN_ANIM_PARAM = Animator.StringToHash("Run");
         private readonly int CROUCH_ANIM_PARAM = Animator.StringToHash("Crouch");
-        private readonly int CROUCH_IDLE_ANIM_PARAM = Animator.StringToHash("Crouch Idle");
         private readonly int JUMP_ANIM_PARAM = Animator.StringToHash("Jump");
         private readonly int SLIDE_ANIM_PARAM = Animator.StringToHash("Slide");
         private readonly int FALLING_ANIM_PARAM = Animator.StringToHash("Falling");
@@ -44,19 +43,6 @@ namespace Player
         private void FixedUpdate()
         {
             Vector2 playerHorizontalInput = m_playerController.GetPlayerInputVector();
-
-            if (m_playerController.GetTopPlayerState() == BasePlayerController.PlayerState.Crouch)
-            {
-                if (playerHorizontalInput.x == 0 && playerHorizontalInput.y == 0)
-                {
-                    m_playerAnimator.SetBool(CROUCH_IDLE_ANIM_PARAM, true);
-                }
-                else
-                {
-                    m_playerAnimator.SetBool(CROUCH_IDLE_ANIM_PARAM, false);
-                }
-            }
-
             m_playerAnimator.SetFloat(HORIZONTAL_ANIM_PARAM, playerHorizontalInput.x);
             m_playerAnimator.SetFloat(VERTICAL_ANIM_PARAM, playerHorizontalInput.y);
         }
@@ -83,7 +69,6 @@ namespace Player
             m_playerAnimator.SetBool(WALK_ANIM_PARAM, false);
             m_playerAnimator.SetBool(RUN_ANIM_PARAM, false);
             m_playerAnimator.SetBool(CROUCH_ANIM_PARAM, false);
-            m_playerAnimator.SetBool(CROUCH_IDLE_ANIM_PARAM, false);
             m_playerAnimator.SetBool(SLIDE_ANIM_PARAM, false);
             m_playerAnimator.SetBool(FALLING_ANIM_PARAM, false);
 

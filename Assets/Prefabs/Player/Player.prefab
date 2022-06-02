@@ -292,7 +292,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   m_groundedCheckDistance: 0.75
-  m_airControlMultiplier: 0.3
+  m_airControlMultiplier: 0.75
   m_crouchWalkSpeed: 3.5
   m_crouchCapsuleHeight: 1
   m_slideSpeed: 18
@@ -312,6 +312,7 @@ MonoBehaviour:
   - {fileID: 1281640488}
   - {fileID: 40384556}
   - {fileID: 1078637262}
+  m_characterVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &8378721820819924144
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -375,6 +375,12 @@ namespace Player
 
         private void UpdateFallingState()
         {
+            // This is only possible if the Second State is Falling. Since the Idle state is never removed
+            if (m_playerStateStack.Count <= 2)
+            {
+                m_currentStateMoveVelocity = m_horizontalWalkSpeed;
+            }
+
             if (m_isGrounded)
             {
                 PopTopPlayerState();
