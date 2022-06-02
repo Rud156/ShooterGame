@@ -2,7 +2,7 @@
 A shooter game with abilities!
 
 ## TODOs: 
-- [ ] Player Movement
+- [X] Player Movement
     - [X] Basic Movement
     - [X] Move Look
     - [X] Jump
@@ -13,10 +13,11 @@ A shooter game with abilities!
       - [X] Jump should keep momentum in air
       - [X] Slide should not activate in air
       - [X] Jump needs to feel a bit lighter
-    - [ ] Animations
+    - [X] Animations
         - [X] Basic Player Animations for all states
-        - [ ] Try to see if the animations can be a bit polished up
+        - [X] Try to see if the animations can be a bit polished up
 - [ ] Weapon System
+    - [ ] Basic Shooting
     - [ ] Customizable Spray
     - [ ] Frame Rate Independent Shooting
 - [ ] Make a Level to Test/Play Basic Mechanics
