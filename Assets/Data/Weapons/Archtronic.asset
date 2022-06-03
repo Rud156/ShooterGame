@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: Archtronic
   Weapon: {fileID: 100000, guid: c65eeed0e623d84468374b51a0d355da, type: 3}
-  WeaponScale: {x: 1.5, y: 2, z: 1.5}
-  WeaponLocalPosition: {x: -0.005, y: 0.0069999695, z: 0.403}
-  WeaponLocalRotation: {x: 104.051, y: -80.42902, z: -74.215}
-  WeaponTPScale: {x: 1.3199853, y: 1.6499497, z: 1.3199941}
-  WeaponTPLocalPosition: {x: -0.20169584, y: -0.27312395, z: 0.056127068}
-  WeaponTPLocalRotation: {x: 99.164, y: 156.344, z: 189.041}
+  WeaponScale: {x: 1.5, y: 1.2, z: 1.5}
+  WeaponLocalPosition: {x: 0.18, y: -0.105, z: 0.24}
+  WeaponLocalRotation: {x: 54.051918, y: 0, z: 0}
+  WeaponTPScale: {x: 1.5, y: 1.2, z: 1.5}
+  WeaponTPLocalPosition: {x: -0.15, y: -0.204, z: 0.077}
+  WeaponTPLocalRotation: {x: 55.084457, y: 357.42737, z: 40.207264}
