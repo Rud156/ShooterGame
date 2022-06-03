@@ -17,6 +17,8 @@ A shooter game with abilities!
         - [X] Basic Player Animations for all states
         - [X] Try to see if the animations can be a bit polished up
 - [ ] Weapon System
+    - [X] Weapon Cliping through wall fix
+    - [ ] Pickup and Drop Weapons
     - [ ] Basic Shooting
     - [ ] Customizable Spray
     - [ ] Frame Rate Independent Shooting
