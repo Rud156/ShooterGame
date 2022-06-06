@@ -242,7 +242,6 @@ namespace Player
             // Change Sliding Speed and Duration Based on Slope
             if (Physics.Raycast(m_slideSlopeCheckPoint.position, Vector3.down, out RaycastHit hit, m_slideNormalCheckDistance, m_groundedCheckMask))
             {
-                Debug.DrawRay(m_slideSlopeCheckPoint.position, Vector3.down * m_slideNormalCheckDistance, Color.green);
                 float normalAngle = Vector3.Angle(transform.forward, hit.normal);
                 normalAngle = GROUND_ANGLE_NORMAL - normalAngle;
 
