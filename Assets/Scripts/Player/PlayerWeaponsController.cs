@@ -15,23 +15,33 @@ namespace Player
         [SerializeField] private Transform m_rightHandAttachPoint;
 
         [Header("Components")]
-        [SerializeField] private Transform m_pickupRaycastTransform;
+        [SerializeField] private PlayerInterractionCollider m_playerInterractionCollider;
         [SerializeField] private Transform m_playerCamera;
 
+        private WeaponType m_currentActiveWeapon;
         private WeaponController m_primaryWeapon;
         private WeaponController m_secondaryWeapon;
 
+        public delegate void WeaponPickup(WeaponController weaponController);
+        public delegate void WeaponDrop();
+
+        public WeaponPickup OnWeaponPickup;
+        public WeaponDrop OnWeaponDrop;
+
         #region Unity Functions
+
+        private void Start()
+        {
+            m_currentActiveWeapon = WeaponType.Melee;
+        }
 
         private void Update()
         {
-            if (Input.GetKey(InputKeys.WeaponPickup) && m_primaryWeapon == null)
+            if (Input.GetKeyDown(InputKeys.WeaponPickup))
             {
-                Vector3 forward = m_playerCamera.forward;
-                Debug.DrawRay(m_pickupRaycastTransform.position, forward * m_weaponPickupRaycastDistance, Color.green);
-                if (Physics.Raycast(m_pickupRaycastTransform.position, forward, out RaycastHit hit, m_weaponPickupRaycastDistance, m_weaponPickupMask))
+                if (m_playerInterractionCollider.GetWeaponInContact() != null)
                 {
-                    GameObject hitObject = hit.collider.gameObject;
+                    GameObject hitObject = m_playerInterractionCollider.GetWeaponInContact();
                     WeaponController weaponController = hitObject.GetComponent<WeaponController>();
                     if (weaponController != null)
                     {
@@ -41,7 +51,7 @@ namespace Player
             }
             else if (Input.GetKeyDown(InputKeys.WeaponDrop))
             {
-                DropCurrentWeapon();
+                DropCurrentPrimaryWeapon();
             }
         }
 
@@ -49,8 +59,15 @@ namespace Player
 
         #region Weapon Set
 
+        private void SetActiveWeapon(WeaponType weaponType) => m_currentActiveWeapon = weaponType;
+
         public void SetPlayerPrimaryWeapon(WeaponController weaponController, GameObject weapon)
         {
+            if (m_primaryWeapon != null)
+            {
+                DropCurrentPrimaryWeapon();
+            }
+
             m_primaryWeapon = weaponController;
 
             weapon.transform.SetParent(m_playerCamera);
@@ -60,9 +77,13 @@ namespace Player
             weapon.transform.localRotation = Quaternion.Euler(weaponData.WeaponLocalRotation);
             weapon.transform.localScale = weaponData.WeaponScale;
             weapon.transform.localPosition = weaponData.WeaponLocalPosition;
+
+            // TODO: Handle this for Third Person View also
+            SetActiveWeapon(WeaponType.Primary);
+            OnWeaponPickup?.Invoke(weaponController);
         }
 
-        public void DropCurrentWeapon()
+        public void DropCurrentPrimaryWeapon()
         {
             if (m_primaryWeapon != null)
             {
@@ -70,6 +91,8 @@ namespace Player
                 m_primaryWeapon.SetupWeaponDefaultsOnDrop();
                 m_primaryWeapon = null;
             }
+            SetActiveWeapon(WeaponType.Melee);
+            OnWeaponDrop?.Invoke();
         }
 
         #endregion Weapon Set

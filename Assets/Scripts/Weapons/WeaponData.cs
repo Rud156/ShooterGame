@@ -6,6 +6,7 @@ namespace Weapons
     public class WeaponData : ScriptableObject
     {
         public string WeaponName;
+        public WeaponType weaponType;
         public GameObject Weapon;
 
         [Header("First Person View")]
