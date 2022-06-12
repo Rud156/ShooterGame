@@ -33,17 +33,30 @@ namespace Player
         {
             if (m_handIKActive)
             {
+                // Left Hand
                 Vector3 leftHandPosition = m_currentWeaponController.GetFrontPoint().position;
-                Vector3 rightHandPosition = m_currentWeaponController.GetTriggerPoint().position;
+                Quaternion leftHandRotation = m_currentWeaponController.GetFrontPoint().rotation;
+
                 m_animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
                 m_animator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandPosition);
+                m_animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
+                m_animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandRotation);
+
+                // Right Hand
+                Vector3 rightHandPosition = m_currentWeaponController.GetTriggerPoint().position;
+                Quaternion rightHandRotation = m_currentWeaponController.GetTriggerPoint().rotation;
+
                 m_animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
                 m_animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandPosition);
+                m_animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+                m_animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandRotation);
             }
             else
             {
                 m_animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
                 m_animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+                m_animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
+                m_animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
             }
         }
 

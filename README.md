@@ -16,10 +16,9 @@ A shooter game with abilities!
     - [X] Animations
         - [X] Basic Player Animations for all states
         - [X] Try to see if the animations can be a bit polished up
-        - [ ] Add IK to Player Feet
 - [ ] Weapon System
     - [X] Weapon Cliping through wall fix
-    - [ ] Pickup and Drop Weapons with IK
+    - [-] Pickup and Drop Weapons with IK (Partially done. Will wait on improving IK for Hand)
     - [ ] Basic Shooting
     - [ ] Customizable Spray
     - [ ] Frame Rate Independent Shooting

@@ -30,6 +30,7 @@ namespace Weapons
         {
             m_weaponRb.isKinematic = false;
             m_weaponCollider.enabled = true;
+            transform.localScale = m_weaponData.WeaponDroppedScale;
             gameObject.layer = LayerMask.NameToLayer(m_weaponDroppedMask);
         }
 

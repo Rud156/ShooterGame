@@ -18,5 +18,8 @@ namespace Weapons
         public Vector3 WeaponTPScale;
         public Vector3 WeaponTPLocalPosition;
         public Vector3 WeaponTPLocalRotation;
+
+        [Header("Weapon Dropped")]
+        public Vector3 WeaponDroppedScale;
     }
 }
