@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Weapons;
 
@@ -7,6 +8,7 @@ namespace Player
     public class PlayerIKController : MonoBehaviour
     {
         [SerializeField] private PlayerWeaponsController m_playerWeaponsController;
+        [SerializeField] private BasePlayerController m_playerController;
 
         private Animator m_animator;
 
@@ -19,6 +21,8 @@ namespace Player
         {
             m_playerWeaponsController.OnWeaponPickup += HandleWeaponPickup;
             m_playerWeaponsController.OnWeaponDrop += ClearHandIK;
+            m_playerController.OnPlayerStatePushed += HandlePlayerStatePushed;
+            m_playerController.OnPlayerStatePopped += HandlePlayerStatePopped;
 
             m_animator = GetComponent<Animator>();
         }
@@ -27,6 +31,8 @@ namespace Player
         {
             m_playerWeaponsController.OnWeaponPickup -= HandleWeaponPickup;
             m_playerWeaponsController.OnWeaponDrop -= ClearHandIK;
+            m_playerController.OnPlayerStatePushed -= HandlePlayerStatePushed;
+            m_playerController.OnPlayerStatePopped -= HandlePlayerStatePopped;
         }
 
         private void OnAnimatorIK()
@@ -62,6 +68,67 @@ namespace Player
 
         #endregion
 
+        #region Player State
+
+        private void HandlePlayerStatePushed(BasePlayerController.PlayerState pushedState)
+        {
+            switch (pushedState)
+            {
+                case BasePlayerController.PlayerState.Idle:
+                    break;
+
+                case BasePlayerController.PlayerState.Walk:
+                    break;
+
+                case BasePlayerController.PlayerState.Run:
+                    break;
+
+                case BasePlayerController.PlayerState.Crouch:
+                    break;
+
+                case BasePlayerController.PlayerState.Slide:
+                    {
+                        m_handIKActive = false;
+                    }
+                    break;
+
+                case BasePlayerController.PlayerState.Falling:
+                    break;
+            }
+        }
+
+        private void HandlePlayerStatePopped(BasePlayerController.PlayerState poppedState, BasePlayerController.PlayerState nextTopState)
+        {
+            switch (poppedState)
+            {
+                case BasePlayerController.PlayerState.Idle:
+                    break;
+
+                case BasePlayerController.PlayerState.Walk:
+                    break;
+
+                case BasePlayerController.PlayerState.Run:
+                    break;
+
+                case BasePlayerController.PlayerState.Crouch:
+                    break;
+
+                case BasePlayerController.PlayerState.Slide:
+                    {
+                        if (m_currentWeaponController != null)
+                        {
+                            m_handIKActive = true;
+                        }
+                    }
+                    break;
+
+                case BasePlayerController.PlayerState.Falling:
+                    break;
+            }
+        }
+
+        #endregion Player State
+
         #region IK Sets
 
         private void HandleWeaponPickup(WeaponController weaponController)
@@ -72,6 +139,6 @@ namespace Player
 
         private void ClearHandIK() => m_handIKActive = false;
 
-        #endregion
+        #endregion IK Sets
     }
 }

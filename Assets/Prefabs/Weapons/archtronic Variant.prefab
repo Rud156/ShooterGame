@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8321490543908671835}
   m_LocalRotation: {x: 0.044819266, y: 0.6684922, z: 0.7215171, w: -0.17470695}
-  m_LocalPosition: {x: 0.0219, y: 0.0255, z: 0.0733}
+  m_LocalPosition: {x: -0.0077, y: -0.0921, z: 0.0779}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -100,15 +100,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.16
+      value: 3.1164336
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.11
+      value: 0.166
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.61
+      value: -3.2096596
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da, type: 3}
       propertyPath: m_LocalRotation.w
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_weaponData: {fileID: 11400000, guid: eada102d035e9434bb1df54f485d2054, type: 2}
-  m_weaponDefaultMask: FPSLayer
+  m_weaponDefaultMask: WeaponDroppedLayer
   m_weaponDroppedMask: WeaponDroppedLayer
   m_weaponRb: {fileID: 7205558302626066043}
   m_weaponCollider: {fileID: 6291754063100780162}

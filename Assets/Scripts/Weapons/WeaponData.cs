@@ -9,15 +9,10 @@ namespace Weapons
         public WeaponType weaponType;
         public GameObject Weapon;
 
-        [Header("First Person View")]
-        public Vector3 WeaponScale;
-        public Vector3 WeaponLocalPosition;
-        public Vector3 WeaponLocalRotation;
-
         [Header("Third Person View")]
-        public Vector3 WeaponTPScale;
         public Vector3 WeaponTPLocalPosition;
         public Vector3 WeaponTPLocalRotation;
+        public Vector3 WeaponTPScale;
 
         [Header("Weapon Dropped")]
         public Vector3 WeaponDroppedScale;

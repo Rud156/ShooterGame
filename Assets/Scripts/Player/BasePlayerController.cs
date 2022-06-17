@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils.Input;
 using Utils.Misc;
+using System;
 
 namespace Player
 {
@@ -43,9 +44,15 @@ namespace Player
         [SerializeField] private float m_slideMaxSlopeSpeed;
         [SerializeField] private float m_slideUpwardTimeReductionMultiplier;
 
+        [Header("Camera")]
+        [SerializeField] private Transform m_cameraHolderTransform;
+        [SerializeField] private Transform m_cameraTransform;
+        [SerializeField] private Transform m_cameraLeft;
+        [SerializeField] private Transform m_cameraRight;
+        [SerializeField] private float m_cameraLerpSpeed;
+
         [Header("Components")]
         [SerializeField] private float m_capsuleLerpSpeed;
-        [SerializeField] private Transform m_cameraTransform;
         [SerializeField] private Transform m_groundedCheckPoint;
         [SerializeField] private List<Transform> m_rayCastTransforms;
 
@@ -57,11 +64,17 @@ namespace Player
         private PlayerInputKey m_runKey;
         private PlayerInputKey m_jumpKey;
         private PlayerInputKey m_crouchKey;
+        private PlayerInputKey m_cameraLeftKey;
+        private PlayerInputKey m_cameraRightKey;
         private float m_currentStateMoveVelocity;
 
         private float m_capsuleStartHeight = 0;
         private float m_capsuleTargetHeight = 0;
         private float m_capsuleLerpAmount = 0;
+
+        private Vector3 m_cameraStartPosition;
+        private Vector3 m_cameraEndPosition;
+        private float m_cameraLerpAmount = 0;
 
         private float m_currentSlideDuration = 0;
 
@@ -88,10 +101,13 @@ namespace Player
             m_capsuleStartHeight = 2;
             m_capsuleTargetHeight = 2;
             m_capsuleLerpAmount = 1;
+            m_cameraLerpAmount = 1;
 
             m_runKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             m_crouchKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             m_jumpKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            m_cameraLeftKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            m_cameraRightKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -107,6 +123,7 @@ namespace Player
 
         private void FixedUpdate()
         {
+            UpdateCameraLerp();
             UpdateMouseMovement();
             UpdateGroundedState();
 
@@ -398,11 +415,41 @@ namespace Player
 
         #endregion Player Vertical Movement
 
+        #region Player Camera Movement
+
+        private void UpdateCameraLerp()
+        {
+            if (m_cameraLeftKey.keyPressedThisFrame)
+            {
+                m_cameraStartPosition = m_cameraTransform.position;
+                m_cameraEndPosition = m_cameraLeft.position;
+                m_cameraLerpAmount = 0;
+            }
+            else if (m_cameraRightKey.keyPressedThisFrame)
+            {
+                m_cameraStartPosition = m_cameraTransform.position;
+                m_cameraEndPosition = m_cameraRight.position;
+                m_cameraLerpAmount = 0;
+            }
+
+            if (m_cameraLerpAmount >= 1)
+            {
+                return;
+            }
+
+            m_cameraLerpAmount += Time.fixedDeltaTime * m_cameraLerpSpeed;
+            Vector3 lerpedPositon = Vector3.Lerp(m_cameraStartPosition, m_cameraEndPosition, m_cameraLerpAmount);
+            m_cameraTransform.position = lerpedPositon;
+        }
+
+        #endregion Player Camera Movement
+
+
         #region Player Mouse Movement
 
         private void UpdateMouseMovement()
         {
-            Vector3 cameraRotation = m_cameraTransform.rotation.eulerAngles;
+            Vector3 cameraRotation = m_cameraHolderTransform.rotation.eulerAngles;
             cameraRotation.y += m_mouseInput.x * m_rotationSpeed * Time.fixedDeltaTime;
             cameraRotation.x += m_mouseInput.y * m_rotationSpeed * Time.fixedDeltaTime;
             cameraRotation.x = ExtensionFunctions.To360Angle(cameraRotation.x);
@@ -427,14 +474,14 @@ namespace Player
             // Only move the camera when sliding...
             if (m_playerStateStack[^1] == PlayerState.Slide)
             {
-                m_cameraTransform.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
-                float localYRotation = m_cameraTransform.localEulerAngles.y;
-                m_cameraTransform.localRotation = Quaternion.Euler(cameraRotation.x, localYRotation, 0);
+                m_cameraHolderTransform.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
+                float localYRotation = m_cameraHolderTransform.localEulerAngles.y;
+                m_cameraHolderTransform.localRotation = Quaternion.Euler(cameraRotation.x, localYRotation, 0);
             }
             else
             {
                 transform.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
-                m_cameraTransform.localRotation = Quaternion.Euler(cameraRotation.x, 0, 0);
+                m_cameraHolderTransform.localRotation = Quaternion.Euler(cameraRotation.x, 0, 0);
             }
         }
 
@@ -460,6 +507,8 @@ namespace Player
             m_runKey.UpdateInputData(InputKeys.Run);
             m_jumpKey.UpdateInputData(InputKeys.Jump);
             m_crouchKey.UpdateInputData(InputKeys.Crouch);
+            m_cameraLeftKey.UpdateInputData(InputKeys.CameraSwitchLeftKey);
+            m_cameraRightKey.UpdateInputData(InputKeys.CameraSwitchRightKey);
         }
 
         private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(m_horizontalInput.x, 0) && ExtensionFunctions.IsNearlyEqual(m_horizontalInput.y, 0);
@@ -482,6 +531,8 @@ namespace Player
             m_runKey.ResetPerFrameInput();
             m_jumpKey.ResetPerFrameInput();
             m_crouchKey.ResetPerFrameInput();
+            m_cameraLeftKey.ResetPerFrameInput();
+            m_cameraRightKey.ResetPerFrameInput();
         }
 
         #endregion Input
@@ -567,9 +618,9 @@ namespace Player
                 case PlayerState.Slide:
                     {
                         // Reset Camera after slide
-                        float cameraXRotation = m_cameraTransform.localRotation.eulerAngles.x;
-                        transform.rotation = Quaternion.Euler(0, m_cameraTransform.rotation.eulerAngles.y, 0);
-                        m_cameraTransform.localRotation = Quaternion.Euler(cameraXRotation, 0, 0);
+                        float cameraXRotation = m_cameraHolderTransform.localRotation.eulerAngles.x;
+                        transform.rotation = Quaternion.Euler(0, m_cameraHolderTransform.rotation.eulerAngles.y, 0);
+                        m_cameraHolderTransform.localRotation = Quaternion.Euler(cameraXRotation, 0, 0);
                     }
                     break;
 

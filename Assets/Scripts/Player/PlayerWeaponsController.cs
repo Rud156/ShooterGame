@@ -16,7 +16,7 @@ namespace Player
 
         [Header("Components")]
         [SerializeField] private PlayerInterractionCollider m_playerInterractionCollider;
-        [SerializeField] private Transform m_playerCamera;
+        [SerializeField] private Transform m_playerWeaponAttachPoint;
 
         private WeaponType m_currentActiveWeapon;
         private WeaponController m_primaryWeapon;
@@ -70,15 +70,14 @@ namespace Player
 
             m_primaryWeapon = weaponController;
 
-            weapon.transform.SetParent(m_playerCamera);
+            weapon.transform.SetParent(m_playerWeaponAttachPoint);
             m_primaryWeapon.SetupWeaponDefaultsOnPickup();
 
             WeaponData weaponData = weaponController.GetWeaponData();
-            weapon.transform.localRotation = Quaternion.Euler(weaponData.WeaponLocalRotation);
-            weapon.transform.localScale = weaponData.WeaponScale;
-            weapon.transform.localPosition = weaponData.WeaponLocalPosition;
+            weapon.transform.localPosition = weaponData.WeaponTPLocalPosition;
+            weapon.transform.localRotation = Quaternion.Euler(weaponData.WeaponTPLocalRotation);
+            weapon.transform.localScale = weaponData.WeaponTPScale;
 
-            // TODO: Handle this for Third Person View also
             SetActiveWeapon(WeaponType.Primary);
             OnWeaponPickup?.Invoke(weaponController);
         }
