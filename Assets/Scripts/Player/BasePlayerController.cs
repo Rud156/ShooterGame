@@ -1,9 +1,7 @@
-using System.Security.Cryptography.X509Certificates;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils.Input;
 using Utils.Misc;
-using System;
 
 namespace Player
 {

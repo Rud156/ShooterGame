@@ -142,6 +142,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: c65eeed0e623d84468374b51a0d355da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 48fb7b777ae006246a996f32b75de25c, type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da,
@@ -188,6 +192,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.07292061, y: 0.46495003, z: 0.14414734}
   m_Center: {x: -0.00000000745058, y: 0, z: 0.000000007450582}
+--- !u!114 &17048351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9193910569005034709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed8f4bb77e46734b8bd743d33b3c481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_lerpSpeed: 3
 --- !u!114 &5515373206759969166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +224,7 @@ MonoBehaviour:
   m_weaponCollider: {fileID: 6291754063100780162}
   m_weaponFrontPoint: {fileID: 4028634085640356455}
   m_weaponTriggerPoint: {fileID: 8082765901895826800}
+  m_weaponDissolveShader: {fileID: 17048351}
 --- !u!4 &9193910569005396213 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da,

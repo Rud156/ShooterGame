@@ -15,6 +15,7 @@ namespace Player
         [SerializeField] private Transform m_rightHandAttachPoint;
 
         [Header("Components")]
+        [SerializeField] private BasePlayerController m_playerController;
         [SerializeField] private PlayerInterractionCollider m_playerInterractionCollider;
         [SerializeField] private Transform m_playerWeaponAttachPoint;
 
@@ -33,6 +34,14 @@ namespace Player
         private void Start()
         {
             m_currentActiveWeapon = WeaponType.Melee;
+            m_playerController.OnPlayerStatePushed += HandlePlayerStatePushed;
+            m_playerController.OnPlayerStatePopped += HandlePlayerStatePopped;
+        }
+
+        private void OnDestroy()
+        {
+            m_playerController.OnPlayerStatePushed -= HandlePlayerStatePushed;
+            m_playerController.OnPlayerStatePopped -= HandlePlayerStatePopped;
         }
 
         private void Update()
@@ -95,5 +104,69 @@ namespace Player
         }
 
         #endregion Weapon Set
+
+        #region Player State
+
+        private void HandlePlayerStatePushed(BasePlayerController.PlayerState pushedState)
+        {
+            switch (pushedState)
+            {
+                case BasePlayerController.PlayerState.Idle:
+                    break;
+
+                case BasePlayerController.PlayerState.Walk:
+                    break;
+
+                case BasePlayerController.PlayerState.Run:
+                    break;
+
+                case BasePlayerController.PlayerState.Crouch:
+                    break;
+
+                case BasePlayerController.PlayerState.Slide:
+                    {
+                        if (m_primaryWeapon != null)
+                        {
+                            m_primaryWeapon.SetWeaponDissolve(true);
+                        }
+                    }
+                    break;
+
+                case BasePlayerController.PlayerState.Falling:
+                    break;
+            }
+        }
+
+        private void HandlePlayerStatePopped(BasePlayerController.PlayerState poppedState, BasePlayerController.PlayerState nextTopState)
+        {
+            switch (poppedState)
+            {
+                case BasePlayerController.PlayerState.Idle:
+                    break;
+
+                case BasePlayerController.PlayerState.Walk:
+                    break;
+
+                case BasePlayerController.PlayerState.Run:
+                    break;
+
+                case BasePlayerController.PlayerState.Crouch:
+                    break;
+
+                case BasePlayerController.PlayerState.Slide:
+                    {
+                        if (m_primaryWeapon != null)
+                        {
+                            m_primaryWeapon.SetWeaponDissolve(false);
+                        }
+                    }
+                    break;
+
+                case BasePlayerController.PlayerState.Falling:
+                    break;
+            }
+        }
+
+        #endregion
     }
 }

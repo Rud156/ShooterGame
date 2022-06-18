@@ -1,3 +1,4 @@
+using Common;
 using UnityEngine;
 
 namespace Weapons
@@ -16,6 +17,11 @@ namespace Weapons
         [Header("Hold Positions")]
         [SerializeField] private Transform m_weaponFrontPoint;
         [SerializeField] private Transform m_weaponTriggerPoint;
+
+        [Header("Components")]
+        [SerializeField] private DissolveShader m_weaponDissolveShader;
+
+        #region Weapon Data
 
         public WeaponData GetWeaponData() => m_weaponData;
 
@@ -37,5 +43,13 @@ namespace Weapons
         public Transform GetFrontPoint() => m_weaponFrontPoint;
 
         public Transform GetTriggerPoint() => m_weaponTriggerPoint;
+
+        #endregion
+
+        #region Shader
+
+        public void SetWeaponDissolve(bool active) => m_weaponDissolveShader.SetDissolve(active);
+
+        #endregion
     }
 }

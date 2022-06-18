@@ -504,6 +504,7 @@ MonoBehaviour:
     m_Bits: 128
   m_leftHandAttachPoint: {fileID: 3523108744365789242}
   m_rightHandAttachPoint: {fileID: 4134026566145211617}
+  m_playerController: {fileID: 7975099698339277547}
   m_playerInterractionCollider: {fileID: 1122063540}
   m_playerWeaponAttachPoint: {fileID: 8383518335202386022}
 --- !u!1001 &7975099697081729563
