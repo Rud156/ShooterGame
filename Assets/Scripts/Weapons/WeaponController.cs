@@ -21,11 +21,15 @@ namespace Weapons
 
         [Header("Components")]
         [SerializeField] private DissolveShader m_weaponDissolveShader;
+        [SerializeField] private Transform m_shootPoint;
 
         private int m_bulletsShot;
         private float m_currentRecoilResetTime;
         private float m_lastShotTime;
         private float m_lastShotRemainderTime;
+
+        public delegate void RecoilReset();
+        public RecoilReset OnRecoilReset;
 
         #region Unity Functions
 
@@ -45,15 +49,17 @@ namespace Weapons
                 {
                     m_lastShotRemainderTime = 0;
                     m_lastShotTime = 0;
+
+                    OnRecoilReset?.Invoke();
                 }
             }
         }
 
-        #endregion
+        #endregion Unity Functions
 
         #region Recoil Control
 
-        private int CalculateShootCountAndSaveRemainder()
+        public int CalculateShootCountAndSaveRemainder()
         {
             if (m_lastShotTime <= 0)
             {
@@ -73,13 +79,13 @@ namespace Weapons
             return shootCount;
         }
 
-        private void ShootingSetComplete()
+        public void ShootingSetComplete()
         {
             m_currentRecoilResetTime = m_weaponRecoilData.recoilResetDelay;
             m_lastShotTime = Time.time;
         }
 
-        private void ResetRecoilData(int bulletsShot)
+        public void ResetRecoilData(int bulletsShot)
         {
             if (m_bulletsShot < 0)
             {
@@ -91,11 +97,15 @@ namespace Weapons
             }
         }
 
-        #endregion
+        #endregion Recoil Control
 
         #region Weapon Data
 
+        public int GetCurrentBulletsShot() => m_bulletsShot;
+
         public WeaponData GetWeaponData() => m_weaponData;
+
+        public WeaponRecoilData GetWeaponRecoilData() => m_weaponRecoilData;
 
         public void SetupWeaponDefaultsOnPickup()
         {
@@ -116,12 +126,14 @@ namespace Weapons
 
         public Transform GetTriggerPoint() => m_weaponTriggerPoint;
 
-        #endregion
+        public Transform GetShootPoint() => m_shootPoint;
+
+        #endregion Weapon Data
 
         #region Shader
 
         public void SetWeaponDissolve(bool active) => m_weaponDissolveShader.SetDissolve(active);
 
-        #endregion
+        #endregion Shader
     }
 }

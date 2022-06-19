@@ -4,7 +4,7 @@ using Weapons;
 
 namespace Player
 {
-    public class PlayerWeaponsController : MonoBehaviour
+    public class PlayerWeaponsInventoryController : MonoBehaviour
     {
         [Header("Weapon Pickup Raycast")]
         [SerializeField] private float m_weaponPickupRaycastDistance;
@@ -24,7 +24,7 @@ namespace Player
         private WeaponController m_secondaryWeapon;
 
         public delegate void WeaponPickup(WeaponController weaponController);
-        public delegate void WeaponDrop();
+        public delegate void WeaponDrop(WeaponController weaponController);
 
         public WeaponPickup OnWeaponPickup;
         public WeaponDrop OnWeaponDrop;
@@ -97,11 +97,17 @@ namespace Player
             {
                 m_primaryWeapon.transform.parent = null;
                 m_primaryWeapon.SetupWeaponDefaultsOnDrop();
+                OnWeaponDrop?.Invoke(m_primaryWeapon);
                 m_primaryWeapon = null;
             }
             SetActiveWeapon(WeaponType.Melee);
-            OnWeaponDrop?.Invoke();
         }
+
+        public WeaponController GetPrimaryWeapon() => m_primaryWeapon;
+
+        public WeaponController GetSecondaryWeapon() => m_secondaryWeapon;
+
+        public WeaponController GetActiveWeapon() => m_primaryWeapon; // TODO: Implement active weapon
 
         #endregion Weapon Set
 
@@ -167,6 +173,6 @@ namespace Player
             }
         }
 
-        #endregion
+        #endregion Player State
     }
 }

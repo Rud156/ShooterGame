@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Weapons;
 
@@ -7,7 +6,7 @@ namespace Player
     [RequireComponent(typeof(Animator))]
     public class PlayerIKController : MonoBehaviour
     {
-        [SerializeField] private PlayerWeaponsController m_playerWeaponsController;
+        [SerializeField] private PlayerWeaponsInventoryController m_playerWeaponsController;
         [SerializeField] private BasePlayerController m_playerController;
 
         private Animator m_animator;
@@ -66,7 +65,7 @@ namespace Player
             }
         }
 
-        #endregion
+        #endregion Unity Functions
 
         #region Player State
 
@@ -137,7 +136,7 @@ namespace Player
             m_handIKActive = true;
         }
 
-        private void ClearHandIK() => m_handIKActive = false;
+        private void ClearHandIK(WeaponController weaponController) => m_handIKActive = false;
 
         #endregion IK Sets
     }

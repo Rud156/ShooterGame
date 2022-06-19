@@ -13,6 +13,7 @@ namespace Weapons
         public AnimationCurve recoilLerpCurve;
         public float verticalRecoilOffset = 10;
         public float horizontalRecoilOffset = 10;
+        public float maxShootDistance;
 
         [Header("Normal Recoil")]
         public Vector2 defaultFiringError;

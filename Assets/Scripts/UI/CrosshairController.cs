@@ -33,7 +33,7 @@ namespace UI
             UpdateCrosshairTransform();
         }
 
-        #endregion
+        #endregion Unity Functions
 
         #region Crosshair Setup
 
@@ -61,7 +61,7 @@ namespace UI
             m_crosshairCenterDot.image.color = new Color(m_centerDotColor.r, m_centerDotColor.g, m_centerDotColor.b, m_centerDotAlpha); ;
         }
 
-        #endregion
+        #endregion Crosshair Setup
 
         #region Structs
 
@@ -72,6 +72,6 @@ namespace UI
             public Image image;
         }
 
-        #endregion
+        #endregion Structs
     }
 }

@@ -36,7 +36,7 @@ namespace Common
             m_material.SetFloat(AlphaClipId, lerpedValue);
         }
 
-        #endregion
+        #endregion Unity Functions
 
         #region External Functions
 
@@ -55,6 +55,6 @@ namespace Common
             }
         }
 
-        #endregion
+        #endregion External Functions
     }
 }

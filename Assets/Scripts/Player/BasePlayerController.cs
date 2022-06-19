@@ -442,7 +442,6 @@ namespace Player
 
         #endregion Player Camera Movement
 
-
         #region Player Mouse Movement
 
         private void UpdateMouseMovement()

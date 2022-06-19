@@ -20,5 +20,9 @@ namespace Utils.Input
         // Weapon Pickup Key
         public const KeyCode WeaponPickup = KeyCode.F;
         public const KeyCode WeaponDrop = KeyCode.G;
+
+        // Weapon Attack
+        public const KeyCode AttackPrimary = KeyCode.Mouse0;
+        public const KeyCode AttackSecondary = KeyCode.Mouse1;
     }
 }

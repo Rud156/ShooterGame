@@ -73,7 +73,7 @@ namespace Weapons
             return new RecoilOffset() { raycastOffset = raycastOffset, crosshairOffset = crosshairOffset };
         }
 
-        #endregion
+        #endregion Recoil
 
         #region Singleton
 
@@ -93,7 +93,7 @@ namespace Weapons
             }
         }
 
-        #endregion
+        #endregion Singleton
 
         #region Structs
 
@@ -108,9 +108,8 @@ namespace Weapons
             public bool isInAds;
             public bool isMoving;
             public int bulletsShot;
-
         }
 
-        #endregion
+        #endregion Structs
     }
 }
