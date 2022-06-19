@@ -7,6 +7,7 @@ namespace Weapons
     {
         [Header("Data")]
         [SerializeField] private WeaponData m_weaponData;
+        [SerializeField] private WeaponRecoilData m_weaponRecoilData;
         [SerializeField] private string m_weaponDefaultMask;
         [SerializeField] private string m_weaponDroppedMask;
 
@@ -20,6 +21,77 @@ namespace Weapons
 
         [Header("Components")]
         [SerializeField] private DissolveShader m_weaponDissolveShader;
+
+        private int m_bulletsShot;
+        private float m_currentRecoilResetTime;
+        private float m_lastShotTime;
+        private float m_lastShotRemainderTime;
+
+        #region Unity Functions
+
+        private void Start()
+        {
+            m_lastShotTime = 0;
+            m_lastShotRemainderTime = 0;
+            m_bulletsShot = 0;
+        }
+
+        private void FixedUpdate()
+        {
+            if (m_currentRecoilResetTime >= 0)
+            {
+                m_currentRecoilResetTime -= Time.fixedDeltaTime;
+                if (m_currentRecoilResetTime <= 0)
+                {
+                    m_lastShotRemainderTime = 0;
+                    m_lastShotTime = 0;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Recoil Control
+
+        private int CalculateShootCountAndSaveRemainder()
+        {
+            if (m_lastShotTime <= 0)
+            {
+                return 1;
+            }
+
+            float currentTime = Time.time;
+            float diff = (currentTime - m_lastShotTime) + m_lastShotRemainderTime;
+            int shootCount = Mathf.FloorToInt(diff / m_weaponRecoilData.fireRate);
+
+            if (shootCount > 0)
+            {
+                float remainder = diff - shootCount * m_weaponRecoilData.fireRate;
+                m_lastShotRemainderTime = remainder;
+            }
+
+            return shootCount;
+        }
+
+        private void ShootingSetComplete()
+        {
+            m_currentRecoilResetTime = m_weaponRecoilData.recoilResetDelay;
+            m_lastShotTime = Time.time;
+        }
+
+        private void ResetRecoilData(int bulletsShot)
+        {
+            if (m_bulletsShot < 0)
+            {
+                m_bulletsShot = 0;
+            }
+            else
+            {
+                m_bulletsShot = bulletsShot;
+            }
+        }
+
+        #endregion
 
         #region Weapon Data
 
