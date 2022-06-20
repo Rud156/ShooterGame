@@ -23,10 +23,13 @@ namespace Weapons
         [SerializeField] private DissolveShader m_weaponDissolveShader;
         [SerializeField] private Transform m_shootPoint;
 
-        private int m_bulletsShot;
-        private float m_currentRecoilResetTime;
-        private float m_lastShotTime;
-        private float m_lastShotRemainderTime;
+        public int m_bulletsShot;
+        public float m_currentRecoilResetTime;
+        public float m_lastShotTime;
+        public float m_lastShotRemainderTime;
+        public int shootCount;
+        public float diff;
+        public float currentTime;
 
         public delegate void RecoilReset();
         public RecoilReset OnRecoilReset;
@@ -40,11 +43,11 @@ namespace Weapons
             m_bulletsShot = 0;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (m_currentRecoilResetTime >= 0)
             {
-                m_currentRecoilResetTime -= Time.fixedDeltaTime;
+                m_currentRecoilResetTime -= Time.deltaTime;
                 if (m_currentRecoilResetTime <= 0)
                 {
                     m_lastShotRemainderTime = 0;
@@ -66,9 +69,9 @@ namespace Weapons
                 return 1;
             }
 
-            float currentTime = Time.time;
-            float diff = (currentTime - m_lastShotTime) + m_lastShotRemainderTime;
-            int shootCount = Mathf.FloorToInt(diff / m_weaponRecoilData.fireRate);
+            currentTime = Time.time;
+            diff = currentTime - m_lastShotTime + m_lastShotRemainderTime;
+            shootCount = Mathf.FloorToInt(diff / m_weaponRecoilData.fireRate);
 
             if (shootCount > 0)
             {
@@ -102,6 +105,8 @@ namespace Weapons
         #region Weapon Data
 
         public int GetCurrentBulletsShot() => m_bulletsShot;
+
+        public int SetCurrentBulletsShot(int bulletsShot) => m_bulletsShot = bulletsShot;
 
         public WeaponData GetWeaponData() => m_weaponData;
 

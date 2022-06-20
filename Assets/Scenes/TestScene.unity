@@ -287,6 +287,12 @@ MonoBehaviour:
   m_crosshairCenterDot:
     transform: {fileID: 856280830}
     image: {fileID: 856280831}
+  start: {x: 30, y: -30}
+  target: {x: 60, y: -60}
+  lerpAmount_1: 0.01451106
+  lerpAmount_2: 0.0154101
+  result_1: {x: 30.435331, y: -30.435331}
+  result_2: {x: 30.462303, y: -30.462303}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +493,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e27ec0adf20f3449de36c91ef9d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firingError: {x: 0, y: 0}
+  randomPointInCircle: {x: 0, y: 0}
+  raycastOffset: {x: 0, y: 0}
+  crosshairOffset: {x: 0, y: 0}
+  cameraHorizontalMultNegative: 0
+  sinBulletAngle: 0
+  sinAngle: 0
 --- !u!1 &532739024
 GameObject:
   m_ObjectHideFlags: 0

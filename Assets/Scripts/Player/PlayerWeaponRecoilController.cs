@@ -16,11 +16,14 @@ namespace Player
         [SerializeField] private Transform m_weaponShootClearPoint;
         [SerializeField] private LayerMask m_weaponShootMask;
 
-        private float m_recoilLerpSpeed;
-        private float m_recoilLerpAmount;
-        private bool m_resetRecoil;
-        private Vector2 m_startRecoilOffset;
-        private Vector2 m_targetRecoilOffset;
+        public float m_recoilLerpSpeed;
+        public float m_recoilLerpAmount;
+        public bool m_resetRecoil;
+        public Vector2 m_startRecoilOffset;
+        public Vector2 m_targetRecoilOffset;
+        public Vector2 currentInputAmount;
+        public Vector2 nextInputAmount;
+        public Vector2 diff;
 
         #region Unity Functions
 
@@ -84,15 +87,20 @@ namespace Player
                 m_recoilLerpSpeed = recoilData.recoilResetLerpSpeed.Evaluate(m_recoilLerpAmount);
             }
 
+            Debug.Log($"Start: {m_startRecoilOffset}, Target: {m_targetRecoilOffset}");
+
             float currentRecoilAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
-            Vector2 currentInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, currentRecoilAmount);
-            m_recoilLerpAmount += m_recoilLerpSpeed * Time.fixedDeltaTime;
+            currentInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, currentRecoilAmount);
+            Debug.Log($"Previous: CR: {currentRecoilAmount}, CI: {currentInputAmount}, RL: {m_recoilLerpAmount}");
+            m_recoilLerpAmount += m_recoilLerpSpeed * Time.deltaTime;
             m_recoilLerpAmount = Mathf.Clamp01(m_recoilLerpAmount);
 
             float nextRecoilAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
-            Vector2 nextInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, nextRecoilAmount);
+            nextInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, nextRecoilAmount);
 
-            Vector2 diff = nextInputAmount - currentInputAmount;
+            Debug.Log($"Next: RL: {m_recoilLerpAmount}, NR: {nextRecoilAmount}, NI: {nextInputAmount}");
+
+            diff = nextInputAmount - currentInputAmount;
 
             Vector3 rotation = transform.rotation.eulerAngles;
             rotation.y += diff.y * m_recoilCameraMultiplier;
@@ -160,12 +168,14 @@ namespace Player
 
             for (int i = 0; i < shootCount; i++)
             {
+                Debug.Log($"Shoot Count Valid: {shootCount}");
                 WeaponRecoilGenerator.RecoilOffset recoilOffset = WeaponRecoilGenerator.Instance.CalculateRecoilData(recoilData, new WeaponRecoilGenerator.RecoilInputData()
                 {
                     bulletsShot = activeWeapon.GetCurrentBulletsShot(),
                     isInAds = false,
                     isMoving = false
                 });
+                activeWeapon.SetCurrentBulletsShot(activeWeapon.GetCurrentBulletsShot() + 1);
 
                 m_targetRecoilOffset += recoilOffset.crosshairOffset;
                 m_recoilLerpAmount = 0;

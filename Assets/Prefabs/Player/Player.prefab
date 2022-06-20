@@ -559,7 +559,15 @@ MonoBehaviour:
   m_weaponShootClearPoint: {fileID: 1083103209}
   m_weaponShootMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 64
+  m_recoilLerpSpeed: 0
+  m_recoilLerpAmount: 0
+  m_resetRecoil: 0
+  m_startRecoilOffset: {x: 0, y: 0}
+  m_targetRecoilOffset: {x: 0, y: 0}
+  currentInputAmount: {x: 0, y: 0}
+  nextInputAmount: {x: 0, y: 0}
+  diff: {x: 0, y: 0}
 --- !u!1001 &7975099697081729563
 PrefabInstance:
   m_ObjectHideFlags: 0
