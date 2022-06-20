@@ -23,7 +23,7 @@ A shooter game with abilities!
     - [X] Crosshair
     - [X] Basic Shooting
     - [X] Frame Rate Independent Shooting
-    - [ ] Customizable Spray
+    - [X] Customizable Spray
     - [ ] Code Cleanup
 - [ ] Make a Level to Test/Play Basic Mechanics
 - [ ] Multiplayer

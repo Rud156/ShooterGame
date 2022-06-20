@@ -559,7 +559,7 @@ MonoBehaviour:
   m_weaponShootClearPoint: {fileID: 1083103209}
   m_weaponShootMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1
   m_recoilLerpSpeed: 0
   m_recoilLerpAmount: 0
   m_resetRecoil: 0

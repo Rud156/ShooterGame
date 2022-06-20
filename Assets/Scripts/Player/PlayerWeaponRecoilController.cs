@@ -87,27 +87,22 @@ namespace Player
                 m_recoilLerpSpeed = recoilData.recoilResetLerpSpeed.Evaluate(m_recoilLerpAmount);
             }
 
-            Debug.Log($"Start: {m_startRecoilOffset}, Target: {m_targetRecoilOffset}");
-
             float currentRecoilAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
             currentInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, currentRecoilAmount);
-            Debug.Log($"Previous: CR: {currentRecoilAmount}, CI: {currentInputAmount}, RL: {m_recoilLerpAmount}");
             m_recoilLerpAmount += m_recoilLerpSpeed * Time.deltaTime;
             m_recoilLerpAmount = Mathf.Clamp01(m_recoilLerpAmount);
 
             float nextRecoilAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
             nextInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, nextRecoilAmount);
 
-            Debug.Log($"Next: RL: {m_recoilLerpAmount}, NR: {nextRecoilAmount}, NI: {nextInputAmount}");
-
             diff = nextInputAmount - currentInputAmount;
 
             Vector3 rotation = transform.rotation.eulerAngles;
-            rotation.y += diff.y * m_recoilCameraMultiplier;
+            rotation.y += diff.x * m_recoilCameraMultiplier;
             transform.rotation = Quaternion.Euler(rotation);
 
             Vector3 cameraHolderRotation = m_cameraHolder.rotation.eulerAngles;
-            cameraHolderRotation.x += diff.x * m_recoilCameraMultiplier;
+            cameraHolderRotation.x += diff.y * m_recoilCameraMultiplier;
             m_cameraHolder.rotation = Quaternion.Euler(cameraHolderRotation);
 
             if (m_recoilLerpAmount >= 1)
@@ -168,7 +163,6 @@ namespace Player
 
             for (int i = 0; i < shootCount; i++)
             {
-                Debug.Log($"Shoot Count Valid: {shootCount}");
                 WeaponRecoilGenerator.RecoilOffset recoilOffset = WeaponRecoilGenerator.Instance.CalculateRecoilData(recoilData, new WeaponRecoilGenerator.RecoilInputData()
                 {
                     bulletsShot = activeWeapon.GetCurrentBulletsShot(),

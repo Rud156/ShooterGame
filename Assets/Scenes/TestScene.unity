@@ -3163,11 +3163,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7975099697220874106, guid: 1d5cfca1358ba2b40b64c9c81f831490,
-        type: 3}
-      propertyPath: m_weaponShootMask.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7975099698339277545, guid: 1d5cfca1358ba2b40b64c9c81f831490,
         type: 3}
       propertyPath: m_RootOrder
