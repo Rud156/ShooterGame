@@ -115,7 +115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da, type: 3}
       propertyPath: m_LocalScale.x
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_weaponData: {fileID: 11400000, guid: eada102d035e9434bb1df54f485d2054, type: 2}
-  m_weaponRecoilData: {fileID: 0}
+  m_weaponRecoilData: {fileID: 11400000, guid: fbb4c373c05bfdf41b58a099e526279e, type: 2}
   m_weaponDefaultMask: WeaponDroppedLayer
   m_weaponDroppedMask: WeaponDroppedLayer
   m_weaponRb: {fileID: 7205558302626066043}
@@ -261,6 +261,7 @@ MonoBehaviour:
   m_weaponFrontPoint: {fileID: 4028634085640356455}
   m_weaponTriggerPoint: {fileID: 8082765901895826800}
   m_weaponDissolveShader: {fileID: 17048351}
+  m_shootPoint: {fileID: 2110010852658180885}
 --- !u!4 &9193910569005396213 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c65eeed0e623d84468374b51a0d355da,

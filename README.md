@@ -21,9 +21,10 @@ A shooter game with abilities!
     - [X] Weapon Clipping through wall fix
     - [X] Pickup and Drop Weapons with IK (Partially done. Will wait on improving IK for Hand)
     - [X] Crosshair
-    - [ ] Basic Shooting
+    - [X] Basic Shooting
+    - [X] Frame Rate Independent Shooting
     - [ ] Customizable Spray
-    - [ ] Frame Rate Independent Shooting
+    - [ ] Code Cleanup
 - [ ] Make a Level to Test/Play Basic Mechanics
 - [ ] Multiplayer
     - [ ] Player Movement Sync

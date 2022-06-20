@@ -43,7 +43,7 @@ namespace Player
             if (m_playerWeaponInventory.GetActiveWeapon() != null)
             {
                 UpdateRecoilCamera();
-                if (Input.GetKeyDown(InputKeys.AttackPrimary))
+                if (Input.GetKey(InputKeys.AttackPrimary))
                 {
                     HandleShootingPressed();
                 }
@@ -204,7 +204,7 @@ namespace Player
                 }
             }
 
-            DebugExtension.DebugWireSphere(sphereLocation, Color.red, 5, 1);
+            DebugExtension.DebugWireSphere(sphereLocation, Color.red, 1, 1);
         }
 
         #endregion Shooting

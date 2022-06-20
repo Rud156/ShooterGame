@@ -12,3 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ca41a032035354dae3e4d5cb51a825, type: 3}
   m_Name: ArchtronicRecoil
   m_EditorClassIdentifier: 
+  fireRate: 0.2
+  recoilResetDelay: 0.3
+  recoilResetLerpSpeed:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  recoilShootLerpSpeed: 7
+  recoilLerpCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  verticalRecoilOffset: 10
+  horizontalRecoilOffset: 10
+  maxShootDistance: 100
+  defaultFiringError: {x: 5, y: 5}
+  movementFiringError: {x: 10, y: 10}
+  horizontalRecoilStartBullet: 5
+  horizontalSinAmplitude: 5
+  horizontalBulletSinMultiplier: 5
+  hVOffsetAmount: 10
+  raycastOffsetMultiplierX:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  raycastOffsetMultiplierY:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  crosshairMultiplierX:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  crosshairMultiplierY:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
