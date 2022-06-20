@@ -287,12 +287,6 @@ MonoBehaviour:
   m_crosshairCenterDot:
     transform: {fileID: 856280830}
     image: {fileID: 856280831}
-  start: {x: 30, y: -30}
-  target: {x: 60, y: -60}
-  lerpAmount_1: 0.01451106
-  lerpAmount_2: 0.0154101
-  result_1: {x: 30.435331, y: -30.435331}
-  result_2: {x: 30.462303, y: -30.462303}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3169,6 +3163,11 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7975099697220874106, guid: 1d5cfca1358ba2b40b64c9c81f831490,
+        type: 3}
+      propertyPath: m_weaponShootMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7975099698339277545, guid: 1d5cfca1358ba2b40b64c9c81f831490,
         type: 3}
       propertyPath: m_RootOrder
