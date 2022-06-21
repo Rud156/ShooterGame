@@ -23,8 +23,8 @@ namespace Player
         private WeaponController m_primaryWeapon;
         private WeaponController m_secondaryWeapon;
 
-        public delegate void WeaponPickup(WeaponController weaponController);
-        public delegate void WeaponDrop(WeaponController weaponController);
+        public delegate void WeaponPickup(WeaponController weaponController, WeaponType weaponType);
+        public delegate void WeaponDrop(WeaponController weaponController, WeaponType weaponType);
 
         public WeaponPickup OnWeaponPickup;
         public WeaponDrop OnWeaponDrop;
@@ -68,7 +68,20 @@ namespace Player
 
         #region Weapon Set
 
+        public WeaponController GetActiveWeapon()
+        {
+            return m_currentActiveWeapon switch
+            {
+                WeaponType.Melee => null,
+                WeaponType.Primary => m_primaryWeapon,
+                WeaponType.Secondary => m_secondaryWeapon,
+                _ => null,
+            };
+        }
+
         private void SetActiveWeapon(WeaponType weaponType) => m_currentActiveWeapon = weaponType;
+
+        public WeaponController GetPrimaryWeapon() => m_primaryWeapon;
 
         public void SetPlayerPrimaryWeapon(WeaponController weaponController, GameObject weapon)
         {
@@ -88,7 +101,7 @@ namespace Player
             weapon.transform.localScale = weaponData.WeaponTPScale;
 
             SetActiveWeapon(WeaponType.Primary);
-            OnWeaponPickup?.Invoke(weaponController);
+            OnWeaponPickup?.Invoke(weaponController, WeaponType.Primary);
         }
 
         public void DropCurrentPrimaryWeapon()
@@ -97,17 +110,27 @@ namespace Player
             {
                 m_primaryWeapon.transform.parent = null;
                 m_primaryWeapon.SetupWeaponDefaultsOnDrop();
-                OnWeaponDrop?.Invoke(m_primaryWeapon);
+                OnWeaponDrop?.Invoke(m_primaryWeapon, WeaponType.Primary);
                 m_primaryWeapon = null;
             }
             SetActiveWeapon(WeaponType.Melee);
         }
 
-        public WeaponController GetPrimaryWeapon() => m_primaryWeapon;
-
         public WeaponController GetSecondaryWeapon() => m_secondaryWeapon;
 
-        public WeaponController GetActiveWeapon() => m_primaryWeapon; // TODO: Implement active weapon
+        public void SetPlayerSecondaryWeapon(WeaponController weaponController, GameObject weapon)
+        {
+            // TODO: Implement this function...
+        }
+
+        public void DropCurrentSecondaryWeapon()
+        {
+            if (m_secondaryWeapon != null)
+            {
+                // TODO: Implement this function...
+            }
+            SetActiveWeapon(WeaponType.Melee);
+        }
 
         #endregion Weapon Set
 

@@ -23,13 +23,10 @@ namespace Weapons
         [SerializeField] private DissolveShader m_weaponDissolveShader;
         [SerializeField] private Transform m_shootPoint;
 
-        public int m_bulletsShot;
-        public float m_currentRecoilResetTime;
-        public float m_lastShotTime;
-        public float m_lastShotRemainderTime;
-        public int shootCount;
-        public float diff;
-        public float currentTime;
+        private int m_bulletsShot;
+        private float m_currentRecoilResetTime;
+        private float m_lastShotTime;
+        private float m_lastShotRemainderTime;
 
         public delegate void RecoilReset();
         public RecoilReset OnRecoilReset;
@@ -43,11 +40,11 @@ namespace Weapons
             m_bulletsShot = 0;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (m_currentRecoilResetTime >= 0)
             {
-                m_currentRecoilResetTime -= Time.deltaTime;
+                m_currentRecoilResetTime -= Time.fixedDeltaTime;
                 if (m_currentRecoilResetTime <= 0)
                 {
                     m_lastShotRemainderTime = 0;
@@ -62,16 +59,16 @@ namespace Weapons
 
         #region Recoil Control
 
-        public int CalculateShootCountAndSaveRemainder()
+        public int GetWeaponBulletsShotAndSaveRemainderTime()
         {
             if (m_lastShotTime <= 0)
             {
                 return 1;
             }
 
-            currentTime = Time.time;
-            diff = currentTime - m_lastShotTime + m_lastShotRemainderTime;
-            shootCount = Mathf.FloorToInt(diff / m_weaponRecoilData.fireRate);
+            float currentTime = Time.fixedTime;
+            float diff = currentTime - m_lastShotTime + m_lastShotRemainderTime;
+            int shootCount = Mathf.FloorToInt(diff / m_weaponRecoilData.fireRate);
 
             if (shootCount > 0)
             {
@@ -82,10 +79,10 @@ namespace Weapons
             return shootCount;
         }
 
-        public void ShootingSetComplete()
+        public void MarkThisFrameShootingComplete()
         {
             m_currentRecoilResetTime = m_weaponRecoilData.recoilResetDelay;
-            m_lastShotTime = Time.time;
+            m_lastShotTime = Time.fixedTime;
         }
 
         public void ResetRecoilData(int bulletsShot)

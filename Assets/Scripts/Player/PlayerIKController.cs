@@ -130,13 +130,13 @@ namespace Player
 
         #region IK Sets
 
-        private void HandleWeaponPickup(WeaponController weaponController)
+        private void HandleWeaponPickup(WeaponController weaponController, WeaponType weaponType)
         {
             m_currentWeaponController = weaponController;
             m_handIKActive = true;
         }
 
-        private void ClearHandIK(WeaponController weaponController) => m_handIKActive = false;
+        private void ClearHandIK(WeaponController weaponController, WeaponType weaponType) => m_handIKActive = false;
 
         #endregion IK Sets
     }

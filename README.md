@@ -24,7 +24,8 @@ A shooter game with abilities!
     - [X] Basic Shooting
     - [X] Frame Rate Independent Shooting
     - [X] Customizable Spray
-    - [ ] Code Cleanup
+    - [X] Code Cleanup
+    - [ ] Add ADS Weapon Control
 - [ ] Make a Level to Test/Play Basic Mechanics
 - [ ] Multiplayer
     - [ ] Player Movement Sync

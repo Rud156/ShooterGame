@@ -5,14 +5,6 @@ namespace Weapons
 {
     public class WeaponRecoilGenerator : MonoBehaviour
     {
-        public Vector2 firingError;
-        public Vector2 randomPointInCircle;
-        public Vector2 raycastOffset;
-        public Vector2 crosshairOffset;
-        public bool cameraHorizontalMultNegative;
-        public float sinBulletAngle;
-        public float sinAngle;
-
         #region Recoil
 
         public RecoilOffset CalculateRecoilData(WeaponRecoilData recoilData, RecoilInputData recoilInputData)
@@ -31,11 +23,11 @@ namespace Weapons
             // TODO: Add in data for ADS
 
             // Default/Movement Firing Error
-            firingError = recoilInputData.isMoving ? movementFiringError : defaultFiringError;
-            randomPointInCircle = Random.insideUnitCircle;
-            raycastOffset = new Vector2(randomPointInCircle.x * Random.Range(-firingError.x, firingError.x),
+            Vector2 firingError = recoilInputData.isMoving ? movementFiringError : defaultFiringError;
+            Vector2 randomPointInCircle = Random.insideUnitCircle;
+            Vector2 raycastOffset = new Vector2(randomPointInCircle.x * Random.Range(-firingError.x, firingError.x),
                                                 Mathf.Abs(randomPointInCircle.y) * Random.Range(0, firingError.y));
-            crosshairOffset = Vector2.zero;
+            Vector2 crosshairOffset = Vector2.zero;
 
             // Calculate Horizontal Recoil
             bool cameraHorizontalMultNegative = false;
@@ -45,10 +37,10 @@ namespace Weapons
                 raycastOffset.x = Mathf.Abs(raycastOffset.x);
                 raycastOffset.x += recoilData.horizontalRecoilOffset;
 
-                sinBulletAngle = recoilInputData.bulletsShot - horizontalRecoilStartBullet;
+                float sinBulletAngle = recoilInputData.bulletsShot - horizontalRecoilStartBullet;
                 sinBulletAngle *= horizontalBulletSinMultiplier;
                 sinBulletAngle %= 360;
-                sinAngle = Mathf.Deg2Rad * sinBulletAngle;
+                float sinAngle = Mathf.Deg2Rad * sinBulletAngle;
 
                 raycastOffset.x *= Mathf.Sin(sinAngle) * horizontalSinAmplitude;
                 if (sinBulletAngle > 90 && sinBulletAngle < 270)

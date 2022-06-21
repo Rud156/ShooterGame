@@ -16,14 +16,13 @@ namespace Player
         [SerializeField] private Transform m_weaponShootClearPoint;
         [SerializeField] private LayerMask m_weaponShootMask;
 
-        public float m_recoilLerpSpeed;
-        public float m_recoilLerpAmount;
-        public bool m_resetRecoil;
-        public Vector2 m_startRecoilOffset;
-        public Vector2 m_targetRecoilOffset;
-        public Vector2 currentInputAmount;
-        public Vector2 nextInputAmount;
-        public Vector2 diff;
+        private PlayerInputKey m_primaryShootKey;
+
+        private float m_weaponRecoilLerpSpeed;
+        private float m_recoilLerpAmount;
+        private bool m_resetRecoil;
+        private Vector2 m_startRecoilOffset;
+        private Vector2 m_targetRecoilOffset;
 
         #region Unity Functions
 
@@ -32,6 +31,7 @@ namespace Player
             m_playerWeaponInventory.OnWeaponPickup += HandleWeaponPickup;
             m_playerWeaponInventory.OnWeaponDrop += HandleWeaponDrop;
 
+            m_primaryShootKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             ClearRecoilData();
         }
 
@@ -41,29 +41,30 @@ namespace Player
             m_playerWeaponInventory.OnWeaponDrop -= HandleWeaponDrop;
         }
 
-        private void Update()
+        private void Update() => m_primaryShootKey.UpdateInputData(InputKeys.AttackPrimary);
+
+        private void FixedUpdate()
         {
-            if (m_playerWeaponInventory.GetActiveWeapon() != null)
+            UpdateRecoilCamera();
+            if (m_playerWeaponInventory.GetActiveWeapon() != null && m_primaryShootKey.keyPressed)
             {
-                UpdateRecoilCamera();
-                if (Input.GetKey(InputKeys.AttackPrimary))
-                {
-                    HandleShootingPressed();
-                }
+                HandleShootingPressed();
             }
+
+            m_primaryShootKey.ResetPerFrameInput();
         }
 
         #endregion Unity Functions
 
         #region Weapon Pickup And Drop
 
-        private void HandleWeaponPickup(WeaponController weaponController)
+        private void HandleWeaponPickup(WeaponController weaponController, WeaponType weaponType)
         {
             ClearRecoilData();
             weaponController.OnRecoilReset += ResetPreRecoilCamera;
         }
 
-        private void HandleWeaponDrop(WeaponController weaponController)
+        private void HandleWeaponDrop(WeaponController weaponController, WeaponType weaponType)
         {
             ClearRecoilData();
             weaponController.OnRecoilReset -= ResetPreRecoilCamera;
@@ -73,76 +74,10 @@ namespace Player
 
         #region Shooting
 
-        private void UpdateRecoilCamera()
-        {
-            if (m_recoilLerpAmount >= 1)
-            {
-                return;
-            }
-
-            WeaponController activeWeapon = m_playerWeaponInventory.GetActiveWeapon();
-            WeaponRecoilData recoilData = activeWeapon.GetWeaponRecoilData();
-            if (m_resetRecoil)
-            {
-                m_recoilLerpSpeed = recoilData.recoilResetLerpSpeed.Evaluate(m_recoilLerpAmount);
-            }
-
-            float currentRecoilAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
-            currentInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, currentRecoilAmount);
-            m_recoilLerpAmount += m_recoilLerpSpeed * Time.deltaTime;
-            m_recoilLerpAmount = Mathf.Clamp01(m_recoilLerpAmount);
-
-            float nextRecoilAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
-            nextInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, nextRecoilAmount);
-
-            diff = nextInputAmount - currentInputAmount;
-
-            Vector3 rotation = transform.rotation.eulerAngles;
-            rotation.y += diff.x * m_recoilCameraMultiplier;
-            transform.rotation = Quaternion.Euler(rotation);
-
-            Vector3 cameraHolderRotation = m_cameraHolder.rotation.eulerAngles;
-            cameraHolderRotation.x += diff.y * m_recoilCameraMultiplier;
-            m_cameraHolder.rotation = Quaternion.Euler(cameraHolderRotation);
-
-            if (m_recoilLerpAmount >= 1)
-            {
-                m_startRecoilOffset = m_targetRecoilOffset;
-                if (m_resetRecoil)
-                {
-                    ClearRecoilData();
-                    activeWeapon.ResetRecoilData(0);
-                }
-            }
-        }
-
-        private void ResetPreRecoilCamera()
-        {
-            WeaponController activeWeapon = m_playerWeaponInventory.GetActiveWeapon();
-            WeaponRecoilData recoilData = activeWeapon.GetWeaponRecoilData();
-
-            float amount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
-            Vector2 currentRecoilAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, amount);
-            m_startRecoilOffset = currentRecoilAmount;
-            m_targetRecoilOffset = Vector2.zero;
-            m_recoilLerpAmount = 0;
-            m_resetRecoil = true;
-            m_recoilLerpSpeed = recoilData.recoilResetLerpSpeed.Evaluate(0);
-        }
-
-        private void ClearRecoilData()
-        {
-            m_startRecoilOffset = Vector2.zero;
-            m_targetRecoilOffset = Vector2.zero;
-            m_recoilLerpAmount = 1;
-            m_recoilLerpSpeed = 1;
-            m_resetRecoil = false;
-        }
-
         public void HandleShootingPressed()
         {
             WeaponController activeWeapon = m_playerWeaponInventory.GetActiveWeapon();
-            int shootCount = activeWeapon.CalculateShootCountAndSaveRemainder();
+            int shootCount = activeWeapon.GetWeaponBulletsShotAndSaveRemainderTime();
             if (shootCount <= 0)
             {
                 return;
@@ -173,7 +108,7 @@ namespace Player
 
                 m_targetRecoilOffset += recoilOffset.crosshairOffset;
                 m_recoilLerpAmount = 0;
-                m_recoilLerpSpeed = recoilData.recoilShootLerpSpeed;
+                m_weaponRecoilLerpSpeed = recoilData.recoilShootLerpSpeed;
                 m_resetRecoil = false;
 
                 Vector3 startPosition = m_cameraHolder.position;
@@ -182,7 +117,7 @@ namespace Player
                                     m_mainCamera.right * recoilOffset.raycastOffset.x;
                 BulletShot(startPosition, endPosition, activeWeapon.GetShootPoint().position);
             }
-            activeWeapon.ShootingSetComplete();
+            activeWeapon.MarkThisFrameShootingComplete();
         }
 
         private void BulletShot(Vector3 startPosition, Vector3 endPosition, Vector3 shootPoint)
@@ -192,11 +127,14 @@ namespace Player
             Vector3 wallCheckStartPosition = shootPoint;
             Vector3 wallCheckEndPosition = m_weaponShootClearPoint.position;
             bool wallHitCheck = Physics.Linecast(wallCheckStartPosition, wallCheckEndPosition, out RaycastHit hit, m_weaponShootMask);
+            Debug.DrawLine(wallCheckStartPosition, wallCheckEndPosition, Color.red, 1);
 
+            Color sphereColor = Color.red;
             if (wallHitCheck)
             {
                 Debug.DrawLine(wallCheckStartPosition, wallCheckEndPosition, Color.red, 1);
                 sphereLocation = hit.point;
+                sphereColor = Color.green;
             }
             else
             {
@@ -208,7 +146,76 @@ namespace Player
                 }
             }
 
-            DebugExtension.DebugWireSphere(sphereLocation, Color.red, 1, 1);
+            DebugExtension.DebugWireSphere(sphereLocation, sphereColor, 0.5f, 1);
+        }
+
+        private void UpdateRecoilCamera()
+        {
+            if (m_recoilLerpAmount >= 1)
+            {
+                return;
+            }
+
+            WeaponController activeWeapon = m_playerWeaponInventory.GetActiveWeapon();
+            if (activeWeapon != null)
+            {
+                WeaponRecoilData recoilData = activeWeapon.GetWeaponRecoilData();
+                if (m_resetRecoil)
+                {
+                    m_weaponRecoilLerpSpeed = recoilData.recoilResetLerpSpeed.Evaluate(m_recoilLerpAmount);
+                }
+
+                float currentRecoilAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
+                Vector2 currentInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, currentRecoilAmount);
+                m_recoilLerpAmount += m_weaponRecoilLerpSpeed * Time.fixedDeltaTime;
+                m_recoilLerpAmount = Mathf.Clamp01(m_recoilLerpAmount);
+
+                float nextRecoilAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
+                Vector2 nextInputAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, nextRecoilAmount);
+
+                Vector2 diff = nextInputAmount - currentInputAmount;
+
+                Vector3 rotation = transform.rotation.eulerAngles;
+                rotation.y += diff.x * m_recoilCameraMultiplier;
+                transform.rotation = Quaternion.Euler(rotation);
+
+                Vector3 cameraHolderRotation = m_cameraHolder.rotation.eulerAngles;
+                cameraHolderRotation.x += diff.y * m_recoilCameraMultiplier;
+                m_cameraHolder.rotation = Quaternion.Euler(cameraHolderRotation);
+
+                if (m_recoilLerpAmount >= 1)
+                {
+                    m_startRecoilOffset = m_targetRecoilOffset;
+                    if (m_resetRecoil)
+                    {
+                        ClearRecoilData();
+                        activeWeapon.ResetRecoilData(0);
+                    }
+                }
+            }
+        }
+
+        private void ResetPreRecoilCamera()
+        {
+            WeaponController activeWeapon = m_playerWeaponInventory.GetActiveWeapon();
+            WeaponRecoilData recoilData = activeWeapon.GetWeaponRecoilData();
+
+            float amount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
+            Vector2 currentRecoilAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, amount);
+            m_startRecoilOffset = currentRecoilAmount;
+            m_targetRecoilOffset = Vector2.zero;
+            m_recoilLerpAmount = 0;
+            m_resetRecoil = true;
+            m_weaponRecoilLerpSpeed = recoilData.recoilResetLerpSpeed.Evaluate(0);
+        }
+
+        private void ClearRecoilData()
+        {
+            m_startRecoilOffset = Vector2.zero;
+            m_targetRecoilOffset = Vector2.zero;
+            m_recoilLerpAmount = 1;
+            m_weaponRecoilLerpSpeed = 1;
+            m_resetRecoil = false;
         }
 
         #endregion Shooting
