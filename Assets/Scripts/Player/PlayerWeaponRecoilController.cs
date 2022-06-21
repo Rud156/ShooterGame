@@ -11,6 +11,7 @@ namespace Player
 
         [Header("Components")]
         [SerializeField] private PlayerWeaponsInventoryController m_playerWeaponInventory;
+        [SerializeField] private Transform m_weaponRaycastShootPoint;
         [SerializeField] private Transform m_cameraHolder;
         [SerializeField] private Transform m_mainCamera;
         [SerializeField] private Transform m_weaponShootClearPoint;
@@ -111,7 +112,7 @@ namespace Player
                 m_weaponRecoilLerpSpeed = recoilData.recoilShootLerpSpeed;
                 m_resetRecoil = false;
 
-                Vector3 startPosition = m_cameraHolder.position;
+                Vector3 startPosition = m_weaponRaycastShootPoint.position;
                 Vector3 endPosition = startPosition + m_mainCamera.forward * recoilData.maxShootDistance +
                                     m_mainCamera.up * recoilOffset.raycastOffset.y +
                                     m_mainCamera.right * recoilOffset.raycastOffset.x;
@@ -126,15 +127,16 @@ namespace Player
 
             Vector3 wallCheckStartPosition = shootPoint;
             Vector3 wallCheckEndPosition = m_weaponShootClearPoint.position;
-            bool wallHitCheck = Physics.Linecast(wallCheckStartPosition, wallCheckEndPosition, out RaycastHit hit, m_weaponShootMask);
+            bool wallHitCheck = Physics.Linecast(wallCheckStartPosition, wallCheckEndPosition, out RaycastHit wallCheckHit, m_weaponShootMask);
             Debug.DrawLine(wallCheckStartPosition, wallCheckEndPosition, Color.red, 1);
 
             Color sphereColor = Color.red;
             if (wallHitCheck)
             {
                 Debug.DrawLine(wallCheckStartPosition, wallCheckEndPosition, Color.red, 1);
-                sphereLocation = hit.point;
+                sphereLocation = wallCheckHit.point;
                 sphereColor = Color.green;
+                Debug.Log(wallCheckHit.collider.name);
             }
             else
             {
@@ -146,7 +148,7 @@ namespace Player
                 }
             }
 
-            DebugExtension.DebugWireSphere(sphereLocation, sphereColor, 0.5f, 1);
+            DebugExtension.DebugWireSphere(sphereLocation, sphereColor, 0.1f, 1);
         }
 
         private void UpdateRecoilCamera()

@@ -13,14 +13,14 @@ namespace UI
         [SerializeField][Range(0, 1)] private float m_crosshairAlpha;
         [SerializeField] private Color m_crosshairColor;
         [SerializeField][Range(0, 1)] private float m_crosshairOutlineThickness;
-        [SerializeField][Range(0, 1)] private float m_crosshairOutlineAlpha;
+        [SerializeField][Range(0.01f, 1)] private float m_crosshairOutlineAlpha;
 
         [Header("Center Dot")]
         [SerializeField][Range(0, 100)] private float m_centerDotThickness;
         [SerializeField][Range(0, 1)] private float m_centerDotAlpha;
         [SerializeField] private Color m_centerDotColor;
         [SerializeField][Range(0, 1)] private float m_centerDotOutlineThickness;
-        [SerializeField][Range(0, 1)] private float m_centerDotOutlineAlpha;
+        [SerializeField][Range(0.01f, 1)] private float m_centerDotOutlineAlpha;
 
         [Header("Components")]
         [SerializeField] private CrosshairData m_crosshairLeft;
