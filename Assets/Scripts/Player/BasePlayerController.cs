@@ -69,18 +69,18 @@ namespace Player
         private PlayerInputKey m_crouchKey;
         private PlayerInputKey m_cameraLeftKey;
         private PlayerInputKey m_cameraRightKey;
-        private PlayerInputKey m_adsKey;
+        public PlayerInputKey m_adsKey;
 
         private float m_currentStateMoveVelocity = 0;
-        private List<CameraState> m_cameraStateStack;
 
         private float m_capsuleStartHeight = 0;
         private float m_capsuleTargetHeight = 0;
         private float m_capsuleLerpAmount = 0;
 
-        private Vector3 m_cameraStartPosition;
-        private Vector3 m_cameraEndPosition;
-        private float m_cameraLerpAmount = 0;
+        public List<CameraState> m_cameraStateStack;
+        public Vector3 m_cameraStartPosition;
+        public Vector3 m_cameraEndPosition;
+        public float m_cameraLerpAmount = 0;
 
         private float m_currentSlideDuration = 0;
 
@@ -121,7 +121,7 @@ namespace Player
             Cursor.visible = false;
 
             PushTopPlayerState(PlayerState.Idle);
-            SetCameraState(CameraState.RightNormal);
+            PushCameraState(CameraState.RightNormal);
         }
 
         private void Update()
@@ -698,7 +698,7 @@ namespace Player
 
             m_cameraLerpAmount += Time.fixedDeltaTime * (IsInAds() ? m_cameraAdsLerpSpeed : m_cameraLerpSpeed);
             Vector3 lerpedPositon = Vector3.Lerp(m_cameraStartPosition, m_cameraEndPosition, m_cameraLerpAmount);
-            m_cameraTransform.position = lerpedPositon;
+            m_cameraTransform.localPosition = lerpedPositon;
         }
 
         private void UpdateCameraPosition()
@@ -765,9 +765,14 @@ namespace Player
             if (m_cameraStateStack.Count > 1)
             {
                 m_cameraStateStack.Clear();
+                m_cameraStateStack.Add(cameraState);
+            }
+            else
+            {
+                m_cameraStateStack[0] = cameraState;
             }
 
-            m_cameraStateStack.Add(cameraState);
+
             SetCameraLerpData();
         }
 
@@ -779,25 +784,25 @@ namespace Player
 
         private void SetCameraLerpData()
         {
-            m_cameraStartPosition = m_cameraTransform.position;
+            m_cameraStartPosition = m_cameraTransform.localPosition;
             m_cameraLerpAmount = 0;
 
             switch (m_cameraStateStack[^1])
             {
                 case CameraState.RightNormal:
-                    m_cameraEndPosition = m_cameraRight.position;
+                    m_cameraEndPosition = m_cameraRight.localPosition;
                     break;
 
                 case CameraState.LeftNormal:
-                    m_cameraEndPosition = m_cameraLeft.position;
+                    m_cameraEndPosition = m_cameraLeft.localPosition;
                     break;
 
                 case CameraState.RightAds:
-                    m_cameraEndPosition = m_cameraRightAds.position;
+                    m_cameraEndPosition = m_cameraRightAds.localPosition;
                     break;
 
                 case CameraState.LeftAds:
-                    m_cameraEndPosition = m_cameraLeftAds.position;
+                    m_cameraEndPosition = m_cameraLeftAds.localPosition;
                     break;
             }
         }

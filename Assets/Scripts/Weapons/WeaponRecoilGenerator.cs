@@ -22,7 +22,6 @@ namespace Weapons
 
             if (recoilInputData.isInAds)
             {
-                Debug.Log("Using Ads Data");
                 defaultFiringError = adsRecoilData.defaultFiringError;
                 movementFiringError = adsRecoilData.movementFiringError;
                 horizontalRecoilStartBullet = adsRecoilData.horizontalRecoilStartBullet;

@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278439513}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 0.96999997, z: -1.5}
+  m_LocalPosition: {x: 3, y: 0.96999997, z: -3}
   m_LocalScale: {x: 3.8828917, y: 3.8828917, z: 3.8828917}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -95,6 +95,7 @@ Transform:
   m_Children:
   - {fileID: 1083103209}
   - {fileID: 405801708}
+  - {fileID: 1122063538}
   m_Father: {fileID: 925205031}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -241,7 +242,6 @@ Transform:
   m_LocalScale: {x: 0.25754, y: 0.25754, z: 0.25754}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1122063538}
   - {fileID: 2111191681}
   - {fileID: 2068861779}
   - {fileID: 1027051735}
@@ -369,11 +369,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122063537}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 1, z: 6.5}
-  m_LocalScale: {x: 2, y: 1.5, z: 10}
+  m_LocalPosition: {x: 0, y: 0.0077261776, z: 2.8097615}
+  m_LocalScale: {x: 0.51508003, y: 0.38631004, z: 2.5754}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 925205031}
+  m_Father: {fileID: 330585546}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1122063539
@@ -456,7 +456,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068861778}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: 0.96999997, z: -1.5}
+  m_LocalPosition: {x: -3, y: 0.96999997, z: -3}
   m_LocalScale: {x: 3.8828917, y: 3.8828917, z: 3.8828917}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -533,7 +533,7 @@ Transform:
   - {fileID: 1078637262}
   - {fileID: 925205031}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &7975099698339277546
 CharacterController:
@@ -605,6 +605,10 @@ MonoBehaviour:
   - {fileID: 40384556}
   - {fileID: 1078637262}
   - {fileID: 9036281571833040041}
+  m_cameraStateStack: 
+  m_cameraStartPosition: {x: 0, y: 0, z: 0}
+  m_cameraEndPosition: {x: 0, y: 0, z: 0}
+  m_cameraLerpAmount: 0
 --- !u!114 &8378721820819924144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,7 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_recoilCameraMultiplier: 10
   m_playerWeaponInventory: {fileID: 2803441255831649627}
-  m_playerController: {fileID: 0}
+  m_playerController: {fileID: 7975099698339277547}
   m_weaponRaycastShootPoint: {fileID: 405801708}
   m_cameraHolder: {fileID: 925205031}
   m_mainCamera: {fileID: 330585546}
