@@ -17,7 +17,7 @@ A shooter game with abilities!
         - [X] Basic Player Animations for all states
         - [X] Try to see if the animations can be a bit polished up
         - [X] Change Animations to 3rd Person since Animations for 3rd person is easily available.
-- [ ] Weapon System
+- [X] Weapon System
     - [X] Weapon Clipping through wall fix
     - [X] Pickup and Drop Weapons with IK (Partially done. Will wait on improving IK for Hand)
     - [X] Crosshair
@@ -25,7 +25,7 @@ A shooter game with abilities!
     - [X] Frame Rate Independent Shooting
     - [X] Customizable Spray
     - [X] Code Cleanup
-    - [ ] Add ADS Weapon Control
+    - [X] Add ADS Weapon Control
 - [ ] Make a Level to Test/Play Basic Mechanics
 - [ ] Multiplayer
     - [ ] Player Movement Sync
