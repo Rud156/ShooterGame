@@ -19,3 +19,5 @@ MonoBehaviour:
   WeaponTPLocalRotation: {x: 66.53054, y: 3.2965236, z: 0.5888932}
   WeaponTPScale: {x: 1.5, y: 1.2, z: 1.5}
   WeaponDroppedScale: {x: 1.5, y: 1.2, z: 1.5}
+  NormalRecoilData: {fileID: 11400000, guid: fbb4c373c05bfdf41b58a099e526279e, type: 2}
+  AdsRecoilData: {fileID: 11400000, guid: bed6c421c618fd84c8340b79d6a8f4da, type: 2}

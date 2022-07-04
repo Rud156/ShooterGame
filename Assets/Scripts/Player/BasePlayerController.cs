@@ -49,6 +49,11 @@ namespace Player
         [SerializeField] private Transform m_cameraRight;
         [SerializeField] private float m_cameraLerpSpeed;
 
+        [Header("ADS")]
+        [SerializeField] private float m_cameraAdsLerpSpeed;
+        [SerializeField] private Transform m_cameraLeftAds;
+        [SerializeField] private Transform m_cameraRightAds;
+
         [Header("Components")]
         [SerializeField] private float m_capsuleLerpSpeed;
         [SerializeField] private Transform m_groundedCheckPoint;
@@ -64,7 +69,10 @@ namespace Player
         private PlayerInputKey m_crouchKey;
         private PlayerInputKey m_cameraLeftKey;
         private PlayerInputKey m_cameraRightKey;
-        private float m_currentStateMoveVelocity;
+        private PlayerInputKey m_adsKey;
+
+        private float m_currentStateMoveVelocity = 0;
+        private List<CameraState> m_cameraStateStack;
 
         private float m_capsuleStartHeight = 0;
         private float m_capsuleTargetHeight = 0;
@@ -95,6 +103,7 @@ namespace Player
         {
             m_characterController = GetComponent<CharacterController>();
             m_playerStateStack = new List<PlayerState>();
+            m_cameraStateStack = new List<CameraState>();
 
             m_capsuleStartHeight = 2;
             m_capsuleTargetHeight = 2;
@@ -106,11 +115,13 @@ namespace Player
             m_jumpKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             m_cameraLeftKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             m_cameraRightKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            m_adsKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
             PushTopPlayerState(PlayerState.Idle);
+            SetCameraState(CameraState.RightNormal);
         }
 
         private void Update()
@@ -122,6 +133,8 @@ namespace Player
         private void FixedUpdate()
         {
             UpdateCameraLerp();
+            UpdateCameraPosition();
+
             UpdateMouseMovement();
             UpdateGroundedState();
 
@@ -413,35 +426,6 @@ namespace Player
 
         #endregion Player Vertical Movement
 
-        #region Player Camera Movement
-
-        private void UpdateCameraLerp()
-        {
-            if (m_cameraLeftKey.keyPressedThisFrame)
-            {
-                m_cameraStartPosition = m_cameraTransform.position;
-                m_cameraEndPosition = m_cameraLeft.position;
-                m_cameraLerpAmount = 0;
-            }
-            else if (m_cameraRightKey.keyPressedThisFrame)
-            {
-                m_cameraStartPosition = m_cameraTransform.position;
-                m_cameraEndPosition = m_cameraRight.position;
-                m_cameraLerpAmount = 0;
-            }
-
-            if (m_cameraLerpAmount >= 1)
-            {
-                return;
-            }
-
-            m_cameraLerpAmount += Time.fixedDeltaTime * m_cameraLerpSpeed;
-            Vector3 lerpedPositon = Vector3.Lerp(m_cameraStartPosition, m_cameraEndPosition, m_cameraLerpAmount);
-            m_cameraTransform.position = lerpedPositon;
-        }
-
-        #endregion Player Camera Movement
-
         #region Player Mouse Movement
 
         private void UpdateMouseMovement()
@@ -486,6 +470,8 @@ namespace Player
 
         #region Extra Data
 
+        public bool IsInAds() => m_cameraStateStack[^1] == CameraState.LeftAds || m_cameraStateStack[^1] == CameraState.RightAds;
+
         public Vector2 GetPlayerInputVector() => m_horizontalInput;
 
         #endregion Extra Data
@@ -516,6 +502,8 @@ namespace Player
             float mouseY = -Input.GetAxisRaw(InputKeys.MouseY);
             m_mouseInput.x = mouseX;
             m_mouseInput.y = mouseY;
+
+            m_adsKey.UpdateInputData(InputKeys.AttackSecondary);
         }
 
         private void MarkFrameInputsAsRead()
@@ -530,6 +518,7 @@ namespace Player
             m_crouchKey.ResetPerFrameInput();
             m_cameraLeftKey.ResetPerFrameInput();
             m_cameraRightKey.ResetPerFrameInput();
+            m_adsKey.ResetPerFrameInput();
         }
 
         #endregion Input
@@ -560,6 +549,18 @@ namespace Player
                     break;
 
                 case PlayerState.Falling:
+                    {
+                        switch (m_cameraStateStack[^1])
+                        {
+                            case CameraState.RightAds:
+                                PushCameraState(CameraState.RightNormal);
+                                break;
+
+                            case CameraState.LeftAds:
+                                PushCameraState(CameraState.LeftNormal);
+                                break;
+                        }
+                    }
                     break;
             }
 
@@ -622,6 +623,21 @@ namespace Player
                     break;
 
                 case PlayerState.Falling:
+                    {
+                        if (m_cameraStateStack.Count > 1)
+                        {
+                            switch (m_cameraStateStack[^1])
+                            {
+                                case CameraState.RightNormal:
+                                    SetCameraState(CameraState.RightAds);
+                                    break;
+
+                                case CameraState.LeftNormal:
+                                    SetCameraState(CameraState.LeftAds);
+                                    break;
+                            }
+                        }
+                    }
                     break;
             }
         }
@@ -670,5 +686,130 @@ namespace Player
         };
 
         #endregion Player State
+
+        #region Camera State
+
+        private void UpdateCameraLerp()
+        {
+            if (m_cameraLerpAmount >= 1)
+            {
+                return;
+            }
+
+            m_cameraLerpAmount += Time.fixedDeltaTime * (IsInAds() ? m_cameraAdsLerpSpeed : m_cameraLerpSpeed);
+            Vector3 lerpedPositon = Vector3.Lerp(m_cameraStartPosition, m_cameraEndPosition, m_cameraLerpAmount);
+            m_cameraTransform.position = lerpedPositon;
+        }
+
+        private void UpdateCameraPosition()
+        {
+            if (m_adsKey.keyPressedThisFrame && CanPlayerAds())
+            {
+                switch (m_cameraStateStack[^1])
+                {
+                    case CameraState.RightNormal:
+                        SetCameraState(CameraState.RightAds);
+                        break;
+
+                    case CameraState.LeftNormal:
+                        SetCameraState(CameraState.LeftAds);
+                        break;
+
+                    case CameraState.RightAds:
+                        SetCameraState(CameraState.RightNormal);
+                        break;
+
+                    case CameraState.LeftAds:
+                        SetCameraState(CameraState.LeftNormal);
+                        break;
+                }
+            }
+
+            if (m_cameraLeftKey.keyPressedThisFrame)
+            {
+                switch (m_cameraStateStack[^1])
+                {
+                    case CameraState.RightNormal:
+                        SetCameraState(CameraState.LeftNormal);
+                        break;
+
+                    case CameraState.RightAds:
+                        SetCameraState(CameraState.LeftAds);
+                        break;
+                }
+            }
+            else if (m_cameraRightKey.keyPressedThisFrame)
+            {
+                switch (m_cameraStateStack[^1])
+                {
+                    case CameraState.LeftNormal:
+                        SetCameraState(CameraState.RightNormal);
+                        break;
+
+                    case CameraState.LeftAds:
+                        SetCameraState(CameraState.RightAds);
+                        break;
+                }
+            }
+        }
+
+        private bool CanPlayerAds()
+        {
+            PlayerState topState = GetTopPlayerState();
+            return topState != PlayerState.Falling;
+        }
+
+        // Calling this function basically clears the entire stack state
+        private void SetCameraState(CameraState cameraState)
+        {
+            if (m_cameraStateStack.Count > 1)
+            {
+                m_cameraStateStack.Clear();
+            }
+
+            m_cameraStateStack.Add(cameraState);
+            SetCameraLerpData();
+        }
+
+        private void PushCameraState(CameraState cameraState)
+        {
+            m_cameraStateStack.Add(cameraState);
+            SetCameraLerpData();
+        }
+
+        private void SetCameraLerpData()
+        {
+            m_cameraStartPosition = m_cameraTransform.position;
+            m_cameraLerpAmount = 0;
+
+            switch (m_cameraStateStack[^1])
+            {
+                case CameraState.RightNormal:
+                    m_cameraEndPosition = m_cameraRight.position;
+                    break;
+
+                case CameraState.LeftNormal:
+                    m_cameraEndPosition = m_cameraLeft.position;
+                    break;
+
+                case CameraState.RightAds:
+                    m_cameraEndPosition = m_cameraRightAds.position;
+                    break;
+
+                case CameraState.LeftAds:
+                    m_cameraEndPosition = m_cameraLeftAds.position;
+                    break;
+            }
+        }
+
+        public enum CameraState
+        {
+            RightNormal,
+            LeftNormal,
+            RightAds,
+            LeftAds
+        };
+
+        #endregion Camera State
     }
 }

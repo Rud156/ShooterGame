@@ -7,7 +7,6 @@ namespace Weapons
     {
         [Header("Data")]
         [SerializeField] private WeaponData m_weaponData;
-        [SerializeField] private WeaponRecoilData m_weaponRecoilData;
         [SerializeField] private string m_weaponDefaultMask;
         [SerializeField] private string m_weaponDroppedMask;
 
@@ -28,6 +27,9 @@ namespace Weapons
         private float m_lastShotTime;
         private float m_lastShotRemainderTime;
 
+        private WeaponRecoilData m_weaponRecoilData;
+        private WeaponRecoilData m_weaponAdsRecoilData;
+
         public delegate void RecoilReset();
         public RecoilReset OnRecoilReset;
 
@@ -38,6 +40,9 @@ namespace Weapons
             m_lastShotTime = 0;
             m_lastShotRemainderTime = 0;
             m_bulletsShot = 0;
+
+            m_weaponRecoilData = m_weaponData.NormalRecoilData;
+            m_weaponAdsRecoilData = m_weaponData.AdsRecoilData;
         }
 
         private void FixedUpdate()
@@ -108,6 +113,8 @@ namespace Weapons
         public WeaponData GetWeaponData() => m_weaponData;
 
         public WeaponRecoilData GetWeaponRecoilData() => m_weaponRecoilData;
+
+        public WeaponRecoilData GetWeaponAdsRecoilData() => m_weaponAdsRecoilData;
 
         public void SetupWeaponDefaultsOnPickup()
         {

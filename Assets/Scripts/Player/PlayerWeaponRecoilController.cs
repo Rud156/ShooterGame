@@ -11,6 +11,7 @@ namespace Player
 
         [Header("Components")]
         [SerializeField] private PlayerWeaponsInventoryController m_playerWeaponInventory;
+        [SerializeField] private BasePlayerController m_playerController;
         [SerializeField] private Transform m_weaponRaycastShootPoint;
         [SerializeField] private Transform m_cameraHolder;
         [SerializeField] private Transform m_mainCamera;
@@ -84,7 +85,7 @@ namespace Player
                 return;
             }
 
-            WeaponRecoilData recoilData = activeWeapon.GetWeaponRecoilData();
+            WeaponRecoilData recoilData = m_playerController.IsInAds() ? activeWeapon.GetWeaponAdsRecoilData() : activeWeapon.GetWeaponRecoilData();
             float recoilLerpAmount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
             Vector2 currentRecoilAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, recoilLerpAmount);
             if (m_resetRecoil)
@@ -99,12 +100,17 @@ namespace Player
 
             for (int i = 0; i < shootCount; i++)
             {
-                WeaponRecoilGenerator.RecoilOffset recoilOffset = WeaponRecoilGenerator.Instance.CalculateRecoilData(recoilData, new WeaponRecoilGenerator.RecoilInputData()
-                {
-                    bulletsShot = activeWeapon.GetCurrentBulletsShot(),
-                    isInAds = false,
-                    isMoving = false
-                });
+                BasePlayerController.PlayerState playerState = m_playerController.GetTopPlayerState();
+                bool isInAds = m_playerController.IsInAds();
+                WeaponRecoilGenerator.RecoilOffset recoilOffset = WeaponRecoilGenerator.Instance.CalculateRecoilData(
+                                                                activeWeapon.GetWeaponRecoilData(),
+                                                                activeWeapon.GetWeaponAdsRecoilData(),
+                                                                new WeaponRecoilGenerator.RecoilInputData()
+                                                                {
+                                                                    bulletsShot = activeWeapon.GetCurrentBulletsShot(),
+                                                                    isInAds = isInAds,
+                                                                    isMoving = playerState != BasePlayerController.PlayerState.Idle
+                                                                });
                 activeWeapon.SetCurrentBulletsShot(activeWeapon.GetCurrentBulletsShot() + 1);
 
                 m_targetRecoilOffset += recoilOffset.crosshairOffset;
@@ -161,7 +167,7 @@ namespace Player
             WeaponController activeWeapon = m_playerWeaponInventory.GetActiveWeapon();
             if (activeWeapon != null)
             {
-                WeaponRecoilData recoilData = activeWeapon.GetWeaponRecoilData();
+                WeaponRecoilData recoilData = m_playerController.IsInAds() ? activeWeapon.GetWeaponAdsRecoilData() : activeWeapon.GetWeaponRecoilData();
                 if (m_resetRecoil)
                 {
                     m_weaponRecoilLerpSpeed = recoilData.recoilResetLerpSpeed.Evaluate(m_recoilLerpAmount);
@@ -200,7 +206,7 @@ namespace Player
         private void ResetPreRecoilCamera()
         {
             WeaponController activeWeapon = m_playerWeaponInventory.GetActiveWeapon();
-            WeaponRecoilData recoilData = activeWeapon.GetWeaponRecoilData();
+            WeaponRecoilData recoilData = m_playerController.IsInAds() ? activeWeapon.GetWeaponAdsRecoilData() : activeWeapon.GetWeaponRecoilData();
 
             float amount = recoilData.recoilLerpCurve.Evaluate(m_recoilLerpAmount);
             Vector2 currentRecoilAmount = Vector2.Lerp(m_startRecoilOffset, m_targetRecoilOffset, amount);

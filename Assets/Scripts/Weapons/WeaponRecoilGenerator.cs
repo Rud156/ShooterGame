@@ -7,7 +7,7 @@ namespace Weapons
     {
         #region Recoil
 
-        public RecoilOffset CalculateRecoilData(WeaponRecoilData recoilData, RecoilInputData recoilInputData)
+        public RecoilOffset CalculateRecoilData(WeaponRecoilData recoilData, WeaponRecoilData adsRecoilData, RecoilInputData recoilInputData)
         {
             Vector2 defaultFiringError = recoilData.defaultFiringError;
             Vector2 movementFiringError = recoilData.movementFiringError;
@@ -20,7 +20,20 @@ namespace Weapons
             AnimationCurve raycastOffsetMultiplierX = recoilData.raycastOffsetMultiplierX;
             AnimationCurve raycastOffsetMultiplierY = recoilData.raycastOffsetMultiplierY;
 
-            // TODO: Add in data for ADS
+            if (recoilInputData.isInAds)
+            {
+                Debug.Log("Using Ads Data");
+                defaultFiringError = adsRecoilData.defaultFiringError;
+                movementFiringError = adsRecoilData.movementFiringError;
+                horizontalRecoilStartBullet = adsRecoilData.horizontalRecoilStartBullet;
+                hVOffsetAmount = adsRecoilData.hVOffsetAmount;
+                horizontalBulletSinMultiplier = adsRecoilData.horizontalBulletSinMultiplier;
+                horizontalSinAmplitude = adsRecoilData.horizontalSinAmplitude;
+                crossHairMultiplierX = adsRecoilData.crosshairMultiplierX;
+                crossHairMultiplierY = adsRecoilData.crosshairMultiplierY;
+                raycastOffsetMultiplierX = adsRecoilData.raycastOffsetMultiplierX;
+                raycastOffsetMultiplierY = adsRecoilData.raycastOffsetMultiplierY;
+            }
 
             // Default/Movement Firing Error
             Vector2 firingError = recoilInputData.isMoving ? movementFiringError : defaultFiringError;

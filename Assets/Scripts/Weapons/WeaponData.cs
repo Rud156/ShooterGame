@@ -16,5 +16,9 @@ namespace Weapons
 
         [Header("Weapon Dropped")]
         public Vector3 WeaponDroppedScale;
+
+        [Header("Recoil")]
+        public WeaponRecoilData NormalRecoilData;
+        public WeaponRecoilData AdsRecoilData;
     }
 }
