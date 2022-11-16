@@ -542,7 +542,7 @@ MonoBehaviour:
   _airSpeed: 5
   _gravityMultiplier: 0.25
   _groundedCheckPoint: {fileID: 515246940}
-  _groundedCheckDistance: 5
+  _groundedCheckDistance: 0.65
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
