@@ -539,7 +539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runSpeed: 20
   _walkSpeed: 10
-  _airSpeed: 5
+  _airControlMultiplier: 0.3
   _gravityMultiplier: 0.25
   _groundedCheckPoint: {fileID: 515246940}
   _groundedCheckDistance: 0.65

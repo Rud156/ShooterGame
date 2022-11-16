@@ -11,7 +11,7 @@ namespace Player.Base
         [Header("Basic Move")]
         [SerializeField] private float _runSpeed;
         [SerializeField] private float _walkSpeed;
-        [SerializeField] private float _airSpeed;
+        [SerializeField] private float _airControlMultiplier;
         [SerializeField] private float _gravityMultiplier;
 
         [Header("Ground Check")]
@@ -136,7 +136,13 @@ namespace Player.Base
 
         private void UpdateFallingState()
         {
-            _currentStateVelocity = _airSpeed;
+            // This is only possible if the Second State is Falling. Since the Idle state is never removed
+            // Which means the player jumped from a standstill
+            if (_playerStateStack.Count <= 2)
+            {
+                _currentStateVelocity = _walkSpeed;
+            }
+
             if (_isGrounded)
             {
                 PopPlayerState();
@@ -152,12 +158,28 @@ namespace Player.Base
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
 
-            Vector3 groundedMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
-            groundedMovement.y = 0;
-            groundedMovement = groundedMovement.normalized * _currentStateVelocity;
+            if (_playerStateStack[^1] == PlayerState.Falling)
+            {
+                Vector3 groundedMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
+                groundedMovement.y = 0;
+                groundedMovement = groundedMovement.normalized * _currentStateVelocity;
 
-            _characterVelocity.x = groundedMovement.x;
-            _characterVelocity.z = groundedMovement.z;
+                _characterVelocity.x = groundedMovement.x;
+                _characterVelocity.z = groundedMovement.z;
+            }
+            else
+            {
+                Vector3 airMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
+                airMovement.y = 0;
+                airMovement = _airControlMultiplier * airMovement.normalized * _currentStateVelocity;
+
+                airMovement.x += _characterVelocity.x;
+                airMovement.z += _characterVelocity.z;
+                airMovement = airMovement.normalized * _currentStateVelocity;
+
+                _characterVelocity.x = airMovement.x;
+                _characterVelocity.z = airMovement.z;
+            }
         }
 
         private void ProcessJumpInput()
