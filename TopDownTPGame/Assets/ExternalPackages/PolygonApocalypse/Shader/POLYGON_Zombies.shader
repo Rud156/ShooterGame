@@ -1,64 +1,64 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "SyntyStudios/Blood"
 {
 	Properties
 	{
-		_Texture("Texture", 2D) = "white" {}
-		_Blood("Blood", 2D) = "white" {}
-		_BloodColor("BloodColor", Color) = (0.6470588,0.2569204,0.2569204,0)
-		_BloodAmount("BloodAmount", Range( 0 , 1)) = 0
-		_Spec("Spec", Color) = (0,0,0,0)
-		_Smoothness("Smoothness", Range( 0 , 1)) = 0
-		_Emissive("Emissive", 2D) = "white" {}
-		_EmissiveColor("Emissive Color", Color) = (0,0,0,0)
+		_Texture( "Texture", 2D ) = "white" {}
+		_Blood( "Blood", 2D ) = "white" {}
+		_BloodColor( "BloodColor", Color ) = (0.6470588,0.2569204,0.2569204,0)
+		_BloodAmount( "BloodAmount", Range( 0 , 1 ) ) = 0
+		_Spec( "Spec", Color ) = (0,0,0,0)
+		_Smoothness( "Smoothness", Range( 0 , 1 ) ) = 0
+		_Emissive( "Emissive", 2D ) = "white" {}
+		_EmissiveColor( "Emissive Color", Color ) = (0,0,0,0)
 		[HideInInspector] _texcoord2( "", 2D ) = "white" {}
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
 
-	SubShader
-	{
-		Tags{ "RenderType" = "Opaque"  "Queue" = "Geometry+0" "IsEmissive" = "true"  }
-		Cull Back
-		CGPROGRAM
-		#pragma target 3.0
-		#pragma surface surf Standard keepalpha addshadow fullforwardshadows 
-		struct Input
+		SubShader
 		{
-			float2 uv_texcoord;
-			float2 uv2_texcoord2;
-		};
+			Tags{ "RenderType" = "Opaque"  "Queue" = "Geometry+0" "IsEmissive" = "true"  }
+			Cull Back
+			CGPROGRAM
+			#pragma target 3.0
+			#pragma surface surf Standard keepalpha addshadow fullforwardshadows
+			struct Input
+			{
+				float2 uv_texcoord;
+				float2 uv2_texcoord2;
+			};
 
-		uniform sampler2D _Texture;
-		uniform float4 _Texture_ST;
-		uniform float4 _BloodColor;
-		uniform sampler2D _Blood;
-		uniform float4 _Blood_ST;
-		uniform float _BloodAmount;
-		uniform sampler2D _Emissive;
-		uniform float4 _Emissive_ST;
-		uniform float4 _EmissiveColor;
-		uniform float4 _Spec;
-		uniform float _Smoothness;
+			uniform sampler2D _Texture;
+			uniform float4 _Texture_ST;
+			uniform float4 _BloodColor;
+			uniform sampler2D _Blood;
+			uniform float4 _Blood_ST;
+			uniform float _BloodAmount;
+			uniform sampler2D _Emissive;
+			uniform float4 _Emissive_ST;
+			uniform float4 _EmissiveColor;
+			uniform float4 _Spec;
+			uniform float _Smoothness;
 
-		void surf( Input i , inout SurfaceOutputStandard o )
-		{
-			float2 uv_Texture = i.uv_texcoord * _Texture_ST.xy + _Texture_ST.zw;
-			float2 uv2_Blood = i.uv2_texcoord2 * _Blood_ST.xy + _Blood_ST.zw;
-			float4 lerpResult33 = lerp( float4( 0,0,0,0 ) , tex2D( _Blood, uv2_Blood, float2( 0,0 ), float2( 0,0 ) ) , _BloodAmount);
-			float4 lerpResult18 = lerp( tex2D( _Texture, uv_Texture ) , _BloodColor , lerpResult33);
-			o.Albedo = lerpResult18.rgb;
-			float2 uv_Emissive = i.uv_texcoord * _Emissive_ST.xy + _Emissive_ST.zw;
-			o.Emission = ( tex2D( _Emissive, uv_Emissive ) * _EmissiveColor ).rgb;
-			o.Smoothness = ( _Spec * _Smoothness ).r;
-			o.Alpha = 1;
+			void surf( Input i , inout SurfaceOutputStandard o )
+			{
+				float2 uv_Texture = i.uv_texcoord * _Texture_ST.xy + _Texture_ST.zw;
+				float2 uv2_Blood = i.uv2_texcoord2 * _Blood_ST.xy + _Blood_ST.zw;
+				float4 lerpResult33 = lerp( float4(0,0,0,0) , tex2D( _Blood, uv2_Blood, float2(0,0), float2(0,0) ) , _BloodAmount );
+				float4 lerpResult18 = lerp( tex2D( _Texture, uv_Texture ) , _BloodColor , lerpResult33 );
+				o.Albedo = lerpResult18.rgb;
+				float2 uv_Emissive = i.uv_texcoord * _Emissive_ST.xy + _Emissive_ST.zw;
+				o.Emission = (tex2D( _Emissive, uv_Emissive ) * _EmissiveColor).rgb;
+				o.Smoothness = (_Spec * _Smoothness).r;
+				o.Alpha = 1;
+			}
+
+			ENDCG
 		}
-
-		ENDCG
-	}
-	Fallback "Diffuse"
-	CustomEditor "ASEMaterialInspector"
+			Fallback "Diffuse"
+				CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=16900
