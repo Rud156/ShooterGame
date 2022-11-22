@@ -6,5 +6,7 @@ namespace Player
         Walking,
         Running,
         Falling,
+
+        Custom
     };
 }

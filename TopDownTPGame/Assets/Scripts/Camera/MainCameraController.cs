@@ -15,7 +15,13 @@ namespace Camera
 
         #region Unity Functions
 
-        private void Start() => _mouseInput = new Vector2();
+        private void Start()
+        {
+            _mouseInput = new Vector2();
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
         private void Update() => HandleMouseInput();
 

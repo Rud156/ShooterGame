@@ -162,7 +162,7 @@ namespace Player.Base
             {
                 Vector3 groundedMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
                 groundedMovement.y = 0;
-                groundedMovement = groundedMovement.normalized * _currentStateVelocity;
+                groundedMovement = _currentStateVelocity * groundedMovement.normalized;
 
                 _characterVelocity.x = groundedMovement.x;
                 _characterVelocity.z = groundedMovement.z;
@@ -171,7 +171,7 @@ namespace Player.Base
             {
                 Vector3 airMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
                 airMovement.y = 0;
-                airMovement = _airControlMultiplier * airMovement.normalized * _currentStateVelocity;
+                airMovement = _airControlMultiplier * _currentStateVelocity * airMovement.normalized;
 
                 airMovement.x += _characterVelocity.x;
                 airMovement.z += _characterVelocity.z;
