@@ -35,7 +35,7 @@ namespace Camera
         {
             Vector3 cameraRotation = _cameraHolder.rotation.eulerAngles;
             cameraRotation.y += _mouseInput.x * _cameraRotationSpeed * Time.fixedDeltaTime;
-            cameraRotation.x += _mouseInput.y * _cameraRotationSpeed * Time.fixedDeltaTime;
+            cameraRotation.x += -_mouseInput.y * _cameraRotationSpeed * Time.fixedDeltaTime;
             cameraRotation.x = ExtensionFunctions.To360Angle(cameraRotation.x);
 
             // Clamp X Rotation

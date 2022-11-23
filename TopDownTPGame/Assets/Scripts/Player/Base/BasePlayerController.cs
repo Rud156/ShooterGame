@@ -1,3 +1,4 @@
+using Player.Common;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils.Input;
@@ -26,6 +27,7 @@ namespace Player.Base
         private Vector2 _coreMoveInput;
         private PlayerInputKey _runKey;
         private PlayerInputKey _jumpKey;
+        private PlayerInputKey _abilityMovementKey;
         private float _currentStateVelocity;
 
         // Movement/Controller
@@ -33,6 +35,9 @@ namespace Player.Base
         private List<PlayerState> _playerStateStack;
         private Vector3 _characterVelocity;
         private bool _isGrounded;
+
+        // Custom Movement
+        private AbilityMovement _abilityMovement;
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -49,11 +54,13 @@ namespace Player.Base
         {
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
+            _abilityMovement = GetComponent<AbilityMovement>();
 
             _coreMoveInput = new Vector2();
             _currentStateVelocity = 0;
             _runKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _jumpKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            _abilityMovementKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             PushPlayerState(PlayerState.Idle);
         }
@@ -67,9 +74,13 @@ namespace Player.Base
         {
             UpdateGroundedState();
             ProcessJumpInput();
+            ProcessCustomMovementInput();
             UpdatePlayerMovement();
 
-            ProcessGlobalGravity();
+            if (_playerStateStack[^1] != PlayerState.Custom)
+            {
+                ProcessGlobalGravity();
+            }
             ApplyFinalMovement();
 
             MarkFrameInputsAsRead();
@@ -97,6 +108,10 @@ namespace Player.Base
 
                 case PlayerState.Falling:
                     UpdateFallingState();
+                    break;
+
+                case PlayerState.Custom:
+                    UpdateCustomMovementState();
                     break;
             }
 
@@ -149,16 +164,39 @@ namespace Player.Base
             }
         }
 
+        private void UpdateCustomMovementState()
+        {
+            _characterVelocity = _abilityMovement.AbilityMove(_characterVelocity, _coreMoveInput);
+            if (_abilityMovement.AbilityNeedsToEnd())
+            {
+                _abilityMovement.EndAbility();
+                PopPlayerState();
+            }
+        }
+
         #endregion Movement
 
         #region Core Movement
+
+        private void ProcessCustomMovementInput()
+        {
+            if (_abilityMovementKey.keyPressedThisFrame && _abilityMovement.AbilityCanStart())
+            {
+                _abilityMovement.StartAbility();
+                PushPlayerState(PlayerState.Custom);
+            }
+        }
 
         private void UpdateCoreMovement()
         {
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
 
-            if (_playerStateStack[^1] == PlayerState.Falling)
+            // When Custom Apply Movement Directly
+            if (_playerStateStack[^1] == PlayerState.Custom)
+            {
+            }
+            else if (_playerStateStack[^1] != PlayerState.Falling)
             {
                 Vector3 groundedMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
                 groundedMovement.y = 0;
@@ -202,7 +240,7 @@ namespace Player.Base
                 _characterVelocity.y = 0;
             }
 
-            if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling)
+            if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling && _playerStateStack[^1] != PlayerState.Custom)
             {
                 PushPlayerState(PlayerState.Falling);
             }
@@ -249,6 +287,7 @@ namespace Player.Base
 
             _jumpKey.UpdateInputData(InputKeys.Jump);
             _runKey.UpdateInputData(InputKeys.Run);
+            _abilityMovementKey.UpdateInputData(InputKeys.AbilityMovement);
         }
 
         private void MarkFrameInputsAsRead()
@@ -258,6 +297,7 @@ namespace Player.Base
 
             _jumpKey.ResetPerFrameInput();
             _runKey.ResetPerFrameInput();
+            _abilityMovementKey.ResetPerFrameInput();
         }
 
         private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMoveInput.x, 0) && ExtensionFunctions.IsNearlyEqual(_coreMoveInput.y, 0);

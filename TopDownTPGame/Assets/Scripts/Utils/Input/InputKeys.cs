@@ -13,13 +13,7 @@ namespace Utils.Input
         // Movement Keys
         public const KeyCode Jump = KeyCode.Space;
         public const KeyCode Run = KeyCode.LeftShift;
-        public const KeyCode Crouch = KeyCode.LeftControl;
-        public const KeyCode CameraSwitchLeftKey = KeyCode.Q;
-        public const KeyCode CameraSwitchRightKey = KeyCode.E;
-
-        // Weapon Pickup Key
-        public const KeyCode WeaponPickup = KeyCode.F;
-        public const KeyCode WeaponDrop = KeyCode.G;
+        public const KeyCode AbilityMovement = KeyCode.Mouse3;
 
         // Weapon Attack
         public const KeyCode AttackPrimary = KeyCode.Mouse0;
