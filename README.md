@@ -4,8 +4,8 @@
 - [ ] Primary Ability (In Progress)
 - [ ] Secondary Ability
 - [ ] Ultimate Ability
-- [ ] Atleast 5 different character types
 - [ ] Abilities modify everything (Movement/Shooting/Controls etc.)
+- [ ] Atleast 5 different character types
 
 ## TODOs (Done)
 - [X] Player Movement
