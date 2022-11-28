@@ -28,6 +28,7 @@ namespace Player.Base
         private PlayerInputKey _runKey;
         private PlayerInputKey _jumpKey;
         private PlayerInputKey _ability_1_Key;
+        private PlayerInputKey _ability_2_Key;
         private float _currentStateVelocity;
 
         // Movement/Controller
@@ -36,8 +37,9 @@ namespace Player.Base
         private Vector3 _characterVelocity;
         private bool _isGrounded;
 
-        // Custom Movement
-        private Ability _abilityMovement;
+        // Custom Abilities
+        private Ability _ability_1;
+        private Ability _ability_2;
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -54,21 +56,21 @@ namespace Player.Base
         {
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
-            _abilityMovement = GetComponent<Ability>();
+            Ability[] abilityList = GetComponentsInChildren<Ability>();
+            _ability_1 = abilityList[0];
+            _ability_2 = abilityList[1];
 
             _coreMoveInput = new Vector2();
             _currentStateVelocity = 0;
             _runKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _jumpKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _ability_1_Key = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            _ability_2_Key = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             PushPlayerState(PlayerState.Idle);
         }
 
-        private void Update()
-        {
-            HandleKeyboardInput();
-        }
+        private void Update() => HandleKeyboardInput();
 
         private void FixedUpdate()
         {
@@ -82,6 +84,8 @@ namespace Player.Base
                 ProcessGlobalGravity();
             }
             ApplyFinalMovement();
+
+            ProcessOtherAbilities();
 
             MarkFrameInputsAsRead();
         }
@@ -166,10 +170,11 @@ namespace Player.Base
 
         private void UpdateCustomMovementState()
         {
-            _characterVelocity = _abilityMovement.AbilityUpdate(this);
-            if (_abilityMovement.AbilityNeedsToEnd())
+            _ability_1.AbilityUpdate(this);
+            _characterVelocity = _ability_1.GetMovementData();
+            if (_ability_1.AbilityNeedsToEnd())
             {
-                _abilityMovement.EndAbility();
+                _ability_1.EndAbility();
                 PopPlayerState();
             }
         }
@@ -181,10 +186,10 @@ namespace Player.Base
         private void ProcessCustomMovementInput()
         {
             if (_ability_1_Key.keyPressedThisFrame &&
-                _abilityMovement.AbilityCanStart() &&
-                _abilityMovement.GetAbilityType() == AbilityType.Movement)
+                _ability_1.AbilityCanStart() &&
+                _ability_1.GetAbilityType() == AbilityType.Movement)
             {
-                _abilityMovement.StartAbility();
+                _ability_1.StartAbility();
                 PushPlayerState(PlayerState.Custom);
             }
         }
@@ -267,6 +272,19 @@ namespace Player.Base
 
         #endregion Core Movement
 
+        #region Non Movement Abilities
+
+        private void ProcessOtherAbilities()
+        {
+            // TODO: Make sure ability keys are interchangable...
+            // DO NOT fix Movement to be Ability 1 etc...
+            if (_ability_2_Key.keyPressed)
+            {
+            }
+        }
+
+        #endregion Non Movement Abilities
+
         #region Player State
 
         private void PushPlayerState(PlayerState state)
@@ -294,6 +312,7 @@ namespace Player.Base
             _jumpKey.UpdateInputData(InputKeys.Jump);
             _runKey.UpdateInputData(InputKeys.Run);
             _ability_1_Key.UpdateInputData(InputKeys.AbilityMovement);
+            _ability_2_Key.UpdateInputData(InputKeys.AbilityPrimary);
         }
 
         private void MarkFrameInputsAsRead()
@@ -304,6 +323,7 @@ namespace Player.Base
             _jumpKey.ResetPerFrameInput();
             _runKey.ResetPerFrameInput();
             _ability_1_Key.ResetPerFrameInput();
+            _ability_2_Key.ResetPerFrameInput();
         }
 
         private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMoveInput.x, 0) && ExtensionFunctions.IsNearlyEqual(_coreMoveInput.y, 0);

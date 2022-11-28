@@ -12,10 +12,11 @@ namespace Player.Type_1
         [SerializeField] private float _dashVelocity;
 
         private float _currentDashTimeLeft;
+        private Vector3 _computedVelocity;
 
         public override void StartAbility() => _currentDashTimeLeft = _dashDuration;
 
-        public override Vector3 AbilityUpdate(BasePlayerController playerController)
+        public override void AbilityUpdate(BasePlayerController playerController)
         {
             Vector3 currentVelocity = playerController.GetCharacterVelocity();
             Vector3 coreInput = playerController.GetCoreMoveInput();
@@ -31,11 +32,9 @@ namespace Player.Type_1
                 coreInput.y = 1;
             }
 
-            Vector3 computedVelocity = forward * coreInput.y + right * coreInput.x;
-            computedVelocity = _dashVelocity * computedVelocity.normalized;
-            computedVelocity.y = currentVelocity.y;
-
-            return computedVelocity;
+            _computedVelocity = forward * coreInput.y + right * coreInput.x;
+            _computedVelocity = _dashVelocity * _computedVelocity.normalized;
+            _computedVelocity.y = currentVelocity.y;
         }
 
         public override void EndAbility()
@@ -45,5 +44,7 @@ namespace Player.Type_1
         public override bool AbilityCanStart() => true;
 
         public override bool AbilityNeedsToEnd() => _currentDashTimeLeft <= 0;
+
+        public override Vector3 GetMovementData() => _computedVelocity;
     }
 }

@@ -13,10 +13,10 @@ namespace Utils.Input
         // Movement Keys
         public const KeyCode Jump = KeyCode.Space;
         public const KeyCode Run = KeyCode.LeftShift;
-        public const KeyCode AbilityMovement = KeyCode.Mouse3;
 
-        // Weapon Attack
-        public const KeyCode AttackPrimary = KeyCode.Mouse0;
-        public const KeyCode AttackSecondary = KeyCode.Mouse1;
+        // Ability Keys
+        public const KeyCode AbilityPrimary = KeyCode.Mouse0;
+        public const KeyCode AbilitySecondary = KeyCode.Mouse1;
+        public const KeyCode AbilityMovement = KeyCode.Mouse3;
     }
 }

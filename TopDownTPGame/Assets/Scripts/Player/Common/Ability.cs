@@ -8,11 +8,10 @@ namespace Player.Common
         [Header("Core Ability Data")]
         [SerializeField] private AbilityType abilityType;
         [SerializeField] private float abilityChargeUpTime;
-        
 
         public abstract void StartAbility();
 
-        public abstract Vector3 AbilityUpdate(BasePlayerController playerController);
+        public abstract void AbilityUpdate(BasePlayerController playerController);
 
         public abstract void EndAbility();
 
@@ -21,5 +20,7 @@ namespace Player.Common
         public abstract bool AbilityNeedsToEnd();
 
         public AbilityType GetAbilityType() => abilityType;
+
+        public virtual Vector3 GetMovementData() => Vector3.zero;
     }
 }

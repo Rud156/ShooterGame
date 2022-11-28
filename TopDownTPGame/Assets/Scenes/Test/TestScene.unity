@@ -576,6 +576,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e8bdbc4ab03a445a032fa7a738dc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityType: 0
+  abilityChargeUpTime: 0
   _dashDuration: 0.25
   _dashVelocity: 50
 --- !u!1 &832575517
