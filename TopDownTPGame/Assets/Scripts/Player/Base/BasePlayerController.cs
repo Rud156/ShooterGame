@@ -27,7 +27,7 @@ namespace Player.Base
         private Vector2 _coreMoveInput;
         private PlayerInputKey _runKey;
         private PlayerInputKey _jumpKey;
-        private PlayerInputKey _abilityMovementKey;
+        private PlayerInputKey _ability_1_Key;
         private float _currentStateVelocity;
 
         // Movement/Controller
@@ -37,7 +37,7 @@ namespace Player.Base
         private bool _isGrounded;
 
         // Custom Movement
-        private AbilityMovement _abilityMovement;
+        private Ability _abilityMovement;
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -54,13 +54,13 @@ namespace Player.Base
         {
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
-            _abilityMovement = GetComponent<AbilityMovement>();
+            _abilityMovement = GetComponent<Ability>();
 
             _coreMoveInput = new Vector2();
             _currentStateVelocity = 0;
             _runKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _jumpKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
-            _abilityMovementKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            _ability_1_Key = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             PushPlayerState(PlayerState.Idle);
         }
@@ -166,7 +166,7 @@ namespace Player.Base
 
         private void UpdateCustomMovementState()
         {
-            _characterVelocity = _abilityMovement.AbilityMove(_characterVelocity, _coreMoveInput);
+            _characterVelocity = _abilityMovement.AbilityUpdate(this);
             if (_abilityMovement.AbilityNeedsToEnd())
             {
                 _abilityMovement.EndAbility();
@@ -180,7 +180,9 @@ namespace Player.Base
 
         private void ProcessCustomMovementInput()
         {
-            if (_abilityMovementKey.keyPressedThisFrame && _abilityMovement.AbilityCanStart())
+            if (_ability_1_Key.keyPressedThisFrame &&
+                _abilityMovement.AbilityCanStart() &&
+                _abilityMovement.GetAbilityType() == AbilityType.Movement)
             {
                 _abilityMovement.StartAbility();
                 PushPlayerState(PlayerState.Custom);
@@ -259,6 +261,10 @@ namespace Player.Base
 
         private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
 
+        public Vector3 GetCharacterVelocity() => _characterVelocity;
+
+        public float GetCurrentStateVelocity() => _currentStateVelocity;
+
         #endregion Core Movement
 
         #region Player State
@@ -287,7 +293,7 @@ namespace Player.Base
 
             _jumpKey.UpdateInputData(InputKeys.Jump);
             _runKey.UpdateInputData(InputKeys.Run);
-            _abilityMovementKey.UpdateInputData(InputKeys.AbilityMovement);
+            _ability_1_Key.UpdateInputData(InputKeys.AbilityMovement);
         }
 
         private void MarkFrameInputsAsRead()
@@ -297,10 +303,18 @@ namespace Player.Base
 
             _jumpKey.ResetPerFrameInput();
             _runKey.ResetPerFrameInput();
-            _abilityMovementKey.ResetPerFrameInput();
+            _ability_1_Key.ResetPerFrameInput();
         }
 
         private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMoveInput.x, 0) && ExtensionFunctions.IsNearlyEqual(_coreMoveInput.y, 0);
+
+        public Vector2 GetCoreMoveInput() => _coreMoveInput;
+
+        public PlayerInputKey GetJumpKey() => _jumpKey;
+
+        public PlayerInputKey GetRunKey() => _runKey;
+
+        public PlayerInputKey GetAbilityKey() => _ability_1_Key;
 
         #endregion Inputs
     }

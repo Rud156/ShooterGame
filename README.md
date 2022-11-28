@@ -14,4 +14,4 @@
     - [X] Basic movement should be similar to Bullet Hell games
         - [X] WASD Movement
         - [X] Run
-    - [X] Ability System for Movement (In Progress)
+    - [X] Ability System for Movement

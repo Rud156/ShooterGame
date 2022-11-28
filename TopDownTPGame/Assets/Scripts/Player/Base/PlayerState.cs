@@ -1,4 +1,4 @@
-namespace Player
+namespace Player.Base
 {
     public enum PlayerState
     {

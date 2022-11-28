@@ -1,11 +1,13 @@
+using Player.Base;
 using Player.Common;
 using UnityEngine;
 using Utils.Misc;
 
 namespace Player.Type_1
 {
-    public class Type_1_Dash : AbilityMovement
+    public class Type_1_Dash : Ability
     {
+        [Header("Dash Data")]
         [SerializeField] private float _dashDuration;
         [SerializeField] private float _dashVelocity;
 
@@ -13,8 +15,10 @@ namespace Player.Type_1
 
         public override void StartAbility() => _currentDashTimeLeft = _dashDuration;
 
-        public override Vector3 AbilityMove(Vector3 currentVelocity, Vector3 coreInput)
+        public override Vector3 AbilityUpdate(BasePlayerController playerController)
         {
+            Vector3 currentVelocity = playerController.GetCharacterVelocity();
+            Vector3 coreInput = playerController.GetCoreMoveInput();
             _currentDashTimeLeft -= Time.fixedDeltaTime;
 
             // Override X and Z
