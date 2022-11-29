@@ -23,12 +23,17 @@ namespace Player.Base
         [Header("Jump")]
         [SerializeField] private float _jumpVelocity;
 
+        [Header("Abilities")]
+        [SerializeField] private List<Ability> _playerAbilities;
+
         // Input
         private Vector2 _coreMoveInput;
         private PlayerInputKey _runKey;
         private PlayerInputKey _jumpKey;
         private PlayerInputKey _ability_1_Key;
         private PlayerInputKey _ability_2_Key;
+        private PlayerInputKey _ability_3_Key;
+        private PlayerInputKey _ultimateKey;
         private float _currentStateVelocity;
 
         // Movement/Controller
@@ -37,9 +42,8 @@ namespace Player.Base
         private Vector3 _characterVelocity;
         private bool _isGrounded;
 
-        // Custom Abilities
-        private Ability _ability_1;
-        private Ability _ability_2;
+        // Custom Ability
+        private Ability _currentActiveMovementAbility;
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -56,9 +60,6 @@ namespace Player.Base
         {
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
-            Ability[] abilityList = GetComponentsInChildren<Ability>();
-            _ability_1 = abilityList[0];
-            _ability_2 = abilityList[1];
 
             _coreMoveInput = new Vector2();
             _currentStateVelocity = 0;
@@ -66,6 +67,8 @@ namespace Player.Base
             _jumpKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _ability_1_Key = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _ability_2_Key = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            _ability_3_Key = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            _ultimateKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             PushPlayerState(PlayerState.Idle);
         }
@@ -170,11 +173,18 @@ namespace Player.Base
 
         private void UpdateCustomMovementState()
         {
-            _ability_1.AbilityUpdate(this);
-            _characterVelocity = _ability_1.GetMovementData();
-            if (_ability_1.AbilityNeedsToEnd())
+            if (_currentActiveMovementAbility != null)
             {
-                _ability_1.EndAbility();
+                PopPlayerState();
+                return;
+            }
+
+            _currentActiveMovementAbility.AbilityUpdate(this);
+            _characterVelocity = _currentActiveMovementAbility.GetMovementData();
+            if (_currentActiveMovementAbility.AbilityNeedsToEnd())
+            {
+                _currentActiveMovementAbility.EndAbility();
+                _currentActiveMovementAbility = null;
                 PopPlayerState();
             }
         }
@@ -185,12 +195,20 @@ namespace Player.Base
 
         private void ProcessCustomMovementInput()
         {
-            if (_ability_1_Key.keyPressedThisFrame &&
-                _ability_1.AbilityCanStart() &&
-                _ability_1.GetAbilityType() == AbilityType.Movement)
+            foreach (Ability ability in _playerAbilities)
             {
-                _ability_1.StartAbility();
-                PushPlayerState(PlayerState.Custom);
+                PlayerInputKey key = GetKeyForAbilityTrigger(ability.GetAbilityTrigger());
+
+                if (ability.GetAbilityType() == AbilityType.Movement &&
+                    ability.AbilityCanStart() &&
+                    key.keyPressedThisFrame &&
+                    _currentActiveMovementAbility == null)
+                {
+                    _currentActiveMovementAbility = ability;
+                    _currentActiveMovementAbility.StartAbility();
+                    PushPlayerState(PlayerState.Custom);
+                    break;
+                }
             }
         }
 
@@ -276,11 +294,7 @@ namespace Player.Base
 
         private void ProcessOtherAbilities()
         {
-            // TODO: Make sure ability keys are interchangable...
-            // DO NOT fix Movement to be Ability 1 etc...
-            if (_ability_2_Key.keyPressed)
-            {
-            }
+            // TODO: Complete this function...
         }
 
         #endregion Non Movement Abilities
@@ -313,6 +327,8 @@ namespace Player.Base
             _runKey.UpdateInputData(InputKeys.Run);
             _ability_1_Key.UpdateInputData(InputKeys.AbilityMovement);
             _ability_2_Key.UpdateInputData(InputKeys.AbilityPrimary);
+            _ability_3_Key.UpdateInputData(InputKeys.AbilityPrimary);
+            _ultimateKey.UpdateInputData(InputKeys.AbilityPrimary);
         }
 
         private void MarkFrameInputsAsRead()
@@ -324,9 +340,31 @@ namespace Player.Base
             _runKey.ResetPerFrameInput();
             _ability_1_Key.ResetPerFrameInput();
             _ability_2_Key.ResetPerFrameInput();
+            _ability_3_Key.ResetPerFrameInput();
+            _ultimateKey.ResetPerFrameInput();
         }
 
         private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMoveInput.x, 0) && ExtensionFunctions.IsNearlyEqual(_coreMoveInput.y, 0);
+
+        private PlayerInputKey GetKeyForAbilityTrigger(AbilityTrigger abilityTrigger)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    return _ability_1_Key;
+
+                case AbilityTrigger.Secondary:
+                    return _ability_2_Key;
+
+                case AbilityTrigger.Tertiary:
+                    return _ability_3_Key;
+
+                case AbilityTrigger.Ultimate:
+                    return _ultimateKey;
+            }
+
+            throw new System.Exception("Invalid Trigger Type");
+        }
 
         public Vector2 GetCoreMoveInput() => _coreMoveInput;
 

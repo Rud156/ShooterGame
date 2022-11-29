@@ -548,6 +548,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _jumpVelocity: 30
+  _playerAbilities:
+  - {fileID: 680768253}
 --- !u!114 &680768252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,8 +578,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e8bdbc4ab03a445a032fa7a738dc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityType: 0
-  abilityChargeUpTime: 0
+  _abilityTrigger: 0
+  _abilityType: 0
+  _abilityChargeUpTime: 0
   _dashDuration: 0.25
   _dashVelocity: 50
 --- !u!1 &832575517

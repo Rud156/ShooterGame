@@ -6,7 +6,7 @@ namespace Projectiles
     public class SimpleOneShotForwardProjectile : MonoBehaviour, IProjectile
     {
         [Header("Prjectile Data")]
-        [SerializeField] private float projectileLaunchForce;
+        [SerializeField] private float projectileLaunchVelocity;
         [SerializeField] private float projectileDestroyTime;
 
         private float _currentTimeLeft;
@@ -39,7 +39,7 @@ namespace Projectiles
         public void LaunchProjectile(Vector3 direction)
         {
             _isLaunched = true;
-            _rb.AddForce(direction * projectileLaunchForce, ForceMode.Impulse);
+            _rb.velocity = direction * projectileLaunchVelocity;
             _currentTimeLeft = projectileDestroyTime;
         }
 
