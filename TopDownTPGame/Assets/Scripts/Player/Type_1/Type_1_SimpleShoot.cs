@@ -16,10 +16,7 @@ namespace Player.Type_1
 
         public override bool AbilityCanStart() => true;
 
-        public override bool AbilityNeedsToEnd()
-        {
-            return false;
-        }
+        public override bool AbilityNeedsToEnd() => false;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {

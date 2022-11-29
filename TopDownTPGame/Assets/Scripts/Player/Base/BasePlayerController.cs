@@ -295,6 +295,11 @@ namespace Player.Base
         private void ProcessOtherAbilities()
         {
             // TODO: Complete this function...
+            foreach (Ability ability in _playerAbilities)
+            {
+                AbilityTrigger abilityTrigger = ability.GetAbilityTrigger();
+                AbilityType abilityType = ability.GetAbilityType();
+            }
         }
 
         #endregion Non Movement Abilities
