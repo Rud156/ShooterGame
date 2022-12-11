@@ -13,10 +13,11 @@ namespace Player.Type_1
         [SerializeField] private GameObject projectilePrefab;
 
         private float _lastShootTime;
+        private bool _abilityEnd;
 
         public override bool AbilityCanStart() => true;
 
-        public override bool AbilityNeedsToEnd() => false;
+        public override bool AbilityNeedsToEnd() => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
@@ -32,10 +33,24 @@ namespace Player.Type_1
             }
 
             _lastShootTime -= Time.fixedDeltaTime;
+
+            ActiveAbilityData currentAbility = playerController.GetCurrentAbility();
+            if (currentAbility.abilityKey.keyReleasedThisFrame)
+            {
+                _abilityEnd = true;
+            }
         }
 
-        public override void EndAbility() => _lastShootTime = 0;
+        public override void EndAbility()
+        {
+            _lastShootTime = 0;
+            _abilityEnd = true;
+        }
 
-        public override void StartAbility() => _lastShootTime = 0;
+        public override void StartAbility()
+        {
+            _lastShootTime = 0;
+            _abilityEnd = false;
+        }
     }
 }

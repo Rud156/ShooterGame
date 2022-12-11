@@ -43,7 +43,7 @@ namespace Player.Base
         private bool _isGrounded;
 
         // Custom Ability
-        private Ability _currentActiveMovementAbility;
+        private ActiveAbilityData _currentAbility;
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -70,6 +70,8 @@ namespace Player.Base
             _ability_3_Key = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _ultimateKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
+            _currentAbility = new ActiveAbilityData();
+
             PushPlayerState(PlayerState.Idle);
         }
 
@@ -79,17 +81,17 @@ namespace Player.Base
         {
             UpdateGroundedState();
             ProcessJumpInput();
-            ProcessCustomMovementInput();
+            CheckAndActivateCustomMovementAbility();
             UpdatePlayerMovement();
 
             if (_playerStateStack[^1] != PlayerState.Custom)
             {
                 ProcessGlobalGravity();
             }
+
             ApplyFinalMovement();
-
-            ProcessOtherAbilities();
-
+            CheckAndActivateOtherAbilities();
+            UpdateCustomAbilities();
             MarkFrameInputsAsRead();
         }
 
@@ -173,18 +175,18 @@ namespace Player.Base
 
         private void UpdateCustomMovementState()
         {
-            if (_currentActiveMovementAbility != null)
+            if (!_currentAbility.IsValid())
             {
                 PopPlayerState();
                 return;
             }
 
-            _currentActiveMovementAbility.AbilityUpdate(this);
-            _characterVelocity = _currentActiveMovementAbility.GetMovementData();
-            if (_currentActiveMovementAbility.AbilityNeedsToEnd())
+            _currentAbility.ability.AbilityUpdate(this);
+            _characterVelocity = _currentAbility.ability.GetMovementData();
+            if (_currentAbility.ability.AbilityNeedsToEnd())
             {
-                _currentActiveMovementAbility.EndAbility();
-                _currentActiveMovementAbility = null;
+                _currentAbility.ability.EndAbility();
+                _currentAbility.Clear();
                 PopPlayerState();
             }
         }
@@ -193,8 +195,13 @@ namespace Player.Base
 
         #region Core Movement
 
-        private void ProcessCustomMovementInput()
+        private void CheckAndActivateCustomMovementAbility()
         {
+            if (_currentAbility.IsValid())
+            {
+                return;
+            }
+
             foreach (Ability ability in _playerAbilities)
             {
                 PlayerInputKey key = GetKeyForAbilityTrigger(ability.GetAbilityTrigger());
@@ -202,10 +209,13 @@ namespace Player.Base
                 if (ability.GetAbilityType() == AbilityType.Movement &&
                     ability.AbilityCanStart() &&
                     key.keyPressedThisFrame &&
-                    _currentActiveMovementAbility == null)
+                    !_currentAbility.IsValid())
                 {
-                    _currentActiveMovementAbility = ability;
-                    _currentActiveMovementAbility.StartAbility();
+                    _currentAbility.ability = ability;
+                    _currentAbility.abilityKey = key;
+                    _currentAbility.isMovement = true;
+
+                    _currentAbility.ability.StartAbility();
                     PushPlayerState(PlayerState.Custom);
                     break;
                 }
@@ -292,15 +302,47 @@ namespace Player.Base
 
         #region Non Movement Abilities
 
-        private void ProcessOtherAbilities()
+        private void CheckAndActivateOtherAbilities()
         {
-            // TODO: Complete this function...
+            if (_currentAbility.IsValid())
+            {
+                return;
+            }
+
             foreach (Ability ability in _playerAbilities)
             {
                 AbilityTrigger abilityTrigger = ability.GetAbilityTrigger();
-                AbilityType abilityType = ability.GetAbilityType();
+                PlayerInputKey key = GetKeyForAbilityTrigger(abilityTrigger);
+
+                if (ability.AbilityCanStart() && !_currentAbility.IsValid() && key.keyPressedThisFrame)
+                {
+                    _currentAbility.ability = ability;
+                    _currentAbility.abilityKey = key;
+                    _currentAbility.isMovement = false;
+
+                    _currentAbility.ability.StartAbility();
+                    break;
+                }
             }
         }
+
+        private void UpdateCustomAbilities()
+        {
+            // This means there is an ability not active OR the ability active is only for Movement
+            if (!_currentAbility.IsValid() || _playerStateStack[^1] == PlayerState.Custom)
+            {
+                return;
+            }
+
+            _currentAbility.ability.AbilityUpdate(this);
+            if (_currentAbility.ability.AbilityNeedsToEnd())
+            {
+                _currentAbility.ability.EndAbility();
+                _currentAbility.Clear();
+            }
+        }
+
+        public ActiveAbilityData GetCurrentAbility() => _currentAbility;
 
         #endregion Non Movement Abilities
 
