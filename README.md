@@ -1,11 +1,10 @@
 # Top Down Third Person Game
 
 ## TODOs (Current)
-- [ ] Primary Ability (In Progress)
-- [ ] Secondary Ability
-- [ ] Ultimate Ability
-- [ ] Abilities modify everything (Movement/Shooting/Controls etc.)
-- [ ] Atleast 5 different character types
+- [X] Primary Ability
+- [X] Secondary Ability
+- [X] Ultimate Ability
+- [X] Abilities modify everything (Movement/Shooting/Controls etc.)
 
 ## TODOs (Done)
 - [X] Player Movement

@@ -8,7 +8,6 @@ namespace Player.Common
         [Header("Core Ability Data")]
         [SerializeField] private AbilityTrigger _abilityTrigger;
         [SerializeField] private AbilityType _abilityType;
-        [SerializeField] private float _abilityChargeUpTime;
 
         #region Core Ability Functions
 

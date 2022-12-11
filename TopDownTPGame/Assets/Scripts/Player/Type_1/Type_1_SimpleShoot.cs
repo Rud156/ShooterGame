@@ -2,6 +2,7 @@ using Player.Base;
 using Player.Common;
 using Projectiles;
 using UnityEngine;
+using Utils.Input;
 
 namespace Player.Type_1
 {
@@ -34,8 +35,8 @@ namespace Player.Type_1
 
             _lastShootTime -= Time.fixedDeltaTime;
 
-            ActiveAbilityData currentAbility = playerController.GetCurrentAbility();
-            if (currentAbility.abilityKey.keyReleasedThisFrame)
+            PlayerInputKey inputKey = playerController.GetKeyForAbilityTrigger(GetAbilityTrigger());
+            if (inputKey.keyReleasedThisFrame || !inputKey.keyPressed)
             {
                 _abilityEnd = true;
             }

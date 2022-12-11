@@ -13,9 +13,11 @@ namespace Projectiles
         private Rigidbody _rb;
         private bool _isLaunched;
 
+        private bool _isInitialized = false;
+
         #region Unity Functions
 
-        private void Start() => _rb = GetComponent<Rigidbody>();
+        private void Start() => Init();
 
         private void FixedUpdate()
         {
@@ -38,6 +40,8 @@ namespace Projectiles
 
         public void LaunchProjectile(Vector3 direction)
         {
+            Init();
+
             _isLaunched = true;
             _rb.velocity = direction * projectileLaunchVelocity;
             _currentTimeLeft = projectileDestroyTime;
@@ -54,5 +58,20 @@ namespace Projectiles
         }
 
         #endregion External Functions
+
+        #region Utils
+
+        private void Init()
+        {
+            if (_isInitialized)
+            {
+                return;
+            }
+
+            _rb = GetComponent<Rigidbody>();
+            _isInitialized = true;
+        }
+
+        #endregion Utils
     }
 }
