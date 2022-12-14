@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -196,9 +196,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 12
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 12
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -270,6 +278,9 @@ MonoBehaviour:
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -380,14 +391,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 1
+  m_Version: 2
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
+  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
   m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 1
 --- !u!1 &515246939
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +448,9 @@ GameObject:
   - component: {fileID: 680768251}
   - component: {fileID: 680768252}
   - component: {fileID: 680768254}
+  - component: {fileID: 680768255}
   - component: {fileID: 680768253}
+  - component: {fileID: 680768256}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -518,9 +534,17 @@ CharacterController:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680768245}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
@@ -552,7 +576,9 @@ MonoBehaviour:
   _jumpVelocity: 30
   _playerAbilities:
   - {fileID: 680768254}
+  - {fileID: 680768255}
   - {fileID: 680768253}
+  - {fileID: 680768256}
 --- !u!114 &680768252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,7 +609,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityTrigger: 2
   _abilityType: 0
-  _abilityChargeUpTime: 0
   _dashDuration: 0.25
   _dashVelocity: 50
 --- !u!114 &680768254
@@ -600,11 +625,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityTrigger: 0
   _abilityType: 1
-  _abilityChargeUpTime: 0
-  fireRate: 0.35
-  shootPoint: {fileID: 693097133}
-  projectilePrefab: {fileID: 3515318782041256082, guid: 76baa5bf0a6dcff498d25a2276ada752,
+  _fireRate: 0.3
+  _shootPoint: {fileID: 693097133}
+  _projectilePrefab: {fileID: 3515318782041256082, guid: 76baa5bf0a6dcff498d25a2276ada752,
     type: 3}
+--- !u!114 &680768255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680768245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0fe40e20a63aa944a758f0feb57230a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityTrigger: 1
+  _abilityType: 1
+  _minChargeDuration: 1
+  _maxChargeDuration: 1.5
+  _shootPoint: {fileID: 693097133}
+  _chargedObjectPrefab: {fileID: 3515318782041256082, guid: 76baa5bf0a6dcff498d25a2276ada752,
+    type: 3}
+--- !u!114 &680768256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680768245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97c83c25cd6f3147bdf961842f727b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityTrigger: 3
+  _abilityType: 1
 --- !u!1 &693097132
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,9 +801,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654355030}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1654355032

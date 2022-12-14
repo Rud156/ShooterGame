@@ -5,7 +5,7 @@ using Utils.Misc;
 
 namespace Player.Type_1
 {
-    public class Type_1_Dash : Ability
+    public class Type_1_Tertiary_Dash : Ability
     {
         [Header("Dash Data")]
         [SerializeField] private float _dashDuration;

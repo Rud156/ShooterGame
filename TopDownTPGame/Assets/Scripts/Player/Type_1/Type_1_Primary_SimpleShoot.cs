@@ -6,12 +6,12 @@ using Utils.Input;
 
 namespace Player.Type_1
 {
-    public class Type_1_SimpleShoot : Ability
+    public class Type_1_Primary_SimpleShoot : Ability
     {
         [Header("Simple Shoot Data")]
-        [SerializeField] private float fireRate;
-        [SerializeField] private Transform shootPoint;
-        [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private float _fireRate;
+        [SerializeField] private Transform _shootPoint;
+        [SerializeField] private GameObject _projectilePrefab;
 
         private float _lastShootTime;
         private bool _abilityEnd;
@@ -24,11 +24,11 @@ namespace Player.Type_1
         {
             if (_lastShootTime <= 0)
             {
-                _lastShootTime = fireRate;
-                Vector3 spawnPosition = shootPoint.position;
+                _lastShootTime = _fireRate;
+                Vector3 spawnPosition = _shootPoint.position;
                 Vector3 direction = transform.forward;
 
-                GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+                GameObject projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 SimpleOneShotForwardProjectile simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
                 simpleProj.LaunchProjectile(direction);
             }

@@ -6,15 +6,9 @@ namespace Utils.Misc
     {
         private const float FloatTolerance = 0.1f;
 
-        public static bool IsNearlyEqual(float a, float b)
-        {
-            return Mathf.Abs(a - b) <= FloatTolerance;
-        }
+        public static bool IsNearlyEqual(float a, float b) => Mathf.Abs(a - b) <= FloatTolerance;
 
-        public static bool IsNearlyEqual(float a, float b, float tolerance)
-        {
-            return Mathf.Abs(a - b) <= tolerance;
-        }
+        public static bool IsNearlyEqual(float a, float b, float tolerance) => Mathf.Abs(a - b) <= tolerance;
 
         public static float Map(float from, float fromMin, float fromMax, float toMin, float toMax)
         {

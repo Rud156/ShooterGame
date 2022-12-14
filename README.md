@@ -1,19 +1,14 @@
 # Top Down Third Person Game
 
 ## TODOs (Current)
-- [ ]  Type 1 - Default Call of Duty Character
-    - [X]  Ability Primary - Simple Shooting
-    - [ ]  Ability Secondary - Sojourn Charge
-    - [X]  Ability Tertiary - Dash
-    - [ ]  Ability Ultimate - All abilities cooldowns decreased for allies in range
-
-## TODOs (Future)
-### All characters heals HP when not in combat after sometime.
 - [ ]  Type 2 - Water Bender
     - [ ]  Ability Primary - Water bending control a bubble of water and use it to attack enemies
     - [ ]  Ability Secondary - Charged water slash
     - [ ]  Ability Tertiary - Become water and move anywhere without taking damage
     - [ ]  Ability Ultimate - Water bubble to trap enemy
+
+## TODOs (Future)
+### All characters heals HP when not in combat after sometime.
 - [ ]  Type 3 - Darkness
     - [ ]  Ability Primary - Shoot bolts to mark enemies who take damage overtime
     - [ ]  Ability Secondary - Charge to shoot a blast forward and increase the damage from primary for sometime
@@ -28,7 +23,9 @@
     - [ ]  Ability Primary - Place a Turret that deals damage
     - [ ]  Ability Secondary - Grenade Cluster that also knockbacks enemies a small amount
     - [ ]  Ability Tertiary - Gibraltar shield from Apex
-    - [ ]  Ability Ultimate - Allies get movement speed buff and a protective shield around them which deals a small amount of damage when in contact with enemy
+    - [ ]  Ability Ultimate - Allies get movement speed buff and a protective shield around them
+- [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
+- [ ] Add Damage and Health Systems (Both must be modifiable by effects)
 
 ## TODOs (Done)
 - [X] Player Movement
@@ -43,4 +40,8 @@
     - [X] Ultimate Ability
     - [X] Abilities modify everything (Movement/Shooting/Controls etc.)
 
-
+- [X]  Type 1 - Default Call of Duty Character
+    - [X]  Ability Primary - Simple Shooting
+    - [X]  Ability Secondary - Sojourn Charge
+    - [X]  Ability Tertiary - Dash
+    - [X]  Ability Ultimate - All abilities cooldowns decreased for allies in range
