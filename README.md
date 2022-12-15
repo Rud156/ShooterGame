@@ -9,21 +9,21 @@
 
 ## TODOs (Future)
 ### All characters heals HP when not in combat after sometime.
-- [ ]  Type 3 - Darkness
-    - [ ]  Ability Primary - Shoot bolts to mark enemies who take damage overtime
-    - [ ]  Ability Secondary - Charge to shoot a blast forward and increase the damage from primary for sometime
+- [ ]  Type 3 - Darkness (Fade)
+    - [ ]  Ability Primary - Shoot bolts to mark enemies who take damage over time
+    - [ ]  Ability Secondary - Charge to shoot a blast forward and increase the damage from primary for some time
     - [ ]  Ability Tertiary - Shadow Movement
-    - [ ]  Ability Ultimate - Inflict Paranoia as a pulse
-- [ ]  Type 4 - Fire Dragon
-    - [ ]  Ability Primary - Fire Breath
-    - [ ]  Ability Secondary - Fireball. Charge up to deal more damage
-    - [ ]  Ability Tertiary - Fire Dragon wing attack. Dash in any direction damaging anything in path
-    - [ ]  Ability Ultimate - Meteor Strike
-- [ ]  Type 5 - Engineer
+    - [ ]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse
+- [ ]  Type 4 - Grenadier (Raze)
+    - [ ]  Ability Primary - Slow shooting sticky bombs XD (cringe... sorry Raze)
+    - [ ]  Ability Secondary - Soldier 76 Grenades
+    - [ ]  Ability Tertiary - Fine… Raze Satchel
+    - [ ]  Ability Ultimate - Here comes the party! :D
+- [ ]  Type 5 - Engineer (Killjoy)
     - [ ]  Ability Primary - Place a Turret that deals damage
     - [ ]  Ability Secondary - Grenade Cluster that also knockbacks enemies a small amount
     - [ ]  Ability Tertiary - Gibraltar shield from Apex
-    - [ ]  Ability Ultimate - Allies get movement speed buff and a protective shield around them
+    - [ ]  Ability Ultimate - Allies get a movement speed buff and a protective shield around them
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
 - [ ] Add Damage and Health Systems (Both must be modifiable by effects)
 
