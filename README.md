@@ -2,10 +2,10 @@
 
 ## TODOs (Current)
 - [ ]  Type 2 - Water Bender
-    - [ ]  Ability Primary - Water bending control a bubble of water and use it to attack enemies
-    - [ ]  Ability Secondary - Charged water slash
+    - [ ]  Ability Primary - Water bending controls a bubble of water and uses it to attack enemies
+    - [ ]  Ability Secondary - Cause the primary bubble created to explode dealing AOE damage
     - [ ]  Ability Tertiary - Become water and move anywhere without taking damage
-    - [ ]  Ability Ultimate - Water bubble to trap enemy
+    - [ ]  Ability Ultimate - Water bubble to trap the enemy
 
 ## TODOs (Future)
 ### All characters heals HP when not in combat after sometime.
