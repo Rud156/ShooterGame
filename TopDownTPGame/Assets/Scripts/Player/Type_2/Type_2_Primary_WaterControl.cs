@@ -17,7 +17,9 @@ namespace Player.Type_2
 
         [Header("Water Lines Data")]
         [SerializeField] private SplineContainer _leftSlash;
+        [SerializeField] private AnimationCurve _leftEaseCurve;
         [SerializeField] private SplineContainer _rightSlash;
+        [SerializeField] private AnimationCurve _rightEaseCurve;
         [SerializeField] private float _slashDuration;
         [SerializeField] private float _resetDuration;
 
@@ -120,11 +122,17 @@ namespace Player.Type_2
             switch (waterControlState)
             {
                 case WaterControlState.LeftSlash:
-                    position = _leftSlash.EvaluatePosition(0, percent);
+                    {
+                        float mappedPercent = _leftEaseCurve.Evaluate(percent);
+                        position = _leftSlash.EvaluatePosition(0, mappedPercent);
+                    }
                     break;
 
                 case WaterControlState.RightSlash:
-                    position = _rightSlash.EvaluatePosition(0, percent);
+                    {
+                        float mappedPercent = _rightEaseCurve.Evaluate(percent);
+                        position = _rightSlash.EvaluatePosition(0, mappedPercent);
+                    }
                     break;
 
                 case WaterControlState.ShootFront:
