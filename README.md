@@ -3,7 +3,7 @@
 ## TODOs (Current)
 - [ ]  Type 2 - Water Bender
     - [X]  Ability Primary - Water slash attacks since if the player swings around their camera too much the game experience will not be good
-    - [ ]  Ability Secondary - Create an Ice Wall that block incoming damage (Can be Broken)
+    - [X]  Ability Secondary - Create an Ice Wall that block incoming damage (Can be Broken)
     - [ ]  Ability Tertiary - Become water and move anywhere without taking damage
     - [ ]  Ability Ultimate - Water bubble to trap the enemy
 
