@@ -15,7 +15,7 @@ namespace Player.Type_2
 
         public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded;
 
-        public override bool AbilityNeedsToEnd() => _abilityEnd;
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
@@ -30,9 +30,9 @@ namespace Player.Type_2
             _abilityEnd = true;
         }
 
-        public override void EndAbility() => _abilityEnd = true;
+        public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
-        public override void StartAbility()
+        public override void StartAbility(BasePlayerController playerController)
         {
             // Don't do anything here...
         }

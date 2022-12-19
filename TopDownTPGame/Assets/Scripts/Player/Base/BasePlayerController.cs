@@ -186,9 +186,9 @@ namespace Player.Base
 
             _currentAbility.AbilityUpdate(this);
             _characterVelocity = _currentAbility.GetMovementData();
-            if (_currentAbility.AbilityNeedsToEnd())
+            if (_currentAbility.AbilityNeedsToEnd(this))
             {
-                _currentAbility.EndAbility();
+                _currentAbility.EndAbility(this);
                 OnPlayerAbilityEnded?.Invoke(_currentAbility);
                 _currentAbility = null;
                 PopPlayerState();
@@ -217,7 +217,7 @@ namespace Player.Base
                 {
                     _currentAbility = ability;
 
-                    _currentAbility.StartAbility();
+                    _currentAbility.StartAbility(this);
                     OnPlayerAbilityStarted?.Invoke(_currentAbility);
                     PushPlayerState(PlayerState.Custom);
                     break;
@@ -322,7 +322,7 @@ namespace Player.Base
                 {
                     _currentAbility = ability;
 
-                    _currentAbility.StartAbility();
+                    _currentAbility.StartAbility(this);
                     OnPlayerAbilityStarted?.Invoke(_currentAbility);
                     break;
                 }
@@ -338,9 +338,9 @@ namespace Player.Base
             }
 
             _currentAbility.AbilityUpdate(this);
-            if (_currentAbility.AbilityNeedsToEnd())
+            if (_currentAbility.AbilityNeedsToEnd(this))
             {
-                _currentAbility.EndAbility();
+                _currentAbility.EndAbility(this);
                 OnPlayerAbilityEnded?.Invoke(_currentAbility);
                 _currentAbility = null;
             }

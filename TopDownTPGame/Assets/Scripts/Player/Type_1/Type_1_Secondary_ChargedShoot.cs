@@ -19,7 +19,7 @@ namespace Player.Type_1
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
-        public override bool AbilityNeedsToEnd() => _abilityEnd;
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
@@ -44,13 +44,13 @@ namespace Player.Type_1
             }
         }
 
-        public override void EndAbility()
+        public override void EndAbility(BasePlayerController playerController)
         {
             _abilityEnd = true;
             _currentChargeTime = 0;
         }
 
-        public override void StartAbility()
+        public override void StartAbility(BasePlayerController playerController)
         {
             _abilityEnd = false;
             _currentChargeTime = 0;

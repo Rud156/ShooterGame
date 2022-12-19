@@ -14,7 +14,7 @@ namespace Player.Type_1
         private float _currentDashTimeLeft;
         private Vector3 _computedVelocity;
 
-        public override void StartAbility() => _currentDashTimeLeft = _dashDuration;
+        public override void StartAbility(BasePlayerController playerController) => _currentDashTimeLeft = _dashDuration;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
@@ -37,13 +37,13 @@ namespace Player.Type_1
             _computedVelocity.y = currentVelocity.y;
         }
 
-        public override void EndAbility()
+        public override void EndAbility(BasePlayerController playerController)
         {
         }
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
-        public override bool AbilityNeedsToEnd() => _currentDashTimeLeft <= 0;
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _currentDashTimeLeft <= 0;
 
         public override Vector3 GetMovementData() => _computedVelocity;
     }

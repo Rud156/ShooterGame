@@ -11,15 +11,15 @@ namespace Player.Common
 
         #region Core Ability Functions
 
-        public abstract void StartAbility();
+        public abstract void StartAbility(BasePlayerController playerController);
 
         public abstract void AbilityUpdate(BasePlayerController playerController);
 
-        public abstract void EndAbility();
+        public abstract void EndAbility(BasePlayerController playerController);
 
         public abstract bool AbilityCanStart(BasePlayerController playerController);
 
-        public abstract bool AbilityNeedsToEnd();
+        public abstract bool AbilityNeedsToEnd(BasePlayerController playerController);
 
         #endregion Core Ability Functions
 
