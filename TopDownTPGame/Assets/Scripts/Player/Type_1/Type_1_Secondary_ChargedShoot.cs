@@ -1,6 +1,6 @@
+using AbilityScripts.Projectiles;
 using Player.Base;
 using Player.Common;
-using Projectiles;
 using UnityEngine;
 using Utils.Input;
 
@@ -17,7 +17,7 @@ namespace Player.Type_1
         private bool _abilityEnd;
         private float _currentChargeTime;
 
-        public override bool AbilityCanStart() => true;
+        public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
         public override bool AbilityNeedsToEnd() => _abilityEnd;
 

@@ -40,6 +40,7 @@ namespace Player.Base
         private CharacterController _characterController;
         private List<PlayerState> _playerStateStack;
         private Vector3 _characterVelocity;
+        public bool IsGrounded => _isGrounded;
         private bool _isGrounded;
 
         // Custom Ability
@@ -210,7 +211,7 @@ namespace Player.Base
                 PlayerInputKey key = GetKeyForAbilityTrigger(ability.GetAbilityTrigger());
 
                 if (ability.GetAbilityType() == AbilityType.Movement &&
-                    ability.AbilityCanStart() &&
+                    ability.AbilityCanStart(this) &&
                     key.keyPressedThisFrame &&
                     _currentAbility == null)
                 {
@@ -317,7 +318,7 @@ namespace Player.Base
                 AbilityTrigger abilityTrigger = ability.GetAbilityTrigger();
                 PlayerInputKey key = GetKeyForAbilityTrigger(abilityTrigger);
 
-                if (ability.AbilityCanStart() && _currentAbility == null && key.keyPressedThisFrame)
+                if (ability.AbilityCanStart(this) && _currentAbility == null && key.keyPressedThisFrame)
                 {
                     _currentAbility = ability;
 

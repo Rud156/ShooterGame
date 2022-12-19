@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Projectiles
+namespace AbilityScripts.Projectiles
 {
     public interface IProjectile
     {

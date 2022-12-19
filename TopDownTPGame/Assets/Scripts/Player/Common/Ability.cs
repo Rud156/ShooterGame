@@ -17,7 +17,7 @@ namespace Player.Common
 
         public abstract void EndAbility();
 
-        public abstract bool AbilityCanStart();
+        public abstract bool AbilityCanStart(BasePlayerController playerController);
 
         public abstract bool AbilityNeedsToEnd();
 

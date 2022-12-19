@@ -6,7 +6,7 @@ namespace Player.Type_1
 {
     public class Type_1_Ulitimate : Ability
     {
-        public override bool AbilityCanStart() => true;
+        public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
         // This is a one time ability and so needs to end instantly...
         public override bool AbilityNeedsToEnd() => true;

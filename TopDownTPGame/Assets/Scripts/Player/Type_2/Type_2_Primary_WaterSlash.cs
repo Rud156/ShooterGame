@@ -1,6 +1,6 @@
+using AbilityScripts.Projectiles;
 using Player.Base;
 using Player.Common;
-using Projectiles;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Splines;
@@ -8,7 +8,7 @@ using UnityEngine.Splines;
 namespace Player.Type_2
 {
     // This attack is comprised of 1 Right Slash, 1 Left Slash and then a Shoot front attack
-    public class Type_2_Primary_WaterControl : Ability
+    public class Type_2_Primary_WaterSlash : Ability
     {
         [Header("Components")]
         [SerializeField] private GameObject _slashSidePrefab;
@@ -36,7 +36,7 @@ namespace Player.Type_2
 
         #endregion Unity Functions
 
-        public override bool AbilityCanStart() => true;
+        public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
         public override bool AbilityNeedsToEnd() => _abilityEnd;
 
@@ -124,14 +124,18 @@ namespace Player.Type_2
                 case WaterControlState.LeftSlash:
                     {
                         float mappedPercent = _leftEaseCurve.Evaluate(percent);
-                        position = _leftSlash.EvaluatePosition(0, mappedPercent);
+                        int totalSplines = _leftSlash.Splines.Count;
+                        int randomIndex = Random.Range(0, totalSplines);
+                        position = _leftSlash.EvaluatePosition(randomIndex, mappedPercent);
                     }
                     break;
 
                 case WaterControlState.RightSlash:
                     {
                         float mappedPercent = _rightEaseCurve.Evaluate(percent);
-                        position = _rightSlash.EvaluatePosition(0, mappedPercent);
+                        int totalSplines = _leftSlash.Splines.Count;
+                        int randomIndex = Random.Range(0, totalSplines);
+                        position = _rightSlash.EvaluatePosition(randomIndex, mappedPercent);
                     }
                     break;
 

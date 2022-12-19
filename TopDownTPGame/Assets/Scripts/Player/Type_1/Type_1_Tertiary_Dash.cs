@@ -41,7 +41,7 @@ namespace Player.Type_1
         {
         }
 
-        public override bool AbilityCanStart() => true;
+        public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
         public override bool AbilityNeedsToEnd() => _currentDashTimeLeft <= 0;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Projectiles
+namespace AbilityScripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
     public class SimpleOneShotForwardProjectile : MonoBehaviour, IProjectile
