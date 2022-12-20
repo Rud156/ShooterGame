@@ -7,8 +7,15 @@ namespace Player.Type_2
 {
     public class Type_2_Tertiary_WaterMovement : Ability
     {
-        [Header("Components")]
+        [Header("Prefabs")]
         [SerializeField] private GameObject _waterMovementPrefab;
+
+        [Header("Spawn Data")]
+        [SerializeField] private GameObject _playerMainMesh;
+        [SerializeField] private Transform _spawnParent;
+        [SerializeField] private Vector3 _spawnOffset;
+        [SerializeField] private float _rbModifiedHeight;
+        [SerializeField] private float _rbModifiedYOffset;
 
         [Header("Water Data")]
         [SerializeField] private float _movementSpeed;
@@ -16,6 +23,10 @@ namespace Player.Type_2
 
         private float _currentDuration;
         private Vector3 _computedVelocity;
+        private GameObject _customMeshEffect;
+
+        private Vector3 _originalCenterOffset;
+        private float _originalHeight;
 
         // This is added since the Ability Update is called in the same frame that the Ability is Started
         // So to handle the key a second time a delay needed to be added for 1 frame
@@ -27,7 +38,6 @@ namespace Player.Type_2
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            // TODO: Update to handle custom Capsule Size and Model...
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
 
@@ -50,12 +60,32 @@ namespace Player.Type_2
 
         public override void EndAbility(BasePlayerController playerController)
         {
+            CharacterController characterController = playerController.GetComponent<CharacterController>();
+            characterController.height = _originalHeight;
+            characterController.center = _originalCenterOffset;
+
+            _playerMainMesh.SetActive(true);
+            Destroy(_customMeshEffect);
+            _customMeshEffect = null;
         }
 
         public override void StartAbility(BasePlayerController playerController)
         {
             _currentDuration = _abilityDuration;
             _abilityUpdatedOnce = false;
+
+            CharacterController characterController = playerController.GetComponent<CharacterController>();
+            _originalHeight = characterController.height;
+            _originalCenterOffset = characterController.center;
+
+            characterController.height = _rbModifiedHeight;
+            characterController.center = new Vector3(0, _rbModifiedYOffset, 0);
+
+            _playerMainMesh.SetActive(false);
+            GameObject customMeshEffect = Instantiate(_waterMovementPrefab, transform.position, Quaternion.identity);
+            customMeshEffect.transform.SetParent(_spawnParent);
+            customMeshEffect.transform.localPosition = customMeshEffect.transform.localPosition + _spawnOffset;
+            _customMeshEffect = customMeshEffect;
         }
 
         public override Vector3 GetMovementData() => _computedVelocity;

@@ -8,11 +8,13 @@ namespace Player.Type_1
 {
     public class Type_1_Secondary_ChargedShoot : Ability
     {
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _chargedObjectPrefab;
+
         [Header("Charged Shoot Data")]
         [SerializeField] private float _minChargeDuration;
         [SerializeField] private float _maxChargeDuration;
         [SerializeField] private Transform _shootPoint;
-        [SerializeField] private GameObject _chargedObjectPrefab;
 
         private bool _abilityEnd;
         private float _currentChargeTime;

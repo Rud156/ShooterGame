@@ -4,8 +4,8 @@
 - [ ]  Type 3 - Darkness (Fade)
     - [ ]  Ability Primary - Shoot bolts to mark enemies who take damage over time
     - [ ]  Ability Secondary - Charge to shoot a blast forward and increase the damage from primary for some time
-    - [ ]  Ability Tertiary - Shadow Movement
-    - [ ]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse\
+    - [ ]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved
+    - [ ]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse
 
 ## TODOs (Future)
 ### All characters heals HP when not in combat after sometime.
@@ -13,7 +13,7 @@
     - [ ]  Ability Primary - Slow shooting sticky bombs XD (cringe... sorry Raze)
     - [ ]  Ability Secondary - Soldier 76 Grenades
     - [ ]  Ability Tertiary - Fine… Raze Satchel
-    - [ ]  Ability Ultimate - Here comes the party! :D
+    - [ ]  Ability Ultimate - Here comes the party! :smile:
 - [ ]  Type 5 - Engineer (Killjoy)
     - [ ]  Ability Primary - Place a Turret that deals damage
     - [ ]  Ability Secondary - Grenade Cluster that also knockbacks enemies a small amount
@@ -34,13 +34,11 @@
     - [X] Secondary Ability
     - [X] Ultimate Ability
     - [X] Abilities modify everything (Movement/Shooting/Controls etc.)
-
 - [X]  Type 1 - Default Call of Duty Character
     - [X]  Ability Primary - Simple Shooting
     - [X]  Ability Secondary - Sojourn Charge
     - [X]  Ability Tertiary - Dash
     - [X]  Ability Ultimate - All abilities cooldowns decreased for allies in range
-
 - [X]  Type 2 - Water Bender
     - [X]  Ability Primary - Water slash attacks since if the player swings around their camera too much the game experience will not be good
     - [X]  Ability Secondary - Create an Ice Wall that block incoming damage (Can be Broken)

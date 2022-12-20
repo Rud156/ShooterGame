@@ -8,10 +8,12 @@ namespace Player.Type_1
 {
     public class Type_1_Primary_SimpleShoot : Ability
     {
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _projectilePrefab;
+
         [Header("Simple Shoot Data")]
         [SerializeField] private float _fireRate;
         [SerializeField] private Transform _shootPoint;
-        [SerializeField] private GameObject _projectilePrefab;
 
         private float _lastShootTime;
         private bool _abilityEnd;

@@ -13,9 +13,9 @@ namespace Player.Type_2
         [Header("Components")]
         [SerializeField] private GameObject _slashSidePrefab;
         [SerializeField] private GameObject _slashFrontPrefab;
-        [SerializeField] private Transform _shootPoint;
 
         [Header("Water Lines Data")]
+        [SerializeField] private Transform _shootPoint;
         [SerializeField] private SplineContainer _leftSlash;
         [SerializeField] private AnimationCurve _leftEaseCurve;
         [SerializeField] private SplineContainer _rightSlash;

@@ -6,8 +6,10 @@ namespace Player.Type_2
 {
     public class Type_2_Secondary_IceWall : Ability
     {
-        [Header("Components")]
+        [Header("Prefabs")]
         [SerializeField] private GameObject _iceWallPrefab;
+
+        [Header("Spawn Data")]
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private Vector3 _spawnOffset;
 
