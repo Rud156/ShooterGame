@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 2637092012038209775}
   - component: {fileID: 5610458570850552265}
   - component: {fileID: 2637092012433437204}
+  - component: {fileID: 2637092012433437213}
   m_Layer: 6
   m_Name: Player Type 2
   m_TagString: Player
@@ -424,6 +425,9 @@ MonoBehaviour:
   - {fileID: 2637092012038209775}
   - {fileID: 5610458570850552265}
   - {fileID: 2637092012433437204}
+  _playerCustomEffects:
+  - effectPrefab: {fileID: 0}
+    targetState: 5
 --- !u!114 &2637092012038209774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,6 +565,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityTrigger: 2
   _abilityType: 0
+  _waterMovementPrefab: {fileID: 0}
+  _movementSpeed: 5
+  _abilityDuration: 3
+--- !u!114 &2637092012433437213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637092012038209767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2cd1299f741b5a4996ff282d624a7fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityTrigger: 3
+  _abilityType: 1
+  _abilityCastRadius: 0
+  _castOffset: {x: 0, y: 0, z: 0}
+  _abilityMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _abilityDuration: 0
 --- !u!1 &2637092012472504216
 GameObject:
   m_ObjectHideFlags: 0
