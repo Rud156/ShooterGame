@@ -425,9 +425,12 @@ MonoBehaviour:
   - {fileID: 2637092012038209775}
   - {fileID: 5610458570850552265}
   - {fileID: 2637092012433437204}
-  _playerCustomEffects:
-  - effectPrefab: {fileID: 0}
-    targetState: 5
+  - {fileID: 2637092012433437213}
+  _playerInputRestrictingEffectsData:
+  - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    targetState: 0
 --- !u!114 &2637092012038209774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,12 +585,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityTrigger: 3
   _abilityType: 1
-  _abilityCastRadius: 0
-  _castOffset: {x: 0, y: 0, z: 0}
+  _abilityCastRadius: 10
+  _castOffset: {x: 0, y: 2.5, z: 0}
   _abilityMask:
     serializedVersion: 2
-    m_Bits: 0
-  _abilityDuration: 0
+    m_Bits: 64
+  _abilityDuration: 3
 --- !u!1 &2637092012472504216
 GameObject:
   m_ObjectHideFlags: 0

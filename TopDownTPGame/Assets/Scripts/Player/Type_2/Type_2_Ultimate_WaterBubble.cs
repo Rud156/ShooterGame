@@ -1,6 +1,5 @@
 using Player.Base;
 using Player.Common;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player.Type_2
@@ -15,37 +14,16 @@ namespace Player.Type_2
         [SerializeField] private LayerMask _abilityMask;
         [SerializeField] private float _abilityDuration;
 
-        private List<BasePlayerController> _targets;
-        private float _currentDuration;
+        public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
-        #region Unity Functions
-
-        private void Start() => _targets = new List<BasePlayerController>();
-
-        #endregion Unity Functions
-
-        public override bool AbilityCanStart(BasePlayerController playerController) => _targets.Count <= 0;
-
-        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _currentDuration <= 0;
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => true;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            _currentDuration -= Time.fixedDeltaTime;
-
-            if (_currentDuration <= 0)
-            {
-                for (int i = 0; i < _targets.Count; i++)
-                {
-                    _targets[i].UnFreezeCharacter();
-                }
-
-                _targets.Clear();
-            }
         }
 
         public override void EndAbility(BasePlayerController playerController)
         {
-            throw new System.NotImplementedException();
         }
 
         public override void StartAbility(BasePlayerController playerController)
@@ -61,24 +39,24 @@ namespace Player.Type_2
 
             Collider[] hitColliders = new Collider[MAX_COLLIDERS_CHECK];
             Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, hitColliders, _abilityMask);
+            DebugExtension.DebugWireSphere(castPosition, _abilityCastRadius, 10);
             for (int i = 0; i < MAX_COLLIDERS_CHECK; i++)
             {
-                BasePlayerController targetController = hitColliders[i].GetComponent<BasePlayerController>();
-                // TODO: Also check team here...
-                if (targetController != null)
+                // Do not target itself
+                if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
                 {
-                    targetController.FreezeCharacter();
-                    anyColliderHit = true;
+                    continue;
+                }
 
-                    _targets.Add(targetController);
+                // TODO: Also check team here...
+                if (hitColliders[i].TryGetComponent<BasePlayerController>(out BasePlayerController targetController))
+                {
+                    targetController.FreezeCharacter(_abilityDuration);
+                    anyColliderHit = true;
                 }
             }
 
-            if (anyColliderHit)
-            {
-                _currentDuration = _abilityDuration;
-            }
-            else
+            if (!anyColliderHit)
             {
                 // TODO: Put on cooldown...
             }

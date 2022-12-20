@@ -27,7 +27,7 @@ namespace Player.Base
         [SerializeField] private List<Ability> _playerAbilities;
 
         [Header("Custom Effects")]
-        [SerializeField] private List<PlayerCustomEffects> _playerCustomEffects;
+        [SerializeField] private List<PlayerInputRestrictingData> _playerInputRestrictingEffectsData;
 
         // Input
         private Vector2 _coreMoveInput;
@@ -48,6 +48,7 @@ namespace Player.Base
 
         // Custom Ability
         private Ability _currentAbility;
+        private List<PlayerInputRestrictingStoreData> _playerInputRestrictingEffects;
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -68,6 +69,7 @@ namespace Player.Base
         {
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
+            _playerInputRestrictingEffects = new List<PlayerInputRestrictingStoreData>();
 
             _coreMoveInput = new Vector2();
             _currentStateVelocity = 0;
@@ -85,23 +87,105 @@ namespace Player.Base
 
         private void FixedUpdate()
         {
-            UpdateGroundedState();
-            ProcessJumpInput();
-            CheckAndActivateCustomMovementAbility();
-            UpdatePlayerMovement();
+            UpdateCustomAbilityEffects();
 
-            if (_playerStateStack[^1] != PlayerState.Custom)
+            if ((int)_playerStateStack[^1] < (int)PlayerState.CustomInputRestrictingStates)
             {
-                ProcessGlobalGravity();
-            }
+                UpdateGroundedState();
+                ProcessJumpInput();
+                CheckAndActivateCustomMovementAbility();
+                UpdatePlayerMovement();
 
-            ApplyFinalMovement();
-            CheckAndActivateOtherAbilities();
-            UpdateCustomAbilities();
+                if (_playerStateStack[^1] != PlayerState.CustomMovement)
+                {
+                    ProcessGlobalGravity();
+                }
+
+                ApplyFinalMovement();
+                CheckAndActivateOtherAbilities();
+                UpdateCustomAbilities();
+            }
             MarkFrameInputsAsRead();
         }
 
         #endregion Unity Functions
+
+        #region Custom Ability States
+
+        private void UpdateCustomAbilityEffects()
+        {
+            if (_playerStateStack[^1] != PlayerState.CustomInputRestrictingStates)
+            {
+                return;
+            }
+
+            for (int i = _playerInputRestrictingEffects.Count - 1; i >= 0; i--)
+            {
+                var customAbility = _playerInputRestrictingEffects[i];
+                customAbility.TickDuration();
+                _playerInputRestrictingEffects[i] = customAbility;
+
+                if (_playerInputRestrictingEffects[i].customEffectDuration <= 0)
+                {
+                    switch (_playerInputRestrictingEffects[i].targetState)
+                    {
+                        case PlayerInputRestrictingState.Frozen:
+                            {
+                                UnFreezeCharacter(_playerInputRestrictingEffects[i]);
+                                _playerInputRestrictingEffects.RemoveAt(i);
+                            }
+                            break;
+                    }
+                }
+            }
+
+            if (_playerInputRestrictingEffects.Count <= 0)
+            {
+                PopPlayerState();
+            }
+        }
+
+        public void FreezeCharacter(float abilityDuration)
+        {
+            PlayerState topState = _playerStateStack[^1];
+            if (topState != PlayerState.CustomInputRestrictingStates)
+            {
+                PushPlayerState(PlayerState.CustomInputRestrictingStates);
+            }
+
+            PlayerInputRestrictingData customEffect = GetCustomEffectForState(PlayerInputRestrictingState.Frozen);
+            Vector3 spawnPosition = transform.position;
+            Vector3 forward = transform.forward;
+            Vector3 right = transform.right;
+
+            spawnPosition += forward * customEffect.effectSpawnOffset.z + right * customEffect.effectSpawnOffset.x;
+            spawnPosition.y += customEffect.effectSpawnOffset.y;
+
+            GameObject effect = Instantiate(customEffect.effectPrefab, spawnPosition, Quaternion.identity);
+            _playerInputRestrictingEffects.Add(new PlayerInputRestrictingStoreData()
+            {
+                effect = effect,
+                targetState = PlayerInputRestrictingState.Frozen,
+                customEffectDuration = abilityDuration
+            });
+        }
+
+        private void UnFreezeCharacter(PlayerInputRestrictingStoreData playerCustomEffectOutput) => Destroy(playerCustomEffectOutput.effect);
+
+        private PlayerInputRestrictingData GetCustomEffectForState(PlayerInputRestrictingState playerState)
+        {
+            foreach (PlayerInputRestrictingData effect in _playerInputRestrictingEffectsData)
+            {
+                if (effect.targetState == playerState)
+                {
+                    return effect;
+                }
+            }
+
+            throw new System.Exception("Invalid State Requested");
+        }
+
+        #endregion Custom Ability States
 
         #region Movement
 
@@ -125,7 +209,7 @@ namespace Player.Base
                     UpdateFallingState();
                     break;
 
-                case PlayerState.Custom:
+                case PlayerState.CustomMovement:
                     UpdateCustomMovementState();
                     break;
             }
@@ -222,7 +306,7 @@ namespace Player.Base
 
                     _currentAbility.StartAbility(this);
                     OnPlayerAbilityStarted?.Invoke(_currentAbility);
-                    PushPlayerState(PlayerState.Custom);
+                    PushPlayerState(PlayerState.CustomMovement);
                     break;
                 }
             }
@@ -234,7 +318,7 @@ namespace Player.Base
             Vector3 right = transform.right;
 
             // When Custom Apply Movement Directly
-            if (_playerStateStack[^1] == PlayerState.Custom)
+            if (_playerStateStack[^1] == PlayerState.CustomMovement)
             {
                 // Do nothing here since Custom Movement handles it...
             }
@@ -282,7 +366,7 @@ namespace Player.Base
                 _characterVelocity.y = 0;
             }
 
-            if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling && _playerStateStack[^1] != PlayerState.Custom)
+            if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling && _playerStateStack[^1] != PlayerState.CustomMovement)
             {
                 PushPlayerState(PlayerState.Falling);
             }
@@ -304,15 +388,6 @@ namespace Player.Base
         public Vector3 GetCharacterVelocity() => _characterVelocity;
 
         public float GetCurrentStateVelocity() => _currentStateVelocity;
-
-        public void FreezeCharacter()
-        {
-            // TODO: Implement this...
-        }
-
-        public void UnFreezeCharacter()
-        {
-        }
 
         #endregion Core Movement
 
@@ -344,7 +419,7 @@ namespace Player.Base
         private void UpdateCustomAbilities()
         {
             // This means there is an ability not active OR the ability active is only for Movement
-            if (_currentAbility == null || _playerStateStack[^1] == PlayerState.Custom)
+            if (_currentAbility == null || _playerStateStack[^1] == PlayerState.CustomMovement)
             {
                 return;
             }
@@ -438,12 +513,22 @@ namespace Player.Base
         #region Structs
 
         [System.Serializable]
-        private struct PlayerCustomEffects
+        private struct PlayerInputRestrictingData
         {
             public GameObject effectPrefab;
-            public PlayerState targetState;
+            public Vector3 effectSpawnOffset;
+            public PlayerInputRestrictingState targetState;
         }
 
-        #endregion
+        private struct PlayerInputRestrictingStoreData
+        {
+            public GameObject effect;
+            public PlayerInputRestrictingState targetState;
+            public float customEffectDuration;
+
+            public void TickDuration() => customEffectDuration -= Time.fixedDeltaTime;
+        }
+
+        #endregion Structs
     }
 }
