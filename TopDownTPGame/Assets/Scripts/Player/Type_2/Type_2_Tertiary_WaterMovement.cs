@@ -27,6 +27,7 @@ namespace Player.Type_2
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
+            // TODO: Update to handle custom Capsule Size and Model...
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
 
