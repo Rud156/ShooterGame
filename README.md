@@ -4,8 +4,8 @@
 - [ ]  Type 2 - Water Bender
     - [X]  Ability Primary - Water slash attacks since if the player swings around their camera too much the game experience will not be good
     - [X]  Ability Secondary - Create an Ice Wall that block incoming damage (Can be Broken)
-    - [ ]  Ability Tertiary - Become water and move anywhere without taking damage
-    - [ ]  Ability Ultimate - Water bubble to trap the enemy
+    - [X]  Ability Tertiary - Become water and move anywhere without taking damage
+    - [X]  Ability Ultimate - Water bubble to trap the enemy
 
 ## TODOs (Future)
 ### All characters heals HP when not in combat after sometime.
