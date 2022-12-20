@@ -35,7 +35,7 @@ namespace Player.Type_1
 
             _lastShootTime -= Time.fixedDeltaTime;
 
-            PlayerInputKey inputKey = playerController.GetKeyForAbilityTrigger(GetAbilityTrigger());
+            PlayerInputKey inputKey = playerController.GetPrimaryAbilityKey();
             if (inputKey.keyReleasedThisFrame || !inputKey.keyPressed)
             {
                 _abilityEnd = true;

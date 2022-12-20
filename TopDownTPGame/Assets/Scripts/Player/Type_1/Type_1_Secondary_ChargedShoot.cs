@@ -23,7 +23,7 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            PlayerInputKey key = playerController.GetKeyForAbilityTrigger(GetAbilityTrigger());
+            PlayerInputKey key = playerController.GetSecondaryAbilityKey();
             if (key.keyReleasedThisFrame || !key.keyPressed || _currentChargeTime >= _maxChargeDuration)
             {
                 if (_currentChargeTime >= _minChargeDuration)

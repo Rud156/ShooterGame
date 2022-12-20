@@ -26,6 +26,9 @@ namespace Player.Base
         [Header("Abilities")]
         [SerializeField] private List<Ability> _playerAbilities;
 
+        [Header("Custom Effects")]
+        [SerializeField] private List<PlayerCustomEffects> _playerCustomEffects;
+
         // Input
         private Vector2 _coreMoveInput;
         private PlayerInputKey _runKey;
@@ -302,6 +305,15 @@ namespace Player.Base
 
         public float GetCurrentStateVelocity() => _currentStateVelocity;
 
+        public void FreezeCharacter()
+        {
+            // TODO: Implement this...
+        }
+
+        public void UnFreezeCharacter()
+        {
+        }
+
         #endregion Core Movement
 
         #region Non Movement Abilities
@@ -422,5 +434,16 @@ namespace Player.Base
         public PlayerInputKey GetUltimateAbilityKey() => _abilityUltimateKey;
 
         #endregion Inputs
+
+        #region Structs
+
+        [System.Serializable]
+        private struct PlayerCustomEffects
+        {
+            public GameObject effectPrefab;
+            public PlayerState targetState;
+        }
+
+        #endregion
     }
 }

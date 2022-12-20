@@ -7,6 +7,10 @@ namespace Player.Base
         Running,
         Falling,
 
-        Custom
+        Custom,
+
+        // The states below these are custom states that prevent any normal input
+        // These should not be use for any normal gameplay
+        Frozen,
     };
 }
