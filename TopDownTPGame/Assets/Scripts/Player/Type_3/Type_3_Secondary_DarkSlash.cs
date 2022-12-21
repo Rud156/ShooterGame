@@ -43,7 +43,11 @@ namespace Player.Type_3
             }
         }
 
-        public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
+        public override void EndAbility(BasePlayerController playerController)
+        {
+            _abilityEnd = true;
+            _currentTime = 0;
+        }
 
         public override void StartAbility(BasePlayerController playerController)
         {
@@ -53,8 +57,8 @@ namespace Player.Type_3
             GameObject projectile = Instantiate(_slashPrefab, spawnPosition, Quaternion.identity);
 
             _slashObject = projectile;
-            _currentTime = 0;
             _randomSlashIndex = randomIndex;
+            _currentTime = 0;
             _abilityEnd = false;
         }
     }
