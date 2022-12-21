@@ -15,7 +15,7 @@ namespace Player.Type_1
         [SerializeField] private float _fireRate;
         [SerializeField] private Transform _shootPoint;
 
-        private float _lastShootTime;
+        private float _nextFireTime;
         private bool _abilityEnd;
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
@@ -24,9 +24,9 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            if (_lastShootTime <= 0)
+            if (Time.time >= _nextFireTime)
             {
-                _lastShootTime = _fireRate;
+                _nextFireTime = Time.time + _fireRate;
                 Vector3 spawnPosition = _shootPoint.position;
                 Vector3 direction = transform.forward;
 
@@ -35,8 +35,6 @@ namespace Player.Type_1
                 simpleProj.LaunchProjectile(direction);
             }
 
-            _lastShootTime -= Time.fixedDeltaTime;
-
             PlayerInputKey inputKey = playerController.GetPrimaryAbilityKey();
             if (inputKey.keyReleasedThisFrame || !inputKey.keyPressed)
             {
@@ -44,16 +42,8 @@ namespace Player.Type_1
             }
         }
 
-        public override void EndAbility(BasePlayerController playerController)
-        {
-            _lastShootTime = 0;
-            _abilityEnd = true;
-        }
+        public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
-        public override void StartAbility(BasePlayerController playerController)
-        {
-            _lastShootTime = 0;
-            _abilityEnd = false;
-        }
+        public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
     }
 }

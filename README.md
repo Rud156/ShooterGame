@@ -2,7 +2,7 @@
 
 ## TODOs (Current)
 - [ ]  Type 3 - Darkness (Fade)
-    - [ ]  Ability Primary - Shoot bolts to mark enemies who take damage over time
+    - [X]  Ability Primary - Shoots a spray of bullets that inflict damage overtime
     - [ ]  Ability Secondary - Charge to shoot a blast forward and increase the damage from primary for some time
     - [ ]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved
     - [ ]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse
