@@ -27,6 +27,7 @@ namespace Player.Type_2
         private bool _abilityEnd;
 
         private GameObject _sideSlashObject;
+        private int _randomSlashIndex;
         private float _currentTime;
         private float _lastTriggeredTime;
 
@@ -71,7 +72,7 @@ namespace Player.Type_2
             {
                 case WaterControlState.LeftSlash:
                 case WaterControlState.RightSlash:
-                    _sideSlashObject = CreateSlashPrefab(_waterControlState);
+                    _sideSlashObject = CreateSlashPrefabAndUpdateRandomIndex(_waterControlState);
                     _currentTime = 0;
                     break;
 
@@ -83,17 +84,27 @@ namespace Player.Type_2
 
         #region Ability Updates
 
-        private GameObject CreateSlashPrefab(WaterControlState waterControlState)
+        private GameObject CreateSlashPrefabAndUpdateRandomIndex(WaterControlState waterControlState)
         {
             Vector3 spawnPosition = Vector3.zero;
             switch (waterControlState)
             {
                 case WaterControlState.LeftSlash:
-                    _leftSlash.EvaluatePosition(0, 0);
+                    {
+                        int totalSplines = _leftSlash.Splines.Count;
+                        int randomIndex = Random.Range(0, totalSplines);
+                        spawnPosition = _leftSlash.EvaluatePosition(randomIndex, 0);
+                        _randomSlashIndex = randomIndex;
+                    }
                     break;
 
                 case WaterControlState.RightSlash:
-                    _rightSlash.EvaluatePosition(0, 0);
+                    {
+                        int totalSplines = _leftSlash.Splines.Count;
+                        int randomIndex = Random.Range(0, totalSplines);
+                        spawnPosition = _rightSlash.EvaluatePosition(randomIndex, 0);
+                        _randomSlashIndex = randomIndex;
+                    }
                     break;
 
                 case WaterControlState.ShootFront:
@@ -124,18 +135,14 @@ namespace Player.Type_2
                 case WaterControlState.LeftSlash:
                     {
                         float mappedPercent = _leftEaseCurve.Evaluate(percent);
-                        int totalSplines = _leftSlash.Splines.Count;
-                        int randomIndex = Random.Range(0, totalSplines);
-                        position = _leftSlash.EvaluatePosition(randomIndex, mappedPercent);
+                        position = _leftSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
                     }
                     break;
 
                 case WaterControlState.RightSlash:
                     {
                         float mappedPercent = _rightEaseCurve.Evaluate(percent);
-                        int totalSplines = _leftSlash.Splines.Count;
-                        int randomIndex = Random.Range(0, totalSplines);
-                        position = _rightSlash.EvaluatePosition(randomIndex, mappedPercent);
+                        position = _rightSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
                     }
                     break;
 
