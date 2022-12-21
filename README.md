@@ -3,7 +3,7 @@
 ## TODOs (Current)
 - [ ]  Type 3 - Darkness (Fade)
     - [X]  Ability Primary - Shoots a spray of bullets that inflict damage overtime
-    - [ ]  Ability Secondary - Dark Slash
+    - [X]  Ability Secondary - Dark Slash
     - [ ]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved
     - [ ]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse
 
