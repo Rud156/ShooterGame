@@ -4,7 +4,7 @@
 - [ ]  Type 3 - Darkness (Fade)
     - [X]  Ability Primary - Shoots a spray of bullets that inflict damage overtime
     - [X]  Ability Secondary - Dark Slash. Targets marked with this take more damage from Primary for sometime
-    - [X]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved
+    - [X]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved (Andro Dash). There is a delay between when gravity starts affecting.
     - [ ]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse
 
 ## TODOs (Future)
