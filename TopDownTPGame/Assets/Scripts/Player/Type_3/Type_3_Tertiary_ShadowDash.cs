@@ -3,22 +3,34 @@ using Player.Common;
 using UnityEngine;
 using Utils.Misc;
 
-namespace Player.Type_1
+namespace Player.Type_3
 {
-    public class Type_1_Tertiary_Dash : Ability
+    public class Type_3_Tertiary_ShadowDash : Ability
     {
-        [Header("Dash Data")]
+        [Header("Dash Charges")]
+        [SerializeField] private int _dashCharges;
         [SerializeField] private float _dashDuration;
         [SerializeField] private float _dashVelocity;
 
+        [Header("Components")]
+        [SerializeField] private Transform _cameraHolder;
+
+        private int _currentDashUsedCount;
         private float _currentDashTimeLeft;
         private Vector3 _computedVelocity;
 
-        public override void StartAbility(BasePlayerController playerController) => _currentDashTimeLeft = _dashDuration;
+        public override bool AbilityCanStart(BasePlayerController playerController)
+        {
+            // TODO: Implement cooldown here...
+            // TODO: Add a floating like mechanic
+
+            return true;
+        }
+
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _currentDashTimeLeft <= 0;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            Vector3 currentVelocity = playerController.GetCharacterVelocity();
             Vector3 coreInput = playerController.GetCoreMoveInput();
             _currentDashTimeLeft -= Time.fixedDeltaTime;
 
@@ -28,22 +40,23 @@ namespace Player.Type_1
                 coreInput.y = 1;
             }
 
-            Vector3 forward = transform.forward;
-            Vector3 right = transform.right;
+            Vector3 forward = _cameraHolder.forward;
+            Vector3 right = _cameraHolder.right;
 
-            // Override X and Z
             _computedVelocity = forward * coreInput.y + right * coreInput.x;
             _computedVelocity = _dashVelocity * _computedVelocity.normalized;
-            _computedVelocity.y = currentVelocity.y;
         }
 
         public override void EndAbility(BasePlayerController playerController)
         {
+            _currentDashUsedCount += 1;
+            if (_currentDashUsedCount > _dashCharges)
+            {
+                _currentDashUsedCount = 0;
+            }
         }
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
-
-        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _currentDashTimeLeft <= 0;
+        public override void StartAbility(BasePlayerController playerController) => _currentDashTimeLeft = _dashDuration;
 
         public override Vector3 GetMovementData() => _computedVelocity;
     }
