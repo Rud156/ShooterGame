@@ -54,7 +54,7 @@ namespace Player.Base
         private bool _isGrounded;
 
         // Movement Modifiers
-        private List<PlayerCoreMovementModifier> _playerCoreMovementModifiers;
+        private List<PlayerEffectsAndInputModifiers> _playerEffectsInputsModifiers;
 
         // Custom Ability
         private Ability _currentAbility;
@@ -80,7 +80,7 @@ namespace Player.Base
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
             _playerInputRestrictingEffects = new List<PlayerInputRestrictingStoreData>();
-            _playerCoreMovementModifiers = new List<PlayerCoreMovementModifier>();
+            _playerEffectsInputsModifiers = new List<PlayerEffectsAndInputModifiers>();
 
             _coreMoveInput = new Vector2();
             _currentStateVelocity = 0;
@@ -161,11 +161,11 @@ namespace Player.Base
 
         private void CheckAndRemoveCoreMovementMultiplier(string identifier)
         {
-            for (int i = 0; i < _playerCoreMovementModifiers.Count; i++)
+            for (int i = 0; i < _playerEffectsInputsModifiers.Count; i++)
             {
-                if (string.Equals(_playerCoreMovementModifiers[i].modifierIdentifier, identifier))
+                if (string.Equals(_playerEffectsInputsModifiers[i].modifierIdentifier, identifier))
                 {
-                    _playerCoreMovementModifiers.RemoveAt(i);
+                    _playerEffectsInputsModifiers.RemoveAt(i);
                 }
             }
         }
@@ -217,12 +217,12 @@ namespace Player.Base
                 return;
             }
 
-            _playerCoreMovementModifiers.Add(new PlayerCoreMovementModifier()
+            _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
             {
                 currentDuration = duration,
                 isTimed = true,
                 floatModifierAmount = multiplier,
-                modifierType = PlayerCoreMovementModifierType.GavityFall,
+                modifierType = PlayerEffectsAndInputModifierType.GavityFall,
                 modifierIdentifier = string.Empty,
             });
         }
@@ -356,24 +356,24 @@ namespace Player.Base
 
         private void UpdateCoreMovementModifierData()
         {
-            for (int i = _playerCoreMovementModifiers.Count - 1; i >= 0; i--)
+            for (int i = _playerEffectsInputsModifiers.Count - 1; i >= 0; i--)
             {
-                PlayerCoreMovementModifier movementModifier = _playerCoreMovementModifiers[i];
+                PlayerEffectsAndInputModifiers movementModifier = _playerEffectsInputsModifiers[i];
                 if (movementModifier.isTimed)
                 {
                     movementModifier.currentDuration -= Time.fixedDeltaTime;
                     if (movementModifier.currentDuration <= 0)
                     {
-                        _playerCoreMovementModifiers.RemoveAt(i);
+                        _playerEffectsInputsModifiers.RemoveAt(i);
                     }
                     else
                     {
-                        _playerCoreMovementModifiers[i] = movementModifier;
+                        _playerEffectsInputsModifiers[i] = movementModifier;
                     }
                 }
-                else if (_playerCoreMovementModifiers[i].modifierType == PlayerCoreMovementModifierType.GavityFall && _isGrounded)
+                else if (_playerEffectsInputsModifiers[i].modifierType == PlayerEffectsAndInputModifierType.GavityFall && _isGrounded)
                 {
-                    _playerCoreMovementModifiers.RemoveAt(i);
+                    _playerEffectsInputsModifiers.RemoveAt(i);
                 }
             }
         }
@@ -382,18 +382,6 @@ namespace Player.Base
         {
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
-
-            Vector2 finalCoreInputModifier = Vector2.one;
-            for (int i = 0; i < _playerCoreMovementModifiers.Count; i++)
-            {
-                if (_playerCoreMovementModifiers[i].modifierType == PlayerCoreMovementModifierType.CoreInput)
-                {
-                    finalCoreInputModifier.x += _playerCoreMovementModifiers[i].vectorModifierAmount.x;
-                    finalCoreInputModifier.y += _playerCoreMovementModifiers[i].vectorModifierAmount.y;
-                }
-            }
-            _coreMoveInput.x *= finalCoreInputModifier.x;
-            _coreMoveInput.y *= finalCoreInputModifier.y;
 
             // When Custom Apply Movement Directly
             if (_playerStateStack[^1] == PlayerState.CustomMovement)
@@ -433,10 +421,10 @@ namespace Player.Base
 
             if (_movementHoldKey.keyPressedThisFrame)
             {
-                _playerCoreMovementModifiers.Add(new PlayerCoreMovementModifier()
+                _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
                 {
                     isTimed = false,
-                    modifierType = PlayerCoreMovementModifierType.GavityFall,
+                    modifierType = PlayerEffectsAndInputModifierType.GavityFall,
                     modifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
                     floatModifierAmount = _movementHoldGravityMultiplier,
                 });
@@ -455,16 +443,7 @@ namespace Player.Base
                 return;
             }
 
-            float finalJumpModifier = 1;
-            for (int i = 0; i < _playerCoreMovementModifiers.Count; i++)
-            {
-                if (_playerCoreMovementModifiers[i].modifierType == PlayerCoreMovementModifierType.Jump)
-                {
-                    finalJumpModifier += _playerCoreMovementModifiers[i].floatModifierAmount;
-                }
-            }
-
-            _characterVelocity.y += _jumpVelocity * finalJumpModifier;
+            _characterVelocity.y += _jumpVelocity;
             OnPlayerJumped?.Invoke();
         }
 
@@ -493,11 +472,11 @@ namespace Player.Base
                 {
                     float finalGravityFallModifier = 0;
                     bool hasValue = false;
-                    for (int i = 0; i < _playerCoreMovementModifiers.Count; i++)
+                    for (int i = 0; i < _playerEffectsInputsModifiers.Count; i++)
                     {
-                        if (_playerCoreMovementModifiers[i].modifierType == PlayerCoreMovementModifierType.GavityFall)
+                        if (_playerEffectsInputsModifiers[i].modifierType == PlayerEffectsAndInputModifierType.GavityFall)
                         {
-                            finalGravityFallModifier += _playerCoreMovementModifiers[i].floatModifierAmount;
+                            finalGravityFallModifier += _playerEffectsInputsModifiers[i].floatModifierAmount;
                             hasValue = true;
                         }
                     }
@@ -667,15 +646,14 @@ namespace Player.Base
             public void TickDuration() => customEffectDuration -= Time.fixedDeltaTime;
         }
 
-        private struct PlayerCoreMovementModifier
+        private struct PlayerEffectsAndInputModifiers
         {
             public string modifierIdentifier;
-            public PlayerCoreMovementModifierType modifierType;
+            public PlayerEffectsAndInputModifierType modifierType;
             public bool isTimed;
             public float currentDuration;
 
             public float floatModifierAmount;
-            public Vector2 vectorModifierAmount;
         }
 
         #endregion Structs
@@ -687,11 +665,9 @@ namespace Player.Base
             Frozen,
         }
 
-        private enum PlayerCoreMovementModifierType
+        private enum PlayerEffectsAndInputModifierType
         {
             GavityFall,
-            CoreInput,
-            Jump
         }
 
         #endregion Enums
