@@ -222,7 +222,7 @@ namespace Player.Base
                 currentDuration = duration,
                 isTimed = true,
                 floatModifierAmount = multiplier,
-                modifierType = PlayerEffectsAndInputModifierType.GavityFall,
+                modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
                 modifierIdentifier = string.Empty,
             });
         }
@@ -371,7 +371,7 @@ namespace Player.Base
                         _playerEffectsInputsModifiers[i] = movementModifier;
                     }
                 }
-                else if (_playerEffectsInputsModifiers[i].modifierType == PlayerEffectsAndInputModifierType.GavityFall && _isGrounded)
+                else if (_playerEffectsInputsModifiers[i].modifierType == PlayerEffectsAndInputModifierType.ConstantSpeedFall && _isGrounded)
                 {
                     _playerEffectsInputsModifiers.RemoveAt(i);
                 }
@@ -424,7 +424,7 @@ namespace Player.Base
                 _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
                 {
                     isTimed = false,
-                    modifierType = PlayerEffectsAndInputModifierType.GavityFall,
+                    modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
                     modifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
                     floatModifierAmount = _movementHoldGravityMultiplier,
                 });
@@ -470,13 +470,13 @@ namespace Player.Base
             {
                 if (_characterVelocity.y < 0)
                 {
-                    float finalGravityFallModifier = 0;
+                    float constantSpeedFall = 0;
                     bool hasValue = false;
                     for (int i = 0; i < _playerEffectsInputsModifiers.Count; i++)
                     {
-                        if (_playerEffectsInputsModifiers[i].modifierType == PlayerEffectsAndInputModifierType.GavityFall)
+                        if (_playerEffectsInputsModifiers[i].modifierType == PlayerEffectsAndInputModifierType.ConstantSpeedFall)
                         {
-                            finalGravityFallModifier += _playerEffectsInputsModifiers[i].floatModifierAmount;
+                            constantSpeedFall += _playerEffectsInputsModifiers[i].floatModifierAmount;
                             hasValue = true;
                         }
                     }
@@ -484,7 +484,7 @@ namespace Player.Base
                     if (hasValue)
                     {
                         float gravityY = Physics.gravity.y * _gravityMultiplier;
-                        _characterVelocity.y = gravityY * finalGravityFallModifier;
+                        _characterVelocity.y = gravityY * constantSpeedFall;
                     }
                     else
                     {
@@ -667,7 +667,7 @@ namespace Player.Base
 
         private enum PlayerEffectsAndInputModifierType
         {
-            GavityFall,
+            ConstantSpeedFall,
         }
 
         #endregion Enums
