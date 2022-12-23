@@ -21,6 +21,9 @@
     - [ ]  Ability Ultimate - Allies get a movement speed buff and a protective shield around them
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
 - [ ] Add Damage and Health Systems (Both must be modifiable by effects)
+- [ ] Switch to new Unity Input system
+- [ ] Use UIToolkit to make the UI
+- [ ] For Networking currently use Netcode for GameObjects
 
 ## TODOs (Done)
 - [X] Player Movement
