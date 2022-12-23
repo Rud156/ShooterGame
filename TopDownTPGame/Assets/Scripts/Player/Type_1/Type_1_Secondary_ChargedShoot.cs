@@ -11,6 +11,9 @@ namespace Player.Type_1
         [Header("Prefabs")]
         [SerializeField] private GameObject _chargedObjectPrefab;
 
+        [Header("Components")]
+        [SerializeField] private Transform _cameraHolder;
+
         [Header("Charged Shoot Data")]
         [SerializeField] private float _minChargeDuration;
         [SerializeField] private float _maxChargeDuration;
@@ -31,7 +34,7 @@ namespace Player.Type_1
                 if (_currentChargeTime >= _minChargeDuration)
                 {
                     Vector3 spawnPosition = _shootPoint.position;
-                    Vector3 direction = transform.forward;
+                    Vector3 direction = _cameraHolder.forward;
 
                     GameObject projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
                     SimpleOneShotForwardProjectile simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();

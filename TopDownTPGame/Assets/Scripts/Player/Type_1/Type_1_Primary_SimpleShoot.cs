@@ -11,6 +11,9 @@ namespace Player.Type_1
         [Header("Prefabs")]
         [SerializeField] private GameObject _projectilePrefab;
 
+        [Header("Components")]
+        [SerializeField] private Transform _cameraHolder;
+
         [Header("Simple Shoot Data")]
         [SerializeField] private float _fireRate;
         [SerializeField] private Transform _shootPoint;
@@ -28,7 +31,7 @@ namespace Player.Type_1
             {
                 _nextFireTime = Time.time + _fireRate;
                 Vector3 spawnPosition = _shootPoint.position;
-                Vector3 direction = transform.forward;
+                Vector3 direction = _cameraHolder.forward;
 
                 GameObject projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 SimpleOneShotForwardProjectile simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();

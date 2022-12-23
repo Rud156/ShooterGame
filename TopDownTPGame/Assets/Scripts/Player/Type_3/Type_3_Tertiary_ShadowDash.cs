@@ -7,13 +7,17 @@ namespace Player.Type_3
 {
     public class Type_3_Tertiary_ShadowDash : Ability
     {
+        [Header("Components")]
+        [SerializeField] private Transform _cameraHolder;
+
         [Header("Dash Charges")]
         [SerializeField] private int _dashCharges;
         [SerializeField] private float _dashDuration;
         [SerializeField] private float _dashVelocity;
 
-        [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
+        [Header("Dash Float")]
+        [SerializeField] private float _dashEndFloatDuration;
+        [SerializeField] private float _dashGravityMultiplier;
 
         private int _currentDashUsedCount;
         private float _currentDashTimeLeft;
@@ -22,7 +26,6 @@ namespace Player.Type_3
         public override bool AbilityCanStart(BasePlayerController playerController)
         {
             // TODO: Implement cooldown here...
-            // TODO: Add a floating like mechanic
 
             return true;
         }
@@ -49,6 +52,8 @@ namespace Player.Type_3
 
         public override void EndAbility(BasePlayerController playerController)
         {
+            playerController.PlayerFloatAirTimed(_dashEndFloatDuration, _dashGravityMultiplier);
+
             _currentDashUsedCount += 1;
             if (_currentDashUsedCount > _dashCharges)
             {

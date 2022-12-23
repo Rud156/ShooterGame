@@ -368,7 +368,7 @@ Transform:
   - {fileID: 95916530296144473}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -418,6 +418,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _jumpVelocity: 30
+  _movementHoldGravityEnabled: 0
+  _movementHoldGravityMultiplier: 0
   _playerAbilities:
   - {fileID: 95916530318942730}
   - {fileID: 95916530318942731}
@@ -460,6 +462,7 @@ MonoBehaviour:
   _abilityType: 1
   _projectilePrefab: {fileID: 3515318782041256082, guid: 76baa5bf0a6dcff498d25a2276ada752,
     type: 3}
+  _cameraHolder: {fileID: 95916529673104767}
   _fireRate: 0.3
   _shootPoint: {fileID: 95916530296144473}
 --- !u!114 &95916530318942731
@@ -478,6 +481,7 @@ MonoBehaviour:
   _abilityType: 1
   _chargedObjectPrefab: {fileID: 3515318782041256082, guid: 38c89cd689cbac945b36aeb720d4e11f,
     type: 3}
+  _cameraHolder: {fileID: 95916529673104767}
   _minChargeDuration: 1
   _maxChargeDuration: 1.5
   _shootPoint: {fileID: 95916530296144473}

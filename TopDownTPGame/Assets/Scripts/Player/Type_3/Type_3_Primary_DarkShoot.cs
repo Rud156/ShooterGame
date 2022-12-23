@@ -11,6 +11,9 @@ namespace Player.Type_3
         [Header("Prefabs")]
         [SerializeField] private GameObject _projectilePrefab;
 
+        [Header("Components")]
+        [SerializeField] private Transform _cameraHolder;
+
         [Header("Shoot Data")]
         [SerializeField] private float _fireRate;
         [SerializeField] private Transform _shootPoint;
@@ -52,7 +55,7 @@ namespace Player.Type_3
                     SimpleOneShotForwardProjectile simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
 
                     Quaternion angleDirection = Quaternion.Euler(0, startAngle - _spawnQuaternionOffset, 0);
-                    Vector3 secondaryDirection = angleDirection * transform.forward + angleDirection * transform.right;
+                    Vector3 secondaryDirection = angleDirection * _cameraHolder.forward + angleDirection * _cameraHolder.right;
                     simpleProj.LaunchProjectile(secondaryDirection);
 
                     startAngle += _shootAngle;

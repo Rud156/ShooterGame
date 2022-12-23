@@ -9,6 +9,8 @@ namespace Player.Base
     [RequireComponent(typeof(CharacterController))]
     public class BasePlayerController : MonoBehaviour
     {
+        private const string MOVEMENT_HOLD_IDENTIFIER = "MovementHold";
+
         [Header("Basic Move")]
         [SerializeField] private float _runSpeed;
         [SerializeField] private float _walkSpeed;
@@ -22,6 +24,10 @@ namespace Player.Base
 
         [Header("Jump")]
         [SerializeField] private float _jumpVelocity;
+
+        [Header("Movement Modifiers")]
+        [SerializeField] private bool _movementHoldGravityEnabled;
+        [SerializeField] private float _movementHoldGravityMultiplier;
 
         [Header("Abilities")]
         [SerializeField] private List<Ability> _playerAbilities;
@@ -37,6 +43,7 @@ namespace Player.Base
         private PlayerInputKey _abilitySecondaryKey;
         private PlayerInputKey _abilityTertiaryKey;
         private PlayerInputKey _abilityUltimateKey;
+        private PlayerInputKey _movementHoldKey;
         private float _currentStateVelocity;
 
         // Movement/Controller
@@ -83,6 +90,7 @@ namespace Player.Base
             _abilitySecondaryKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _abilityTertiaryKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _abilityUltimateKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            _movementHoldKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             PushPlayerState(PlayerState.Idle);
         }
@@ -96,6 +104,7 @@ namespace Player.Base
             if ((int)_playerStateStack[^1] < (int)PlayerState.CustomInputRestrictingStates)
             {
                 UpdateGroundedState();
+                ProcessMovementHold();
                 ProcessJumpInput();
                 CheckAndActivateCustomMovementAbility();
                 UpdatePlayerMovement();
@@ -108,6 +117,7 @@ namespace Player.Base
                 ApplyFinalMovement();
                 CheckAndActivateOtherAbilities();
                 UpdateCustomAbilities();
+                UpdateCoreMovementModifierData();
             }
             MarkFrameInputsAsRead();
         }
@@ -149,6 +159,17 @@ namespace Player.Base
             }
         }
 
+        private void CheckAndRemoveCoreMovementMultiplier(string identifier)
+        {
+            for (int i = 0; i < _playerCoreMovementModifiers.Count; i++)
+            {
+                if (string.Equals(_playerCoreMovementModifiers[i].modifierIdentifier, identifier))
+                {
+                    _playerCoreMovementModifiers.RemoveAt(i);
+                }
+            }
+        }
+
         public void FreezeCharacter(float abilityDuration)
         {
             PlayerState topState = _playerStateStack[^1];
@@ -187,6 +208,23 @@ namespace Player.Base
             }
 
             throw new System.Exception("Invalid State Requested");
+        }
+
+        public void PlayerFloatAirTimed(float duration, float multiplier)
+        {
+            if (_isGrounded)
+            {
+                return;
+            }
+
+            _playerCoreMovementModifiers.Add(new PlayerCoreMovementModifier()
+            {
+                currentDuration = duration,
+                isTimed = true,
+                floatModifierAmount = multiplier,
+                modifierType = PlayerCoreMovementModifierType.GavityFall,
+                modifierIdentifier = string.Empty,
+            });
         }
 
         #endregion Custom Ability States
@@ -233,7 +271,7 @@ namespace Player.Base
         private void UpdateWalkingState()
         {
             _currentStateVelocity = _walkSpeed;
-            if (_runKey.keyPressedThisFrame)
+            if (_runKey.keyPressedThisFrame && _isGrounded)
             {
                 PushPlayerState(PlayerState.Running);
             }
@@ -246,7 +284,7 @@ namespace Player.Base
         private void UpdateRunningState()
         {
             _currentStateVelocity = _runSpeed;
-            if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || _runKey.keyReleasedThisFrame)
+            if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || _runKey.keyReleasedThisFrame || !_runKey.keyPressed)
             {
                 PopPlayerState();
             }
@@ -316,10 +354,46 @@ namespace Player.Base
             }
         }
 
+        private void UpdateCoreMovementModifierData()
+        {
+            for (int i = _playerCoreMovementModifiers.Count - 1; i >= 0; i--)
+            {
+                PlayerCoreMovementModifier movementModifier = _playerCoreMovementModifiers[i];
+                if (movementModifier.isTimed)
+                {
+                    movementModifier.currentDuration -= Time.fixedDeltaTime;
+                    if (movementModifier.currentDuration <= 0)
+                    {
+                        _playerCoreMovementModifiers.RemoveAt(i);
+                    }
+                    else
+                    {
+                        _playerCoreMovementModifiers[i] = movementModifier;
+                    }
+                }
+                else if (_playerCoreMovementModifiers[i].modifierType == PlayerCoreMovementModifierType.GavityFall && _isGrounded)
+                {
+                    _playerCoreMovementModifiers.RemoveAt(i);
+                }
+            }
+        }
+
         private void UpdateCoreMovement()
         {
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
+
+            Vector2 finalCoreInputModifier = Vector2.one;
+            for (int i = 0; i < _playerCoreMovementModifiers.Count; i++)
+            {
+                if (_playerCoreMovementModifiers[i].modifierType == PlayerCoreMovementModifierType.CoreInput)
+                {
+                    finalCoreInputModifier.x += _playerCoreMovementModifiers[i].vectorModifierAmount.x;
+                    finalCoreInputModifier.y += _playerCoreMovementModifiers[i].vectorModifierAmount.y;
+                }
+            }
+            _coreMoveInput.x *= finalCoreInputModifier.x;
+            _coreMoveInput.y *= finalCoreInputModifier.y;
 
             // When Custom Apply Movement Directly
             if (_playerStateStack[^1] == PlayerState.CustomMovement)
@@ -350,6 +424,29 @@ namespace Player.Base
             }
         }
 
+        private void ProcessMovementHold()
+        {
+            if (!_movementHoldGravityEnabled)
+            {
+                return;
+            }
+
+            if (_movementHoldKey.keyPressedThisFrame)
+            {
+                _playerCoreMovementModifiers.Add(new PlayerCoreMovementModifier()
+                {
+                    isTimed = false,
+                    modifierType = PlayerCoreMovementModifierType.GavityFall,
+                    modifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
+                    floatModifierAmount = _movementHoldGravityMultiplier,
+                });
+            }
+            else if (_movementHoldKey.keyReleasedThisFrame || !_movementHoldKey.keyPressed)
+            {
+                CheckAndRemoveCoreMovementMultiplier(MOVEMENT_HOLD_IDENTIFIER);
+            }
+        }
+
         private void ProcessJumpInput()
         {
             bool isValidJumpPressed = _jumpKey.keyPressedThisFrame;
@@ -358,7 +455,16 @@ namespace Player.Base
                 return;
             }
 
-            _characterVelocity.y += _jumpVelocity;
+            float finalJumpModifier = 1;
+            for (int i = 0; i < _playerCoreMovementModifiers.Count; i++)
+            {
+                if (_playerCoreMovementModifiers[i].modifierType == PlayerCoreMovementModifierType.Jump)
+                {
+                    finalJumpModifier += _playerCoreMovementModifiers[i].floatModifierAmount;
+                }
+            }
+
+            _characterVelocity.y += _jumpVelocity * finalJumpModifier;
             OnPlayerJumped?.Invoke();
         }
 
@@ -383,7 +489,33 @@ namespace Player.Base
         {
             if (!_isGrounded)
             {
-                _characterVelocity.y += Physics.gravity.y * _gravityMultiplier;
+                if (_characterVelocity.y < 0)
+                {
+                    float finalGravityFallModifier = 0;
+                    bool hasValue = false;
+                    for (int i = 0; i < _playerCoreMovementModifiers.Count; i++)
+                    {
+                        if (_playerCoreMovementModifiers[i].modifierType == PlayerCoreMovementModifierType.GavityFall)
+                        {
+                            finalGravityFallModifier += _playerCoreMovementModifiers[i].floatModifierAmount;
+                            hasValue = true;
+                        }
+                    }
+
+                    if (hasValue)
+                    {
+                        float gravityY = Physics.gravity.y * _gravityMultiplier;
+                        _characterVelocity.y = gravityY * finalGravityFallModifier;
+                    }
+                    else
+                    {
+                        _characterVelocity.y += Physics.gravity.y * _gravityMultiplier;
+                    }
+                }
+                else
+                {
+                    _characterVelocity.y += Physics.gravity.y * _gravityMultiplier;
+                }
             }
         }
 
@@ -469,6 +601,7 @@ namespace Player.Base
             _abilitySecondaryKey.UpdateInputData(InputKeys.AbilitySecondary);
             _abilityTertiaryKey.UpdateInputData(InputKeys.AbilityTertiary);
             _abilityUltimateKey.UpdateInputData(InputKeys.AbilityUltimate);
+            _movementHoldKey.UpdateInputData(InputKeys.MovementHoldInput);
         }
 
         private void MarkFrameInputsAsRead()
@@ -482,6 +615,7 @@ namespace Player.Base
             _abilitySecondaryKey.ResetPerFrameInput();
             _abilityTertiaryKey.ResetPerFrameInput();
             _abilityUltimateKey.ResetPerFrameInput();
+            _movementHoldKey.ResetPerFrameInput();
         }
 
         private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMoveInput.x, 0) && ExtensionFunctions.IsNearlyEqual(_coreMoveInput.y, 0);
@@ -535,9 +669,13 @@ namespace Player.Base
 
         private struct PlayerCoreMovementModifier
         {
+            public string modifierIdentifier;
             public PlayerCoreMovementModifierType modifierType;
             public bool isTimed;
-            public float duration;
+            public float currentDuration;
+
+            public float floatModifierAmount;
+            public Vector2 vectorModifierAmount;
         }
 
         #endregion Structs
@@ -551,9 +689,9 @@ namespace Player.Base
 
         private enum PlayerCoreMovementModifierType
         {
-            Gravity,
+            GavityFall,
             CoreInput,
-            JumpModifier,
+            Jump
         }
 
         #endregion Enums
