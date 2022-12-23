@@ -46,6 +46,9 @@ namespace Player.Base
         public bool IsGrounded => _isGrounded;
         private bool _isGrounded;
 
+        // Movement Modifiers
+        private List<PlayerCoreMovementModifier> _playerCoreMovementModifiers;
+
         // Custom Ability
         private Ability _currentAbility;
         private List<PlayerInputRestrictingStoreData> _playerInputRestrictingEffects;
@@ -70,6 +73,7 @@ namespace Player.Base
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
             _playerInputRestrictingEffects = new List<PlayerInputRestrictingStoreData>();
+            _playerCoreMovementModifiers = new List<PlayerCoreMovementModifier>();
 
             _coreMoveInput = new Vector2();
             _currentStateVelocity = 0;
@@ -242,7 +246,7 @@ namespace Player.Base
         private void UpdateRunningState()
         {
             _currentStateVelocity = _runSpeed;
-            if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || _runKey.keyPressedThisFrame)
+            if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || _runKey.keyReleasedThisFrame)
             {
                 PopPlayerState();
             }
@@ -529,6 +533,29 @@ namespace Player.Base
             public void TickDuration() => customEffectDuration -= Time.fixedDeltaTime;
         }
 
+        private struct PlayerCoreMovementModifier
+        {
+            public PlayerCoreMovementModifierType modifierType;
+            public bool isTimed;
+            public float duration;
+        }
+
         #endregion Structs
+
+        #region Enums
+
+        private enum PlayerInputRestrictingState
+        {
+            Frozen,
+        }
+
+        private enum PlayerCoreMovementModifierType
+        {
+            Gravity,
+            CoreInput,
+            JumpModifier,
+        }
+
+        #endregion Enums
     }
 }
