@@ -17,7 +17,7 @@ namespace Player.Type_3
 
         [Header("Dash Float")]
         [SerializeField] private float _dashEndFloatDuration;
-        [SerializeField] private float _dashGravityMultiplier;
+        [SerializeField] private float _dashEndFloatFallMultiplier;
 
         private int _currentDashUsedCount;
         private float _currentDashTimeLeft;
@@ -52,7 +52,7 @@ namespace Player.Type_3
 
         public override void EndAbility(BasePlayerController playerController)
         {
-            playerController.PlayerFloatAirTimed(_dashEndFloatDuration, _dashGravityMultiplier);
+            playerController.PlayerConstantSpeedFallTimed(_dashEndFloatDuration, _dashEndFloatFallMultiplier);
 
             _currentDashUsedCount += 1;
             if (_currentDashUsedCount > _dashCharges)

@@ -23,7 +23,7 @@
 - [ ] Add Damage and Health Systems (Both must be modifiable by effects)
 - [ ] Switch to new Unity Input system
 - [ ] Use UIToolkit to make the UI
-- [ ] For Networking currently use Netcode for GameObjects
+- [ ] For Networking currently use Netcode for GameObjects as of now
 
 ## TODOs (Done)
 - [X] Player Movement

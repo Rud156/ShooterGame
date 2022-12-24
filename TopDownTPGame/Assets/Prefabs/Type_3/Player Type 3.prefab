@@ -418,8 +418,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _jumpVelocity: 30
-  _movementHoldGravityEnabled: 1
-  _movementHoldGravityMultiplier: 2.5
+  _constantSpeedFallEnabled: 1
+  _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
   - {fileID: 1683011238459484372}
   - {fileID: 680768254}
@@ -528,7 +528,7 @@ MonoBehaviour:
   _dashDuration: 0.3
   _dashVelocity: 50
   _dashEndFloatDuration: 0.25
-  _dashGravityMultiplier: 2.5
+  _dashEndFloatFallMultiplier: 2.5
 --- !u!1 &3729988722622905508
 GameObject:
   m_ObjectHideFlags: 0

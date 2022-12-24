@@ -26,8 +26,8 @@ namespace Player.Base
         [SerializeField] private float _jumpVelocity;
 
         [Header("Movement Modifiers")]
-        [SerializeField] private bool _movementHoldGravityEnabled;
-        [SerializeField] private float _movementHoldGravityMultiplier;
+        [SerializeField] private bool _constantSpeedFallEnabled;
+        [SerializeField] private float _constantSpeedFallMultiplier;
 
         [Header("Abilities")]
         [SerializeField] private List<Ability> _playerAbilities;
@@ -43,7 +43,7 @@ namespace Player.Base
         private PlayerInputKey _abilitySecondaryKey;
         private PlayerInputKey _abilityTertiaryKey;
         private PlayerInputKey _abilityUltimateKey;
-        private PlayerInputKey _movementHoldKey;
+        private PlayerInputKey _constantSpeedFallKey;
         private float _currentStateVelocity;
 
         // Movement/Controller
@@ -90,7 +90,7 @@ namespace Player.Base
             _abilitySecondaryKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _abilityTertiaryKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _abilityUltimateKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
-            _movementHoldKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+            _constantSpeedFallKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
 
             PushPlayerState(PlayerState.Idle);
         }
@@ -99,12 +99,16 @@ namespace Player.Base
 
         private void FixedUpdate()
         {
+            // These inputs are global and should always be processed...
             UpdateCustomAbilityEffects();
+            UpdatePlayerEffectsAndInputModifiers();
 
-            if ((int)_playerStateStack[^1] < (int)PlayerState.CustomInputRestrictingStates)
+            // Since this is where input handling happens. Input to be delayed can be done here...
+            bool isInputRestricted = (int)_playerStateStack[^1] < (int)PlayerState.CustomInputRestrictingStates;
+            if (!isInputRestricted)
             {
                 UpdateGroundedState();
-                ProcessMovementHold();
+                ProcessConstantSpeedFall();
                 ProcessJumpInput();
                 CheckAndActivateCustomMovementAbility();
                 UpdatePlayerMovement();
@@ -117,8 +121,8 @@ namespace Player.Base
                 ApplyFinalMovement();
                 CheckAndActivateOtherAbilities();
                 UpdateCustomAbilities();
-                UpdateCoreMovementModifierData();
             }
+
             MarkFrameInputsAsRead();
         }
 
@@ -156,17 +160,6 @@ namespace Player.Base
             if (_playerInputRestrictingEffects.Count <= 0)
             {
                 PopPlayerState();
-            }
-        }
-
-        private void CheckAndRemoveCoreMovementMultiplier(string identifier)
-        {
-            for (int i = 0; i < _playerEffectsInputsModifiers.Count; i++)
-            {
-                if (string.Equals(_playerEffectsInputsModifiers[i].modifierIdentifier, identifier))
-                {
-                    _playerEffectsInputsModifiers.RemoveAt(i);
-                }
             }
         }
 
@@ -210,7 +203,18 @@ namespace Player.Base
             throw new System.Exception("Invalid State Requested");
         }
 
-        public void PlayerFloatAirTimed(float duration, float multiplier)
+        private void CheckAndRemovePlayerEffectsAndInputsModifier(string identifier)
+        {
+            for (int i = 0; i < _playerEffectsInputsModifiers.Count; i++)
+            {
+                if (string.Equals(_playerEffectsInputsModifiers[i].modifierIdentifier, identifier))
+                {
+                    _playerEffectsInputsModifiers.RemoveAt(i);
+                }
+            }
+        }
+
+        public void PlayerConstantSpeedFallTimed(float duration, float multiplier)
         {
             if (_isGrounded)
             {
@@ -354,7 +358,7 @@ namespace Player.Base
             }
         }
 
-        private void UpdateCoreMovementModifierData()
+        private void UpdatePlayerEffectsAndInputModifiers()
         {
             for (int i = _playerEffectsInputsModifiers.Count - 1; i >= 0; i--)
             {
@@ -412,26 +416,26 @@ namespace Player.Base
             }
         }
 
-        private void ProcessMovementHold()
+        private void ProcessConstantSpeedFall()
         {
-            if (!_movementHoldGravityEnabled)
+            if (!_constantSpeedFallEnabled || _isGrounded)
             {
                 return;
             }
 
-            if (_movementHoldKey.keyPressedThisFrame)
+            if (_constantSpeedFallKey.keyPressedThisFrame)
             {
                 _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
                 {
                     isTimed = false,
                     modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
                     modifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
-                    floatModifierAmount = _movementHoldGravityMultiplier,
+                    floatModifierAmount = _constantSpeedFallMultiplier,
                 });
             }
-            else if (_movementHoldKey.keyReleasedThisFrame || !_movementHoldKey.keyPressed)
+            else if (_constantSpeedFallKey.keyReleasedThisFrame || !_constantSpeedFallKey.keyPressed)
             {
-                CheckAndRemoveCoreMovementMultiplier(MOVEMENT_HOLD_IDENTIFIER);
+                CheckAndRemovePlayerEffectsAndInputsModifier(MOVEMENT_HOLD_IDENTIFIER);
             }
         }
 
@@ -580,7 +584,7 @@ namespace Player.Base
             _abilitySecondaryKey.UpdateInputData(InputKeys.AbilitySecondary);
             _abilityTertiaryKey.UpdateInputData(InputKeys.AbilityTertiary);
             _abilityUltimateKey.UpdateInputData(InputKeys.AbilityUltimate);
-            _movementHoldKey.UpdateInputData(InputKeys.MovementHoldInput);
+            _constantSpeedFallKey.UpdateInputData(InputKeys.MovementHoldInput);
         }
 
         private void MarkFrameInputsAsRead()
@@ -594,7 +598,7 @@ namespace Player.Base
             _abilitySecondaryKey.ResetPerFrameInput();
             _abilityTertiaryKey.ResetPerFrameInput();
             _abilityUltimateKey.ResetPerFrameInput();
-            _movementHoldKey.ResetPerFrameInput();
+            _constantSpeedFallKey.ResetPerFrameInput();
         }
 
         private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMoveInput.x, 0) && ExtensionFunctions.IsNearlyEqual(_coreMoveInput.y, 0);
