@@ -2,7 +2,7 @@
 
 ## TODOs (Current)
 - [ ]  Type 4 - Grenadier (Raze)
-    - [ ]  Ability Primary - Slow shooting sticky bombs XD (cringe... sorry Raze)
+    - [ ]  Ability Primary - Can deploy a cluster mine in front of the player
     - [ ]  Ability Secondary - Soldier 76 Grenades
     - [ ]  Ability Tertiary - Fine… Raze Satchel
     - [ ]  Ability Ultimate - Here comes the party! :smile:
