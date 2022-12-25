@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 1683011238459484372}
   - component: {fileID: 680768254}
   - component: {fileID: 377452656}
+  - component: {fileID: 1683011237795699243}
   m_Layer: 6
   m_Name: Player Type 3
   m_TagString: Player
@@ -424,6 +425,7 @@ MonoBehaviour:
   - {fileID: 1683011238459484372}
   - {fileID: 680768254}
   - {fileID: 377452656}
+  - {fileID: 1683011237795699243}
   _playerInputRestrictingEffectsData:
   - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
       type: 3}
@@ -529,6 +531,22 @@ MonoBehaviour:
   _dashVelocity: 50
   _dashEndFloatDuration: 0.25
   _dashEndFloatFallMultiplier: 2.5
+--- !u!114 &1683011237795699243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683011238459484380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b9652e01996dab4f88368b468006b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityTrigger: 3
+  _abilityType: 1
+  _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
+    type: 3}
 --- !u!1 &3729988722622905508
 GameObject:
   m_ObjectHideFlags: 0

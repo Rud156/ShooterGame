@@ -21,6 +21,10 @@ namespace Player.Common
 
         public abstract bool AbilityNeedsToEnd(BasePlayerController playerController);
 
+        public virtual void ClearAllAbilityData(BasePlayerController playerController)
+        {
+        }
+
         #endregion Core Ability Functions
 
         #region Getters

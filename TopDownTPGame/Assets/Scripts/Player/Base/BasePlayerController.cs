@@ -128,7 +128,7 @@ namespace Player.Base
 
         #endregion Unity Functions
 
-        #region Custom Ability States
+        #region Player Input Restricting States
 
         private void UpdateCustomAbilityEffects()
         {
@@ -163,6 +163,19 @@ namespace Player.Base
             }
         }
 
+        private PlayerInputRestrictingData GetCustomEffectForState(PlayerInputRestrictingState playerState)
+        {
+            foreach (PlayerInputRestrictingData effect in _playerInputRestrictingEffectsData)
+            {
+                if (effect.targetState == playerState)
+                {
+                    return effect;
+                }
+            }
+
+            throw new System.Exception("Invalid State Requested");
+        }
+
         public void FreezeCharacter(float abilityDuration)
         {
             PlayerState topState = _playerStateStack[^1];
@@ -190,17 +203,32 @@ namespace Player.Base
 
         private void UnFreezeCharacter(PlayerInputRestrictingStoreData playerCustomEffectOutput) => Destroy(playerCustomEffectOutput.effect);
 
-        private PlayerInputRestrictingData GetCustomEffectForState(PlayerInputRestrictingState playerState)
+        #endregion Player Input Restricting States
+
+        #region Player Effects and Input Modifiers
+
+        private void UpdatePlayerEffectsAndInputModifiers()
         {
-            foreach (PlayerInputRestrictingData effect in _playerInputRestrictingEffectsData)
+            for (int i = _playerEffectsInputsModifiers.Count - 1; i >= 0; i--)
             {
-                if (effect.targetState == playerState)
+                PlayerEffectsAndInputModifiers movementModifier = _playerEffectsInputsModifiers[i];
+                if (movementModifier.isTimed)
                 {
-                    return effect;
+                    movementModifier.currentDuration -= Time.fixedDeltaTime;
+                    if (movementModifier.currentDuration <= 0)
+                    {
+                        _playerEffectsInputsModifiers.RemoveAt(i);
+                    }
+                    else
+                    {
+                        _playerEffectsInputsModifiers[i] = movementModifier;
+                    }
+                }
+                else if (_playerEffectsInputsModifiers[i].modifierType == PlayerEffectsAndInputModifierType.ConstantSpeedFall && _isGrounded)
+                {
+                    _playerEffectsInputsModifiers.RemoveAt(i);
                 }
             }
-
-            throw new System.Exception("Invalid State Requested");
         }
 
         private void CheckAndRemovePlayerEffectsAndInputsModifier(string identifier)
@@ -231,7 +259,47 @@ namespace Player.Base
             });
         }
 
-        #endregion Custom Ability States
+        public void PlayerEnabledParanoia(float duration)
+        {
+            // TODO: Trigger with Global UI Handler to implement Paranoia
+
+            _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
+            {
+                currentDuration = duration,
+                isTimed = true,
+                modifierType = PlayerEffectsAndInputModifierType.Paranoia,
+                modifierIdentifier = string.Empty,
+            });
+        }
+
+        #region Updates
+
+        private void ProcessConstantSpeedFall()
+        {
+            if (!_constantSpeedFallEnabled || _isGrounded)
+            {
+                return;
+            }
+
+            if (_constantSpeedFallKey.keyPressedThisFrame)
+            {
+                _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
+                {
+                    isTimed = false,
+                    modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
+                    modifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
+                    floatModifierAmount = _constantSpeedFallMultiplier,
+                });
+            }
+            else if (_constantSpeedFallKey.keyReleasedThisFrame || !_constantSpeedFallKey.keyPressed)
+            {
+                CheckAndRemovePlayerEffectsAndInputsModifier(MOVEMENT_HOLD_IDENTIFIER);
+            }
+        }
+
+        #endregion Updates
+
+        #endregion Player Effects and Input Modifiers
 
         #region Movement
 
@@ -358,30 +426,6 @@ namespace Player.Base
             }
         }
 
-        private void UpdatePlayerEffectsAndInputModifiers()
-        {
-            for (int i = _playerEffectsInputsModifiers.Count - 1; i >= 0; i--)
-            {
-                PlayerEffectsAndInputModifiers movementModifier = _playerEffectsInputsModifiers[i];
-                if (movementModifier.isTimed)
-                {
-                    movementModifier.currentDuration -= Time.fixedDeltaTime;
-                    if (movementModifier.currentDuration <= 0)
-                    {
-                        _playerEffectsInputsModifiers.RemoveAt(i);
-                    }
-                    else
-                    {
-                        _playerEffectsInputsModifiers[i] = movementModifier;
-                    }
-                }
-                else if (_playerEffectsInputsModifiers[i].modifierType == PlayerEffectsAndInputModifierType.ConstantSpeedFall && _isGrounded)
-                {
-                    _playerEffectsInputsModifiers.RemoveAt(i);
-                }
-            }
-        }
-
         private void UpdateCoreMovement()
         {
             Vector3 forward = transform.forward;
@@ -413,29 +457,6 @@ namespace Player.Base
 
                 _characterVelocity.x = airMovement.x;
                 _characterVelocity.z = airMovement.z;
-            }
-        }
-
-        private void ProcessConstantSpeedFall()
-        {
-            if (!_constantSpeedFallEnabled || _isGrounded)
-            {
-                return;
-            }
-
-            if (_constantSpeedFallKey.keyPressedThisFrame)
-            {
-                _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
-                {
-                    isTimed = false,
-                    modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
-                    modifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
-                    floatModifierAmount = _constantSpeedFallMultiplier,
-                });
-            }
-            else if (_constantSpeedFallKey.keyReleasedThisFrame || !_constantSpeedFallKey.keyPressed)
-            {
-                CheckAndRemovePlayerEffectsAndInputsModifier(MOVEMENT_HOLD_IDENTIFIER);
             }
         }
 
@@ -672,6 +693,7 @@ namespace Player.Base
         private enum PlayerEffectsAndInputModifierType
         {
             ConstantSpeedFall,
+            Paranoia,
         }
 
         #endregion Enums

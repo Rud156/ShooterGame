@@ -591,6 +591,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _jumpVelocity: 30
+  _constantSpeedFallEnabled: 0
+  _constantSpeedFallMultiplier: 0
   _playerAbilities:
   - {fileID: 2637092012038209775}
   - {fileID: 5610458570850552265}

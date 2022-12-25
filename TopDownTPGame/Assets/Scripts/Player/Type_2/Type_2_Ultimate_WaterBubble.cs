@@ -39,7 +39,6 @@ namespace Player.Type_2
 
             Collider[] hitColliders = new Collider[MAX_COLLIDERS_CHECK];
             Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, hitColliders, _abilityMask);
-            DebugExtension.DebugWireSphere(castPosition, _abilityCastRadius, 10);
             for (int i = 0; i < MAX_COLLIDERS_CHECK; i++)
             {
                 // Do not target itself
@@ -49,7 +48,7 @@ namespace Player.Type_2
                 }
 
                 // TODO: Also check team here...
-                if (hitColliders[i].TryGetComponent<BasePlayerController>(out BasePlayerController targetController))
+                if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
                     targetController.FreezeCharacter(_abilityDuration);
                     anyColliderHit = true;
