@@ -1,7 +1,7 @@
 using Player.Base;
 using UnityEngine;
 
-namespace Player.Type_3
+namespace AbilityScripts.Projectiles
 {
     public class DarkPulse : MonoBehaviour
     {

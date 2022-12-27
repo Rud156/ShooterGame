@@ -3,15 +3,20 @@ using UnityEngine;
 namespace AbilityScripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class SimpleOneShotForwardProjectile : MonoBehaviour, IProjectile
+    public class PlasmaBombLine : MonoBehaviour, IProjectile
     {
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _plasmaPulsePrefab;
+
         [Header("Prjectile Data")]
         [SerializeField] private float _projectileLaunchVelocity;
         [SerializeField] private float _projectileDestroyTime;
+        [SerializeField] private float _pulseDropRate;
 
         private Rigidbody _rb;
-        private float _currentTimeLeft;
         private bool _isLaunched;
+        private float _currentTimeLeft;
+        private float _nextDropTime;
 
         private bool _isInitialized = false;
 
@@ -32,6 +37,12 @@ namespace AbilityScripts.Projectiles
                 ProjectileDestroy();
                 Destroy(gameObject);
             }
+
+            if (Time.time >= _nextDropTime)
+            {
+                Instantiate(_plasmaPulsePrefab, transform.position, Quaternion.identity);
+                _nextDropTime = Time.time + _pulseDropRate;
+            }
         }
 
         #endregion Unity Functions
@@ -47,14 +58,12 @@ namespace AbilityScripts.Projectiles
             _currentTimeLeft = _projectileDestroyTime;
         }
 
-        public void ProjectileHit(Collider other)
-        {
-            // TODO: Call damage function here...
-        }
-
         public void ProjectileDestroy()
         {
-            // TODO: Call anything here...
+        }
+
+        public void ProjectileHit(Collider other)
+        {
         }
 
         #endregion External Functions
@@ -70,6 +79,7 @@ namespace AbilityScripts.Projectiles
 
             _rb = GetComponent<Rigidbody>();
             _isInitialized = true;
+            _nextDropTime = 0;
         }
 
         #endregion Utils

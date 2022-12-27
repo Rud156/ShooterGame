@@ -2,8 +2,8 @@
 
 ## TODOs (Current)
 - [ ]  Type 4 - Grenadier (Raze)
-    - [ ]  Ability Primary - Can deploy a cluster mine in front of the player
-    - [ ]  Ability Secondary - Soldier 76 Grenades
+    - [X]  Ability Primary - Shoot Plasma bombs that stick to the ground and hurt enemies in range. They disappear after sometime (SlaughterSpine)
+    - [ ]  Ability Secondary - Soldier 76 Grenades homing grenades but has a slow targeting range so can be dodged
     - [ ]  Ability Tertiary - Fine… Raze Satchel
     - [ ]  Ability Ultimate - Here comes the party! :smile:
 

@@ -4,21 +4,21 @@ using Player.Common;
 using UnityEngine;
 using Utils.Input;
 
-namespace Player.Type_1
+namespace Player.Type_4
 {
-    public class Type_1_Primary_SimpleShoot : Ability
+    public class Type_4_Primary_PlasmaBomb : Ability
     {
         [Header("Prefabs")]
-        [SerializeField] private GameObject _projectilePrefab;
+        [SerializeField] private GameObject _plasmaBombPrefab;
 
         [Header("Components")]
         [SerializeField] private Transform _cameraHolder;
         [SerializeField] private Transform _shootPoint;
 
-        [Header("Simple Shoot Data")]
+        [Header("Plasma Shoot Data")]
         [SerializeField] private float _fireRate;
 
-        private float _nextFireTime;
+        private float _nextShootTime;
         private bool _abilityEnd;
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
@@ -27,15 +27,16 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            if (Time.time >= _nextFireTime)
+            if (Time.time >= _nextShootTime)
             {
-                _nextFireTime = Time.time + _fireRate;
+                _nextShootTime = Time.time + _fireRate;
+
                 Vector3 spawnPosition = _shootPoint.position;
                 Vector3 direction = _cameraHolder.forward;
 
-                GameObject projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
-                SimpleOneShotForwardProjectile simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
-                simpleProj.LaunchProjectile(direction);
+                GameObject projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
+                PlasmaBombLine plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
+                plasmaBomb.LaunchProjectile(direction);
             }
 
             PlayerInputKey inputKey = playerController.GetPrimaryAbilityKey();
