@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 1504131108388283768}
   - component: {fileID: 1504131108388283775}
   - component: {fileID: 1683011236865259035}
+  - component: {fileID: -8520166292908909276}
   m_Layer: 6
   m_Name: Player Type 4
   m_TagString: Player
@@ -173,7 +174,7 @@ Transform:
   - {fileID: 1504131108382786862}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -227,6 +228,7 @@ MonoBehaviour:
   _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
   - {fileID: 1683011236865259035}
+  - {fileID: -8520166292908909276}
   _playerInputRestrictingEffectsData:
   - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
       type: 3}
@@ -267,6 +269,29 @@ MonoBehaviour:
   _cameraHolder: {fileID: 1504131108770834952}
   _shootPoint: {fileID: 1504131108382786862}
   _fireRate: 0.5
+--- !u!114 &-8520166292908909276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504131108388283766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b56bd1daf86a0348b1f7567fa7e3b74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityTrigger: 1
+  _abilityType: 1
+  _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
+    type: 3}
+  _cameraHolder: {fileID: 1504131108770834952}
+  _cameraPoint: {fileID: 1504131108474634825}
+  _fireRate: 0.5
+  _targetDistance: 50
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 183
 --- !u!1 &1504131108474634820
 GameObject:
   m_ObjectHideFlags: 0
