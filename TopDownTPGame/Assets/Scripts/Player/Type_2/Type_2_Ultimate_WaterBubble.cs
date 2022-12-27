@@ -38,8 +38,8 @@ namespace Player.Type_2
             bool anyColliderHit = false;
 
             Collider[] hitColliders = new Collider[MAX_COLLIDERS_CHECK];
-            Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, hitColliders, _abilityMask);
-            for (int i = 0; i < MAX_COLLIDERS_CHECK; i++)
+            int totalHitColliders = Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, hitColliders, _abilityMask);
+            for (int i = 0; i < totalHitColliders; i++)
             {
                 // Do not target itself
                 if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())

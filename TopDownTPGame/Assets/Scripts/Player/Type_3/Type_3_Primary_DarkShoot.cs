@@ -1,4 +1,3 @@
-using AbilityScripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -8,21 +7,32 @@ namespace Player.Type_3
 {
     public class Type_3_Primary_DarkShoot : Ability
     {
-        [Header("Prefabs")]
-        [SerializeField] private GameObject _projectilePrefab;
+        private const int MAX_COLLIDERS = 10;
 
         [Header("Components")]
         [SerializeField] private Transform _cameraHolder;
+        [SerializeField] private AbilityPrefabInitializer _prefabInit;
 
         [Header("Shoot Data")]
         [SerializeField] private float _fireRate;
         [SerializeField] private Transform _shootPoint;
-        [SerializeField] private float _spawnQuaternionOffset;
-        [SerializeField] private float _shootAngle;
-        [SerializeField] private int _totalProjectiles;
+        [SerializeField] private LayerMask _attackMask;
+
+        [Header("Post Start Filled")]
+        [SerializeField] private Transform _frontCollider;
 
         private float _nextFireTime;
         private bool _abilityEnd;
+
+        #region Unity Functions
+
+        private void Start()
+        {
+            _prefabInit.AbilityPrefabInit();
+            _frontCollider = transform.Find("Type_3_Prefab(Clone)/FrontColliderDetector");
+        }
+
+        #endregion Unity Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
@@ -33,32 +43,22 @@ namespace Player.Type_3
             if (Time.time >= _nextFireTime)
             {
                 _nextFireTime = Time.time + _fireRate;
-                Vector3 spawnPosition = _shootPoint.position;
 
-                bool isEven = _totalProjectiles % 2 == 0;
-                float startAngle;
-                if (isEven)
+                Collider[] hitColliders = new Collider[MAX_COLLIDERS];
+                int totalHitColliders = Physics.OverlapBoxNonAlloc(_frontCollider.position, _frontCollider.localScale / 2, hitColliders, _frontCollider.rotation, _attackMask);
+                for (int i = 0; i < totalHitColliders; i++)
                 {
-                    int halfProjectiles = _totalProjectiles / 2;
-                    startAngle = (halfProjectiles - 1) * _shootAngle + (_shootAngle / 2);
-                }
-                else
-                {
-                    int halfProjectiles = Mathf.FloorToInt(_totalProjectiles / 2);
-                    startAngle = halfProjectiles * _shootAngle;
-                }
-                startAngle = -startAngle;
+                    // Do not target itself
+                    if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                    {
+                        continue;
+                    }
 
-                for (int i = 0; i < _totalProjectiles; i++)
-                {
-                    GameObject projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.Euler(0, startAngle, 0));
-                    SimpleOneShotForwardProjectile simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
-
-                    Quaternion angleDirection = Quaternion.Euler(0, startAngle - _spawnQuaternionOffset, 0);
-                    Vector3 secondaryDirection = angleDirection * _cameraHolder.forward + angleDirection * _cameraHolder.right;
-                    simpleProj.LaunchProjectile(secondaryDirection);
-
-                    startAngle += _shootAngle;
+                    // TODO: Also check team here...
+                    if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+                    {
+                        // TODO: Implement damage here...
+                    }
                 }
             }
 

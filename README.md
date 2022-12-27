@@ -1,19 +1,14 @@
 # Top Down Third Person Game
 
 ## TODOs (Current)
-- [X]  Type 3 - Darkness (Fade)
-    - [ ]  Ability Primary - Kasumi but not as overpowered
-    - [X]  Ability Secondary - Dark Slash. Targets marked with this take more damage from Primary for sometime
-    - [X]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved (Andro Dash). There is a delay between when gravity starts affecting.
-    - [X]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse
-
-## TODOs (Future)
-### All characters heals HP when not in combat after sometime.
 - [ ]  Type 4 - Grenadier (Raze)
     - [ ]  Ability Primary - Can deploy a cluster mine in front of the player
     - [ ]  Ability Secondary - Soldier 76 Grenades
     - [ ]  Ability Tertiary - Fine… Raze Satchel
     - [ ]  Ability Ultimate - Here comes the party! :smile:
+
+## TODOs (Future)
+### All characters heals HP when not in combat after sometime.
 - [ ]  Type 5 - Engineer (Killjoy)
     - [ ]  Ability Primary - Place a Turret that deals damage
     - [ ]  Ability Secondary - Grenade Cluster that also knockbacks enemies a small amount
@@ -47,3 +42,8 @@
     - [X]  Ability Secondary - Create an Ice Wall that block incoming damage (Can be Broken)
     - [X]  Ability Tertiary - Become water and move anywhere without taking damage
     - [X]  Ability Ultimate - Water bubble to trap the enemy
+- [X]  Type 3 - Darkness (Fade)
+    - [X]  Ability Primary - Kasumi but not as overpowered
+    - [X]  Ability Secondary - Dark Slash. Targets marked with this take more damage from Primary for sometime
+    - [X]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved (Andro Dash). There is a delay between when gravity starts affecting.
+    - [X]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse

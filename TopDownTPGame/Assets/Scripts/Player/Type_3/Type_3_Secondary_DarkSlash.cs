@@ -11,15 +11,30 @@ namespace Player.Type_3
         [Header("Prefabs")]
         [SerializeField] private GameObject _slashPrefab;
 
+        [Header("Components")]
+        [SerializeField] private AbilityPrefabInitializer _prefabInit;
+
         [Header("Slash Data")]
-        [SerializeField] private SplineContainer _slash;
         [SerializeField] private AnimationCurve _slashEaseCurve;
         [SerializeField] private float _slashDuration;
+
+        [Header("Post Start Filled")]
+        [SerializeField] private SplineContainer _slash;
 
         private GameObject _slashObject;
         private int _randomSlashIndex;
         private float _currentTime;
         private bool _abilityEnd;
+
+        #region Unity Functions
+
+        private void Start()
+        {
+            _prefabInit.AbilityPrefabInit();
+            _slash = transform.Find("Type_3_Prefab(Clone)/SlashPaths/Slash").GetComponent<SplineContainer>();
+        }
+
+        #endregion Unity Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 

@@ -104,7 +104,7 @@ namespace Player.Base
             UpdatePlayerEffectsAndInputModifiers();
 
             // Since this is where input handling happens. Input to be delayed can be done here...
-            bool isInputRestricted = (int)_playerStateStack[^1] < (int)PlayerState.CustomInputRestrictingStates;
+            bool isInputRestricted = (int)_playerStateStack[^1] >= (int)PlayerState.CustomInputRestrictingStates;
             if (!isInputRestricted)
             {
                 UpdateGroundedState();

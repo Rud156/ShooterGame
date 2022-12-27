@@ -10,18 +10,23 @@ namespace Player.Type_2
     // This attack is comprised of 1 Right Slash, 1 Left Slash and then a Shoot front attack
     public class Type_2_Primary_WaterSlash : Ability
     {
-        [Header("Components")]
+        [Header("Prefabs")]
         [SerializeField] private GameObject _slashSidePrefab;
         [SerializeField] private GameObject _slashFrontPrefab;
 
+        [Header("Components")]
+        [SerializeField] private AbilityPrefabInitializer _prefabInit;
+
         [Header("Water Lines Data")]
         [SerializeField] private Transform _shootPoint;
-        [SerializeField] private SplineContainer _leftSlash;
         [SerializeField] private AnimationCurve _leftEaseCurve;
-        [SerializeField] private SplineContainer _rightSlash;
         [SerializeField] private AnimationCurve _rightEaseCurve;
         [SerializeField] private float _slashDuration;
         [SerializeField] private float _resetDuration;
+
+        [Header("Post Start Filled")]
+        [SerializeField] private SplineContainer _leftSlash;
+        [SerializeField] private SplineContainer _rightSlash;
 
         private WaterControlState _waterControlState;
         private bool _abilityEnd;
@@ -33,7 +38,14 @@ namespace Player.Type_2
 
         #region Unity Functions
 
-        private void Start() => SetState(WaterControlState.LeftSlash);
+        private void Start()
+        {
+            _prefabInit.AbilityPrefabInit();
+            _leftSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();
+            _rightSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/RightSlash").GetComponent<SplineContainer>();
+
+            SetState(WaterControlState.LeftSlash);
+        }
 
         #endregion Unity Functions
 
