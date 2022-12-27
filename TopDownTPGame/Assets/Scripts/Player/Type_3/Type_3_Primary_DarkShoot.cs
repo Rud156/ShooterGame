@@ -58,6 +58,9 @@ namespace Player.Type_3
                     if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                     {
                         // TODO: Implement damage here...
+
+                        // Only hit one target...
+                        break;
                     }
                 }
             }
