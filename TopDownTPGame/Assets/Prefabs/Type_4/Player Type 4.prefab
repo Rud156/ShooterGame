@@ -229,6 +229,8 @@ MonoBehaviour:
   _constantSpeedFallEnabled: 1
   _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
+  - {fileID: 1683011236865259035}
+  - {fileID: -8520166292908909276}
   - {fileID: 253607354497569646}
   _playerInputRestrictingEffectsData:
   - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,

@@ -146,5 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c210b80ab48764a96c843b28e29159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _satchelLaunchForce: 7.5
+  _satchelLaunchForce: 10
   _destroyDuration: 10
