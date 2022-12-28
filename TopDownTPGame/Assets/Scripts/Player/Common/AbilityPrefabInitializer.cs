@@ -6,6 +6,10 @@ namespace Player.Common
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _abilityPrefab;
+        [SerializeField] private GameObject _abilityCameraParentPrefab;
+
+        [Header("Components")]
+        [SerializeField] private Transform _cameraHolder;
 
         private bool _isInitialized;
 
@@ -25,7 +29,14 @@ namespace Player.Common
             }
 
             _isInitialized = true;
-            Instantiate(_abilityPrefab, transform);
+            if (_abilityPrefab != null)
+            {
+                Instantiate(_abilityPrefab, transform);
+            }
+            if (_abilityCameraParentPrefab != null)
+            {
+                Instantiate(_abilityCameraParentPrefab, _cameraHolder);
+            }
         }
 
         #endregion External Functions

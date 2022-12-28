@@ -37,7 +37,7 @@ namespace Player.Type_4
         private void Start()
         {
             _prefabInit.AbilityPrefabInit();
-            _shootPoint = transform.Find("Type_4_Prefab(Clone)/BelowShootPoint");
+            _shootPoint = transform.Find("CameraHolder/Type_4_Prefab(Clone)/BelowShootPoint");
         }
 
         #endregion

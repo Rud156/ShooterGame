@@ -1,19 +1,14 @@
 # Top Down Third Person Game
 
 ## TODOs (Current)
-- [ ]  Type 4 - Grenadier (Raze)
-    - [X]  Ability Primary - Shoot Plasma bombs that stick to the ground and hurt enemies in range. They disappear after sometime (SlaughterSpine)
-    - [X]  Ability Secondary - Soldier 76 Grenades homing grenades but has a slow targeting range so can be dodged
-    - [ ]  Ability Tertiary - Fine… Raze Satchel
-    - [ ]  Ability Ultimate - Here comes the party! :smile:
-
-## TODOs (Future)
-### All characters heals HP when not in combat after sometime.
 - [ ]  Type 5 - Engineer (Killjoy)
     - [ ]  Ability Primary - Place a Turret that deals damage
     - [ ]  Ability Secondary - Grenade Cluster that also knockbacks enemies a small amount
     - [ ]  Ability Tertiary - Gibraltar shield from Apex
     - [ ]  Ability Ultimate - Allies get a movement speed buff and a protective shield around them
+
+## TODOs (Future)
+### All characters heals HP when not in combat after sometime.
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
 - [ ] Add Damage and Health Systems (Both must be modifiable by effects)
 - [ ] Switch to new Unity Input system
@@ -47,3 +42,8 @@
     - [X]  Ability Secondary - Dark Slash. Targets marked with this take more damage from Primary for sometime
     - [X]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved (Andro Dash). There is a delay between when gravity starts affecting.
     - [X]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse
+- [X]  Type 4 - Grenadier (Raze)
+    - [X]  Ability Primary - Shoot Plasma bombs that stick to the ground and hurt enemies in range. They disappear after sometime (SlaughterSpine)
+    - [X]  Ability Secondary - Soldier 76 Grenades homing grenades but has a slow targeting range so can be dodged
+    - [X]  Ability Tertiary - Fine… Raze Satchel
+    - [X]  Ability Ultimate - Here comes the party! :smile:

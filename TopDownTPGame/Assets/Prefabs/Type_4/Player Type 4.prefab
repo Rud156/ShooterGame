@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 1683011236865259035}
   - component: {fileID: -8520166292908909276}
   - component: {fileID: 253607354497569646}
+  - component: {fileID: 134541335}
   m_Layer: 6
   m_Name: Player Type 4
   m_TagString: Player
@@ -232,6 +233,7 @@ MonoBehaviour:
   - {fileID: 1683011236865259035}
   - {fileID: -8520166292908909276}
   - {fileID: 253607354497569646}
+  - {fileID: 134541335}
   _playerInputRestrictingEffectsData:
   - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
       type: 3}
@@ -265,8 +267,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdc3a56bf5bc4545a9d88d4b04df1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _abilityPrefab: {fileID: 1050605402142570255, guid: 67301d8de3ff0aa4e9d8e3a33d3ffc4e,
+  _abilityPrefab: {fileID: 0}
+  _abilityCameraParentPrefab: {fileID: 1050605402142570255, guid: 67301d8de3ff0aa4e9d8e3a33d3ffc4e,
     type: 3}
+  _cameraHolder: {fileID: 1504131108770834952}
 --- !u!114 &1683011236865259035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +337,24 @@ MonoBehaviour:
   _minForceDuration: 0.25
   _maxForceDuration: 1
   _satchelGravityMultiplier: 0.5
+--- !u!114 &134541335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504131108388283766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7d916f8521afc448cfce02242bc008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityTrigger: 3
+  _abilityType: 1
+  _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
+    type: 3}
+  _cameraHolder: {fileID: 1504131108770834952}
+  _shootPoint: {fileID: 1504131108382786862}
 --- !u!1 &1504131108474634820
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +538,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504131108770834953}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.41501084, y: 0, z: 0, w: 0.90981644}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -524,7 +546,7 @@ Transform:
   - {fileID: 1504131108474634825}
   m_Father: {fileID: 1504131108388283770}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -49.04, y: 0, z: 0}
 --- !u!1 &3478866269718607929
 GameObject:
   m_ObjectHideFlags: 0
