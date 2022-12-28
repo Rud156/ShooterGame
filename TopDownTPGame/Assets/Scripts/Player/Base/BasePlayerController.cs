@@ -545,7 +545,10 @@ namespace Player.Base
                 AbilityTrigger abilityTrigger = ability.GetAbilityTrigger();
                 PlayerInputKey key = GetKeyForAbilityTrigger(abilityTrigger);
 
-                if (ability.AbilityCanStart(this) && _currentAbility == null && key.keyPressedThisFrame)
+                if (ability.GetAbilityType() != AbilityType.Movement &&
+                    ability.AbilityCanStart(this) &&
+                    _currentAbility == null &&
+                    key.keyPressedThisFrame)
                 {
                     _currentAbility = ability;
 

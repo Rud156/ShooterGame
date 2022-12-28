@@ -418,8 +418,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   _jumpVelocity: 30
-  _movementHoldGravityEnabled: 0
-  _movementHoldGravityMultiplier: 0
+  _constantSpeedFallEnabled: 0
+  _constantSpeedFallMultiplier: 0
   _playerAbilities:
   - {fileID: 95916530318942730}
   - {fileID: 95916530318942731}
@@ -444,8 +444,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraHolder: {fileID: 95916529673104767}
   _cameraRotationSpeed: 100
-  _minCameraAngle: -30
-  _maxCameraAngle: 30
+  _minCameraAngle: -90
+  _maxCameraAngle: 90
 --- !u!114 &95916530318942730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,8 +463,8 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 3515318782041256082, guid: 76baa5bf0a6dcff498d25a2276ada752,
     type: 3}
   _cameraHolder: {fileID: 95916529673104767}
-  _fireRate: 0.3
   _shootPoint: {fileID: 95916530296144473}
+  _fireRate: 0.3
 --- !u!114 &95916530318942731
 MonoBehaviour:
   m_ObjectHideFlags: 0

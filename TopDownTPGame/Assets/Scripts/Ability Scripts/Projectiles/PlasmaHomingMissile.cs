@@ -32,7 +32,6 @@ namespace AbilityScripts.Projectiles
             if (_currentDestroyTime <= 0)
             {
                 ProjectileDestroy();
-                Destroy(gameObject);
             }
         }
 

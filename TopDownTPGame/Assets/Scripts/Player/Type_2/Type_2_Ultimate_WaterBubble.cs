@@ -14,19 +14,13 @@ namespace Player.Type_2
         [SerializeField] private LayerMask _abilityMask;
         [SerializeField] private float _abilityDuration;
 
+        private bool _abilityEnd;
+
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
-        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => true;
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
-        {
-        }
-
-        public override void EndAbility(BasePlayerController playerController)
-        {
-        }
-
-        public override void StartAbility(BasePlayerController playerController)
         {
             Vector3 castPosition = transform.position;
             Vector3 forward = transform.forward;
@@ -59,6 +53,11 @@ namespace Player.Type_2
             {
                 // TODO: Put on cooldown...
             }
+            _abilityEnd = true;
         }
+
+        public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
+
+        public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
     }
 }

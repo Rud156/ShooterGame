@@ -30,7 +30,6 @@ namespace AbilityScripts.Projectiles
             if (_currentTimeLeft < 0)
             {
                 ProjectileDestroy();
-                Destroy(gameObject);
             }
         }
 
@@ -49,13 +48,9 @@ namespace AbilityScripts.Projectiles
 
         public void ProjectileHit(Collider other)
         {
-            // TODO: Call damage function here...
         }
 
-        public void ProjectileDestroy()
-        {
-            // TODO: Call anything here...
-        }
+        public void ProjectileDestroy() => Destroy(gameObject);
 
         #endregion External Functions
 

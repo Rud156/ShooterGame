@@ -11,27 +11,25 @@ namespace Player.Type_3
         [SerializeField] private GameObject _darkPulsePrefab;
 
         private GameObject _darkPulseObject;
+        private bool _abilityEnd;
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
-        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => true;
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
-        {
-        }
-
-        public override void EndAbility(BasePlayerController playerController)
-        {
-        }
-
-        public override void StartAbility(BasePlayerController playerController)
         {
             GameObject darkPulse = Instantiate(_darkPulsePrefab, transform.position, Quaternion.identity);
             DarkPulse pulse = darkPulse.GetComponent<DarkPulse>();
             pulse.StartPulse();
 
             _darkPulseObject = darkPulse;
+            _abilityEnd = true;
         }
+
+        public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
+
+        public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
 
         public override void ClearAllAbilityData(BasePlayerController playerController)
         {

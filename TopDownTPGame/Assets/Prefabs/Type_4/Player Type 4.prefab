@@ -148,8 +148,10 @@ GameObject:
   - component: {fileID: 1504131108388283769}
   - component: {fileID: 1504131108388283768}
   - component: {fileID: 1504131108388283775}
+  - component: {fileID: 253607354497569653}
   - component: {fileID: 1683011236865259035}
   - component: {fileID: -8520166292908909276}
+  - component: {fileID: 253607354497569646}
   m_Layer: 6
   m_Name: Player Type 4
   m_TagString: Player
@@ -227,8 +229,7 @@ MonoBehaviour:
   _constantSpeedFallEnabled: 1
   _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
-  - {fileID: 1683011236865259035}
-  - {fileID: -8520166292908909276}
+  - {fileID: 253607354497569646}
   _playerInputRestrictingEffectsData:
   - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
       type: 3}
@@ -248,8 +249,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraHolder: {fileID: 1504131108770834952}
   _cameraRotationSpeed: 100
-  _minCameraAngle: -30
-  _maxCameraAngle: 30
+  _minCameraAngle: -90
+  _maxCameraAngle: 90
+--- !u!114 &253607354497569653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504131108388283766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdc3a56bf5bc4545a9d88d4b04df1b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityPrefab: {fileID: 1050605402142570255, guid: 67301d8de3ff0aa4e9d8e3a33d3ffc4e,
+    type: 3}
 --- !u!114 &1683011236865259035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +307,30 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 183
+--- !u!114 &253607354497569646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504131108388283766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1c9216ea357724893e12a8b9eedf5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityTrigger: 2
+  _abilityType: 0
+  _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
+    type: 3}
+  _prefabInit: {fileID: 253607354497569653}
+  _cameraHolder: {fileID: 1504131108770834952}
+  _satchelAffectRadius: 10
+  _satchelVelocity: 35
+  _airControlMultiplier: 1
+  _minForceDuration: 0.25
+  _maxForceDuration: 1
+  _satchelGravityMultiplier: 0.5
 --- !u!1 &1504131108474634820
 GameObject:
   m_ObjectHideFlags: 0

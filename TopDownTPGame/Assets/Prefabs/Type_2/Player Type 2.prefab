@@ -369,8 +369,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraHolder: {fileID: 2637092012472504217}
   _cameraRotationSpeed: 100
-  _minCameraAngle: -30
-  _maxCameraAngle: 30
+  _minCameraAngle: -90
+  _maxCameraAngle: 90
 --- !u!114 &3703342411328765957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,7 +514,7 @@ MonoBehaviour:
   _spawnOffset: {x: 0, y: -0.64, z: 0}
   _rbModifiedHeight: 0.5
   _rbModifiedYOffset: -0.5
-  _movementSpeed: 5
+  _movementSpeed: 35
   _abilityDuration: 3
 --- !u!114 &2637092012433437213
 MonoBehaviour:
