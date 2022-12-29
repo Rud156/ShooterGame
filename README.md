@@ -2,7 +2,7 @@
 
 ## TODOs (Current)
 - [ ]  Type 5 - Engineer (Killjoy)
-    - [ ]  Ability Primary - Place a Turret that deals damage
+    - [X]  Ability Primary - Place a Turret that deals damage
     - [ ]  Ability Secondary - Grenade Cluster that also stuns enemies a small amount
     - [ ]  Ability Tertiary - Gibraltar shield from Apex
     - [ ]  Ability Ultimate - Allies get a movement speed buff and a protective shield around them
