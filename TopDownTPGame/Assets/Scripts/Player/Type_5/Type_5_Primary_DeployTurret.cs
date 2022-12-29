@@ -1,5 +1,6 @@
 using Player.Base;
 using Player.Common;
+using System.Collections.Generic;
 using UnityEngine;
 using Utils.Input;
 
@@ -23,6 +24,13 @@ namespace Player.Type_5
         private bool _firstUpdateCompleted;
 
         private GameObject _turretObject;
+        private List<GameObject> _spawnedTurrets;
+
+        #region Unity Functions
+
+        private void Start() => _spawnedTurrets = new List<GameObject>();
+
+        #endregion Unity Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded;
 
@@ -34,12 +42,17 @@ namespace Player.Type_5
             Debug.DrawRay(_cameraPoint.position, _cameraHolder.forward * _spawnMaxDistance, color: Color.red);
             if (hit)
             {
+                // TODO: Do not spawn the turret if it spawn inside some geometry...
+
                 _turretObject.transform.position = hitInfo.point + _spawnOffset;
                 _turretObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
 
                 PlayerInputKey primaryKey = playerController.GetPrimaryAbilityKey();
                 if (primaryKey.keyPressedThisFrame && _firstUpdateCompleted)
                 {
+                    _turretObject.transform.SetParent(hitInfo.transform);
+                    _spawnedTurrets.Add(_turretObject);
+
                     _turretObject = null;
                     _placementCompleted = true;
                 }
@@ -65,6 +78,16 @@ namespace Player.Type_5
             _placementCompleted = false;
             _firstUpdateCompleted = false;
             _turretObject = Instantiate(_turretPrefab, transform.position, Quaternion.identity);
+        }
+
+        public override void ClearAllAbilityData(BasePlayerController playerController)
+        {
+            for (int i = 0; i < _spawnedTurrets.Count; i++)
+            {
+                Destroy(_spawnedTurrets[i]);
+            }
+
+            _spawnedTurrets.Clear();
         }
     }
 }
