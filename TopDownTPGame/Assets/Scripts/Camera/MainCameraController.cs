@@ -69,6 +69,8 @@ namespace Camera
             _mouseInput.y = Input.GetAxisRaw(InputKeys.MouseY);
         }
 
+        public Vector2 GetMouseInput() => _mouseInput;
+
         #endregion Inputs
     }
 }

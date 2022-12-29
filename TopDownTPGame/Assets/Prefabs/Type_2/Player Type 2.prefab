@@ -355,6 +355,10 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 0
+  - effectPrefab: {fileID: 1434155821187485333, guid: bddef074da1d9f64eadd4cbb76ff24f6,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    targetState: 1
 --- !u!114 &2637092012038209774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +389,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityPrefab: {fileID: 1502905930425212743, guid: 204d146b2b5e8a64c98f571965281a2b,
     type: 3}
+  _abilityCameraParentPrefab: {fileID: 0}
+  _cameraHolder: {fileID: 0}
 --- !u!114 &2637092012038209775
 MonoBehaviour:
   m_ObjectHideFlags: 0
