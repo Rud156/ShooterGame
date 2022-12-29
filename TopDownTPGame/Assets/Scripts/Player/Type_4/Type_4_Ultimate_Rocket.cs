@@ -11,6 +11,10 @@ public class Type_4_Ultimate_Rocket : Ability
     [SerializeField] private Transform _cameraHolder;
     [SerializeField] private Transform _shootPoint;
 
+    [Header("Rocket Data")]
+    [SerializeField] private float _knockbackDuration;
+    [SerializeField] private float _knockbackVelocity;
+
     private GameObject _rocketObject;
     private bool _abilityEnd;
 
@@ -39,6 +43,9 @@ public class Type_4_Ultimate_Rocket : Ability
             rocketRb.isKinematic = false;
             rocket.LaunchProjectile(direction);
             _rocketObject = null;
+
+            Vector3 knockbackDirection = -_cameraHolder.forward * _knockbackVelocity;
+            playerController.KnockbackCharacter(_knockbackDuration, knockbackDirection);
         }
         _abilityEnd = true;
     }

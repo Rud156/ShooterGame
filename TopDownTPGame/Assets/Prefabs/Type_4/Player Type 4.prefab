@@ -239,6 +239,10 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 0
+  - effectPrefab: {fileID: 1434155821187485333, guid: bddef074da1d9f64eadd4cbb76ff24f6,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    targetState: 1
 --- !u!114 &1504131108388283775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +271,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdc3a56bf5bc4545a9d88d4b04df1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _abilityPrefab: {fileID: 0}
+  _abilityPrefab: {fileID: 1050605402142570255, guid: e5a6335db6c4b14428de94aaa5fde280,
+    type: 3}
   _abilityCameraParentPrefab: {fileID: 1050605402142570255, guid: 67301d8de3ff0aa4e9d8e3a33d3ffc4e,
     type: 3}
   _cameraHolder: {fileID: 1504131108770834952}
@@ -337,6 +342,8 @@ MonoBehaviour:
   _minForceDuration: 0.25
   _maxForceDuration: 1
   _satchelGravityMultiplier: 0.5
+  _orbitShootPoint: {fileID: 0}
+  _staticShootPoint: {fileID: 0}
 --- !u!114 &134541335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +362,8 @@ MonoBehaviour:
     type: 3}
   _cameraHolder: {fileID: 1504131108770834952}
   _shootPoint: {fileID: 1504131108382786862}
+  _knockbackDuration: 0.25
+  _knockbackVelocity: 21
 --- !u!1 &1504131108474634820
 GameObject:
   m_ObjectHideFlags: 0

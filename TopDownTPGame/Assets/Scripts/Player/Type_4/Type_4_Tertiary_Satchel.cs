@@ -23,7 +23,9 @@ namespace Player.Type_4
         [SerializeField] private float _maxForceDuration;
         [SerializeField] private float _satchelGravityMultiplier;
 
-        private Transform _shootPoint;
+        [Header("Post Start Filled")]
+        [SerializeField] private Transform _orbitShootPoint;
+        [SerializeField] private Transform _staticShootPoint;
 
         private SatchelNade _satchelObject;
         private bool _abilityEnd;
@@ -37,10 +39,11 @@ namespace Player.Type_4
         private void Start()
         {
             _prefabInit.AbilityPrefabInit();
-            _shootPoint = transform.Find("CameraHolder/Type_4_Prefab(Clone)/BelowShootPoint");
+            _orbitShootPoint = transform.Find("CameraHolder/Type_4_CameraPrefab(Clone)/BelowShootPoint");
+            _staticShootPoint = transform.Find("Type_4_NormalPrefab(Clone)/BelowShootPoint");
         }
 
-        #endregion
+        #endregion Unity Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
@@ -50,7 +53,7 @@ namespace Player.Type_4
         {
             if (_duration <= 0)
             {
-                InitialSatchelActivation();
+                InitialSatchelActivation(playerController);
             }
             else
             {
@@ -71,13 +74,14 @@ namespace Player.Type_4
 
         #region Ability Updates
 
-        private void InitialSatchelActivation()
+        private void InitialSatchelActivation(BasePlayerController playerController)
         {
             if (_satchelObject == null)
             {
                 Vector3 direction = _cameraHolder.forward;
 
-                GameObject satchel = Instantiate(_satchelPrefab, _shootPoint.position, Quaternion.identity);
+                Vector3 shootPosition = playerController.IsGrounded ? _staticShootPoint.position : _orbitShootPoint.position;
+                GameObject satchel = Instantiate(_satchelPrefab, shootPosition, Quaternion.identity);
                 SatchelNade satchelNade = satchel.GetComponent<SatchelNade>();
                 satchelNade.LaunchProjectile(direction);
 

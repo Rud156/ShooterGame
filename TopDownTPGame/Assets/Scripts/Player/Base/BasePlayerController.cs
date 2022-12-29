@@ -143,13 +143,27 @@ namespace Player.Base
                 customAbility.TickDuration();
                 _playerInputRestrictingEffects[i] = customAbility;
 
+                switch (_playerInputRestrictingEffects[i].targetState)
+                {
+                    case PlayerInputRestrictingState.Frozen:
+                        break;
+
+                    case PlayerInputRestrictingState.Knockback:
+                        {
+                            _characterVelocity = _playerInputRestrictingEffects[i].customEffectVectorData_1;
+                            _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
+                        }
+                        break;
+                }
+
                 if (_playerInputRestrictingEffects[i].customEffectDuration <= 0)
                 {
                     switch (_playerInputRestrictingEffects[i].targetState)
                     {
                         case PlayerInputRestrictingState.Frozen:
+                        case PlayerInputRestrictingState.Knockback:
                             {
-                                UnFreezeCharacter(_playerInputRestrictingEffects[i]);
+                                DestroyPlayerInputCustomEffect(_playerInputRestrictingEffects[i]);
                                 _playerInputRestrictingEffects.RemoveAt(i);
                             }
                             break;
@@ -176,15 +190,20 @@ namespace Player.Base
             throw new System.Exception("Invalid State Requested");
         }
 
-        public void FreezeCharacter(float abilityDuration)
+        private void SetupPlayerInputRestrictingState()
         {
             PlayerState topState = _playerStateStack[^1];
             if (topState != PlayerState.CustomInputRestrictingStates)
             {
                 PushPlayerState(PlayerState.CustomInputRestrictingStates);
             }
+        }
 
-            PlayerInputRestrictingData customEffect = GetCustomEffectForState(PlayerInputRestrictingState.Frozen);
+        private void DestroyPlayerInputCustomEffect(PlayerInputRestrictingStoreData playerCustomEffectOutput) => Destroy(playerCustomEffectOutput.effect);
+
+        private GameObject SpawnGenericEffectPrefab(PlayerInputRestrictingState stateType)
+        {
+            PlayerInputRestrictingData customEffect = GetCustomEffectForState(stateType);
             Vector3 spawnPosition = transform.position;
             Vector3 forward = transform.forward;
             Vector3 right = transform.right;
@@ -193,6 +212,14 @@ namespace Player.Base
             spawnPosition.y += customEffect.effectSpawnOffset.y;
 
             GameObject effect = Instantiate(customEffect.effectPrefab, spawnPosition, Quaternion.identity);
+            return effect;
+        }
+
+        public void FreezeCharacter(float abilityDuration)
+        {
+            SetupPlayerInputRestrictingState();
+
+            GameObject effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Frozen);
             _playerInputRestrictingEffects.Add(new PlayerInputRestrictingStoreData()
             {
                 effect = effect,
@@ -201,7 +228,19 @@ namespace Player.Base
             });
         }
 
-        private void UnFreezeCharacter(PlayerInputRestrictingStoreData playerCustomEffectOutput) => Destroy(playerCustomEffectOutput.effect);
+        public void KnockbackCharacter(float knockbackDuration, Vector3 knockbackForce)
+        {
+            SetupPlayerInputRestrictingState();
+
+            GameObject effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Knockback);
+            _playerInputRestrictingEffects.Add(new PlayerInputRestrictingStoreData()
+            {
+                effect = effect,
+                targetState = PlayerInputRestrictingState.Knockback,
+                customEffectDuration = knockbackDuration,
+                customEffectVectorData_1 = knockbackForce,
+            });
+        }
 
         #endregion Player Input Restricting States
 
@@ -670,6 +709,8 @@ namespace Player.Base
             public GameObject effect;
             public PlayerInputRestrictingState targetState;
             public float customEffectDuration;
+            public float customEffectFloatData_1;
+            public Vector3 customEffectVectorData_1;
 
             public void TickDuration() => customEffectDuration -= Time.fixedDeltaTime;
         }
@@ -691,6 +732,7 @@ namespace Player.Base
         private enum PlayerInputRestrictingState
         {
             Frozen,
+            Knockback,
         }
 
         private enum PlayerEffectsAndInputModifierType
