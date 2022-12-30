@@ -58,6 +58,7 @@ public class Example : MonoBehaviour
             Gizmos.color = debugWireSphere_Color;
             Gizmos.DrawWireSphere(new Vector3(30, 0, 0), debugWireSphere_Radius);
         }
+
         if (debugCylinder) DebugExtension.DrawCylinder(new Vector3(40, 0, 0), debugCylinder_End, debugCylinder_Color, debugCylinder_Radius);
         if (debugCone) DebugExtension.DrawCone(new Vector3(50, 0, 0), debugCone_Direction, debugCone_Color, debugCone_Angle);
         if (debugArrow) DebugExtension.DrawArrow(new Vector3(60, 0, 0), debugArrow_Direction, debugArrow_Color);

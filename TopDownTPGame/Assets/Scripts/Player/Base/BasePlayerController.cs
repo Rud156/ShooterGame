@@ -231,12 +231,14 @@ namespace Player.Base
             SetupPlayerInputRestrictingState();
 
             GameObject effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Frozen);
-            _playerInputRestrictingEffects.Add(new PlayerInputRestrictingStoreData()
-            {
-                effect = effect,
-                targetState = PlayerInputRestrictingState.Frozen,
-                customEffectDuration = abilityDuration
-            });
+            _playerInputRestrictingEffects.Add(
+                new PlayerInputRestrictingStoreData()
+                {
+                    effect = effect,
+                    targetState = PlayerInputRestrictingState.Frozen,
+                    customEffectDuration = abilityDuration
+                }
+            );
         }
 
         public void KnockbackCharacter(float knockbackDuration, Vector3 knockbackForce)
@@ -244,13 +246,15 @@ namespace Player.Base
             SetupPlayerInputRestrictingState();
 
             GameObject effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Knockback);
-            _playerInputRestrictingEffects.Add(new PlayerInputRestrictingStoreData()
-            {
-                effect = effect,
-                targetState = PlayerInputRestrictingState.Knockback,
-                customEffectDuration = knockbackDuration,
-                customEffectVectorData_1 = knockbackForce,
-            });
+            _playerInputRestrictingEffects.Add(
+                new PlayerInputRestrictingStoreData()
+                {
+                    effect = effect,
+                    targetState = PlayerInputRestrictingState.Knockback,
+                    customEffectDuration = knockbackDuration,
+                    customEffectVectorData_1 = knockbackForce,
+                }
+            );
         }
 
         public void StunCharacter(float duration)
@@ -258,12 +262,14 @@ namespace Player.Base
             SetupPlayerInputRestrictingState();
 
             GameObject effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Stun);
-            _playerInputRestrictingEffects.Add(new PlayerInputRestrictingStoreData()
-            {
-                effect = effect,
-                targetState = PlayerInputRestrictingState.Stun,
-                customEffectDuration = duration,
-            });
+            _playerInputRestrictingEffects.Add(
+                new PlayerInputRestrictingStoreData()
+                {
+                    effect = effect,
+                    targetState = PlayerInputRestrictingState.Stun,
+                    customEffectDuration = duration,
+                }
+            );
         }
 
         #endregion Player Input Restricting States
@@ -312,40 +318,46 @@ namespace Player.Base
                 return;
             }
 
-            _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
-            {
-                currentDuration = duration,
-                isTimed = true,
-                floatModifierAmount = multiplier,
-                modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
-                modifierIdentifier = string.Empty,
-            });
+            _playerEffectsInputsModifiers.Add(
+                new PlayerEffectsAndInputModifiers()
+                {
+                    currentDuration = duration,
+                    isTimed = true,
+                    floatModifierAmount = multiplier,
+                    modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
+                    modifierIdentifier = string.Empty,
+                }
+            );
         }
 
         public void PlayerEnabledParanoia(float duration)
         {
             // TODO: Trigger with Global UI Handler to implement Paranoia
 
-            _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
-            {
-                currentDuration = duration,
-                isTimed = true,
-                modifierType = PlayerEffectsAndInputModifierType.Paranoia,
-                modifierIdentifier = string.Empty,
-            });
+            _playerEffectsInputsModifiers.Add(
+                new PlayerEffectsAndInputModifiers()
+                {
+                    currentDuration = duration,
+                    isTimed = true,
+                    modifierType = PlayerEffectsAndInputModifierType.Paranoia,
+                    modifierIdentifier = string.Empty,
+                }
+            );
         }
 
         public void CharacterEnableEngineerShield(float duration)
         {
             // TODO: Add handling for effect and stuff
 
-            _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
-            {
-                currentDuration = duration,
-                isTimed = true,
-                modifierType = PlayerEffectsAndInputModifierType.EngineerShield,
-                modifierIdentifier = string.Empty,
-            });
+            _playerEffectsInputsModifiers.Add(
+                new PlayerEffectsAndInputModifiers()
+                {
+                    currentDuration = duration,
+                    isTimed = true,
+                    modifierType = PlayerEffectsAndInputModifierType.EngineerShield,
+                    modifierIdentifier = string.Empty,
+                }
+            );
         }
 
         #region Updates
@@ -359,13 +371,15 @@ namespace Player.Base
 
             if (_constantSpeedFallKey.keyPressedThisFrame)
             {
-                _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
-                {
-                    isTimed = false,
-                    modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
-                    modifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
-                    floatModifierAmount = _constantSpeedFallMultiplier,
-                });
+                _playerEffectsInputsModifiers.Add(
+                    new PlayerEffectsAndInputModifiers()
+                    {
+                        isTimed = false,
+                        modifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
+                        modifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
+                        floatModifierAmount = _constantSpeedFallMultiplier,
+                    }
+                );
             }
             else if (_constantSpeedFallKey.keyReleasedThisFrame || !_constantSpeedFallKey.keyPressed)
             {

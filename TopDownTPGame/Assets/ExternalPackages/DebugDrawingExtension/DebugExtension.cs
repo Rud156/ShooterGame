@@ -7,7 +7,6 @@ using UnityEngine;
 /// 	- Attempts to mimic Unity's existing debugging behaviour for ease-of-use.
 /// 	- Includes gizmo drawing methods for less memory-intensive debug visualization.
 /// </summary>
-
 public static class DebugExtension
 {
     #region DebugDrawFunctions

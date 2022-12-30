@@ -1,16 +1,20 @@
 # Top Down Third Person Game
 
 ## TODOs (Current)
+
 - [ ] Switch to new Unity Input system
 
 ## TODOs (Future)
+
 ### All characters heals HP when not in combat after sometime.
+
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
 - [ ] Add Damage and Health Systems (Both must be modifiable by effects)
 - [ ] Use UIToolkit to make the UI
 - [ ] For Networking currently use Netcode for GameObjects as of now
 
 ## TODOs (Done)
+
 - [X] Player Movement
     - [X] Basic Player Movement
     - [X] Top-down camera similar to old Pokemon games but can be moved 360 deg
@@ -28,17 +32,20 @@
     - [X]  Ability Tertiary - Dash
     - [X]  Ability Ultimate - All abilities cooldowns decreased for allies in range
 - [X]  Type 2 - Water Bender
-    - [X]  Ability Primary - Water slash attacks since if the player swings around their camera too much the game experience will not be good
+    - [X]  Ability Primary - Water slash attacks since if the player swings around their camera too much the game
+      experience will not be good
     - [X]  Ability Secondary - Create an Ice Wall that block incoming damage (Can be Broken)
     - [X]  Ability Tertiary - Become water and move anywhere without taking damage
     - [X]  Ability Ultimate - Water bubble to trap the enemy
 - [X]  Type 3 - Darkness (Fade)
     - [X]  Ability Primary - Kasumi but not as overpowered
     - [X]  Ability Secondary - Dark Slash. Targets marked with this take more damage from Primary for sometime
-    - [X]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved (Andro Dash). There is a delay between when gravity starts affecting.
+    - [X]  Ability Tertiary - Shadow Movement. Similar to how Rogue from Sabertooth moved (Andro Dash). There is a delay
+      between when gravity starts affecting.
     - [X]  Ability Ultimate - Inflict Fade Ultimate and Paranoia as a pulse
 - [X]  Type 4 - Grenadier (Raze)
-    - [X]  Ability Primary - Shoot Plasma bombs that stick to the ground and hurt enemies in range. They disappear after sometime (SlaughterSpine)
+    - [X]  Ability Primary - Shoot Plasma bombs that stick to the ground and hurt enemies in range. They disappear after
+      sometime (SlaughterSpine)
     - [X]  Ability Secondary - Soldier 76 Grenades homing grenades but has a slow targeting range so can be dodged
     - [X]  Ability Tertiary - Fine… Raze Satchel
     - [X]  Ability Ultimate - Here comes the party! :smile:
