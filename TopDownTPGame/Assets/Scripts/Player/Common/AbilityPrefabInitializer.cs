@@ -33,6 +33,7 @@ namespace Player.Common
             {
                 Instantiate(_abilityPrefab, transform);
             }
+
             if (_abilityCameraParentPrefab != null)
             {
                 Instantiate(_abilityCameraParentPrefab, _cameraHolder);

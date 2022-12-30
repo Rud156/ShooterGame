@@ -102,21 +102,21 @@ namespace Player.Type_2
             switch (waterControlState)
             {
                 case WaterControlState.LeftSlash:
-                    {
-                        int totalSplines = _leftSlash.Splines.Count;
-                        int randomIndex = Random.Range(0, totalSplines);
-                        spawnPosition = _leftSlash.EvaluatePosition(randomIndex, 0);
-                        _randomSlashIndex = randomIndex;
-                    }
+                {
+                    int totalSplines = _leftSlash.Splines.Count;
+                    int randomIndex = Random.Range(0, totalSplines);
+                    spawnPosition = _leftSlash.EvaluatePosition(randomIndex, 0);
+                    _randomSlashIndex = randomIndex;
+                }
                     break;
 
                 case WaterControlState.RightSlash:
-                    {
-                        int totalSplines = _leftSlash.Splines.Count;
-                        int randomIndex = Random.Range(0, totalSplines);
-                        spawnPosition = _rightSlash.EvaluatePosition(randomIndex, 0);
-                        _randomSlashIndex = randomIndex;
-                    }
+                {
+                    int totalSplines = _leftSlash.Splines.Count;
+                    int randomIndex = Random.Range(0, totalSplines);
+                    spawnPosition = _rightSlash.EvaluatePosition(randomIndex, 0);
+                    _randomSlashIndex = randomIndex;
+                }
                     break;
 
                 case WaterControlState.ShootFront:
@@ -145,17 +145,17 @@ namespace Player.Type_2
             switch (waterControlState)
             {
                 case WaterControlState.LeftSlash:
-                    {
-                        float mappedPercent = _leftEaseCurve.Evaluate(percent);
-                        position = _leftSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
-                    }
+                {
+                    float mappedPercent = _leftEaseCurve.Evaluate(percent);
+                    position = _leftSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
+                }
                     break;
 
                 case WaterControlState.RightSlash:
-                    {
-                        float mappedPercent = _rightEaseCurve.Evaluate(percent);
-                        position = _rightSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
-                    }
+                {
+                    float mappedPercent = _rightEaseCurve.Evaluate(percent);
+                    position = _rightSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
+                }
                     break;
 
                 case WaterControlState.ShootFront:

@@ -44,12 +44,14 @@ namespace Player.Base
         private PlayerInputKey _abilityTertiaryKey;
         private PlayerInputKey _abilityUltimateKey;
         private PlayerInputKey _constantSpeedFallKey;
+
         private float _currentStateVelocity;
 
         // Movement/Controller
         private CharacterController _characterController;
         private List<PlayerState> _playerStateStack;
         private Vector3 _characterVelocity;
+
         public bool IsGrounded => _isGrounded;
         private bool _isGrounded;
 
@@ -61,11 +63,17 @@ namespace Player.Base
         private List<PlayerInputRestrictingStoreData> _playerInputRestrictingEffects;
 
         public delegate void PlayerStatePushed(PlayerState newState);
+
         public delegate void PlayerStatePopped(PlayerState poppedState);
+
         public delegate void PlayerGroundedChange(bool previousState, bool newState);
+
         public delegate void PlayerJumped();
+
         public delegate void PlayerAbilityStarted(Ability ability);
+
         public delegate void PlayerAbilityEnded(Ability ability);
+
         public PlayerStatePushed OnPlayerStatePushed;
         public PlayerStatePopped OnPlayerStatePopped;
         public PlayerGroundedChange OnPlayerGroundedChanged;
@@ -83,7 +91,6 @@ namespace Player.Base
             _playerEffectsInputsModifiers = new List<PlayerEffectsAndInputModifiers>();
 
             _coreMoveInput = new Vector2();
-            _currentStateVelocity = 0;
             _runKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _jumpKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _abilityPrimaryKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
@@ -91,6 +98,8 @@ namespace Player.Base
             _abilityTertiaryKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _abilityUltimateKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
             _constantSpeedFallKey = new PlayerInputKey() { keyPressed = false, keyReleasedThisFrame = false, keyPressedThisFrame = false, isDataRead = true };
+
+            _currentStateVelocity = 0;
 
             PushPlayerState(PlayerState.Idle);
         }
@@ -150,10 +159,10 @@ namespace Player.Base
                         break;
 
                     case PlayerInputRestrictingState.Knockback:
-                        {
-                            _characterVelocity = _playerInputRestrictingEffects[i].customEffectVectorData_1;
-                            _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
-                        }
+                    {
+                        _characterVelocity = _playerInputRestrictingEffects[i].customEffectVectorData_1;
+                        _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
+                    }
                         break;
                 }
 
@@ -164,10 +173,10 @@ namespace Player.Base
                         case PlayerInputRestrictingState.Frozen:
                         case PlayerInputRestrictingState.Knockback:
                         case PlayerInputRestrictingState.Stun:
-                            {
-                                DestroyPlayerInputCustomEffect(_playerInputRestrictingEffects[i]);
-                                _playerInputRestrictingEffects.RemoveAt(i);
-                            }
+                        {
+                            DestroyPlayerInputCustomEffect(_playerInputRestrictingEffects[i]);
+                            _playerInputRestrictingEffects.RemoveAt(i);
+                        }
                             break;
                     }
                 }
@@ -591,9 +600,7 @@ namespace Player.Base
         }
 
         private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
-
         public Vector3 GetCharacterVelocity() => _characterVelocity;
-
         public float GetCurrentStateVelocity() => _currentStateVelocity;
 
         #endregion Core Movement
@@ -707,17 +714,11 @@ namespace Player.Base
         }
 
         public Vector2 GetCoreMoveInput() => _coreMoveInput;
-
         public PlayerInputKey GetJumpKey() => _jumpKey;
-
         public PlayerInputKey GetRunKey() => _runKey;
-
         public PlayerInputKey GetPrimaryAbilityKey() => _abilityPrimaryKey;
-
         public PlayerInputKey GetSecondaryAbilityKey() => _abilitySecondaryKey;
-
         public PlayerInputKey GetTertiaryAbilityKey() => _abilityTertiaryKey;
-
         public PlayerInputKey GetUltimateAbilityKey() => _abilityUltimateKey;
 
         #endregion Inputs
@@ -739,7 +740,6 @@ namespace Player.Base
             public float customEffectDuration;
             public float customEffectFloatData_1;
             public Vector3 customEffectVectorData_1;
-
             public void TickDuration() => customEffectDuration -= Time.fixedDeltaTime;
         }
 
@@ -749,7 +749,6 @@ namespace Player.Base
             public PlayerEffectsAndInputModifierType modifierType;
             public bool isTimed;
             public float currentDuration;
-
             public float floatModifierAmount;
         }
 

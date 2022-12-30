@@ -47,6 +47,7 @@ public class Type_4_Ultimate_Rocket : Ability
             Vector3 knockbackDirection = -_cameraHolder.forward * _knockbackVelocity;
             playerController.KnockbackCharacter(_knockbackDuration, knockbackDirection);
         }
+
         _abilityEnd = true;
     }
 

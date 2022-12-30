@@ -53,6 +53,7 @@ namespace Player.Type_2
             {
                 // TODO: Put on cooldown...
             }
+
             _abilityEnd = true;
         }
 
