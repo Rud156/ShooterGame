@@ -326,6 +326,19 @@ namespace Player.Base
             });
         }
 
+        public void CharacterEnableEngineerShield(float duration)
+        {
+            // TODO: Add handling for effect and stuff
+
+            _playerEffectsInputsModifiers.Add(new PlayerEffectsAndInputModifiers()
+            {
+                currentDuration = duration,
+                isTimed = true,
+                modifierType = PlayerEffectsAndInputModifierType.EngineerShield,
+                modifierIdentifier = string.Empty,
+            });
+        }
+
         #region Updates
 
         private void ProcessConstantSpeedFall()
@@ -755,6 +768,7 @@ namespace Player.Base
         {
             ConstantSpeedFall,
             Paranoia,
+            EngineerShield,
         }
 
         #endregion Enums

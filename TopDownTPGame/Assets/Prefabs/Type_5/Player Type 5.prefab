@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 1252368709468985581}
   - component: {fileID: 448688126214188792}
   - component: {fileID: 448688126214188800}
+  - component: {fileID: 448688126214188801}
   m_Layer: 6
   m_Name: Player Type 5
   m_TagString: Player
@@ -511,6 +512,25 @@ MonoBehaviour:
     type: 3}
   _shootPoint: {fileID: 1252368709447252148}
   _cameraHolder: {fileID: 1252368709025650578}
+--- !u!114 &448688126214188801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252368709468985580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb703c24ead9061479b85731c979334f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityTrigger: 3
+  _abilityType: 1
+  _shieldDeployRadius: 25
+  _shieldDuration: 7
+  _shieldDeployMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &3889310737047096468
 GameObject:
   m_ObjectHideFlags: 0

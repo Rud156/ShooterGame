@@ -1,15 +1,10 @@
 # Top Down Third Person Game
 
 ## TODOs (Current)
-- [ ]  Type 5 - Engineer (Killjoy)
-    - [X]  Ability Primary - Place a Turret that deals damage
-    - [X]  Ability Secondary - Grenade Cluster that also stuns enemies a small amount
-    - [X]  Ability Tertiary - Gibraltar shield from Apex
-    - [ ]  Ability Ultimate - Allies get a movement speed buff and a protective shield around them
+- [ ] Switch to new Unity Input system
 
 ## TODOs (Future)
 ### All characters heals HP when not in combat after sometime.
-- [ ] Switch to new Unity Input system
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
 - [ ] Add Damage and Health Systems (Both must be modifiable by effects)
 - [ ] Use UIToolkit to make the UI
@@ -47,3 +42,8 @@
     - [X]  Ability Secondary - Soldier 76 Grenades homing grenades but has a slow targeting range so can be dodged
     - [X]  Ability Tertiary - Fine… Raze Satchel
     - [X]  Ability Ultimate - Here comes the party! :smile:
+- [X]  Type 5 - Engineer (Killjoy)
+    - [X]  Ability Primary - Place a Turret that deals damage
+    - [X]  Ability Secondary - Grenade Cluster that also stuns enemies a small amount
+    - [X]  Ability Tertiary - Gibraltar shield from Apex
+    - [X]  Ability Ultimate - Allies get a movement speed buff and a protective shield around them
