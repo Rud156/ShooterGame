@@ -24,9 +24,9 @@ namespace AbilityScripts.Projectiles
             if (!_pulseTriggered)
             {
                 Collider[] hitColliders = new Collider[MAX_COLLIDERS_CHECK];
-                Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, hitColliders, _pulseMask);
+                int targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, hitColliders, _pulseMask);
 
-                for (int i = 0; i < MAX_COLLIDERS_CHECK; i++)
+                for (int i = 0; i < targetsHit; i++)
                 {
                     // Do not target itself
                     if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())

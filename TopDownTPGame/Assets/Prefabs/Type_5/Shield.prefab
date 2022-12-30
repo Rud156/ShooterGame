@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7548192263693597651
+--- !u!1 &7981294947940924098
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7548192263693597655}
-  - component: {fileID: 7548192263693597654}
-  - component: {fileID: 7548192263693597649}
-  - component: {fileID: 7548192263693597648}
-  - component: {fileID: 7548192263693597652}
-  - component: {fileID: -7433943695938108305}
+  - component: {fileID: 7981294947940924126}
+  - component: {fileID: 7981294947940924125}
+  - component: {fileID: 7981294947940924124}
+  - component: {fileID: 7981294947940924099}
+  - component: {fileID: 7981294947940924120}
+  - component: {fileID: 7981294947940924127}
   m_Layer: 7
-  m_Name: Stun Grenade
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7548192263693597655
+--- !u!4 &7981294947940924126
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
+  m_GameObject: {fileID: 7981294947940924098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.395163, y: 8.662785, z: 18.705072}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -36,21 +36,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7548192263693597654
+--- !u!33 &7981294947940924125
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
+  m_GameObject: {fileID: 7981294947940924098}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7548192263693597649
+--- !u!23 &7981294947940924124
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
+  m_GameObject: {fileID: 7981294947940924098}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1bbeb162ad2fe6243b2ee914ff89f0d2, type: 2}
+  - {fileID: 2100000, guid: 349474f321815784fb7fc2cdbcb77c52, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,13 +86,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7548192263693597648
+--- !u!65 &7981294947940924099
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
+  m_GameObject: {fileID: 7981294947940924098}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,13 +107,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7548192263693597652
+--- !u!54 &7981294947940924120
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
+  m_GameObject: {fileID: 7981294947940924098}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -134,26 +134,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-7433943695938108305
+--- !u!114 &7981294947940924127
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
+  m_GameObject: {fileID: 7981294947940924098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38ed78a2979d3834595473c2f1b73fcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ba81c6e381924740b3f2360844253a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _miniGrenadePrefab: {fileID: 7548192263693597651}
+  _shieldPrefab: {fileID: 0}
   _additionalGravity: 25
-  _secondaryGrenadeCount: 4
-  _launchVelocity: 25
-  _projectileDestroyTime: 2
-  _secondaryLaunchVelocity: 0.05
-  _stunEffectRadius: 10
-  _stunDuration: 3
-  _stunMask:
-    serializedVersion: 2
-    m_Bits: 64
+  _projectileDestroyTime: 3
+  _launchVelocity: 30

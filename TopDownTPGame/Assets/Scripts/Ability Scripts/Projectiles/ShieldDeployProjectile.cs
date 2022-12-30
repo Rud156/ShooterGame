@@ -3,17 +3,20 @@ using UnityEngine;
 namespace AbilityScripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class SatchelNade : MonoBehaviour, IProjectile
+    public class ShieldDeployProjectile : MonoBehaviour, IProjectile
     {
-        [Header("Satchel Data")]
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _shieldPrefab;
+
+        [Header("Shield Data")]
         [SerializeField] private float _additionalGravity;
-        [SerializeField] private float _satchelLaunchForce;
-        [SerializeField] private float _destroyDuration;
+        [SerializeField] private float _projectileDestroyTime;
+        [SerializeField] private float _launchVelocity;
 
         private bool _isInitialized;
         private Rigidbody _rb;
 
-        private float _currentDestroyDuration;
+        private float _destroyTimeLeft;
 
         #region Unity Functions
 
@@ -21,8 +24,8 @@ namespace AbilityScripts.Projectiles
 
         private void FixedUpdate()
         {
-            _currentDestroyDuration -= Time.fixedDeltaTime;
-            if (_currentDestroyDuration <= 0)
+            _destroyTimeLeft -= Time.fixedDeltaTime;
+            if (_destroyTimeLeft <= 0)
             {
                 ProjectileDestroy();
             }
@@ -32,12 +35,14 @@ namespace AbilityScripts.Projectiles
 
         #endregion Unity Functions
 
-        #region Externals Functions
+        #region External Functions
 
         public void LaunchProjectile(Vector3 direction)
         {
             Init();
-            _rb.AddForce(direction * _satchelLaunchForce, ForceMode.Impulse);
+
+            _rb.velocity = direction * _launchVelocity;
+            _destroyTimeLeft = _projectileDestroyTime;
         }
 
         public void ProjectileDestroy() => Destroy(gameObject);
@@ -46,7 +51,7 @@ namespace AbilityScripts.Projectiles
         {
         }
 
-        #endregion Externals Functions
+        #endregion External Functions
 
         #region Utils
 
@@ -59,7 +64,6 @@ namespace AbilityScripts.Projectiles
 
             _rb = GetComponent<Rigidbody>();
             _isInitialized = true;
-            _currentDestroyDuration = _destroyDuration;
         }
 
         #endregion Utils

@@ -146,6 +146,7 @@ namespace Player.Base
                 switch (_playerInputRestrictingEffects[i].targetState)
                 {
                     case PlayerInputRestrictingState.Frozen:
+                    case PlayerInputRestrictingState.Stun:
                         break;
 
                     case PlayerInputRestrictingState.Knockback:
@@ -162,6 +163,7 @@ namespace Player.Base
                     {
                         case PlayerInputRestrictingState.Frozen:
                         case PlayerInputRestrictingState.Knockback:
+                        case PlayerInputRestrictingState.Stun:
                             {
                                 DestroyPlayerInputCustomEffect(_playerInputRestrictingEffects[i]);
                                 _playerInputRestrictingEffects.RemoveAt(i);
@@ -239,6 +241,19 @@ namespace Player.Base
                 targetState = PlayerInputRestrictingState.Knockback,
                 customEffectDuration = knockbackDuration,
                 customEffectVectorData_1 = knockbackForce,
+            });
+        }
+
+        public void StunCharacter(float duration)
+        {
+            SetupPlayerInputRestrictingState();
+
+            GameObject effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Stun);
+            _playerInputRestrictingEffects.Add(new PlayerInputRestrictingStoreData()
+            {
+                effect = effect,
+                targetState = PlayerInputRestrictingState.Stun,
+                customEffectDuration = duration,
             });
         }
 
@@ -733,6 +748,7 @@ namespace Player.Base
         {
             Frozen,
             Knockback,
+            Stun,
         }
 
         private enum PlayerEffectsAndInputModifierType

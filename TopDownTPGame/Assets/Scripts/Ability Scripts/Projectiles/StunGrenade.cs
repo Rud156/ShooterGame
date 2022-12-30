@@ -1,9 +1,13 @@
+using Player.Base;
 using UnityEngine;
 
 namespace AbilityScripts.Projectiles
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class StunGrenade : MonoBehaviour, IProjectile
     {
+        private const int MAX_COLLIDERS_CHECK = 10;
+
         [Header("Prefabs")]
         [SerializeField] private GameObject _miniGrenadePrefab;
 
@@ -15,6 +19,11 @@ namespace AbilityScripts.Projectiles
 
         [Header("Secondary Grenades")]
         [SerializeField] private float _secondaryLaunchVelocity;
+
+        [Header("Stun Data")]
+        [SerializeField] private float _stunEffectRadius;
+        [SerializeField] private float _stunDuration;
+        [SerializeField] private LayerMask _stunMask;
 
         private bool _isInitialized;
         private Rigidbody _rb;
@@ -50,6 +59,26 @@ namespace AbilityScripts.Projectiles
 
         public void ProjectileDestroy()
         {
+            // TODO: Add Stun effect to players
+
+            Collider[] hitColliders = new Collider[MAX_COLLIDERS_CHECK];
+            int targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, hitColliders, _stunMask);
+
+            for (int i = 0; i < targetsHit; i++)
+            {
+                // Do not target itself
+                if (hitColliders[i] == null)
+                {
+                    continue;
+                }
+
+                // TODO: Also check team here...
+                if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+                {
+                    targetController.StunCharacter(_stunDuration);
+                }
+            }
+
             if (!_isSecondary)
             {
                 float angleDifference = 360 / _secondaryGrenadeCount;

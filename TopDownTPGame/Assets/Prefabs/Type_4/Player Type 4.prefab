@@ -243,6 +243,10 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 1
+  - effectPrefab: {fileID: 7981294947940924098, guid: e9dec2636deade34eb238a204a19bd2a,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    targetState: 2
 --- !u!114 &1504131108388283775
 MonoBehaviour:
   m_ObjectHideFlags: 0
