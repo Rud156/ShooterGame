@@ -424,6 +424,7 @@ MonoBehaviour:
   - {fileID: 1252368709468985581}
   - {fileID: 448688126214188792}
   - {fileID: 448688126214188800}
+  - {fileID: 448688126214188801}
   _playerInputRestrictingEffectsData:
   - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
       type: 3}
