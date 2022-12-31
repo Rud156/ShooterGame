@@ -6,6 +6,7 @@ namespace Camera
 {
     public class MainCameraController : MonoBehaviour
     {
+        [Header(("Camera Data"))]
         [SerializeField] private Transform _cameraHolder;
         [SerializeField] private float _cameraRotationSpeed;
         [SerializeField] private float _minCameraAngle;
@@ -33,25 +34,32 @@ namespace Camera
 
         private void UpdateCameraControl()
         {
-            Vector3 cameraRotation = _cameraHolder.rotation.eulerAngles;
+            var cameraRotation = _cameraHolder.rotation.eulerAngles;
             cameraRotation.y += _mouseInput.x * _cameraRotationSpeed * Time.fixedDeltaTime;
             cameraRotation.x += -_mouseInput.y * _cameraRotationSpeed * Time.fixedDeltaTime;
             cameraRotation.x = ExtensionFunctions.To360Angle(cameraRotation.x);
 
-            // Clamp X Rotation
-            if (cameraRotation.x >= 0 && cameraRotation.x <= 180)
+            switch (cameraRotation.x)
             {
-                if (cameraRotation.x > _maxCameraAngle)
+                // Clamp X Rotation
+                case >= 0 and <= 180:
                 {
-                    cameraRotation.x = _maxCameraAngle;
+                    if (cameraRotation.x > _maxCameraAngle)
+                    {
+                        cameraRotation.x = _maxCameraAngle;
+                    }
+
+                    break;
                 }
-            }
-            else if (cameraRotation.x > 180 && cameraRotation.x <= 360)
-            {
-                float negatedAngle = cameraRotation.x - 360;
-                if (negatedAngle < _minCameraAngle)
+                case > 180 and <= 360:
                 {
-                    cameraRotation.x = _minCameraAngle;
+                    var negatedAngle = cameraRotation.x - 360;
+                    if (negatedAngle < _minCameraAngle)
+                    {
+                        cameraRotation.x = _minCameraAngle;
+                    }
+
+                    break;
                 }
             }
 

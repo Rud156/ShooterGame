@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -22,8 +22,8 @@ namespace Player.Type_5
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            GameObject stunGrenade = Instantiate(_stunGrenadePrefab, _shootPoint.position, Quaternion.identity);
-            StunGrenade projectile = stunGrenade.GetComponent<StunGrenade>();
+            var stunGrenade = Instantiate(_stunGrenadePrefab, _shootPoint.position, Quaternion.identity);
+            var projectile = stunGrenade.GetComponent<StunGrenade>();
             projectile.LaunchProjectile(_cameraHolder.forward);
             _abilityEnd = true;
         }

@@ -39,9 +39,9 @@ namespace Utils.Misc
 
         public static bool IsVectorAnglesNearlyEqual(Vector3 a, Vector3 b, float tolerance)
         {
-            float xDiff = Mathf.Abs(AngleDifference(To360Angle(a.x), To360Angle(b.x)));
-            float yDiff = Mathf.Abs(AngleDifference(To360Angle(a.y), To360Angle(b.y)));
-            float zDiff = Mathf.Abs(AngleDifference(To360Angle(a.z), To360Angle(b.z)));
+            var xDiff = Mathf.Abs(AngleDifference(To360Angle(a.x), To360Angle(b.x)));
+            var yDiff = Mathf.Abs(AngleDifference(To360Angle(a.y), To360Angle(b.y)));
+            var zDiff = Mathf.Abs(AngleDifference(To360Angle(a.z), To360Angle(b.z)));
 
             bool value = xDiff <= tolerance && yDiff <= tolerance && zDiff <= tolerance;
             if (!value)
@@ -54,7 +54,7 @@ namespace Utils.Misc
 
         public static Vector3 GetRandomPointInsideCollider(BoxCollider boxCollider)
         {
-            Vector3 extents = boxCollider.size / 2f;
+            var extents = boxCollider.size / 2f;
             Vector3 point = new(
                 Random.Range(-extents.x, extents.x),
                 Random.Range(-extents.y, extents.y),

@@ -1,64 +1,66 @@
-using AbilityScripts.Projectiles;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class RocketProjectile : MonoBehaviour, IProjectile
+namespace Ability_Scripts.Projectiles
 {
-    [Header("Rocket Data")]
-    [SerializeField] private float _projectileLaunchVelocity;
-    [SerializeField] private float _projectileDestroyTime;
-
-    private bool _isInitialized;
-    private Rigidbody _rb;
-
-    private bool _isLaunched;
-    private float _destroyTimeLeft;
-
-    #region Unity Functions
-
-    private void Start() => Init();
-
-    private void FixedUpdate()
+    [RequireComponent(typeof(Rigidbody))]
+    public class RocketProjectile : MonoBehaviour, IProjectile
     {
-        if (!_isLaunched)
+        [Header("Rocket Data")]
+        [SerializeField] private float _projectileLaunchVelocity;
+        [SerializeField] private float _projectileDestroyTime;
+
+        private Rigidbody _rb;
+        private bool _isInitialized;
+        private bool _isLaunched;
+
+        private float _destroyTimeLeft;
+
+        #region Unity Functions
+
+        private void Start() => Init();
+
+        private void FixedUpdate()
         {
-            return;
+            if (!_isLaunched)
+            {
+                return;
+            }
+
+            _destroyTimeLeft -= Time.fixedDeltaTime;
+            if (_destroyTimeLeft < 0)
+            {
+                ProjectileDestroy();
+            }
         }
 
-        _destroyTimeLeft -= Time.fixedDeltaTime;
-        if (_destroyTimeLeft < 0)
+        #endregion Unity Functions
+
+        public void LaunchProjectile(Vector3 direction)
         {
-            ProjectileDestroy();
-        }
-    }
-
-    #endregion Unity Functions
-
-    public void LaunchProjectile(Vector3 direction)
-    {
-        _isLaunched = true;
-        _rb.velocity = direction * _projectileLaunchVelocity;
-        _destroyTimeLeft = _projectileDestroyTime;
-    }
-
-    public void ProjectileDestroy() => Destroy(gameObject);
-
-    public void ProjectileHit(Collider other)
-    {
-    }
-
-    #region Utils
-
-    private void Init()
-    {
-        if (_isInitialized)
-        {
-            return;
+            _isLaunched = true;
+            _rb.velocity = direction * _projectileLaunchVelocity;
+            _destroyTimeLeft = _projectileDestroyTime;
         }
 
-        _rb = GetComponent<Rigidbody>();
-        _isInitialized = true;
-    }
+        public void ProjectileDestroy() => Destroy(gameObject);
 
-    #endregion Utils
+        public void ProjectileHit(Collider other)
+        {
+        }
+
+        #region Utils
+
+        private void Init()
+        {
+            if (_isInitialized)
+            {
+                return;
+            }
+
+            _rb = GetComponent<Rigidbody>();
+            _isInitialized = true;
+        }
+
+        #endregion Utils
+    }
 }

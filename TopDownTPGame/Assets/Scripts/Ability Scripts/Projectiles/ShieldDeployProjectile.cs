@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AbilityScripts.Projectiles
+namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
     public class ShieldDeployProjectile : MonoBehaviour, IProjectile
@@ -13,8 +13,8 @@ namespace AbilityScripts.Projectiles
         [SerializeField] private float _projectileDestroyTime;
         [SerializeField] private float _launchVelocity;
 
-        private bool _isInitialized;
         private Rigidbody _rb;
+        private bool _isInitialized;
 
         private float _destroyTimeLeft;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AbilityScripts.Projectiles
+namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
     public class PlasmaBomb : MonoBehaviour
@@ -8,16 +8,16 @@ namespace AbilityScripts.Projectiles
         [Header("Bomb Data")]
         [SerializeField] private float _destroyTime;
 
-        private float _timeLeft;
+        private float _destroyTimeLeft;
 
         #region Unity Functions
 
-        private void Start() => _timeLeft = _destroyTime;
+        private void Start() => _destroyTimeLeft = _destroyTime;
 
         private void FixedUpdate()
         {
-            _timeLeft -= Time.fixedDeltaTime;
-            if (_timeLeft <= 0)
+            _destroyTimeLeft -= Time.fixedDeltaTime;
+            if (_destroyTimeLeft <= 0)
             {
                 Destroy(gameObject);
             }

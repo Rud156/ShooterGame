@@ -34,7 +34,7 @@ namespace Player.Type_3
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            Vector3 coreInput = playerController.GetCoreMoveInput();
+            var coreInput = playerController.GetCoreMoveInput();
             _currentDashTimeLeft -= Time.fixedDeltaTime;
 
             // Basically when there is no input use forward only...
@@ -43,8 +43,8 @@ namespace Player.Type_3
                 coreInput.y = 1;
             }
 
-            Vector3 forward = _cameraHolder.forward;
-            Vector3 right = _cameraHolder.right;
+            var forward = _cameraHolder.forward;
+            var right = _cameraHolder.right;
 
             _computedVelocity = forward * coreInput.y + right * coreInput.x;
             _computedVelocity = _dashVelocity * _computedVelocity.normalized;

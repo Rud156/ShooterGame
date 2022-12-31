@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -33,27 +33,24 @@ namespace Player.Type_4
             {
                 _nextShootTime = Time.time + _fireRate;
 
-                bool hit = Physics.Raycast(_cameraPoint.position, _cameraHolder.forward, out RaycastHit hitInfo, _targetDistance, _targetMask);
-                Debug.DrawRay(_cameraPoint.position, _cameraHolder.forward, Color.red, 10);
+                var hit = Physics.Raycast(_cameraPoint.position, _cameraHolder.forward, out var hitInfo, _targetDistance, _targetMask);
                 if (hit)
                 {
-                    DebugExtension.DebugWireSphere(_cameraPoint.position, 1, 10);
-                    DebugExtension.DebugWireSphere(hitInfo.point, 1, 10);
                     if (hitInfo.collider.gameObject.TryGetComponent(out BasePlayerController targetController))
                     {
                         // Do something here...
                     }
 
-                    GameObject missile = Instantiate(_homingMissilePrefab, _cameraPoint.position, Quaternion.identity);
-                    PlasmaHomingMissile homingTarget = missile.GetComponent<PlasmaHomingMissile>();
+                    var missile = Instantiate(_homingMissilePrefab, _cameraPoint.position, Quaternion.identity);
+                    var homingTarget = missile.GetComponent<PlasmaHomingMissile>();
 
-                    Transform target = hitInfo.collider.transform;
+                    var target = hitInfo.collider.transform;
                     homingTarget.SetTarget(target);
                 }
             }
 
-            PlayerInputKey inputKey = playerController.GetSecondaryAbilityKey();
-            if (inputKey.keyReleasedThisFrame || !inputKey.keyPressed)
+            var inputKey = playerController.GetSecondaryAbilityKey();
+            if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {
                 _abilityEnd = true;
             }

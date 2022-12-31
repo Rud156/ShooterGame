@@ -31,7 +31,7 @@ namespace Player.Type_3
         private void Start()
         {
             _prefabInit.AbilityPrefabInit();
-            _slash = transform.Find("Type_3_Prefab(Clone)/SlashPaths/Slash").GetComponent<SplineContainer>();
+            _slash = transform.Find("Type_3_NormalPrefab(Clone)/SlashPaths/Slash").GetComponent<SplineContainer>();
         }
 
         #endregion Unity Functions

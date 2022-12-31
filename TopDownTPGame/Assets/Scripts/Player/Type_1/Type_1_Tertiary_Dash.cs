@@ -18,8 +18,8 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            Vector3 currentVelocity = playerController.GetCharacterVelocity();
-            Vector3 coreInput = playerController.GetCoreMoveInput();
+            var currentVelocity = playerController.GetCharacterVelocity();
+            var coreInput = playerController.GetCoreMoveInput();
             _currentDashTimeLeft -= Time.fixedDeltaTime;
 
             // Basically when there is no input use forward only...
@@ -28,8 +28,8 @@ namespace Player.Type_1
                 coreInput.y = 1;
             }
 
-            Vector3 forward = transform.forward;
-            Vector3 right = transform.right;
+            var forward = transform.forward;
+            var right = transform.right;
 
             // Override X and Z
             _computedVelocity = forward * coreInput.y + right * coreInput.x;

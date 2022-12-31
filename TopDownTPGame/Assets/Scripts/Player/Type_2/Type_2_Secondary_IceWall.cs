@@ -21,9 +21,9 @@ namespace Player.Type_2
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            Vector3 spawnPosition = _spawnPoint.position;
-            Vector3 forward = transform.forward;
-            Vector3 right = transform.right;
+            var spawnPosition = _spawnPoint.position;
+            var forward = transform.forward;
+            var right = transform.right;
 
             spawnPosition += forward * _spawnOffset.z + right * _spawnOffset.x;
             spawnPosition.y += _spawnOffset.y;

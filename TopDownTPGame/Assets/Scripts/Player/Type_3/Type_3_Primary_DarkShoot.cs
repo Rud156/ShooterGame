@@ -7,21 +7,19 @@ namespace Player.Type_3
 {
     public class Type_3_Primary_DarkShoot : Ability
     {
-        private const int MAX_COLLIDERS = 10;
+        private const int MaxColliders = 10;
 
         [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
 
         [Header("Shoot Data")]
         [SerializeField] private float _fireRate;
-        [SerializeField] private Transform _shootPoint;
         [SerializeField] private LayerMask _attackMask;
 
         [Header("Post Start Filled")]
         [SerializeField] private Transform _frontCollider;
 
-        private float _nextFireTime;
+        private float _nextShootTime;
         private bool _abilityEnd;
 
         #region Unity Functions
@@ -29,7 +27,7 @@ namespace Player.Type_3
         private void Start()
         {
             _prefabInit.AbilityPrefabInit();
-            _frontCollider = transform.Find("Type_3_Prefab(Clone)/FrontColliderDetector");
+            _frontCollider = transform.Find("CameraHolder/Type_3_CameraPrefab(Clone)/FrontColliderDetector");
         }
 
         #endregion Unity Functions
@@ -40,13 +38,13 @@ namespace Player.Type_3
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            if (Time.time >= _nextFireTime)
+            if (Time.time >= _nextShootTime)
             {
-                _nextFireTime = Time.time + _fireRate;
+                _nextShootTime = Time.time + _fireRate;
 
-                Collider[] hitColliders = new Collider[MAX_COLLIDERS];
-                int totalHitColliders = Physics.OverlapBoxNonAlloc(_frontCollider.position, _frontCollider.localScale / 2, hitColliders, _frontCollider.rotation, _attackMask);
-                for (int i = 0; i < totalHitColliders; i++)
+                var hitColliders = new Collider[MaxColliders];
+                var totalHitColliders = Physics.OverlapBoxNonAlloc(_frontCollider.position, _frontCollider.localScale / 2, hitColliders, _frontCollider.rotation, _attackMask);
+                for (var i = 0; i < totalHitColliders; i++)
                 {
                     // Do not target itself
                     if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
@@ -65,8 +63,8 @@ namespace Player.Type_3
                 }
             }
 
-            PlayerInputKey inputKey = playerController.GetPrimaryAbilityKey();
-            if (inputKey.keyReleasedThisFrame || !inputKey.keyPressed)
+            var inputKey = playerController.GetPrimaryAbilityKey();
+            if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {
                 _abilityEnd = true;
             }

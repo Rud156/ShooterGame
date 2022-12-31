@@ -1,3 +1,4 @@
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -26,8 +27,8 @@ public class Type_4_Ultimate_Rocket : Ability
     {
         if (_rocketObject == null)
         {
-            GameObject rocket = Instantiate(_rocketPrefab, _shootPoint.position, Quaternion.identity);
-            Rigidbody rocketRb = rocket.GetComponent<Rigidbody>();
+            var rocket = Instantiate(_rocketPrefab, _shootPoint.position, Quaternion.identity);
+            var rocketRb = rocket.GetComponent<Rigidbody>();
 
             rocket.transform.SetParent(_shootPoint);
             rocketRb.isKinematic = true;
@@ -35,17 +36,17 @@ public class Type_4_Ultimate_Rocket : Ability
         }
         else
         {
-            Vector3 direction = _cameraHolder.forward;
-            RocketProjectile rocket = _rocketObject.GetComponent<RocketProjectile>();
-            Rigidbody rocketRb = _rocketObject.GetComponent<Rigidbody>();
+            var direction = _cameraHolder.forward;
+            var rocket = _rocketObject.GetComponent<RocketProjectile>();
+            var rocketRb = _rocketObject.GetComponent<Rigidbody>();
 
             _rocketObject.transform.SetParent(null);
             rocketRb.isKinematic = false;
             rocket.LaunchProjectile(direction);
             _rocketObject = null;
 
-            Vector3 knockbackDirection = -_cameraHolder.forward * _knockbackVelocity;
-            playerController.KnockbackCharacter(_knockbackDuration, knockbackDirection);
+            var knockbackVelocity = -_cameraHolder.forward * _knockbackVelocity;
+            playerController.KnockbackCharacter(_knockbackDuration, knockbackVelocity);
         }
 
         _abilityEnd = true;

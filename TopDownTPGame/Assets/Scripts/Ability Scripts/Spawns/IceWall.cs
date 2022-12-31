@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AbilityScripts.Spawns
+namespace Ability_Scripts.Spawns
 {
     public class IceWall : MonoBehaviour
     {
@@ -12,7 +12,7 @@ namespace AbilityScripts.Spawns
         [Header("Destroy Data")]
         [SerializeField] private float _destroyDuration;
 
-        private float _currentDuration;
+        private float _currentSpawnDuration;
         private Vector3 _startPosition;
         private Vector3 _endPosition;
 
@@ -23,9 +23,10 @@ namespace AbilityScripts.Spawns
 
         private void Start()
         {
-            _currentDuration = 0;
-            _startPosition = transform.position;
-            _endPosition = transform.position + Vector3.up * _moveYDistance;
+            _currentSpawnDuration = 0;
+            var position = transform.position;
+            _startPosition = position;
+            _endPosition = position + Vector3.up * _moveYDistance;
 
             _spawnActive = true;
             _destroyTimeLeft = _destroyDuration;
@@ -45,14 +46,14 @@ namespace AbilityScripts.Spawns
                 return;
             }
 
-            float percent = _currentDuration / _spawnDuration;
-            float mappedPercent = _spawnEasing.Evaluate(percent);
-            Vector3 mappedPosition = Vector3.Lerp(_startPosition, _endPosition, mappedPercent);
+            var percent = _currentSpawnDuration / _spawnDuration;
+            var mappedPercent = _spawnEasing.Evaluate(percent);
+            var mappedPosition = Vector3.Lerp(_startPosition, _endPosition, mappedPercent);
 
             transform.position = mappedPosition;
-            _currentDuration += Time.fixedDeltaTime;
+            _currentSpawnDuration += Time.fixedDeltaTime;
 
-            if (_currentDuration > _spawnDuration)
+            if (_currentSpawnDuration > _spawnDuration)
             {
                 _spawnActive = false;
             }

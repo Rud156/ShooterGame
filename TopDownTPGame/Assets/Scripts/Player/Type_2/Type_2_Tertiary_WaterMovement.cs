@@ -38,19 +38,19 @@ namespace Player.Type_2
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            Vector3 forward = transform.forward;
-            Vector3 right = transform.right;
+            var forward = transform.forward;
+            var right = transform.right;
 
-            Vector3 coreInput = playerController.GetCoreMoveInput();
-            Vector3 movement = forward * coreInput.y + right * coreInput.x;
+            var coreInput = playerController.GetCoreMoveInput();
+            var movement = forward * coreInput.y + right * coreInput.x;
             movement = _movementSpeed * movement.normalized;
             movement.y = 0;
 
             _computedVelocity = movement;
             _currentDuration -= Time.fixedDeltaTime;
 
-            PlayerInputKey key = playerController.GetTertiaryAbilityKey();
-            if (key.keyPressedThisFrame && _abilityUpdatedOnce)
+            var key = playerController.GetTertiaryAbilityKey();
+            if (key.KeyPressedThisFrame && _abilityUpdatedOnce)
             {
                 _currentDuration = 0;
             }
@@ -60,7 +60,7 @@ namespace Player.Type_2
 
         public override void EndAbility(BasePlayerController playerController)
         {
-            CharacterController characterController = playerController.GetComponent<CharacterController>();
+            var characterController = playerController.GetComponent<CharacterController>();
             characterController.height = _originalHeight;
             characterController.center = _originalCenterOffset;
 
@@ -74,7 +74,7 @@ namespace Player.Type_2
             _currentDuration = _abilityDuration;
             _abilityUpdatedOnce = false;
 
-            CharacterController characterController = playerController.GetComponent<CharacterController>();
+            var characterController = playerController.GetComponent<CharacterController>();
             _originalHeight = characterController.height;
             _originalCenterOffset = characterController.center;
 
@@ -82,7 +82,7 @@ namespace Player.Type_2
             characterController.center = new Vector3(0, _rbModifiedYOffset, 0);
 
             _playerMainMesh.SetActive(false);
-            GameObject customMeshEffect = Instantiate(_waterMovementPrefab, transform.position, Quaternion.identity);
+            var customMeshEffect = Instantiate(_waterMovementPrefab, transform.position, Quaternion.identity);
             customMeshEffect.transform.SetParent(_spawnParent);
             customMeshEffect.transform.localPosition = customMeshEffect.transform.localPosition + _spawnOffset;
             _customMeshEffect = customMeshEffect;

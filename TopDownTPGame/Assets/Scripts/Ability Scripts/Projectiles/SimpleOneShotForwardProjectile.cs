@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AbilityScripts.Projectiles
+namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
     public class SimpleOneShotForwardProjectile : MonoBehaviour, IProjectile
@@ -10,10 +10,9 @@ namespace AbilityScripts.Projectiles
         [SerializeField] private float _projectileDestroyTime;
 
         private Rigidbody _rb;
-        private float _currentTimeLeft;
-        private bool _isLaunched;
+        private float _destroyTimeLeft;
 
-        private bool _isInitialized = false;
+        private bool _isInitialized;
 
         #region Unity Functions
 
@@ -21,13 +20,8 @@ namespace AbilityScripts.Projectiles
 
         private void FixedUpdate()
         {
-            if (!_isLaunched)
-            {
-                return;
-            }
-
-            _currentTimeLeft -= Time.fixedDeltaTime;
-            if (_currentTimeLeft < 0)
+            _destroyTimeLeft -= Time.fixedDeltaTime;
+            if (_destroyTimeLeft < 0)
             {
                 ProjectileDestroy();
             }
@@ -41,9 +35,8 @@ namespace AbilityScripts.Projectiles
         {
             Init();
 
-            _isLaunched = true;
             _rb.velocity = direction * _projectileLaunchVelocity;
-            _currentTimeLeft = _projectileDestroyTime;
+            _destroyTimeLeft = _projectileDestroyTime;
         }
 
         public void ProjectileHit(Collider other)

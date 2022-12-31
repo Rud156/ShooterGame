@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -72,8 +72,8 @@ namespace Player.Type_2
 
         public override void StartAbility(BasePlayerController playerController)
         {
-            float currentTime = Time.time;
-            float difference = currentTime - _lastTriggeredTime;
+            var currentTime = Time.time;
+            var difference = currentTime - _lastTriggeredTime;
             if (difference > _resetDuration)
             {
                 SetState(WaterControlState.LeftSlash);
@@ -98,13 +98,13 @@ namespace Player.Type_2
 
         private GameObject CreateSlashPrefabAndUpdateRandomIndex(WaterControlState waterControlState)
         {
-            Vector3 spawnPosition = Vector3.zero;
+            var spawnPosition = Vector3.zero;
             switch (waterControlState)
             {
                 case WaterControlState.LeftSlash:
                 {
-                    int totalSplines = _leftSlash.Splines.Count;
-                    int randomIndex = Random.Range(0, totalSplines);
+                    var totalSplines = _leftSlash.Splines.Count;
+                    var randomIndex = Random.Range(0, totalSplines);
                     spawnPosition = _leftSlash.EvaluatePosition(randomIndex, 0);
                     _randomSlashIndex = randomIndex;
                 }
@@ -112,8 +112,8 @@ namespace Player.Type_2
 
                 case WaterControlState.RightSlash:
                 {
-                    int totalSplines = _leftSlash.Splines.Count;
-                    int randomIndex = Random.Range(0, totalSplines);
+                    var totalSplines = _leftSlash.Splines.Count;
+                    var randomIndex = Random.Range(0, totalSplines);
                     spawnPosition = _rightSlash.EvaluatePosition(randomIndex, 0);
                     _randomSlashIndex = randomIndex;
                 }
@@ -123,15 +123,15 @@ namespace Player.Type_2
                     throw new System.Exception("Invalid State for this GameObject");
             }
 
-            GameObject projectile = Instantiate(_slashSidePrefab, spawnPosition, Quaternion.identity);
+            var projectile = Instantiate(_slashSidePrefab, spawnPosition, Quaternion.identity);
             return projectile;
         }
 
         private GameObject CreateFrontSlash()
         {
-            Vector3 spawnPosition = _shootPoint.position;
+            var spawnPosition = _shootPoint.position;
 
-            GameObject projectile = Instantiate(_slashFrontPrefab, spawnPosition, Quaternion.identity);
+            var projectile = Instantiate(_slashFrontPrefab, spawnPosition, Quaternion.identity);
             return projectile;
         }
 
@@ -139,21 +139,21 @@ namespace Player.Type_2
         {
             Assert.IsNotNull(_sideSlashObject);
 
-            float percent = _currentTime / _slashDuration;
-            Vector3 position = Vector3.zero;
+            var percent = _currentTime / _slashDuration;
+            var position = Vector3.zero;
 
             switch (waterControlState)
             {
                 case WaterControlState.LeftSlash:
                 {
-                    float mappedPercent = _leftEaseCurve.Evaluate(percent);
+                    var mappedPercent = _leftEaseCurve.Evaluate(percent);
                     position = _leftSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
                 }
                     break;
 
                 case WaterControlState.RightSlash:
                 {
-                    float mappedPercent = _rightEaseCurve.Evaluate(percent);
+                    var mappedPercent = _rightEaseCurve.Evaluate(percent);
                     position = _rightSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
                 }
                     break;
@@ -177,9 +177,9 @@ namespace Player.Type_2
 
         private void UpdateFrontSlash()
         {
-            GameObject frontSlashObject = CreateFrontSlash();
-            Vector3 direction = transform.forward;
-            SimpleOneShotForwardProjectile simpleProj = frontSlashObject.GetComponent<SimpleOneShotForwardProjectile>();
+            var frontSlashObject = CreateFrontSlash();
+            var direction = transform.forward;
+            var simpleProj = frontSlashObject.GetComponent<SimpleOneShotForwardProjectile>();
             simpleProj.LaunchProjectile(direction);
 
             IncrementCurrentState();

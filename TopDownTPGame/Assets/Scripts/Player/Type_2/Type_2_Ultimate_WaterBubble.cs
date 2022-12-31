@@ -22,18 +22,18 @@ namespace Player.Type_2
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            Vector3 castPosition = transform.position;
-            Vector3 forward = transform.forward;
-            Vector3 right = transform.right;
+            var castPosition = transform.position;
+            var forward = transform.forward;
+            var right = transform.right;
 
             castPosition += forward * _castOffset.z + right * _castOffset.x;
             castPosition.y += _castOffset.y;
 
-            bool anyColliderHit = false;
+            var anyColliderHit = false;
 
-            Collider[] hitColliders = new Collider[MAX_COLLIDERS_CHECK];
-            int totalHitColliders = Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, hitColliders, _abilityMask);
-            for (int i = 0; i < totalHitColliders; i++)
+            var hitColliders = new Collider[MAX_COLLIDERS_CHECK];
+            var totalHitColliders = Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, hitColliders, _abilityMask);
+            for (var i = 0; i < totalHitColliders; i++)
             {
                 // Do not target itself
                 if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())

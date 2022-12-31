@@ -38,8 +38,11 @@ namespace Player.Type_5
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            bool hit = Physics.Raycast(_cameraPoint.position, _cameraHolder.forward, out RaycastHit hitInfo, _spawnMaxDistance, _turretMask);
-            Debug.DrawRay(_cameraPoint.position, _cameraHolder.forward * _spawnMaxDistance, color: Color.red);
+            var cameraPosition = _cameraPoint.position;
+            var cameraForward = _cameraHolder.forward;
+            var hit = Physics.Raycast(cameraPosition, cameraForward, out var hitInfo, _spawnMaxDistance, _turretMask);
+            Debug.DrawRay(cameraPosition, cameraForward * _spawnMaxDistance, color: Color.red);
+            PlayerInputKey primaryKey = playerController.GetPrimaryAbilityKey();
             if (hit)
             {
                 // TODO: Do not spawn the turret if it spawn inside some geometry...
@@ -47,8 +50,7 @@ namespace Player.Type_5
                 _turretObject.transform.position = hitInfo.point + _spawnOffset;
                 _turretObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
 
-                PlayerInputKey primaryKey = playerController.GetPrimaryAbilityKey();
-                if (primaryKey.keyPressedThisFrame && _firstUpdateCompleted)
+                if (primaryKey.KeyPressedThisFrame && _firstUpdateCompleted)
                 {
                     _turretObject.transform.SetParent(hitInfo.transform);
                     _spawnedTurrets.Add(_turretObject);
@@ -58,11 +60,11 @@ namespace Player.Type_5
                 }
             }
 
-            PlayerInputKey secondaryKey = playerController.GetSecondaryAbilityKey();
-            PlayerInputKey tertiaryKey = playerController.GetTertiaryAbilityKey();
-            PlayerInputKey ultimateKey = playerController.GetUltimateAbilityKey();
+            var secondaryKey = playerController.GetSecondaryAbilityKey();
+            var tertiaryKey = playerController.GetTertiaryAbilityKey();
+            var ultimateKey = playerController.GetUltimateAbilityKey();
 
-            if (secondaryKey.keyPressedThisFrame || tertiaryKey.keyPressedThisFrame || ultimateKey.keyPressedThisFrame)
+            if (secondaryKey.KeyPressedThisFrame || tertiaryKey.KeyPressedThisFrame || ultimateKey.KeyPressedThisFrame)
             {
                 Destroy(_turretObject);
                 _placementCompleted = true;
@@ -82,9 +84,9 @@ namespace Player.Type_5
 
         public override void ClearAllAbilityData(BasePlayerController playerController)
         {
-            for (int i = 0; i < _spawnedTurrets.Count; i++)
+            foreach (var turret in _spawnedTurrets)
             {
-                Destroy(_spawnedTurrets[i]);
+                Destroy(turret);
             }
 
             _spawnedTurrets.Clear();

@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -18,7 +18,7 @@ namespace Player.Type_1
         [Header("Simple Shoot Data")]
         [SerializeField] private float _fireRate;
 
-        private float _nextFireTime;
+        private float _nextShootTime;
         private bool _abilityEnd;
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
@@ -27,19 +27,19 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            if (Time.time >= _nextFireTime)
+            if (Time.time >= _nextShootTime)
             {
-                _nextFireTime = Time.time + _fireRate;
-                Vector3 spawnPosition = _shootPoint.position;
-                Vector3 direction = _cameraHolder.forward;
+                _nextShootTime = Time.time + _fireRate;
+                var spawnPosition = _shootPoint.position;
+                var direction = _cameraHolder.forward;
 
-                GameObject projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
-                SimpleOneShotForwardProjectile simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
+                var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
+                var simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
                 simpleProj.LaunchProjectile(direction);
             }
 
-            PlayerInputKey inputKey = playerController.GetPrimaryAbilityKey();
-            if (inputKey.keyReleasedThisFrame || !inputKey.keyPressed)
+            var inputKey = playerController.GetPrimaryAbilityKey();
+            if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {
                 _abilityEnd = true;
             }

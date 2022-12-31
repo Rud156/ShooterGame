@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -32,7 +32,7 @@ namespace Player.Type_4
 
         private Vector3 _computedVelocity;
         private Vector3 _direction;
-        private float _duration;
+        private float _satchelSpawnedDuration;
 
         #region Unity Functions
 
@@ -51,7 +51,7 @@ namespace Player.Type_4
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            if (_duration <= 0)
+            if (_satchelSpawnedDuration <= 0)
             {
                 InitialSatchelActivation(playerController);
             }
@@ -66,7 +66,7 @@ namespace Player.Type_4
         public override void StartAbility(BasePlayerController playerController)
         {
             _abilityEnd = false;
-            _duration = 0;
+            _satchelSpawnedDuration = 0;
             _computedVelocity = Vector3.zero;
         }
 
@@ -78,11 +78,11 @@ namespace Player.Type_4
         {
             if (_satchelObject == null)
             {
-                Vector3 direction = _cameraHolder.forward;
+                var direction = _cameraHolder.forward;
 
-                Vector3 shootPosition = playerController.IsGrounded ? _staticShootPoint.position : _orbitShootPoint.position;
-                GameObject satchel = Instantiate(_satchelPrefab, shootPosition, Quaternion.identity);
-                SatchelNade satchelNade = satchel.GetComponent<SatchelNade>();
+                var shootPosition = playerController.IsGrounded ? _staticShootPoint.position : _orbitShootPoint.position;
+                var satchel = Instantiate(_satchelPrefab, shootPosition, Quaternion.identity);
+                var satchelNade = satchel.GetComponent<SatchelNade>();
                 satchelNade.LaunchProjectile(direction);
 
                 _satchelObject = satchelNade;
@@ -90,7 +90,7 @@ namespace Player.Type_4
             }
             else
             {
-                float distance = Vector3.Distance(transform.position, _satchelObject.transform.position);
+                var distance = Vector3.Distance(transform.position, _satchelObject.transform.position);
                 DebugExtension.DebugWireSphere(_satchelObject.transform.position, _satchelAffectRadius, duration: 10);
 
                 if (distance > _satchelAffectRadius)
@@ -99,10 +99,10 @@ namespace Player.Type_4
                 }
                 else
                 {
-                    float mappedDuration = ExtensionFunctions.Map(distance, 0, _satchelAffectRadius, _maxForceDuration, _minForceDuration);
-                    Vector3 direction = transform.position - _satchelObject.transform.position;
+                    var mappedDuration = ExtensionFunctions.Map(distance, 0, _satchelAffectRadius, _maxForceDuration, _minForceDuration);
+                    var direction = transform.position - _satchelObject.transform.position;
 
-                    _duration = mappedDuration;
+                    _satchelSpawnedDuration = mappedDuration;
                     _direction = direction.normalized;
                     _computedVelocity = Vector3.zero;
                 }
@@ -114,13 +114,13 @@ namespace Player.Type_4
 
         private void UpdateSatchelMovement(BasePlayerController playerController)
         {
-            _duration -= Time.fixedDeltaTime;
+            _satchelSpawnedDuration -= Time.fixedDeltaTime;
 
-            Vector2 coreInput = playerController.GetCoreMoveInput();
-            Vector3 forward = _cameraHolder.forward;
-            Vector3 right = _cameraHolder.right;
+            var coreInput = playerController.GetCoreMoveInput();
+            var forward = _cameraHolder.forward;
+            var right = _cameraHolder.right;
 
-            Vector3 satchelMovement = forward * coreInput.y + right * coreInput.x;
+            var satchelMovement = forward * coreInput.y + right * coreInput.x;
             satchelMovement.y = 0;
             satchelMovement = _airControlMultiplier * _satchelVelocity * satchelMovement.normalized;
 
@@ -129,7 +129,7 @@ namespace Player.Type_4
             _computedVelocity.z += satchelMovement.z;
             _computedVelocity.y += Physics.gravity.y * _satchelGravityMultiplier;
 
-            if (_duration < 0)
+            if (_satchelSpawnedDuration < 0)
             {
                 _abilityEnd = true;
             }

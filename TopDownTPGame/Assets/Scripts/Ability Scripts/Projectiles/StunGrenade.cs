@@ -1,12 +1,12 @@
 using Player.Base;
 using UnityEngine;
 
-namespace AbilityScripts.Projectiles
+namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
     public class StunGrenade : MonoBehaviour, IProjectile
     {
-        private const int MAX_COLLIDERS_CHECK = 10;
+        private const int MaxCollidersCheck = 10;
 
         [Header("Prefabs")]
         [SerializeField] private GameObject _miniGrenadePrefab;
@@ -25,8 +25,8 @@ namespace AbilityScripts.Projectiles
         [SerializeField] private float _stunDuration;
         [SerializeField] private LayerMask _stunMask;
 
-        private bool _isInitialized;
         private Rigidbody _rb;
+        private bool _isInitialized;
 
         private bool _isSecondary;
         private float _destroyTimeLeft;
@@ -61,10 +61,10 @@ namespace AbilityScripts.Projectiles
         {
             // TODO: Add Stun effect to players
 
-            Collider[] hitColliders = new Collider[MAX_COLLIDERS_CHECK];
-            int targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, hitColliders, _stunMask);
+            var hitColliders = new Collider[MaxCollidersCheck];
+            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, hitColliders, _stunMask);
 
-            for (int i = 0; i < targetsHit; i++)
+            for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
                 if (hitColliders[i] == null)
@@ -84,12 +84,12 @@ namespace AbilityScripts.Projectiles
                 float angleDifference = 360 / _secondaryGrenadeCount;
                 float startAngle = 0;
 
-                for (int i = 0; i < _secondaryGrenadeCount; i++)
+                for (var i = 0; i < _secondaryGrenadeCount; i++)
                 {
-                    GameObject secondaryProjectile = Instantiate(_miniGrenadePrefab, transform.position, Quaternion.Euler(0, startAngle, 0));
-                    Vector3 forward = secondaryProjectile.transform.forward;
+                    var secondaryProjectile = Instantiate(_miniGrenadePrefab, transform.position, Quaternion.Euler(0, startAngle, 0));
+                    var forward = secondaryProjectile.transform.forward;
 
-                    StunGrenade stunGrenade = secondaryProjectile.GetComponent<StunGrenade>();
+                    var stunGrenade = secondaryProjectile.GetComponent<StunGrenade>();
                     stunGrenade.LaunchProjectile(forward);
                     stunGrenade.SetSecondary(true);
 

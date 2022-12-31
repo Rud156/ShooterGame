@@ -4,36 +4,32 @@ namespace Utils.Input
 {
     public struct PlayerInputKey
     {
-        public bool keyPressedThisFrame;
-        public bool keyReleasedThisFrame;
-        public bool keyPressed;
-        public bool isDataRead;
+        public bool KeyPressedThisFrame;
+        public bool KeyReleasedThisFrame;
+        public bool KeyPressed;
 
         public void UpdateInputData(KeyCode key, KeyCode secondKey = KeyCode.None)
         {
-            bool keyPressedThisFrame = UnityEngine.Input.GetKeyDown(key) || UnityEngine.Input.GetKeyDown(secondKey);
-            bool keyReleasedThisFrame = UnityEngine.Input.GetKeyUp(key) || UnityEngine.Input.GetKeyUp(secondKey);
+            var keyPressedThisFrame = UnityEngine.Input.GetKeyDown(key) || UnityEngine.Input.GetKeyDown(secondKey);
+            var keyReleasedThisFrame = UnityEngine.Input.GetKeyUp(key) || UnityEngine.Input.GetKeyUp(secondKey);
 
-            if (keyPressedThisFrame && !this.keyPressedThisFrame)
+            if (keyPressedThisFrame && !KeyPressedThisFrame)
             {
-                this.keyPressedThisFrame = keyPressedThisFrame;
-                isDataRead = false;
+                KeyPressedThisFrame = true;
             }
 
-            if (keyReleasedThisFrame && !this.keyReleasedThisFrame)
+            if (keyReleasedThisFrame && !KeyReleasedThisFrame)
             {
-                this.keyReleasedThisFrame = keyReleasedThisFrame;
-                isDataRead = false;
+                KeyReleasedThisFrame = true;
             }
 
-            keyPressed = UnityEngine.Input.GetKey(key) || UnityEngine.Input.GetKey(secondKey);
+            KeyPressed = UnityEngine.Input.GetKey(key) || UnityEngine.Input.GetKey(secondKey);
         }
 
         public void ResetPerFrameInput()
         {
-            keyPressedThisFrame = false;
-            keyReleasedThisFrame = false;
-            isDataRead = true;
+            KeyPressedThisFrame = false;
+            KeyReleasedThisFrame = false;
         }
     }
 }

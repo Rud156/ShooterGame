@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -28,16 +28,16 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            PlayerInputKey key = playerController.GetSecondaryAbilityKey();
-            if (key.keyReleasedThisFrame || !key.keyPressed || _currentChargeTime >= _maxChargeDuration)
+            var key = playerController.GetSecondaryAbilityKey();
+            if (key.KeyReleasedThisFrame || !key.KeyPressed || _currentChargeTime >= _maxChargeDuration)
             {
                 if (_currentChargeTime >= _minChargeDuration)
                 {
-                    Vector3 spawnPosition = _shootPoint.position;
-                    Vector3 direction = _cameraHolder.forward;
+                    var spawnPosition = _shootPoint.position;
+                    var direction = _cameraHolder.forward;
 
-                    GameObject projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
-                    SimpleOneShotForwardProjectile simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
+                    var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
+                    var simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
                     simpleProj.LaunchProjectile(direction);
                 }
 

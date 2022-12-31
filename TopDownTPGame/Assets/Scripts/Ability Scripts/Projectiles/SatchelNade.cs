@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AbilityScripts.Projectiles
+namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
     public class SatchelNade : MonoBehaviour, IProjectile
@@ -10,10 +10,10 @@ namespace AbilityScripts.Projectiles
         [SerializeField] private float _satchelLaunchForce;
         [SerializeField] private float _destroyDuration;
 
-        private bool _isInitialized;
         private Rigidbody _rb;
+        private bool _isInitialized;
 
-        private float _currentDestroyDuration;
+        private float _destroyTimeLeft;
 
         #region Unity Functions
 
@@ -21,8 +21,8 @@ namespace AbilityScripts.Projectiles
 
         private void FixedUpdate()
         {
-            _currentDestroyDuration -= Time.fixedDeltaTime;
-            if (_currentDestroyDuration <= 0)
+            _destroyTimeLeft -= Time.fixedDeltaTime;
+            if (_destroyTimeLeft <= 0)
             {
                 ProjectileDestroy();
             }
@@ -59,7 +59,7 @@ namespace AbilityScripts.Projectiles
 
             _rb = GetComponent<Rigidbody>();
             _isInitialized = true;
-            _currentDestroyDuration = _destroyDuration;
+            _destroyTimeLeft = _destroyDuration;
         }
 
         #endregion Utils

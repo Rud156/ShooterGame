@@ -18,6 +18,7 @@ namespace Utils.Input
         public const KeyCode AbilityPrimary = KeyCode.Mouse0;
         public const KeyCode AbilitySecondary = KeyCode.Mouse1;
         public const KeyCode AbilityTertiary = KeyCode.Mouse3;
+        public const KeyCode AbilityTertiarySecondary = KeyCode.F;
         public const KeyCode AbilityUltimate = KeyCode.X;
 
         // Secondary Movement Keys

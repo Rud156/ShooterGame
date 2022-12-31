@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AbilityScripts.Projectiles
+namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
     public class PlasmaHomingMissile : MonoBehaviour, IProjectile
@@ -13,7 +13,7 @@ namespace AbilityScripts.Projectiles
         private Rigidbody _rb;
 
         private Transform _target;
-        private float _currentDestroyTime;
+        private float _destroyTimeLeft;
 
         #region Unity Functions
 
@@ -21,15 +21,16 @@ namespace AbilityScripts.Projectiles
 
         private void FixedUpdate()
         {
-            Vector3 targetDirection = _target.position - transform.position;
+            var targetDirection = _target.position - transform.position;
             targetDirection.Normalize();
 
-            Vector3 rotateAmount = -Vector3.Cross(targetDirection, transform.forward);
+            var forward = transform.forward;
+            var rotateAmount = -Vector3.Cross(targetDirection, forward);
             _rb.angularVelocity = rotateAmount * _rotationSpeed;
-            _rb.velocity = transform.forward * _projectileVelocity;
+            _rb.velocity = forward * _projectileVelocity;
 
-            _currentDestroyTime -= Time.fixedDeltaTime;
-            if (_currentDestroyTime <= 0)
+            _destroyTimeLeft -= Time.fixedDeltaTime;
+            if (_destroyTimeLeft <= 0)
             {
                 ProjectileDestroy();
             }
@@ -42,16 +43,14 @@ namespace AbilityScripts.Projectiles
         public void SetTarget(Transform target)
         {
             _target = target;
-            _currentDestroyTime = _projectileDestroyTime;
+            _destroyTimeLeft = _projectileDestroyTime;
         }
 
         public void LaunchProjectile(Vector3 direction)
         {
         }
 
-        public void ProjectileDestroy()
-        {
-        }
+        public void ProjectileDestroy() => Destroy(gameObject);
 
         public void ProjectileHit(Collider other)
         {

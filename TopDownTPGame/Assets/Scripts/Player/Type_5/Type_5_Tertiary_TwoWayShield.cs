@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -22,8 +22,8 @@ namespace Player.Type_5
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            GameObject shieldObject = Instantiate(_shieldPrefab, _shootPoint.position, Quaternion.identity);
-            ShieldDeployProjectile shieldDeploy = shieldObject.GetComponent<ShieldDeployProjectile>();
+            var shieldObject = Instantiate(_shieldPrefab, _shootPoint.position, Quaternion.identity);
+            var shieldDeploy = shieldObject.GetComponent<ShieldDeployProjectile>();
             shieldDeploy.LaunchProjectile(_cameraHolder.forward);
             _abilityEnd = true;
         }

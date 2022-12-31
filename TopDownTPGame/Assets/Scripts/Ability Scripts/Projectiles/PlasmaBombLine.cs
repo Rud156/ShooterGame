@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AbilityScripts.Projectiles
+namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
     public class PlasmaBombLine : MonoBehaviour, IProjectile
@@ -15,10 +15,10 @@ namespace AbilityScripts.Projectiles
 
         private Rigidbody _rb;
         private bool _isLaunched;
-        private float _currentTimeLeft;
-        private float _nextDropTime;
+        private bool _isInitialized;
 
-        private bool _isInitialized = false;
+        private float _destroyTimeLeft;
+        private float _nextBombDropTime;
 
         #region Unity Functions
 
@@ -31,16 +31,16 @@ namespace AbilityScripts.Projectiles
                 return;
             }
 
-            _currentTimeLeft -= Time.fixedDeltaTime;
-            if (_currentTimeLeft < 0)
+            _destroyTimeLeft -= Time.fixedDeltaTime;
+            if (_destroyTimeLeft < 0)
             {
                 ProjectileDestroy();
             }
 
-            if (Time.time >= _nextDropTime)
+            if (Time.time >= _nextBombDropTime)
             {
                 Instantiate(_plasmaPulsePrefab, transform.position, Quaternion.identity);
-                _nextDropTime = Time.time + _pulseDropRate;
+                _nextBombDropTime = Time.time + _pulseDropRate;
             }
         }
 
@@ -54,7 +54,7 @@ namespace AbilityScripts.Projectiles
 
             _isLaunched = true;
             _rb.velocity = direction * _projectileLaunchVelocity;
-            _currentTimeLeft = _projectileDestroyTime;
+            _destroyTimeLeft = _projectileDestroyTime;
         }
 
         public void ProjectileDestroy()
@@ -78,7 +78,7 @@ namespace AbilityScripts.Projectiles
 
             _rb = GetComponent<Rigidbody>();
             _isInitialized = true;
-            _nextDropTime = 0;
+            _nextBombDropTime = 0;
         }
 
         #endregion Utils

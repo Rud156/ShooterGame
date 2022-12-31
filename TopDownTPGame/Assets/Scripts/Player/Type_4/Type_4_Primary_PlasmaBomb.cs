@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -31,16 +31,16 @@ namespace Player.Type_4
             {
                 _nextShootTime = Time.time + _fireRate;
 
-                Vector3 spawnPosition = _shootPoint.position;
-                Vector3 direction = _cameraHolder.forward;
+                var spawnPosition = _shootPoint.position;
+                var direction = _cameraHolder.forward;
 
-                GameObject projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
-                PlasmaBombLine plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
+                var projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
+                var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
                 plasmaBomb.LaunchProjectile(direction);
             }
 
-            PlayerInputKey inputKey = playerController.GetPrimaryAbilityKey();
-            if (inputKey.keyReleasedThisFrame || !inputKey.keyPressed)
+            var inputKey = playerController.GetPrimaryAbilityKey();
+            if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {
                 _abilityEnd = true;
             }

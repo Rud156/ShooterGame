@@ -1,4 +1,4 @@
-using AbilityScripts.Projectiles;
+using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -19,8 +19,8 @@ namespace Player.Type_3
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            GameObject darkPulse = Instantiate(_darkPulsePrefab, transform.position, Quaternion.identity);
-            DarkPulse pulse = darkPulse.GetComponent<DarkPulse>();
+            var darkPulse = Instantiate(_darkPulsePrefab, transform.position, Quaternion.identity);
+            var pulse = darkPulse.GetComponent<DarkPulse>();
             pulse.StartPulse();
 
             _darkPulseObject = darkPulse;
