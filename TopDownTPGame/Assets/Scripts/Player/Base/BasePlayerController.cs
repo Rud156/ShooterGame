@@ -1,15 +1,18 @@
+using System;
 using Player.Common;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Utils.Input;
 using Utils.Misc;
+using UnityEngine.InputSystem;
 
 namespace Player.Base
 {
     [RequireComponent(typeof(CharacterController))]
     public class BasePlayerController : MonoBehaviour
     {
-        private const string MOVEMENT_HOLD_IDENTIFIER = "MovementHold";
+        private const string MovementHoldIdentifier = "MovementHold";
 
         [Header("Basic Move")]
         [SerializeField] private float _runSpeed;
@@ -45,11 +48,15 @@ namespace Player.Base
         private PlayerInputKey _abilityUltimateKey;
         private PlayerInputKey _constantSpeedFallKey;
 
-        private float _currentStateVelocity;
+        // New Input
+        private PlayerInput _playerInput;
+        private InputMaster _playerInputMaster;
 
         // Movement/Controller
+
         private CharacterController _characterController;
         private List<PlayerState> _playerStateStack;
+        private float _currentStateVelocity;
         private Vector3 _characterVelocity;
 
         public bool IsGrounded => _isGrounded;
@@ -83,8 +90,13 @@ namespace Player.Base
 
         #region Unity Functions
 
+        private void Awake() => _playerInputMaster = new InputMaster();
+
         private void Start()
         {
+            _playerInput = GetComponent<PlayerInput>();
+            InitializeInputEvents();
+
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
             _playerInputRestrictingEffects = new List<PlayerInputRestrictingStoreData>();
@@ -103,6 +115,8 @@ namespace Player.Base
 
             PushPlayerState(PlayerState.Idle);
         }
+
+        private void OnDestroy() => DeInitializeInputEvents();
 
         private void Update() => HandleKeyboardInput();
 
@@ -376,14 +390,14 @@ namespace Player.Base
                     {
                         IsTimed = false,
                         ModifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
-                        ModifierIdentifier = MOVEMENT_HOLD_IDENTIFIER,
+                        ModifierIdentifier = MovementHoldIdentifier,
                         FloatModifierAmount = _constantSpeedFallMultiplier,
                     }
                 );
             }
             else if (_constantSpeedFallKey.KeyReleasedThisFrame || !_constantSpeedFallKey.KeyPressed)
             {
-                CheckAndRemovePlayerEffectsAndInputsModifier(MOVEMENT_HOLD_IDENTIFIER);
+                CheckAndRemovePlayerEffectsAndInputsModifier(MovementHoldIdentifier);
             }
         }
 
@@ -683,21 +697,89 @@ namespace Player.Base
 
         #endregion Player State
 
-        #region Inputs
+        #region New Input System
 
-        private void HandleKeyboardInput()
+        private void InitializeInputEvents()
         {
-            _coreMoveInput.x = Input.GetAxisRaw(InputKeys.Horizontal);
-            _coreMoveInput.y = Input.GetAxisRaw(InputKeys.Vertical);
+            _playerInputMaster.Player.Enable();
 
-            _jumpKey.UpdateInputData(InputKeys.Jump);
-            _runKey.UpdateInputData(InputKeys.Run);
-            _abilityPrimaryKey.UpdateInputData(InputKeys.AbilityPrimary);
-            _abilitySecondaryKey.UpdateInputData(InputKeys.AbilitySecondary);
-            _abilityTertiaryKey.UpdateInputData(InputKeys.AbilityTertiary, InputKeys.AbilityTertiarySecondary);
-            _abilityUltimateKey.UpdateInputData(InputKeys.AbilityUltimate);
-            _constantSpeedFallKey.UpdateInputData(InputKeys.MovementHoldInput);
+            _playerInputMaster.Player.Jump.started += HandlePlayerPressJump;
+            _playerInputMaster.Player.Jump.performed += HandlePlayerPressJump;
+            _playerInputMaster.Player.Jump.canceled += HandlePlayerPressJump;
+
+            _playerInputMaster.Player.Run.started += HandlePlayerPressRun;
+            _playerInputMaster.Player.Run.performed += HandlePlayerPressRun;
+            _playerInputMaster.Player.Run.canceled += HandlePlayerPressRun;
+
+            _playerInputMaster.Player.MovementHold.started += HandlePlayerPressConstantSpeedFall;
+            _playerInputMaster.Player.MovementHold.performed += HandlePlayerPressConstantSpeedFall;
+            _playerInputMaster.Player.MovementHold.canceled += HandlePlayerPressConstantSpeedFall;
+
+            _playerInputMaster.Player.AbilityPrimary.started += HandlePlayerPressAbilityPrimary;
+            _playerInputMaster.Player.AbilityPrimary.performed += HandlePlayerPressAbilityPrimary;
+            _playerInputMaster.Player.AbilityPrimary.canceled += HandlePlayerPressAbilityPrimary;
+
+            _playerInputMaster.Player.AbilitySecondary.started += HandlePlayerPressAbilitySecondary;
+            _playerInputMaster.Player.AbilitySecondary.performed += HandlePlayerPressAbilitySecondary;
+            _playerInputMaster.Player.AbilitySecondary.canceled += HandlePlayerPressAbilitySecondary;
+
+            _playerInputMaster.Player.AbilityTertiary.started += HandlePlayerPressAbilityTertiary;
+            _playerInputMaster.Player.AbilityTertiary.performed += HandlePlayerPressAbilityTertiary;
+            _playerInputMaster.Player.AbilityTertiary.canceled += HandlePlayerPressAbilityTertiary;
+
+            _playerInputMaster.Player.AbilityUltimate.started += HandlePlayerPressAbilityUltimate;
+            _playerInputMaster.Player.AbilityUltimate.performed += HandlePlayerPressAbilityUltimate;
+            _playerInputMaster.Player.AbilityUltimate.canceled += HandlePlayerPressAbilityUltimate;
         }
+
+        private void DeInitializeInputEvents()
+        {
+            _playerInputMaster.Player.Jump.started -= HandlePlayerPressJump;
+            _playerInputMaster.Player.Jump.performed -= HandlePlayerPressJump;
+            _playerInputMaster.Player.Jump.canceled -= HandlePlayerPressJump;
+
+            _playerInputMaster.Player.Run.started -= HandlePlayerPressRun;
+            _playerInputMaster.Player.Run.performed -= HandlePlayerPressRun;
+            _playerInputMaster.Player.Run.canceled -= HandlePlayerPressRun;
+
+            _playerInputMaster.Player.MovementHold.started -= HandlePlayerPressConstantSpeedFall;
+            _playerInputMaster.Player.MovementHold.performed -= HandlePlayerPressConstantSpeedFall;
+            _playerInputMaster.Player.MovementHold.canceled -= HandlePlayerPressConstantSpeedFall;
+
+            _playerInputMaster.Player.AbilityPrimary.started -= HandlePlayerPressAbilityPrimary;
+            _playerInputMaster.Player.AbilityPrimary.performed -= HandlePlayerPressAbilityPrimary;
+            _playerInputMaster.Player.AbilityPrimary.canceled -= HandlePlayerPressAbilityPrimary;
+
+            _playerInputMaster.Player.AbilitySecondary.started -= HandlePlayerPressAbilitySecondary;
+            _playerInputMaster.Player.AbilitySecondary.performed -= HandlePlayerPressAbilitySecondary;
+            _playerInputMaster.Player.AbilitySecondary.canceled -= HandlePlayerPressAbilitySecondary;
+
+            _playerInputMaster.Player.AbilityTertiary.started -= HandlePlayerPressAbilityTertiary;
+            _playerInputMaster.Player.AbilityTertiary.performed -= HandlePlayerPressAbilityTertiary;
+            _playerInputMaster.Player.AbilityTertiary.canceled -= HandlePlayerPressAbilityTertiary;
+
+            _playerInputMaster.Player.AbilityUltimate.started -= HandlePlayerPressAbilityUltimate;
+            _playerInputMaster.Player.AbilityUltimate.performed -= HandlePlayerPressAbilityUltimate;
+            _playerInputMaster.Player.AbilityUltimate.canceled -= HandlePlayerPressAbilityUltimate;
+
+            _playerInputMaster.Player.Disable();
+        }
+
+        private void HandleKeyboardInput() => _coreMoveInput = _playerInputMaster.Player.Move.ReadValue<Vector2>();
+
+        private void HandlePlayerPressJump(InputAction.CallbackContext context) => _jumpKey.UpdateInputData(context);
+
+        private void HandlePlayerPressRun(InputAction.CallbackContext context) => _runKey.UpdateInputData(context);
+
+        private void HandlePlayerPressConstantSpeedFall(InputAction.CallbackContext context) => _constantSpeedFallKey.UpdateInputData(context);
+
+        private void HandlePlayerPressAbilityPrimary(InputAction.CallbackContext context) => _abilityPrimaryKey.UpdateInputData(context);
+
+        private void HandlePlayerPressAbilitySecondary(InputAction.CallbackContext context) => _abilitySecondaryKey.UpdateInputData(context);
+
+        private void HandlePlayerPressAbilityTertiary(InputAction.CallbackContext context) => _abilityTertiaryKey.UpdateInputData(context);
+
+        private void HandlePlayerPressAbilityUltimate(InputAction.CallbackContext context) => _abilityUltimateKey.UpdateInputData(context);
 
         private void MarkFrameInputsAsRead()
         {
@@ -723,7 +805,7 @@ namespace Player.Base
                 AbilityTrigger.Secondary => _abilitySecondaryKey,
                 AbilityTrigger.Tertiary => _abilityTertiaryKey,
                 AbilityTrigger.Ultimate => _abilityUltimateKey,
-                _ => throw new System.Exception("Invalid Trigger Type"),
+                _ => throw new Exception("Invalid Trigger Type"),
             };
         }
 
@@ -735,7 +817,9 @@ namespace Player.Base
         public PlayerInputKey GetTertiaryAbilityKey() => _abilityTertiaryKey;
         public PlayerInputKey GetUltimateAbilityKey() => _abilityUltimateKey;
 
-        #endregion Inputs
+        public InputMaster GetPlayerInputMaster() => _playerInputMaster;
+
+        #endregion New Input System
 
         #region Structs
 

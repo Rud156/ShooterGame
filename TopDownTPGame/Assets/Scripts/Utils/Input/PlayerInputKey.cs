@@ -1,4 +1,4 @@
-using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Utils.Input
 {
@@ -8,10 +8,10 @@ namespace Utils.Input
         public bool KeyReleasedThisFrame;
         public bool KeyPressed;
 
-        public void UpdateInputData(KeyCode key, KeyCode secondKey = KeyCode.None)
+        public void UpdateInputData(InputAction.CallbackContext context)
         {
-            var keyPressedThisFrame = UnityEngine.Input.GetKeyDown(key) || UnityEngine.Input.GetKeyDown(secondKey);
-            var keyReleasedThisFrame = UnityEngine.Input.GetKeyUp(key) || UnityEngine.Input.GetKeyUp(secondKey);
+            var keyPressedThisFrame = context.started;
+            var keyReleasedThisFrame = context.canceled;
 
             if (keyPressedThisFrame && !KeyPressedThisFrame)
             {
@@ -23,7 +23,7 @@ namespace Utils.Input
                 KeyReleasedThisFrame = true;
             }
 
-            KeyPressed = UnityEngine.Input.GetKey(key) || UnityEngine.Input.GetKey(secondKey);
+            KeyPressed = context.performed;
         }
 
         public void ResetPerFrameInput()
