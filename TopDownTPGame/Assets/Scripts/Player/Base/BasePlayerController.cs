@@ -1,7 +1,6 @@
 using System;
 using Player.Common;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Utils.Input;
 using Utils.Misc;
@@ -48,12 +47,7 @@ namespace Player.Base
         private PlayerInputKey _abilityUltimateKey;
         private PlayerInputKey _constantSpeedFallKey;
 
-        // New Input
-        private PlayerInput _playerInput;
-        private InputMaster _playerInputMaster;
-
         // Movement/Controller
-
         private CharacterController _characterController;
         private List<PlayerState> _playerStateStack;
         private float _currentStateVelocity;
@@ -90,11 +84,8 @@ namespace Player.Base
 
         #region Unity Functions
 
-        private void Awake() => _playerInputMaster = new InputMaster();
-
         private void Start()
         {
-            _playerInput = GetComponent<PlayerInput>();
             InitializeInputEvents();
 
             _characterController = GetComponent<CharacterController>();
@@ -701,71 +692,76 @@ namespace Player.Base
 
         private void InitializeInputEvents()
         {
-            _playerInputMaster.Player.Enable();
+            InputManager.Instance.EnablePlayerControls();
 
-            _playerInputMaster.Player.Jump.started += HandlePlayerPressJump;
-            _playerInputMaster.Player.Jump.performed += HandlePlayerPressJump;
-            _playerInputMaster.Player.Jump.canceled += HandlePlayerPressJump;
+            var playerInputMaster = InputManager.Instance.PlayerInput;
 
-            _playerInputMaster.Player.Run.started += HandlePlayerPressRun;
-            _playerInputMaster.Player.Run.performed += HandlePlayerPressRun;
-            _playerInputMaster.Player.Run.canceled += HandlePlayerPressRun;
+            playerInputMaster.Jump.started += HandlePlayerPressJump;
+            playerInputMaster.Jump.performed += HandlePlayerPressJump;
+            playerInputMaster.Jump.canceled += HandlePlayerPressJump;
 
-            _playerInputMaster.Player.MovementHold.started += HandlePlayerPressConstantSpeedFall;
-            _playerInputMaster.Player.MovementHold.performed += HandlePlayerPressConstantSpeedFall;
-            _playerInputMaster.Player.MovementHold.canceled += HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.Run.started += HandlePlayerPressRun;
+            playerInputMaster.Run.performed += HandlePlayerPressRun;
+            playerInputMaster.Run.canceled += HandlePlayerPressRun;
 
-            _playerInputMaster.Player.AbilityPrimary.started += HandlePlayerPressAbilityPrimary;
-            _playerInputMaster.Player.AbilityPrimary.performed += HandlePlayerPressAbilityPrimary;
-            _playerInputMaster.Player.AbilityPrimary.canceled += HandlePlayerPressAbilityPrimary;
+            playerInputMaster.MovementHold.started += HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.MovementHold.performed += HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.MovementHold.canceled += HandlePlayerPressConstantSpeedFall;
 
-            _playerInputMaster.Player.AbilitySecondary.started += HandlePlayerPressAbilitySecondary;
-            _playerInputMaster.Player.AbilitySecondary.performed += HandlePlayerPressAbilitySecondary;
-            _playerInputMaster.Player.AbilitySecondary.canceled += HandlePlayerPressAbilitySecondary;
+            playerInputMaster.AbilityPrimary.started += HandlePlayerPressAbilityPrimary;
+            playerInputMaster.AbilityPrimary.performed += HandlePlayerPressAbilityPrimary;
+            playerInputMaster.AbilityPrimary.canceled += HandlePlayerPressAbilityPrimary;
 
-            _playerInputMaster.Player.AbilityTertiary.started += HandlePlayerPressAbilityTertiary;
-            _playerInputMaster.Player.AbilityTertiary.performed += HandlePlayerPressAbilityTertiary;
-            _playerInputMaster.Player.AbilityTertiary.canceled += HandlePlayerPressAbilityTertiary;
+            playerInputMaster.AbilitySecondary.started += HandlePlayerPressAbilitySecondary;
+            playerInputMaster.AbilitySecondary.performed += HandlePlayerPressAbilitySecondary;
+            playerInputMaster.AbilitySecondary.canceled += HandlePlayerPressAbilitySecondary;
 
-            _playerInputMaster.Player.AbilityUltimate.started += HandlePlayerPressAbilityUltimate;
-            _playerInputMaster.Player.AbilityUltimate.performed += HandlePlayerPressAbilityUltimate;
-            _playerInputMaster.Player.AbilityUltimate.canceled += HandlePlayerPressAbilityUltimate;
+            playerInputMaster.AbilityTertiary.started += HandlePlayerPressAbilityTertiary;
+            playerInputMaster.AbilityTertiary.performed += HandlePlayerPressAbilityTertiary;
+            playerInputMaster.AbilityTertiary.canceled += HandlePlayerPressAbilityTertiary;
+
+            playerInputMaster.AbilityUltimate.started += HandlePlayerPressAbilityUltimate;
+            playerInputMaster.AbilityUltimate.performed += HandlePlayerPressAbilityUltimate;
+            playerInputMaster.AbilityUltimate.canceled += HandlePlayerPressAbilityUltimate;
         }
 
         private void DeInitializeInputEvents()
         {
-            _playerInputMaster.Player.Jump.started -= HandlePlayerPressJump;
-            _playerInputMaster.Player.Jump.performed -= HandlePlayerPressJump;
-            _playerInputMaster.Player.Jump.canceled -= HandlePlayerPressJump;
+            var playerInputMaster = InputManager.Instance.PlayerInput;
 
-            _playerInputMaster.Player.Run.started -= HandlePlayerPressRun;
-            _playerInputMaster.Player.Run.performed -= HandlePlayerPressRun;
-            _playerInputMaster.Player.Run.canceled -= HandlePlayerPressRun;
+            playerInputMaster.Jump.started -= HandlePlayerPressJump;
+            playerInputMaster.Jump.performed -= HandlePlayerPressJump;
+            playerInputMaster.Jump.canceled -= HandlePlayerPressJump;
 
-            _playerInputMaster.Player.MovementHold.started -= HandlePlayerPressConstantSpeedFall;
-            _playerInputMaster.Player.MovementHold.performed -= HandlePlayerPressConstantSpeedFall;
-            _playerInputMaster.Player.MovementHold.canceled -= HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.Run.started -= HandlePlayerPressRun;
+            playerInputMaster.Run.performed -= HandlePlayerPressRun;
+            playerInputMaster.Run.canceled -= HandlePlayerPressRun;
 
-            _playerInputMaster.Player.AbilityPrimary.started -= HandlePlayerPressAbilityPrimary;
-            _playerInputMaster.Player.AbilityPrimary.performed -= HandlePlayerPressAbilityPrimary;
-            _playerInputMaster.Player.AbilityPrimary.canceled -= HandlePlayerPressAbilityPrimary;
+            playerInputMaster.MovementHold.started -= HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.MovementHold.performed -= HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.MovementHold.canceled -= HandlePlayerPressConstantSpeedFall;
 
-            _playerInputMaster.Player.AbilitySecondary.started -= HandlePlayerPressAbilitySecondary;
-            _playerInputMaster.Player.AbilitySecondary.performed -= HandlePlayerPressAbilitySecondary;
-            _playerInputMaster.Player.AbilitySecondary.canceled -= HandlePlayerPressAbilitySecondary;
+            playerInputMaster.AbilityPrimary.started -= HandlePlayerPressAbilityPrimary;
+            playerInputMaster.AbilityPrimary.performed -= HandlePlayerPressAbilityPrimary;
+            playerInputMaster.AbilityPrimary.canceled -= HandlePlayerPressAbilityPrimary;
 
-            _playerInputMaster.Player.AbilityTertiary.started -= HandlePlayerPressAbilityTertiary;
-            _playerInputMaster.Player.AbilityTertiary.performed -= HandlePlayerPressAbilityTertiary;
-            _playerInputMaster.Player.AbilityTertiary.canceled -= HandlePlayerPressAbilityTertiary;
+            playerInputMaster.AbilitySecondary.started -= HandlePlayerPressAbilitySecondary;
+            playerInputMaster.AbilitySecondary.performed -= HandlePlayerPressAbilitySecondary;
+            playerInputMaster.AbilitySecondary.canceled -= HandlePlayerPressAbilitySecondary;
 
-            _playerInputMaster.Player.AbilityUltimate.started -= HandlePlayerPressAbilityUltimate;
-            _playerInputMaster.Player.AbilityUltimate.performed -= HandlePlayerPressAbilityUltimate;
-            _playerInputMaster.Player.AbilityUltimate.canceled -= HandlePlayerPressAbilityUltimate;
+            playerInputMaster.AbilityTertiary.started -= HandlePlayerPressAbilityTertiary;
+            playerInputMaster.AbilityTertiary.performed -= HandlePlayerPressAbilityTertiary;
+            playerInputMaster.AbilityTertiary.canceled -= HandlePlayerPressAbilityTertiary;
 
-            _playerInputMaster.Player.Disable();
+            playerInputMaster.AbilityUltimate.started -= HandlePlayerPressAbilityUltimate;
+            playerInputMaster.AbilityUltimate.performed -= HandlePlayerPressAbilityUltimate;
+            playerInputMaster.AbilityUltimate.canceled -= HandlePlayerPressAbilityUltimate;
+
+            InputManager.Instance.DisablePlayerControls();
         }
 
-        private void HandleKeyboardInput() => _coreMoveInput = _playerInputMaster.Player.Move.ReadValue<Vector2>();
+        private void HandleKeyboardInput() =>
+            _coreMoveInput = InputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
 
         private void HandlePlayerPressJump(InputAction.CallbackContext context) => _jumpKey.UpdateInputData(context);
 
@@ -816,8 +812,6 @@ namespace Player.Base
         public PlayerInputKey GetSecondaryAbilityKey() => _abilitySecondaryKey;
         public PlayerInputKey GetTertiaryAbilityKey() => _abilityTertiaryKey;
         public PlayerInputKey GetUltimateAbilityKey() => _abilityUltimateKey;
-
-        public InputMaster GetPlayerInputMaster() => _playerInputMaster;
 
         #endregion New Input System
 
