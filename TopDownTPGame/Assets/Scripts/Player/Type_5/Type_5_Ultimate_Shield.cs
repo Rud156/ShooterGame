@@ -1,6 +1,10 @@
+#region
+
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+
+#endregion
 
 public class Type_5_Ultimate_Shield : Ability
 {

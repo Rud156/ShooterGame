@@ -1,7 +1,11 @@
+#region
+
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+
+#endregion
 
 namespace Player.Type_3
 {

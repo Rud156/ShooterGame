@@ -1,8 +1,12 @@
+#region
+
+using System.Collections.Generic;
 using Player.Base;
 using Player.Common;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils.Input;
+
+#endregion
 
 namespace Player.Type_5
 {

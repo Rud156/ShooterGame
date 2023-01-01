@@ -1,4 +1,8 @@
+#region
+
 using UnityEngine.InputSystem;
+
+#endregion
 
 namespace Utils.Input
 {

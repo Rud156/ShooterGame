@@ -55,7 +55,11 @@
  * float derivativeValue = derivativeFunc(0, 10, 0.67f);
  */
 
+#region
+
 using UnityEngine;
+
+#endregion
 
 namespace Utils.Misc
 {

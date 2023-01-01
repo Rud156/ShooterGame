@@ -1,4 +1,8 @@
+#region
+
 using UnityEngine;
+
+#endregion
 
 namespace Utils.Input
 {
@@ -26,18 +30,16 @@ namespace Utils.Input
 
         #region Singleton
 
-        private static InputManager _instance;
-
-        public static InputManager Instance => _instance;
+        public static InputManager Instance { get; private set; }
 
         private void Awake()
         {
-            if (_instance == null)
+            if (Instance == null)
             {
-                _instance = this;
+                Instance = this;
             }
 
-            if (_instance != this)
+            if (Instance != this)
             {
                 Destroy(gameObject);
                 return;

@@ -1,5 +1,9 @@
+#region
+
 using Player.Base;
 using UnityEngine;
+
+#endregion
 
 namespace Ability_Scripts.Projectiles
 {

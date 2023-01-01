@@ -1,10 +1,14 @@
+#region
+
 using System;
-using Player.Common;
 using System.Collections.Generic;
+using Player.Common;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utils.Input;
 using Utils.Misc;
-using UnityEngine.InputSystem;
+
+#endregion
 
 namespace Player.Base
 {
@@ -203,7 +207,7 @@ namespace Player.Base
                 }
             }
 
-            throw new System.Exception("Invalid State Requested");
+            throw new Exception("Invalid State Requested");
         }
 
         private void SetupPlayerInputRestrictingState()
@@ -817,7 +821,7 @@ namespace Player.Base
 
         #region Structs
 
-        [System.Serializable]
+        [Serializable]
         private struct PlayerInputRestrictingData
         {
             public GameObject effectPrefab;

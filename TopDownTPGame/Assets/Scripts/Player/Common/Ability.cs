@@ -1,5 +1,9 @@
+#region
+
 using Player.Base;
 using UnityEngine;
+
+#endregion
 
 namespace Player.Common
 {

@@ -1,6 +1,10 @@
+#region
+
 using UnityEngine;
 using Utils.Input;
 using Utils.Misc;
+
+#endregion
 
 namespace Camera
 {

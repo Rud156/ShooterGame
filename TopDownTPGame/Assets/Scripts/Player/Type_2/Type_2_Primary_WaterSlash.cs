@@ -1,9 +1,15 @@
+#region
+
+using System;
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Splines;
+using Random = UnityEngine.Random;
+
+#endregion
 
 namespace Player.Type_2
 {
@@ -120,7 +126,7 @@ namespace Player.Type_2
                     break;
 
                 case WaterControlState.ShootFront:
-                    throw new System.Exception("Invalid State for this GameObject");
+                    throw new Exception("Invalid State for this GameObject");
             }
 
             var projectile = Instantiate(_slashSidePrefab, spawnPosition, Quaternion.identity);
@@ -159,7 +165,7 @@ namespace Player.Type_2
                     break;
 
                 case WaterControlState.ShootFront:
-                    throw new System.Exception("Invalid State for this GameObject");
+                    throw new Exception("Invalid State for this GameObject");
             }
 
             _sideSlashObject.transform.position = position;

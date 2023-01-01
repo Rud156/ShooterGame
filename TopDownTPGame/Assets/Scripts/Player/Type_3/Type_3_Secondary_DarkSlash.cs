@@ -1,8 +1,12 @@
+#region
+
 using Player.Base;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Splines;
+
+#endregion
 
 namespace Player.Type_3
 {
