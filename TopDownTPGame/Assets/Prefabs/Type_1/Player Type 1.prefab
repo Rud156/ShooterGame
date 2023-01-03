@@ -344,6 +344,7 @@ GameObject:
   - component: {fileID: 95916530318942731}
   - component: {fileID: 95916530318942729}
   - component: {fileID: 95916530318943220}
+  - component: {fileID: 1948321099}
   m_Layer: 6
   m_Name: Player Type 1
   m_TagString: Player
@@ -523,6 +524,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityTrigger: 3
   _abilityType: 1
+--- !u!114 &1948321099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95916530318942721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667fc62e00fb63c408ca9352122f1a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _autoHealWhen: 0
+  _autoHealTickRate: 0.75
+  _autoHealPerTickAmount: 1
 --- !u!1 &7955758263491782542
 GameObject:
   m_ObjectHideFlags: 0

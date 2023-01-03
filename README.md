@@ -3,13 +3,13 @@
 ## TODOs (Current)
 
 - [ ] Add Damage and Health Systems (Both must be modifiable by effects)
+- [ ] Use UIToolkit to make the UI
 
 ## TODOs (Future)
 
 ### All characters heals HP when not in combat after sometime.
 
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
-- [ ] Use UIToolkit to make the UI
 - [ ] For Networking currently use Netcode for GameObjects as of now
 
 ## TODOs (Done)
