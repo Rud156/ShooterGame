@@ -68,15 +68,10 @@ namespace Player.Base
         private List<PlayerInputRestrictingStoreData> _playerInputRestrictingEffects;
 
         public delegate void PlayerStatePushed(PlayerState newState);
-
         public delegate void PlayerStatePopped(PlayerState poppedState);
-
         public delegate void PlayerGroundedChange(bool previousState, bool newState);
-
         public delegate void PlayerJumped();
-
         public delegate void PlayerAbilityStarted(Ability ability);
-
         public delegate void PlayerAbilityEnded(Ability ability);
 
         public PlayerStatePushed OnPlayerStatePushed;
@@ -173,6 +168,9 @@ namespace Player.Base
                         _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
                     }
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 if (_playerInputRestrictingEffects[i].CustomEffectDuration <= 0)
@@ -187,6 +185,9 @@ namespace Player.Base
                             _playerInputRestrictingEffects.RemoveAt(i);
                         }
                             break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
             }
@@ -425,6 +426,12 @@ namespace Player.Base
                 case PlayerState.CustomMovement:
                     UpdateCustomMovementState();
                     break;
+
+                case PlayerState.CustomInputRestrictingStates:
+                    throw new Exception("Invalid State Inside Movement");
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             UpdateCoreMovement();

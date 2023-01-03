@@ -71,6 +71,9 @@ namespace Player.Type_2
                 case WaterControlState.ShootFront:
                     UpdateFrontSlash();
                     break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -97,6 +100,9 @@ namespace Player.Type_2
                 case WaterControlState.ShootFront:
                     // Don't do anything here...
                     break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
