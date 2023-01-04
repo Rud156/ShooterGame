@@ -10,9 +10,10 @@
     margin-right: 14px;
     margin-top: 14px;
     margin-bottom: 14px;
-    top: 42px;
+    top: 85px;
     flex-direction: column-reverse;
     rotate: -3deg;
+    left: 42px;
 }
 
 .player_health .unity-progress-bar__background {
