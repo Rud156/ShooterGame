@@ -1,0 +1,52 @@
+.player_health {
+    position: relative;
+    width: 400px;
+    height: 35px;
+    align-items: stretch;
+    min-height: initial;
+    min-width: initial;
+    transform-origin: left;
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    top: 42px;
+    flex-direction: column-reverse;
+    rotate: -3deg;
+}
+
+.player_health .unity-progress-bar__background {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.player_health .unity-progress-bar__progress {
+    background-image: url('project://database/Assets/Textures/UI/WhitePixel.png?fileID=2800000&guid=f4e7a8f895301d942bfecc55c0a45e04&type=3#WhitePixel');
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(0, 0, 255, 0.78);
+    border-right-color: rgba(0, 0, 255, 0.78);
+    border-top-color: rgba(0, 0, 255, 0.78);
+    border-bottom-color: rgba(0, 0, 255, 0.78);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-left-radius: 1px;
+    border-bottom-left-radius: 1px;
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px;
+}
+
+.player_health .unity-progress-bar__title {
+}
+
+.player_health .unity-progress-bar__container {
+    height: 100%;
+    width: 100%;
+    max-height: 100%;
+    min-height: 100%;
+}
