@@ -36,7 +36,6 @@ namespace UI
 
         private void Update()
         {
-            _healthBar.value = _progressValue;
         }
 
         #endregion Unity Functions
