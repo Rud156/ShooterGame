@@ -25,6 +25,7 @@ namespace HealthSystem
         private AutoHealWhen _currentAutoHealState;
         private float _autoHealTimer;
 
+        public delegate void HealthChanged(int startHealth, int currentHealth, int maxHealth);
         public delegate void DamageTaken(int damageTaken, int startingHealth, int finalHealth);
         public delegate void Healed(int healAmount, int startingHealth, int finalHealth);
         public delegate void HealModifierAdded(HealModifier healModifier, int currentHealth);
@@ -32,6 +33,8 @@ namespace HealthSystem
         public delegate void DamageModifierAdded(DamageModifier damageModifier, int currentHealth);
         public delegate void DamageModifierRemoved(DamageModifier damageModifier, int currentHealth);
 
+
+        public HealthChanged OnHealthChanged;
         public DamageTaken OnDamageTaken;
         public Healed OnHealed;
         public HealModifierAdded OnHealModifierAdded;
@@ -48,6 +51,7 @@ namespace HealthSystem
             _currentHealth = _maxHealth;
 
             SetAutoHealState(_autoHealWhen);
+            OnHealthChanged?.Invoke(_currentHealth, _currentHealth, _maxHealth);
         }
 
         private void FixedUpdate()
@@ -131,6 +135,7 @@ namespace HealthSystem
             _currentHealth -= modifiedDamageAmount;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
             OnDamageTaken?.Invoke(modifiedDamageAmount, startHealth, _currentHealth);
+            OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
         }
 
         public void TakeHeal(int healAmount)
@@ -145,6 +150,7 @@ namespace HealthSystem
             _currentHealth += modifiedHealAmount;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
             OnHealed?.Invoke(modifiedHealAmount, startHealth, _currentHealth);
+            OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
         }
 
         public void AddHealModifier(HealModifier healModifier, string id)

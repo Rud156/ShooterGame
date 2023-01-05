@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 95916530318942729}
   - component: {fileID: 95916530318943220}
   - component: {fileID: 1948321099}
+  - component: {fileID: 7127077101925072532}
   m_Layer: 6
   m_Name: Player Type 1
   m_TagString: Player
@@ -369,7 +370,7 @@ Transform:
   - {fileID: 95916530296144473}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -540,6 +541,21 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
+--- !u!114 &7127077101925072532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95916530318942721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd766ac3d2352149b3c9208feb98dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  _midHealthColor: {r: 1, g: 1, b: 0, a: 1}
+  _fullHealthColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &7955758263491782542
 GameObject:
   m_ObjectHideFlags: 0
