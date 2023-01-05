@@ -1,6 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="UI_PlayerHealth" src="project://database/Assets/UI/Player/UI_PlayerHealth.uxml?fileID=9197481963319205126&amp;guid=0b6f91f0da987f2499d54451e9af81b1&amp;type=3#UI_PlayerHealth" />
-    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: stretch; flex-basis: initial;">
-        <ui:Instance template="UI_PlayerHealth" name="UI_PlayerHealth" style="position: absolute; top: 905px; left: 30px; height: 150px; width: 625px;" />
-    </ui:VisualElement>
+    <ui:Instance template="UI_PlayerHealth" name="UI_PlayerHealth" style="height: 100px; width: 450px; min-width: 450px; min-height: 100px; bottom: 21px; position: absolute; left: 21px;" />
 </ui:UXML>
