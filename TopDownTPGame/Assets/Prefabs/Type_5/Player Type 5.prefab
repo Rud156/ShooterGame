@@ -344,6 +344,8 @@ GameObject:
   - component: {fileID: 448688126214188792}
   - component: {fileID: 448688126214188800}
   - component: {fileID: 448688126214188801}
+  - component: {fileID: 2669688019543946796}
+  - component: {fileID: 3600043951216142606}
   m_Layer: 6
   m_Name: Player Type 5
   m_TagString: Player
@@ -532,6 +534,91 @@ MonoBehaviour:
   _shieldDeployMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2669688019543946796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252368709468985580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667fc62e00fb63c408ca9352122f1a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _autoHealWhen: 0
+  _autoHealTickRate: 0.75
+  _autoHealPerTickAmount: 1
+--- !u!114 &3600043951216142606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252368709468985580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd766ac3d2352149b3c9208feb98dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayLerpSpeed: 3
+  _lerrpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.2024858
+      value: 1.1143978
+      inSlope: 1.0192437
+      outSlope: 1.0192437
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.56122494
+      value: 0.93827075
+      inSlope: -0.019299632
+      outSlope: -0.019299632
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11692707
+      outWeight: 0.2673472
+    - serializedVersion: 3
+      time: 0.80998147
+      value: 1.0367497
+      inSlope: 0.2101707
+      outSlope: 0.2101707
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  _midHealthColor: {r: 1, g: 1, b: 0, a: 1}
+  _fullHealthColor: {r: 0, g: 1, b: 0, a: 1}
+  _debugDamageAmount: 40
+  _debugHealAmount: 30
 --- !u!1 &3889310737047096468
 GameObject:
   m_ObjectHideFlags: 0

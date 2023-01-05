@@ -3,7 +3,6 @@
 using EditorCools;
 using HealthSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Utils.Misc;
 
@@ -18,10 +17,18 @@ namespace UI
         private const string CurrentHealthString = "CurrentHealth";
         private const string MaxHealthString = "MaxHealth";
 
+        [Header("Lerp Data")]
+        [SerializeField] private float _displayLerpSpeed;
+        [SerializeField] private AnimationCurve _lerrpCurve;
+
         [Header("Display Colors")]
         [SerializeField] private Color _lowHealthColor;
         [SerializeField] private Color _midHealthColor;
         [SerializeField] private Color _fullHealthColor;
+
+        [Header("Debug")]
+        [SerializeField] private int _debugDamageAmount;
+        [SerializeField] private int _debugHealAmount;
 
         private HealthAndDamage _healthAndDamage;
         private VisualElement _root;
@@ -30,6 +37,10 @@ namespace UI
         private ProgressBar _healthBar;
         private Label _currentHealthLabel;
         private Label _maxHealthLabel;
+
+        private float _startHealthLerp;
+        private float _targetHealthLerp;
+        private float _lerpAmount;
 
         #region Unity Functions
 
@@ -47,12 +58,25 @@ namespace UI
 
             var titleContainer = progressBackground.Q<VisualElement>(className: "unity-progress-bar__title-container");
             var innerText = titleContainer.Q<Label>(className: "unity-progress-bar__title");
-            innerText.text = string.Empty;
+            innerText.style.display = DisplayStyle.None;
 
             _healthAndDamage.OnHealthChanged += HandleHealthChanged;
         }
 
         private void OnDestroy() => _healthAndDamage.OnHealthChanged -= HandleHealthChanged;
+
+        private void Update()
+        {
+            if (_lerpAmount > 1)
+            {
+                return;
+            }
+
+            var percent = _lerrpCurve.Evaluate(_lerpAmount);
+            var mappedValue = Mathf.Lerp(_startHealthLerp, _targetHealthLerp, percent);
+            _healthBar.value = mappedValue;
+            _lerpAmount += Time.deltaTime * _displayLerpSpeed;
+        }
 
         #endregion Unity Functions
 
@@ -65,7 +89,10 @@ namespace UI
 
             _healthBar.lowValue = 0;
             _healthBar.highValue = maxHealth;
-            _healthBar.value = currentHealth;
+
+            _startHealthLerp = _healthBar.value;
+            _targetHealthLerp = currentHealth;
+            _lerpAmount = 0;
 
             var healthRatio = (float)currentHealth / maxHealth;
             var healthColor = healthRatio <= 0.5
@@ -79,10 +106,10 @@ namespace UI
         #region Debug
 
         [Button]
-        public void DebugTakeDamage() => _healthAndDamage.TakeDamage(10);
+        public void DebugTakeDamage() => _healthAndDamage.TakeDamage(_debugDamageAmount);
 
         [Button]
-        public void DebugTakeHeal() => _healthAndDamage.TakeHeal(10);
+        public void DebugTakeHeal() => _healthAndDamage.TakeHeal(_debugHealAmount);
 
         #endregion Debug
     }

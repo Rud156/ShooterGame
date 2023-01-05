@@ -2,12 +2,16 @@
 
 ## TODOs (Current)
 
-- [ ] Add Damage and Health Systems (Both must be modifiable by effects)
-- [ ] Use UIToolkit to make the UI
+- [ ] Polish Pass
+    - [ ] Type 1 Character - Default Call of Duty Character
+    - [ ] Type 2 Character - Water Bender
+    - [ ] Type 3 Character - Darkness Incarnated
+    - [ ] Type 4 Character - Grenadier
+    - [ ] Type 5 Character - Engineer
 
 ## TODOs (Future)
 
-### All characters heals HP when not in combat after sometime.
+> All characters heals HP when not in combat after sometime.
 
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
 - [ ] For Networking currently use Netcode for GameObjects as of now
@@ -54,3 +58,5 @@
     - [X]  Ability Tertiary - Gibraltar shield from Apex
     - [X]  Ability Ultimate - Allies get a movement speed buff and a protective shield around them
 - [X] Switch to new Unity Input system
+- [X] Add Damage and Health Systems (Both must be modifiable by effects)
+- [X] Use UIToolkit to make the UI
