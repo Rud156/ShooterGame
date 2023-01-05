@@ -1,8 +1,10 @@
 #region
 
+using System.Collections;
 using EditorCools;
 using HealthSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Utils.Misc;
 
@@ -25,6 +27,12 @@ namespace UI
         [SerializeField] private Color _lowHealthColor;
         [SerializeField] private Color _midHealthColor;
         [SerializeField] private Color _fullHealthColor;
+
+        [Header("Bar Flash")]
+        [SerializeField] private Color _flashColor;
+        [SerializeField] private int _flashCount;
+        [SerializeField] private float _flashOnDuration;
+        [SerializeField] private float _flashOffDuration;
 
         [Header("Debug")]
         [SerializeField] private int _debugDamageAmount;
@@ -98,7 +106,21 @@ namespace UI
             var healthColor = healthRatio <= 0.5
                 ? Color.Lerp(_lowHealthColor, _midHealthColor, healthRatio * 2)
                 : Color.Lerp(_midHealthColor, _fullHealthColor, (healthRatio - 0.5f) * 2);
-            _progressBarProgress.style.unityBackgroundImageTintColor = healthColor;
+            StartCoroutine(BarFlasher(healthColor));
+        }
+
+        private IEnumerator BarFlasher(Color finalColor)
+        {
+            var startColor = _progressBarProgress.style.backgroundColor.value;
+            for (var i = 0; i < _flashCount; i++)
+            {
+                _progressBarProgress.style.backgroundColor = _flashColor;
+                yield return new WaitForSeconds(_flashOnDuration);
+                _progressBarProgress.style.backgroundColor = startColor;
+                yield return new WaitForSeconds(_flashOffDuration);
+            }
+
+            _progressBarProgress.style.backgroundColor = finalColor;
         }
 
         #endregion Health Events
