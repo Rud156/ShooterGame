@@ -1,4 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="UI_PlayerHealth" src="project://database/Assets/UI/Player/UI_PlayerHealth.uxml?fileID=9197481963319205126&amp;guid=0b6f91f0da987f2499d54451e9af81b1&amp;type=3#UI_PlayerHealth" />
+    <ui:Template name="UI_PlayerAbilityGrid" src="project://database/Assets/UI/Player/UI_PlayerAbilityGrid.uxml?fileID=9197481963319205126&amp;guid=e1b6d2f0c9de4c34caad1dd5ddafa361&amp;type=3#UI_PlayerAbilityGrid" />
     <ui:Instance template="UI_PlayerHealth" name="UI_PlayerHealth" style="height: 100px; width: 450px; min-width: 450px; min-height: 100px; bottom: 21px; position: absolute; left: 21px;" />
+    <ui:Instance template="UI_PlayerAbilityGrid" name="UI_PlayerAbilityGrid" style="width: 500px; height: 135px; position: absolute; bottom: 21px; right: 7px;" />
 </ui:UXML>

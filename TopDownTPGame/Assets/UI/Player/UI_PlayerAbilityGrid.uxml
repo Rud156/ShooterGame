@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="UI_PlayerAbilityItem" src="project://database/Assets/UI/Player/UI_PlayerAbilityItem.uxml?fileID=9197481963319205126&amp;guid=3f41e694d59bb1d4dbafbc3bbea8e7a6&amp;type=3#UI_PlayerAbilityItem" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; width: 450px; height: 155px;">
+        <ui:Instance template="UI_PlayerAbilityItem" name="PrimaryAbility" style="width: 100px; height: 115px;" />
+        <ui:Instance template="UI_PlayerAbilityItem" name="SecondaryAbility" style="translate: 0 10px; width: 100px; height: 115px;" />
+        <ui:Instance template="UI_PlayerAbilityItem" name="TertiaryAbility" style="translate: 0 15px; width: 100px; height: 115px;" />
+        <ui:Instance template="UI_PlayerAbilityItem" name="UltimateAbility" style="scale: 1.5 1.5; translate: 27px 10px; width: 100px; height: 115px;" />
+    </ui:VisualElement>
+</ui:UXML>
