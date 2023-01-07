@@ -2,19 +2,51 @@
 
 ## TODOs (Current)
 
+- [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
 - [ ] Polish Pass
-    - [ ] Type 1 Character - Default Call of Duty Character
-    - [ ] Type 2 Character - Water Bender
-    - [ ] Type 3 Character - Darkness Incarnated
-    - [ ] Type 4 Character - Grenadier
-    - [ ] Type 5 Character - Engineer
+    - [ ] General Character (Effects and Movement Speed)
+        - [ ] Idle
+        - [ ] Walking
+        - [ ] Running
+        - [ ] Falling
+        - [ ] Landing
 
 ## TODOs (Future)
 
 > All characters heals HP when not in combat after sometime.
+> </br>
+> Characters don't take Fall Damage
 
-- [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
+- [ ] Polish Pass
+    - [ ] Abilities drawn based on Abilities the Character has. Even if they only have 2 Abilities
+    - [ ] Out of Combat Healing
+    - [ ] Type 1 Character - Default Call of Duty Character
+        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [ ] Ultimate Ability (All Damage/HP/Effects)
+    - [ ] Type 2 Character - Water Bender
+        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [ ] Ultimate Ability (All Damage/HP/Effects)
+    - [ ] Type 3 Character - Darkness Incarnated
+        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [ ] Ultimate Ability (All Damage/HP/Effects)
+    - [ ] Type 4 Character - Grenadier
+        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [ ] Ultimate Ability (All Damage/HP/Effects)
+    - [ ] Type 5 Character - Engineer
+        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [ ] Ultimate Ability (All Damage/HP/Effects)
 - [ ] For Networking currently use Netcode for GameObjects as of now
+- [ ] Animation Polish
 
 ## TODOs (Done)
 
