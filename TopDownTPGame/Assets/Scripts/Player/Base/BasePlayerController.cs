@@ -69,6 +69,7 @@ namespace Player.Base
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
+        public delegate void PlayerStateChanged(PlayerState currentState);
         public delegate void PlayerGroundedChange(bool previousState, bool newState);
         public delegate void PlayerJumped();
         public delegate void PlayerAbilityStarted(Ability ability);
@@ -76,6 +77,7 @@ namespace Player.Base
 
         public PlayerStatePushed OnPlayerStatePushed;
         public PlayerStatePopped OnPlayerStatePopped;
+        public PlayerStateChanged OnPlayerStateChanged;
         public PlayerGroundedChange OnPlayerGroundedChanged;
         public PlayerJumped OnPlayerJumped;
         public PlayerAbilityStarted OnPlayerAbilityStarted;
@@ -688,6 +690,7 @@ namespace Player.Base
         {
             _playerStateStack.Add(state);
             OnPlayerStatePushed?.Invoke(state);
+            OnPlayerStateChanged?.Invoke(state);
         }
 
         private void PopPlayerState()
@@ -695,6 +698,7 @@ namespace Player.Base
             var topState = _playerStateStack[^1];
             _playerStateStack.RemoveAt(_playerStateStack.Count - 1);
             OnPlayerStatePopped?.Invoke(topState);
+            OnPlayerStateChanged?.Invoke(_playerStateStack[^1]);
         }
 
         #endregion Player State

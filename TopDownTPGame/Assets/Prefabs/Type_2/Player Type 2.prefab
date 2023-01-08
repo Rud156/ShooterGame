@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 2637092012038209771}
   - component: {fileID: 2637092012038209768}
   - component: {fileID: 2637092012038209769}
+  - component: {fileID: 5905943182045767463}
   - component: {fileID: 2637092012038209774}
   - component: {fileID: 3703342411328765957}
   - component: {fileID: 2637092012038209775}
@@ -365,6 +366,33 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 2
+  _playerStateStack: 
+--- !u!114 &5905943182045767463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637092012038209767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345262e5f1c94398aea3044918997584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fallingEffect:
+    spawnOffset: {x: 0, y: -1, z: 0}
+    effectPrefab: {fileID: 4310403025927699439, guid: 08090a5eccf5faf44a6ec590c4962cec,
+      type: 3}
+  _runEffect:
+    spawnOffset: {x: 0, y: 0, z: 0}
+    effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
+      type: 3}
+  _landEffect:
+    spawnOffset: {x: 0, y: -0.72, z: 0}
+    effectPrefab: {fileID: 8586881294353101766, guid: 515389321b5ca5f45a65881b09160674,
+      type: 3}
+  _player: {fileID: 2637092012038209771}
+  _playerController: {fileID: 2637092012038209769}
 --- !u!114 &2637092012038209774
 MonoBehaviour:
   m_ObjectHideFlags: 0
