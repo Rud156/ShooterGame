@@ -32,7 +32,12 @@ namespace Player.Type_5
 
         #region Unity Functions
 
-        private void Start() => _spawnedTurrets = new List<GameObject>();
+        protected override void Start()
+        {
+            base.Start();
+
+            _spawnedTurrets = new List<GameObject>();
+        }
 
         #endregion Unity Functions
 

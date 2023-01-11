@@ -1,6 +1,7 @@
 #region
 
 using Player.Base;
+using UI;
 using UnityEngine;
 
 #endregion
@@ -9,9 +10,23 @@ namespace Player.Common
 {
     public abstract class Ability : MonoBehaviour
     {
+        [Header("Ability Display")]
+        [SerializeField] protected Sprite _icon;
+        [SerializeField] private Sprite _background;
+
         [Header("Core Ability Data")]
         [SerializeField] private AbilityTrigger _abilityTrigger;
         [SerializeField] private AbilityType _abilityType;
+
+        #region Unity Functions
+
+        protected virtual void Start()
+        {
+            PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
+            PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background);
+        }
+
+        #endregion Unity Functions
 
         #region Core Ability Functions
 

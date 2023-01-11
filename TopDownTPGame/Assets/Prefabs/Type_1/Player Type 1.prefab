@@ -371,7 +371,7 @@ Transform:
   - {fileID: 95916530296144473}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -441,7 +441,6 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 2
-  _playerStateStack: 
 --- !u!114 &1948321108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89b4f4ee62fe014fba44a29b740760b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  _background: {fileID: 21300000, guid: e16630edda3c22d41b0b7875c99626ef, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
   _projectilePrefab: {fileID: 3515318782041256082, guid: 76baa5bf0a6dcff498d25a2276ada752,
@@ -515,6 +516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fe40e20a63aa944a758f0feb57230a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
+  _background: {fileID: 21300000, guid: e16630edda3c22d41b0b7875c99626ef, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
   _chargedObjectPrefab: {fileID: 3515318782041256082, guid: 38c89cd689cbac945b36aeb720d4e11f,
@@ -535,6 +538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e8bdbc4ab03a445a032fa7a738dc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: 0ad2337320c1b5841ba3ceb24de6e91a, type: 3}
+  _background: {fileID: 21300000, guid: e16630edda3c22d41b0b7875c99626ef, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
   _dashDuration: 0.25
@@ -551,6 +556,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d97c83c25cd6f3147bdf961842f727b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: 25126c248902e8347a4a2f96259cb92b, type: 3}
+  _background: {fileID: 21300000, guid: e16630edda3c22d41b0b7875c99626ef, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
 --- !u!114 &1948321099

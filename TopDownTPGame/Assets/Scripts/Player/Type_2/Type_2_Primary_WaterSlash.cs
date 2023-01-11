@@ -44,8 +44,10 @@ namespace Player.Type_2
 
         #region Unity Functions
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             _prefabInit.AbilityPrefabInit();
             _leftSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();
             _rightSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/RightSlash").GetComponent<SplineContainer>();

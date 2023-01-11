@@ -1,0 +1,239 @@
+﻿#region
+
+using System;
+using Player.Common;
+using UnityEngine;
+using UnityEngine.UIElements;
+using Utils.Misc;
+
+#endregion
+
+namespace UI
+{
+    public class PlayerAbilityDisplay : MonoBehaviour
+    {
+        private const string PrimaryDisplayString = "PrimaryAbility";
+        private const string SecondaryDisplayString = "SecondaryAbility";
+        private const string TertiaryDisplayString = "TertiaryAbility";
+        private const string UltimateDisplayString = "UltimateAbility";
+
+        [Header("Display")]
+        [SerializeField] private Color _overlayColor;
+
+        private VisualElement _root;
+        private AbilityDisplayItem _primaryDisplay;
+        private AbilityDisplayItem _secondaryDisplay;
+        private AbilityDisplayItem _tertiaryDisplay;
+        private AbilityDisplayItem _ultimateDisplay;
+
+        #region Unity Functions
+
+        private void Start()
+        {
+            _root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
+
+            var primaryAbility = _root.Q<VisualElement>(PrimaryDisplayString);
+            _primaryDisplay = new AbilityDisplayItem()
+            {
+                itemRoot = primaryAbility,
+                abilityBackground = primaryAbility.Q<VisualElement>("Backing"),
+                abilityIcon = primaryAbility.Q<VisualElement>("AbilityIcon"),
+                abilityIconOverlay = primaryAbility.Q<VisualElement>("AbilityIconOverlay"),
+                cooldownLabel = primaryAbility.Q<Label>("CooldownTimer"),
+                stackCountLabel = primaryAbility.Q<Label>("StackCount"),
+            };
+
+            var secondaryAbility = _root.Q<VisualElement>(SecondaryDisplayString);
+            _secondaryDisplay = new AbilityDisplayItem()
+            {
+                itemRoot = secondaryAbility,
+                abilityBackground = secondaryAbility.Q<VisualElement>("Backing"),
+                abilityIcon = secondaryAbility.Q<VisualElement>("AbilityIcon"),
+                abilityIconOverlay = secondaryAbility.Q<VisualElement>("AbilityIconOverlay"),
+                cooldownLabel = secondaryAbility.Q<Label>("CooldownTimer"),
+                stackCountLabel = secondaryAbility.Q<Label>("StackCount"),
+            };
+
+            var tertiaryAbility = _root.Q<VisualElement>(TertiaryDisplayString);
+            _tertiaryDisplay = new AbilityDisplayItem()
+            {
+                itemRoot = tertiaryAbility,
+                abilityBackground = tertiaryAbility.Q<VisualElement>("Backing"),
+                abilityIcon = tertiaryAbility.Q<VisualElement>("AbilityIcon"),
+                abilityIconOverlay = tertiaryAbility.Q<VisualElement>("AbilityIconOverlay"),
+                cooldownLabel = tertiaryAbility.Q<Label>("CooldownTimer"),
+                stackCountLabel = tertiaryAbility.Q<Label>("StackCount"),
+            };
+
+            var ultimateAbility = _root.Q<VisualElement>(UltimateDisplayString);
+            _ultimateDisplay = new AbilityDisplayItem()
+            {
+                itemRoot = ultimateAbility,
+                abilityBackground = ultimateAbility.Q<VisualElement>("Backing"),
+                abilityIcon = ultimateAbility.Q<VisualElement>("AbilityIcon"),
+                abilityIconOverlay = ultimateAbility.Q<VisualElement>("AbilityIconOverlay"),
+                cooldownLabel = ultimateAbility.Q<Label>("CooldownTimer"),
+                stackCountLabel = ultimateAbility.Q<Label>("StackCount"),
+            };
+        }
+
+        #endregion Unity Functions
+
+        #region External Functions
+
+        public void UpdateCooldownTimer(AbilityTrigger abilityTrigger, float timer, float percent)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                {
+                    _primaryDisplay.cooldownLabel.text = timer.ToString("0.00");
+                    _primaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                }
+                    break;
+
+                case AbilityTrigger.Secondary:
+                {
+                    _secondaryDisplay.cooldownLabel.text = timer.ToString("0.00");
+                    _secondaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                }
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                {
+                    _tertiaryDisplay.cooldownLabel.text = timer.ToString("0.00");
+                    _tertiaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                }
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                {
+                    _ultimateDisplay.cooldownLabel.text = timer.ToString("0.00");
+                    _ultimateDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
+        public void UpdateStackCount(AbilityTrigger abilityTrigger, int stackCount)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    _primaryDisplay.stackCountLabel.text = stackCount.ToString();
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    _secondaryDisplay.stackCountLabel.text = stackCount.ToString();
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    _tertiaryDisplay.stackCountLabel.text = stackCount.ToString();
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    _ultimateDisplay.stackCountLabel.text = stackCount.ToString();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
+        public void UpdateAbilityBackground(AbilityTrigger abilityTrigger, Sprite abilityBackground)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    _primaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    _secondaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    _tertiaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    _ultimateDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
+        public void UpdateAbilityIcon(AbilityTrigger abilityTrigger, Sprite abilityIcon)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                {
+                    _primaryDisplay.abilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _primaryDisplay.abilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
+                }
+                    break;
+
+                case AbilityTrigger.Secondary:
+                {
+                    _secondaryDisplay.abilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _secondaryDisplay.abilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
+                }
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                {
+                    _tertiaryDisplay.abilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _tertiaryDisplay.abilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
+                }
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                {
+                    _ultimateDisplay.abilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _ultimateDisplay.abilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
+                }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
+        #endregion External Functions
+
+        #region Singleton
+
+        #endregion Singleton
+
+        public static PlayerAbilityDisplay Instance { get; private set; }
+
+        private void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+
+            if (Instance != this)
+                Destroy(gameObject);
+        }
+
+        #region Structs
+
+        private struct AbilityDisplayItem
+        {
+            public VisualElement itemRoot;
+            public Label cooldownLabel;
+            public Label stackCountLabel;
+            public VisualElement abilityBackground;
+            public VisualElement abilityIcon;
+            public VisualElement abilityIconOverlay;
+        }
+
+        #endregion Structs
+    }
+}

@@ -14,7 +14,7 @@ namespace UI
     [RequireComponent(typeof(HealthAndDamage))]
     public class PlayerHealthDisplay : MonoBehaviour
     {
-        private const string PlayerHealthBar = "PlayerHealth";
+        private const string PlayerHealthBarString = "PlayerHealth";
         private const string CurrentHealthString = "CurrentHealth";
         private const string MaxHealthString = "MaxHealth";
 
@@ -55,7 +55,7 @@ namespace UI
         {
             _healthAndDamage = GetComponent<HealthAndDamage>();
             _root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
-            _healthBar = _root.Q<ProgressBar>(PlayerHealthBar);
+            _healthBar = _root.Q<ProgressBar>(PlayerHealthBarString);
             _currentHealthLabel = _root.Q<Label>(CurrentHealthString);
             _maxHealthLabel = _root.Q<Label>(MaxHealthString);
 
