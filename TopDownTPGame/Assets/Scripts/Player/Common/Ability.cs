@@ -3,6 +3,7 @@
 using Player.Base;
 using UI;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -23,7 +24,7 @@ namespace Player.Common
         protected virtual void Start()
         {
             PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
-            PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background);
+            PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
         }
 
         #endregion Unity Functions

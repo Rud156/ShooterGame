@@ -26,9 +26,9 @@ namespace UI
         private AbilityDisplayItem _tertiaryDisplay;
         private AbilityDisplayItem _ultimateDisplay;
 
-        #region Unity Functions
+        #region Utils
 
-        private void Start()
+        private void Initialize()
         {
             _root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
 
@@ -77,7 +77,7 @@ namespace UI
             };
         }
 
-        #endregion Unity Functions
+        #endregion Utils
 
         #region External Functions
 
@@ -143,24 +143,28 @@ namespace UI
             }
         }
 
-        public void UpdateAbilityBackground(AbilityTrigger abilityTrigger, Sprite abilityBackground)
+        public void UpdateAbilityBackground(AbilityTrigger abilityTrigger, Sprite abilityBackground, Color backgroundTint)
         {
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
                     _primaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    _primaryDisplay.abilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
                 case AbilityTrigger.Secondary:
                     _secondaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    _secondaryDisplay.abilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
                 case AbilityTrigger.Tertiary:
                     _tertiaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    _tertiaryDisplay.abilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
                 case AbilityTrigger.Ultimate:
                     _ultimateDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    _ultimateDisplay.abilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
                 default:
@@ -216,10 +220,17 @@ namespace UI
         private void Awake()
         {
             if (Instance == null)
+            {
                 Instance = this;
+            }
 
             if (Instance != this)
+            {
                 Destroy(gameObject);
+                return;
+            }
+
+            Initialize();
         }
 
         #region Structs

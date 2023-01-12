@@ -67,5 +67,24 @@ namespace Utils.Misc
 
             return boxCollider.transform.TransformPoint(point);
         }
+
+        public static Color32 AverageColorFromTexture(Texture2D tex)
+        {
+            var texColors = tex.GetPixels32();
+            var total = texColors.Length;
+
+            float r = 0;
+            float g = 0;
+            float b = 0;
+
+            for (var i = 0; i < total; i++)
+            {
+                r += texColors[i].r;
+                g += texColors[i].g;
+                b += texColors[i].b;
+            }
+
+            return new Color32((byte)(r / total), (byte)(g / total), (byte)(b / total), 255);
+        }
     }
 }
