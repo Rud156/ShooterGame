@@ -47,7 +47,7 @@ namespace Utils.Misc
             var yDiff = Mathf.Abs(AngleDifference(To360Angle(a.y), To360Angle(b.y)));
             var zDiff = Mathf.Abs(AngleDifference(To360Angle(a.z), To360Angle(b.z)));
 
-            bool value = xDiff <= tolerance && yDiff <= tolerance && zDiff <= tolerance;
+            var value = xDiff <= tolerance && yDiff <= tolerance && zDiff <= tolerance;
             if (!value)
             {
                 Debug.LogWarning("X: " + xDiff + ", Y: " + yDiff + ", Z: " + zDiff);

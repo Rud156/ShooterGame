@@ -4,8 +4,6 @@
 
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
 - [ ] Polish Pass
-    - [ ] Abilities drawn based on Abilities the Character has. Even if they only have 2 Abilities
-    - [ ] Out of Combat Healing
     - [ ] Type 1 Character - Default Call of Duty Character
         - [ ] Primary Ability (All Damage/HP/Effects)
         - [ ] Secondary Ability (All Damage/HP/Effects)
@@ -14,8 +12,6 @@
 
 ## TODOs (Future)
 
-> All characters heals HP when not in combat after sometime.
-> </br>
 > Characters don't take Fall Damage
 
 - [ ] Polish Pass

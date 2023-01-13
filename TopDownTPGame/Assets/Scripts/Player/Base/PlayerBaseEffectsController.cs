@@ -62,11 +62,11 @@ namespace Player.Base
 
                 case PlayerState.Running:
                 {
-                    var position = transform.position;
+                    var characterTransform = transform;
+                    var position = characterTransform.position;
                     position += _runEffect.spawnOffset;
 
-                    var rotation = transform.rotation.eulerAngles;
-                    rotation.y = rotation.y;
+                    var rotation = characterTransform.rotation.eulerAngles;
                     Instantiate(_runEffect.effectPrefab, position, Quaternion.Euler(rotation));
                 }
                     break;
