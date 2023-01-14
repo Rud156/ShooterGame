@@ -40,7 +40,7 @@ namespace Player.Type_1
                     var direction = _cameraHolder.forward;
 
                     var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
-                    var simpleProj = projectile.GetComponent<SimpleOneShotForwardProjectile>();
+                    var simpleProj = projectile.GetComponent<SimpleProjectile>();
                     simpleProj.LaunchProjectile(direction);
                 }
 

@@ -7,9 +7,9 @@ using UnityEngine;
 namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class SimpleOneShotForwardProjectile : MonoBehaviour, IProjectile
+    public class SimpleProjectile : MonoBehaviour, IProjectile
     {
-        [Header("Prjectile Data")]
+        [Header("Projectile Data")]
         [SerializeField] private float _projectileLaunchVelocity;
         [SerializeField] private float _projectileDestroyTime;
 
@@ -21,6 +21,8 @@ namespace Ability_Scripts.Projectiles
         #region Unity Functions
 
         private void Start() => Init();
+
+        private void OnTriggerEnter(Collider other) => ProjectileHit(other);
 
         private void FixedUpdate()
         {
@@ -41,11 +43,10 @@ namespace Ability_Scripts.Projectiles
 
             _rb.velocity = direction * _projectileLaunchVelocity;
             _destroyTimeLeft = _projectileDestroyTime;
+            transform.rotation = Quaternion.LookRotation(direction);
         }
 
-        public void ProjectileHit(Collider other)
-        {
-        }
+        public void ProjectileHit(Collider other) => ProjectileDestroy();
 
         public void ProjectileDestroy() => Destroy(gameObject);
 

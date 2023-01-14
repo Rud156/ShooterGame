@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using EditorCools;
 using UnityEngine;
 
 #endregion
@@ -18,7 +19,11 @@ namespace HealthSystem
         [SerializeField] private float _autoHealTickRate;
         [SerializeField] private int _autoHealPerTickAmount;
 
-        private int _currentHealth;
+        [Header("Debug")]
+        [SerializeField] private int _debugDamageAmount;
+        [SerializeField] private int _debugHealAmount;
+
+        public int _currentHealth;
         private List<Tuple<string, HealModifier>> _healModifiers;
         private List<Tuple<string, DamageModifier>> _damageModifiers;
 
@@ -218,6 +223,16 @@ namespace HealthSystem
         }
 
         #endregion Utils
+
+        #region Debug
+
+        [Button]
+        public void DebugTakeDamage() => TakeDamage(_debugDamageAmount);
+
+        [Button]
+        public void DebugTakeHeal() => TakeHeal(_debugHealAmount);
+
+        #endregion Debug
 
         #region Enums
 

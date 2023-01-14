@@ -3,9 +3,10 @@
 ## TODOs (Current)
 
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
+- [ ] Shoot controller which gives the actual direction where the Projectiles are to be launched
 - [ ] Polish Pass
     - [ ] Type 1 Character - Default Call of Duty Character
-        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [X] Primary Ability (All Damage/HP/Effects)
         - [ ] Secondary Ability (All Damage/HP/Effects)
         - [ ] Tertiary Ability (All Damage/HP/Effects)
         - [ ] Ultimate Ability (All Damage/HP/Effects)

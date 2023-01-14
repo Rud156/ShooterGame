@@ -193,7 +193,7 @@ namespace Player.Type_2
         {
             var frontSlashObject = CreateFrontSlash();
             var direction = transform.forward;
-            var simpleProj = frontSlashObject.GetComponent<SimpleOneShotForwardProjectile>();
+            var simpleProj = frontSlashObject.GetComponent<SimpleProjectile>();
             simpleProj.LaunchProjectile(direction);
 
             IncrementCurrentState();

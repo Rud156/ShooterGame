@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 682027055}
   - component: {fileID: 682027054}
   - component: {fileID: 682027053}
+  - component: {fileID: 682027057}
   m_Layer: 0
   m_Name: High Ground (2)
   m_TagString: Untagged
@@ -618,6 +619,25 @@ Transform:
   m_Father: {fileID: 1697506693}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &682027057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682027052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667fc62e00fb63c408ca9352122f1a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _autoHealWhen: 0
+  _autoHealTickRate: 0
+  _autoHealPerTickAmount: 0
+  _debugDamageAmount: 40
+  _debugHealAmount: 30
+  _currentHealth: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,12 +1360,12 @@ PrefabInstance:
     - target: {fileID: 95916530318942733, guid: 2645757a432b91248b8d7ba4d7baa991,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.97
+      value: 2.26
       objectReference: {fileID: 0}
     - target: {fileID: 95916530318942733, guid: 2645757a432b91248b8d7ba4d7baa991,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.2
+      value: 16.74
       objectReference: {fileID: 0}
     - target: {fileID: 95916530318942733, guid: 2645757a432b91248b8d7ba4d7baa991,
         type: 3}

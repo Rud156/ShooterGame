@@ -33,10 +33,6 @@ namespace UI
         [SerializeField] private float _flashOnDuration;
         [SerializeField] private float _flashOffDuration;
 
-        [Header("Debug")]
-        [SerializeField] private int _debugDamageAmount;
-        [SerializeField] private int _debugHealAmount;
-
         private HealthAndDamage _healthAndDamage;
         private VisualElement _root;
 
@@ -123,15 +119,5 @@ namespace UI
         }
 
         #endregion Health Events
-
-        #region Debug
-
-        [Button]
-        public void DebugTakeDamage() => _healthAndDamage.TakeDamage(_debugDamageAmount);
-
-        [Button]
-        public void DebugTakeHeal() => _healthAndDamage.TakeHeal(_debugHealAmount);
-
-        #endregion Debug
     }
 }
