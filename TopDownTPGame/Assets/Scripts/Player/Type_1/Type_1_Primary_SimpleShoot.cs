@@ -15,7 +15,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _projectilePrefab;
 
         [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
+        [SerializeField] private BaseShootController _shootController;
         [SerializeField] private Transform _shootPoint;
 
         [Header("Simple Shoot Data")]
@@ -34,7 +34,7 @@ namespace Player.Type_1
             {
                 _nextShootTime = Time.time + _fireRate;
                 var spawnPosition = _shootPoint.position;
-                var direction = _cameraHolder.forward;
+                var direction = _shootController.GetShootLookDirection();
 
                 var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();

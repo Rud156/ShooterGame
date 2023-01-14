@@ -15,7 +15,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _chargedObjectPrefab;
 
         [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
+        [SerializeField] private BaseShootController _shootController;
 
         [Header("Charged Shoot Data")]
         [SerializeField] private float _minChargeDuration;
@@ -37,7 +37,7 @@ namespace Player.Type_1
                 if (_currentChargeTime >= _minChargeDuration)
                 {
                     var spawnPosition = _shootPoint.position;
-                    var direction = _cameraHolder.forward;
+                    var direction = _shootController.GetShootLookDirection();
 
                     var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
                     var simpleProj = projectile.GetComponent<SimpleProjectile>();

@@ -231,9 +231,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2637092012017492159}
   m_Layer: 6
-  m_Name: Front Point
+  m_Name: Shoot Point
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 2637092012038209771}
   - component: {fileID: 2637092012038209768}
   - component: {fileID: 2637092012038209769}
+  - component: {fileID: 3268835866765903229}
   - component: {fileID: 5905943182045767463}
   - component: {fileID: 2637092012038209774}
   - component: {fileID: 3703342411328765957}
@@ -291,6 +292,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6658382269380424617}
   - {fileID: 2637092012472504217}
   - {fileID: 2637092012946061646}
   - {fileID: 2637092012017492159}
@@ -366,7 +368,26 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 2
-  _playerStateStack: 
+--- !u!114 &3268835866765903229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637092012038209767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxShootDistance: 250
+  _shootMask:
+    serializedVersion: 2
+    m_Bits: 65
+  _shootPoint: {fileID: 2637092012017492159}
+  _cameraMainPoint: {fileID: 2637092012727805912}
+  _closeShootClearPoint: {fileID: 6658382269380424617}
+  _cameraHolder: {fileID: 2637092012472504217}
 --- !u!114 &5905943182045767463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,6 +458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad5650b55f27b54bb2fd16e62f154d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _background: {fileID: 0}
   _abilityTrigger: 0
   _abilityType: 1
   _slashSidePrefab: {fileID: 3515318782041256082, guid: dd3921cfe0d81e84cbb7343f630cea0c,
@@ -527,6 +550,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76390daee0fb4e14e8a7a79ef9a1b7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _background: {fileID: 0}
   _abilityTrigger: 1
   _abilityType: 1
   _iceWallPrefab: {fileID: 8855951514977000263, guid: 54b25c9551d650942a2936e1e39b341c,
@@ -545,6 +570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f525029af354a7489effea69236763d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _background: {fileID: 0}
   _abilityTrigger: 2
   _abilityType: 0
   _waterMovementPrefab: {fileID: 1222397518879067017, guid: e181fab74af0d7440970d1ec16003dfa,
@@ -568,6 +595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2cd1299f741b5a4996ff282d624a7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _background: {fileID: 0}
   _abilityTrigger: 3
   _abilityType: 1
   _abilityCastRadius: 10
@@ -592,6 +621,9 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
+  _debugDamageAmount: 0
+  _debugHealAmount: 0
+  _currentHealth: 0
 --- !u!114 &6432708683422574492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,8 +695,6 @@ MonoBehaviour:
   _flashCount: 2
   _flashOnDuration: 0.1
   _flashOffDuration: 0.05
-  _debugDamageAmount: 40
-  _debugHealAmount: 30
 --- !u!1 &2637092012472504216
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +742,7 @@ GameObject:
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -826,6 +856,13 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &2637092012946061641
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,6 +888,37 @@ Transform:
   m_GameObject: {fileID: 2637092012946061641}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2637092012038209771}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4265962090424814960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6658382269380424617}
+  m_Layer: 6
+  m_Name: ShootClearClosePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6658382269380424617
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265962090424814960}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.2500002, z: 4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

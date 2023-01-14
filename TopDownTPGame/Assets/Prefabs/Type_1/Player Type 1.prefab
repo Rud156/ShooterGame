@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &492630954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 492630955}
+  m_Layer: 6
+  m_Name: ShootClearClosePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &492630955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492630954}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.2500002, z: 4.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 95916530318942733}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2077631664
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +151,7 @@ GameObject:
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -316,7 +347,7 @@ GameObject:
   m_Layer: 6
   m_Name: Front Point
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -346,13 +377,14 @@ GameObject:
   - component: {fileID: 95916530318942733}
   - component: {fileID: 95916530318942734}
   - component: {fileID: 95916530318942735}
+  - component: {fileID: 1948321099}
   - component: {fileID: 1948321108}
   - component: {fileID: 95916530318942728}
   - component: {fileID: 95916530318942730}
   - component: {fileID: 95916530318942731}
   - component: {fileID: 95916530318942729}
   - component: {fileID: 95916530318943220}
-  - component: {fileID: 1948321099}
+  - component: {fileID: 8572434850116300471}
   - component: {fileID: 7127077101925072532}
   m_Layer: 6
   m_Name: Player Type 1
@@ -373,6 +405,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 492630955}
   - {fileID: 95916529673104767}
   - {fileID: 95916529477622696}
   - {fileID: 95916530296144473}
@@ -448,6 +481,26 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 2
+--- !u!114 &1948321099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95916530318942721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxShootDistance: 250
+  _shootMask:
+    serializedVersion: 2
+    m_Bits: 65
+  _shootPoint: {fileID: 95916530296144473}
+  _cameraMainPoint: {fileID: 95916529393616190}
+  _closeShootClearPoint: {fileID: 492630955}
+  _cameraHolder: {fileID: 95916529673104767}
 --- !u!114 &1948321108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,10 +561,9 @@ MonoBehaviour:
   _abilityType: 1
   _projectilePrefab: {fileID: 9002442166465085074, guid: 97e634534d4e4c74880997ac9a63bf92,
     type: 3}
-  _cameraHolder: {fileID: 95916529673104767}
+  _shootController: {fileID: 1948321099}
   _shootPoint: {fileID: 95916530296144473}
   _fireRate: 0.3
-  _projectileRotationOffset: {x: 0, y: 90, z: 0}
 --- !u!114 &95916530318942731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,7 +582,7 @@ MonoBehaviour:
   _abilityType: 1
   _chargedObjectPrefab: {fileID: 3515318782041256082, guid: 38c89cd689cbac945b36aeb720d4e11f,
     type: 3}
-  _cameraHolder: {fileID: 95916529673104767}
+  _shootController: {fileID: 1948321099}
   _minChargeDuration: 1
   _maxChargeDuration: 1.5
   _shootPoint: {fileID: 95916530296144473}
@@ -568,7 +620,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
---- !u!114 &1948321099
+--- !u!114 &8572434850116300471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

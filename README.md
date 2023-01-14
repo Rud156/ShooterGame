@@ -3,7 +3,6 @@
 ## TODOs (Current)
 
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
-- [ ] Shoot controller which gives the actual direction where the Projectiles are to be launched
 - [ ] Polish Pass
     - [ ] Type 1 Character - Default Call of Duty Character
         - [X] Primary Ability (All Damage/HP/Effects)
@@ -90,3 +89,4 @@
         - [X] Running
         - [X] Falling
         - [X] Landing
+- [X] Shoot controller which gives the actual direction where the Projectiles are to be launched
