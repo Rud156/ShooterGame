@@ -40,9 +40,9 @@ namespace Player.Type_4
 
         #region Unity Functions
 
-        protected override void Start()
+        public override void UnityStartDelegate(BasePlayerController playerController)
         {
-            base.Start();
+            base.UnityStartDelegate(playerController);
 
             _prefabInit.AbilityPrefabInit();
             _orbitShootPoint = transform.Find("CameraHolder/Type_4_CameraPrefab(Clone)/BelowShootPoint");

@@ -3,7 +3,9 @@
 using System;
 using Player.Common;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Utils.Input;
 using Utils.Misc;
 
 #endregion
@@ -41,6 +43,7 @@ namespace UI
                 abilityIconOverlay = primaryAbility.Q<VisualElement>("AbilityIconOverlay"),
                 cooldownLabel = primaryAbility.Q<Label>("CooldownTimer"),
                 stackCountLabel = primaryAbility.Q<Label>("StackCount"),
+                abilityTriggerLabel = primaryAbility.Q<Label>("AbilityTrigger")
             };
 
             var secondaryAbility = _root.Q<VisualElement>(SecondaryDisplayString);
@@ -52,6 +55,7 @@ namespace UI
                 abilityIconOverlay = secondaryAbility.Q<VisualElement>("AbilityIconOverlay"),
                 cooldownLabel = secondaryAbility.Q<Label>("CooldownTimer"),
                 stackCountLabel = secondaryAbility.Q<Label>("StackCount"),
+                abilityTriggerLabel = secondaryAbility.Q<Label>("AbilityTrigger")
             };
 
             var tertiaryAbility = _root.Q<VisualElement>(TertiaryDisplayString);
@@ -63,6 +67,7 @@ namespace UI
                 abilityIconOverlay = tertiaryAbility.Q<VisualElement>("AbilityIconOverlay"),
                 cooldownLabel = tertiaryAbility.Q<Label>("CooldownTimer"),
                 stackCountLabel = tertiaryAbility.Q<Label>("StackCount"),
+                abilityTriggerLabel = tertiaryAbility.Q<Label>("AbilityTrigger")
             };
 
             var ultimateAbility = _root.Q<VisualElement>(UltimateDisplayString);
@@ -74,6 +79,7 @@ namespace UI
                 abilityIconOverlay = ultimateAbility.Q<VisualElement>("AbilityIconOverlay"),
                 cooldownLabel = ultimateAbility.Q<Label>("CooldownTimer"),
                 stackCountLabel = ultimateAbility.Q<Label>("StackCount"),
+                abilityTriggerLabel = ultimateAbility.Q<Label>("AbilityTrigger")
             };
         }
 
@@ -87,6 +93,10 @@ namespace UI
             {
                 case AbilityTrigger.Primary:
                 {
+                    StyleEnum<DisplayStyle> display = percent <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
+                    _primaryDisplay.cooldownLabel.style.display = display;
+                    _primaryDisplay.abilityIconOverlay.style.display = display;
+
                     _primaryDisplay.cooldownLabel.text = timer.ToString("0.00");
                     _primaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
                 }
@@ -94,6 +104,10 @@ namespace UI
 
                 case AbilityTrigger.Secondary:
                 {
+                    StyleEnum<DisplayStyle> display = percent <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
+                    _secondaryDisplay.cooldownLabel.style.display = display;
+                    _secondaryDisplay.abilityIconOverlay.style.display = display;
+
                     _secondaryDisplay.cooldownLabel.text = timer.ToString("0.00");
                     _secondaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
                 }
@@ -101,6 +115,10 @@ namespace UI
 
                 case AbilityTrigger.Tertiary:
                 {
+                    StyleEnum<DisplayStyle> display = percent <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
+                    _tertiaryDisplay.cooldownLabel.style.display = display;
+                    _tertiaryDisplay.abilityIconOverlay.style.display = display;
+
                     _tertiaryDisplay.cooldownLabel.text = timer.ToString("0.00");
                     _tertiaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
                 }
@@ -108,8 +126,49 @@ namespace UI
 
                 case AbilityTrigger.Ultimate:
                 {
+                    StyleEnum<DisplayStyle> display = percent <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
+                    _ultimateDisplay.cooldownLabel.style.display = display;
+                    _ultimateDisplay.abilityIconOverlay.style.display = display;
+
                     _ultimateDisplay.cooldownLabel.text = timer.ToString("0.00");
                     _ultimateDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
+        public void UpdateAbilityTrigger(AbilityTrigger abilityTrigger)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                {
+                    var displayString = InputManager.Instance.PlayerInput.AbilityPrimary.GetBindingDisplayString();
+                    _primaryDisplay.abilityTriggerLabel.text = displayString;
+                }
+                    break;
+
+                case AbilityTrigger.Secondary:
+                {
+                    var displayString = InputManager.Instance.PlayerInput.AbilitySecondary.GetBindingDisplayString();
+                    _secondaryDisplay.abilityTriggerLabel.text = displayString;
+                }
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                {
+                    var displayString = InputManager.Instance.PlayerInput.AbilityTertiary.GetBindingDisplayString();
+                    _tertiaryDisplay.abilityTriggerLabel.text = displayString;
+                }
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                {
+                    var displayString = InputManager.Instance.PlayerInput.AbilityUltimate.GetBindingDisplayString();
+                    _ultimateDisplay.abilityTriggerLabel.text = displayString;
                 }
                     break;
 
@@ -213,8 +272,6 @@ namespace UI
 
         #region Singleton
 
-        #endregion Singleton
-
         public static PlayerAbilityDisplay Instance { get; private set; }
 
         private void Awake()
@@ -233,6 +290,8 @@ namespace UI
             Initialize();
         }
 
+        #endregion Singleton
+
         #region Structs
 
         private struct AbilityDisplayItem
@@ -243,6 +302,7 @@ namespace UI
             public VisualElement abilityBackground;
             public VisualElement abilityIcon;
             public VisualElement abilityIconOverlay;
+            public Label abilityTriggerLabel;
         }
 
         #endregion Structs

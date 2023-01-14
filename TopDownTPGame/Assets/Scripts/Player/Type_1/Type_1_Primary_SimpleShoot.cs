@@ -20,11 +20,15 @@ namespace Player.Type_1
 
         [Header("Simple Shoot Data")]
         [SerializeField] private float _fireRate;
+        [SerializeField] private float _overheatTime;
+        [SerializeField] private float _overheatCooldownMultiplier;
 
         private float _nextShootTime;
         private bool _abilityEnd;
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        private float _currentOverheatTime;
+
+        public override bool AbilityCanStart(BasePlayerController playerController) => _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -39,6 +43,15 @@ namespace Player.Type_1
                 var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 simpleProj.LaunchProjectile(direction);
+
+                _currentOverheatTime += _fireRate;
+            }
+
+            if (_currentOverheatTime >= _overheatTime)
+            {
+                _currentCooldownDuration = _cooldownDuration;
+                _currentOverheatTime = 0;
+                _abilityEnd = true;
             }
 
             var inputKey = playerController.GetPrimaryAbilityKey();
@@ -51,5 +64,15 @@ namespace Player.Type_1
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
         public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
+
+        public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
+        {
+            base.UnityFixedUpdateDelegate(playerController);
+
+            if (_currentOverheatTime > 0 && _abilityEnd)
+            {
+                _currentOverheatTime -= Time.fixedDeltaTime * _overheatCooldownMultiplier;
+            }
+        }
     }
 }

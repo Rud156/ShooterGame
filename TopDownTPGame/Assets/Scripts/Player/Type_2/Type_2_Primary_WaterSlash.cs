@@ -44,9 +44,9 @@ namespace Player.Type_2
 
         #region Unity Functions
 
-        protected override void Start()
+        public override void UnityStartDelegate(BasePlayerController playerController)
         {
-            base.Start();
+            base.UnityStartDelegate(playerController);
 
             _prefabInit.AbilityPrefabInit();
             _leftSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();

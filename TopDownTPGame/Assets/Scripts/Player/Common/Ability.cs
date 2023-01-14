@@ -11,6 +11,8 @@ namespace Player.Common
 {
     public abstract class Ability : MonoBehaviour
     {
+        private const float DefaultCooldownMultiplier = 1;
+
         [Header("Ability Display")]
         [SerializeField] protected Sprite _icon;
         [SerializeField] private Sprite _background;
@@ -19,15 +21,11 @@ namespace Player.Common
         [SerializeField] private AbilityTrigger _abilityTrigger;
         [SerializeField] private AbilityType _abilityType;
 
-        #region Unity Functions
+        [Header("Cooldown")]
+        [SerializeField] protected float _cooldownDuration;
 
-        protected virtual void Start()
-        {
-            PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
-            PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
-        }
-
-        #endregion Unity Functions
+        protected float _currentCooldownDuration;
+        protected float _cooldownMultiplier = DefaultCooldownMultiplier;
 
         #region Core Ability Functions
 
@@ -45,7 +43,46 @@ namespace Player.Common
         {
         }
 
+        public virtual void UnityStartDelegate(BasePlayerController playerController)
+        {
+            PlayerAbilityDisplay.Instance.UpdateAbilityTrigger(_abilityTrigger);
+            PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
+            PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
+        }
+
+        public virtual void UnityUpdateDelegate(BasePlayerController playerController)
+        {
+        }
+
+        public virtual void UnityFixedUpdateDelegate(BasePlayerController playerController)
+        {
+            if (_currentCooldownDuration > 0)
+            {
+                _currentCooldownDuration -= Time.fixedDeltaTime * _cooldownMultiplier;
+                if (_currentCooldownDuration < 0)
+                {
+                    _currentCooldownDuration = 0;
+                }
+
+                PlayerAbilityDisplay.Instance.UpdateCooldownTimer(_abilityTrigger, _currentCooldownDuration, _currentCooldownDuration / _cooldownDuration);
+            }
+        }
+
         #endregion Core Ability Functions
+
+        #region Cooldown Modifier Functions
+
+        public void UpdateCooldownMultiplier(float cooldownMultiplier) => _cooldownMultiplier = cooldownMultiplier;
+
+        public void FixedCooldownReduction(float amount) => _currentCooldownDuration -= amount;
+
+        public void PercentCooldownReduction(float percent)
+        {
+            var amount = _cooldownDuration * percent;
+            _currentCooldownDuration -= amount;
+        }
+
+        #endregion Cooldown Modifier Functions
 
         #region Getters
 

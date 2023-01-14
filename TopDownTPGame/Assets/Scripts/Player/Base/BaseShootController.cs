@@ -36,7 +36,7 @@ namespace Player.Base
             }
             else
             {
-                var distantPoint = _cameraMainPoint.forward * _maxShootDistance;
+                var distantPoint = _cameraMainPoint.position + _cameraMainPoint.forward.normalized * _maxShootDistance;
                 var direction = distantPoint - _shootPoint.position;
                 return direction.normalized;
             }

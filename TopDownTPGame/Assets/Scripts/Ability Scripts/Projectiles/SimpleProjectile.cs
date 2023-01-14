@@ -13,6 +13,10 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private float _projectileLaunchVelocity;
         [SerializeField] private float _projectileDestroyTime;
 
+        [Header("Destroy Effect")]
+        [SerializeField] private Transform _effectSpawnPoint;
+        [SerializeField] private GameObject _destroyEffect;
+
         private Rigidbody _rb;
         private float _destroyTimeLeft;
 
@@ -48,7 +52,15 @@ namespace Ability_Scripts.Projectiles
 
         public void ProjectileHit(Collider other) => ProjectileDestroy();
 
-        public void ProjectileDestroy() => Destroy(gameObject);
+        public void ProjectileDestroy()
+        {
+            if (_destroyEffect)
+            {
+                Instantiate(_destroyEffect, _effectSpawnPoint.position, Quaternion.identity);
+            }
+
+            Destroy(gameObject);
+        }
 
         #endregion External Functions
 

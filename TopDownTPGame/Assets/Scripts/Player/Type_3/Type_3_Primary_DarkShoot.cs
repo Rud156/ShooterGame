@@ -27,9 +27,9 @@ namespace Player.Type_3
 
         #region Unity Functions
 
-        protected override void Start()
+        public override void UnityStartDelegate(BasePlayerController playerController)
         {
-            base.Start();
+            base.UnityStartDelegate(playerController);
 
             _prefabInit.AbilityPrefabInit();
             _frontCollider = transform.Find("CameraHolder/Type_3_CameraPrefab(Clone)/FrontColliderDetector");

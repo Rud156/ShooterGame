@@ -32,9 +32,9 @@ namespace Player.Type_5
 
         #region Unity Functions
 
-        protected override void Start()
+        public override void UnityStartDelegate(BasePlayerController playerController)
         {
-            base.Start();
+            base.UnityStartDelegate(playerController);
 
             _spawnedTurrets = new List<GameObject>();
         }

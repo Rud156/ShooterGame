@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 250
+  _maxShootDistance: 50
   _shootMask:
     serializedVersion: 2
     m_Bits: 65
@@ -559,11 +559,14 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
+  _cooldownDuration: 3
   _projectilePrefab: {fileID: 9002442166465085074, guid: 97e634534d4e4c74880997ac9a63bf92,
     type: 3}
   _shootController: {fileID: 1948321099}
   _shootPoint: {fileID: 95916530296144473}
   _fireRate: 0.3
+  _overheatTime: 3
+  _overheatCooldownMultiplier: 0.75
 --- !u!114 &95916530318942731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +583,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
+  _cooldownDuration: 0
   _chargedObjectPrefab: {fileID: 3515318782041256082, guid: 38c89cd689cbac945b36aeb720d4e11f,
     type: 3}
   _shootController: {fileID: 1948321099}
@@ -602,6 +606,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
+  _cooldownDuration: 0
   _dashDuration: 0.25
   _dashVelocity: 50
 --- !u!114 &95916530318943220
@@ -620,6 +625,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
+  _cooldownDuration: 0
 --- !u!114 &8572434850116300471
 MonoBehaviour:
   m_ObjectHideFlags: 0

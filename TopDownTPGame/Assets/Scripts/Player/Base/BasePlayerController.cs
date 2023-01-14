@@ -105,15 +105,27 @@ namespace Player.Base
 
             _currentStateVelocity = 0;
 
+            foreach (var ability in _playerAbilities)
+            {
+                ability.UnityStartDelegate(this);
+            }
+
             PushPlayerState(PlayerState.Idle);
         }
 
         private void OnDestroy() => DeInitializeInputEvents();
 
-        private void Update() => HandleKeyboardInput();
+        private void Update()
+        {
+            HandleKeyboardInput();
+            DelegateUpdateAbilities();
+        }
 
         private void FixedUpdate()
         {
+            // Handle Fixed General Ability Update
+            DelegateFixedUpdateAbilities();
+
             // These inputs are global and should always be processed...
             UpdateCustomAbilityEffects();
             UpdatePlayerEffectsAndInputModifiers();
@@ -679,6 +691,22 @@ namespace Player.Base
                 _currentAbility.EndAbility(this);
                 OnPlayerAbilityEnded?.Invoke(_currentAbility);
                 _currentAbility = null;
+            }
+        }
+
+        private void DelegateUpdateAbilities()
+        {
+            foreach (var ability in _playerAbilities)
+            {
+                ability.UnityUpdateDelegate(this);
+            }
+        }
+
+        private void DelegateFixedUpdateAbilities()
+        {
+            foreach (var ability in _playerAbilities)
+            {
+                ability.UnityFixedUpdateDelegate(this);
             }
         }
 
