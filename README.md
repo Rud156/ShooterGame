@@ -3,6 +3,7 @@
 ## TODOs (Current)
 
 - [ ] Make a Global Controller to handle effects like changing everyone's timings and giving shields and stuff...
+- [ ] Cooldown system for abilities. Can be faster cooldown, fixed amount time cooldown, percent amount cooldown... 
 - [ ] Polish Pass
     - [ ] Type 1 Character - Default Call of Duty Character
         - [X] Primary Ability (All Damage/HP/Effects)
@@ -89,4 +90,4 @@
         - [X] Running
         - [X] Falling
         - [X] Landing
-- [X] Shoot controller which gives the actual direction where the Projectiles are to be launched
+- [X] ShootController that returns the correct direction where the projectile should be launched to hit the center of the screen
