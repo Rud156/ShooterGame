@@ -3,6 +3,7 @@
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #endregion
 
@@ -10,9 +11,11 @@ namespace Player.Type_1
 {
     public class Type_1_Ulitimate : Ability
     {
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _ultimatePulsePrefab;
 
-        // This is a one time ability and so needs to end instantly...
+        public override bool AbilityCanStart(BasePlayerController playerController) => _currentCooldownDuration <= 0;
+
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => true;
 
         public override void AbilityUpdate(BasePlayerController playerController)
@@ -27,8 +30,9 @@ namespace Player.Type_1
 
         public override void StartAbility(BasePlayerController playerController)
         {
-            Debug.Log("Starting Ultimate");
-            // TODO: Communicate to a global modifier that timers have changed...
+            var characterTransform = transform;
+            Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
+            _currentCooldownDuration = _cooldownDuration;
         }
     }
 }

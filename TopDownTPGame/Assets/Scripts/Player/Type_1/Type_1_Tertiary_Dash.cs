@@ -110,6 +110,8 @@ namespace Player.Type_1
             _dashEffectObject = Instantiate(dashEffectPrefab, _cameraHolder.position, Quaternion.identity, _cameraHolder);
             _dashEffectObject.transform.localPosition += dashEffectOffset;
             _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
+
+            _currentCooldownDuration = _cooldownDuration;
         }
 
         public override Vector3 GetMovementData() => _computedVelocity;

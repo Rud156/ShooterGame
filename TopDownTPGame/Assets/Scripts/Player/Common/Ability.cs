@@ -74,12 +74,23 @@ namespace Player.Common
 
         public void UpdateCooldownMultiplier(float cooldownMultiplier) => _cooldownMultiplier = cooldownMultiplier;
 
-        public void FixedCooldownReduction(float amount) => _currentCooldownDuration -= amount;
+        public void FixedCooldownReduction(float amount)
+        {
+            _currentCooldownDuration -= amount;
+            if (_currentCooldownDuration < 0)
+            {
+                _currentCooldownDuration = 0;
+            }
+        }
 
         public void PercentCooldownReduction(float percent)
         {
             var amount = _cooldownDuration * percent;
             _currentCooldownDuration -= amount;
+            if (_currentCooldownDuration < 0)
+            {
+                _currentCooldownDuration = 0;
+            }
         }
 
         #endregion Cooldown Modifier Functions

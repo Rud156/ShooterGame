@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-namespace Ability_Scripts.Projectiles
+namespace Player.Type_3
 {
     public class DarkPulse : MonoBehaviour
     {
