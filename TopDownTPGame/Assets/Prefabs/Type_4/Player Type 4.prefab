@@ -222,8 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 20
-  _walkSpeed: 10
+  _runSpeed: 40
+  _walkSpeed: 20
   _airControlMultiplier: 0.3
   _gravityMultiplier: 0.25
   _groundedCheckPoint: {fileID: 1504131108692597983}
@@ -231,7 +231,7 @@ MonoBehaviour:
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
-  _jumpVelocity: 30
+  _jumpVelocity: 50
   _constantSpeedFallEnabled: 0
   _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
@@ -289,7 +289,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 4310403025927699439, guid: 08090a5eccf5faf44a6ec590c4962cec,
       type: 3}
   _runEffect:
-    spawnOffset: {x: 0, y: 0, z: 0}
+    spawnOffset: {x: 0, y: 0, z: -1.5}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
       type: 3}
   _landEffect:
@@ -347,6 +347,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 0
   _abilityType: 1
+  _cooldownDuration: 0
   _plasmaBombPrefab: {fileID: 4947489715981850301, guid: e967618039d656546ac03453bac3afef,
     type: 3}
   _cameraHolder: {fileID: 1504131108770834952}
@@ -368,6 +369,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 1
   _abilityType: 1
+  _cooldownDuration: 0
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
   _cameraHolder: {fileID: 1504131108770834952}
@@ -393,6 +395,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 2
   _abilityType: 0
+  _cooldownDuration: 0
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
   _prefabInit: {fileID: 253607354497569653}
@@ -421,6 +424,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 3
   _abilityType: 1
+  _cooldownDuration: 0
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
   _cameraHolder: {fileID: 1504131108770834952}

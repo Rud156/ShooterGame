@@ -463,7 +463,7 @@ namespace Player.Base
         private void UpdateWalkingState()
         {
             _currentStateVelocity = _walkSpeed;
-            if (_runKey.KeyPressedThisFrame && _isGrounded)
+            if (_runKey.KeyPressedThisFrame && _isGrounded && _coreMoveInput.y > 0)
             {
                 PushPlayerState(PlayerState.Running);
             }

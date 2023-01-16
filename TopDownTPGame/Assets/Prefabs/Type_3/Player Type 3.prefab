@@ -421,8 +421,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 20
-  _walkSpeed: 10
+  _runSpeed: 40
+  _walkSpeed: 20
   _airControlMultiplier: 0.3
   _gravityMultiplier: 0.25
   _groundedCheckPoint: {fileID: 1683011238159421813}
@@ -430,7 +430,7 @@ MonoBehaviour:
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
-  _jumpVelocity: 30
+  _jumpVelocity: 50
   _constantSpeedFallEnabled: 1
   _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
@@ -488,7 +488,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 4310403025927699439, guid: 08090a5eccf5faf44a6ec590c4962cec,
       type: 3}
   _runEffect:
-    spawnOffset: {x: 0, y: 0, z: 0}
+    spawnOffset: {x: 0, y: 0, z: -1.5}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
       type: 3}
   _landEffect:
@@ -546,6 +546,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 0
   _abilityType: 1
+  _cooldownDuration: 0
   _prefabInit: {fileID: -1176642752491111730}
   _fireRate: 0.75
   _attackMask:
@@ -568,6 +569,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 1
   _abilityType: 1
+  _cooldownDuration: 0
   _slashPrefab: {fileID: 3515318782041256082, guid: 417e69f2c40d14144aaa6fecc9e89f7f,
     type: 3}
   _prefabInit: {fileID: -1176642752491111730}
@@ -613,6 +615,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 2
   _abilityType: 0
+  _cooldownDuration: 0
   _cameraHolder: {fileID: 1683011237826357154}
   _dashCharges: 3
   _dashDuration: 0.3
@@ -635,6 +638,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 3
   _abilityType: 1
+  _cooldownDuration: 0
   _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
     type: 3}
 --- !u!114 &7031137311574653001

@@ -64,10 +64,11 @@ namespace Player.Base
                 {
                     var characterTransform = transform;
                     var position = characterTransform.position;
-                    position += _runEffect.spawnOffset;
-
                     var rotation = characterTransform.rotation.eulerAngles;
-                    Instantiate(_runEffect.effectPrefab, position, Quaternion.Euler(rotation));
+                    rotation.y += 180;
+
+                    var effect = Instantiate(_runEffect.effectPrefab, position, Quaternion.Euler(rotation), _player);
+                    effect.transform.localPosition += _runEffect.spawnOffset;
                 }
                     break;
 
@@ -75,10 +76,9 @@ namespace Player.Base
                 {
                     Assert.IsNull(_fallingEffectObject, "Falling Effect should not have a value here...");
                     var position = transform.position;
-                    position += _fallingEffect.spawnOffset;
 
-                    _fallingEffectObject = Instantiate(_fallingEffect.effectPrefab, position, _fallingEffect.effectPrefab.transform.rotation);
-                    _fallingEffectObject.transform.SetParent(_player);
+                    _fallingEffectObject = Instantiate(_fallingEffect.effectPrefab, position, _fallingEffect.effectPrefab.transform.rotation, _player);
+                    _fallingEffectObject.transform.localPosition += _fallingEffect.spawnOffset;
                 }
                     break;
 

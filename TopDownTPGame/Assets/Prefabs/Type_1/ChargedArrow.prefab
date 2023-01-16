@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ead9feb4fbf5c24dac2c23a7d9783bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileLaunchVelocity: 49
+  _projectileLaunchVelocity: 147
   _projectileDestroyTime: 3
   _effectSpawnPoint: {fileID: 7016112392592746773}
   _destroyEffect: {fileID: 3008524000958200615, guid: 3987b98f81d9f2e43a890d9e24733475,
@@ -241,6 +241,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ChargedArrowTrailEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4316150606136277585, guid: ade73f4f0c6a2c94aa8398a45b06ddfd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4316150606136277588, guid: ade73f4f0c6a2c94aa8398a45b06ddfd,
         type: 3}

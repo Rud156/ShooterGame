@@ -338,8 +338,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 20
-  _walkSpeed: 10
+  _runSpeed: 40
+  _walkSpeed: 20
   _airControlMultiplier: 0.3
   _gravityMultiplier: 0.25
   _groundedCheckPoint: {fileID: 2637092012946061646}
@@ -347,7 +347,7 @@ MonoBehaviour:
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
-  _jumpVelocity: 30
+  _jumpVelocity: 50
   _constantSpeedFallEnabled: 0
   _constantSpeedFallMultiplier: 0
   _playerAbilities:
@@ -405,7 +405,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 4310403025927699439, guid: 08090a5eccf5faf44a6ec590c4962cec,
       type: 3}
   _runEffect:
-    spawnOffset: {x: 0, y: 0, z: 0}
+    spawnOffset: {x: 0, y: 0, z: -1.5}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
       type: 3}
   _landEffect:
@@ -462,6 +462,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 0
   _abilityType: 1
+  _cooldownDuration: 0
   _slashSidePrefab: {fileID: 3515318782041256082, guid: dd3921cfe0d81e84cbb7343f630cea0c,
     type: 3}
   _slashFrontPrefab: {fileID: 3515318782041256082, guid: cc66f744fd654e147972ca75e7c91165,
@@ -554,6 +555,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 1
   _abilityType: 1
+  _cooldownDuration: 0
   _iceWallPrefab: {fileID: 8855951514977000263, guid: 54b25c9551d650942a2936e1e39b341c,
     type: 3}
   _spawnPoint: {fileID: 2637092012017492159}
@@ -574,6 +576,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 2
   _abilityType: 0
+  _cooldownDuration: 0
   _waterMovementPrefab: {fileID: 1222397518879067017, guid: e181fab74af0d7440970d1ec16003dfa,
     type: 3}
   _playerMainMesh: {fileID: 2029409439}
@@ -599,6 +602,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 3
   _abilityType: 1
+  _cooldownDuration: 0
   _abilityCastRadius: 10
   _castOffset: {x: 0, y: 2.5, z: 0}
   _abilityMask:
