@@ -1,9 +1,12 @@
 #region
 
 using Ability_Scripts.Projectiles;
+using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using UnityEngine.Assertions;
+using Utils.Misc;
 
 #endregion
 
@@ -13,19 +16,22 @@ namespace Player.Type_1
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _chargedObjectPrefab;
+        [SerializeField] private GameObject _chargedObjectSpawnPrefab;
 
         [Header("Components")]
         [SerializeField] private BaseShootController _shootController;
 
         [Header("Charged Shoot Data")]
-        [SerializeField] private float _minChargeDuration;
         [SerializeField] private float _maxChargeDuration;
-        [SerializeField] private Transform _shootPoint;
+        [SerializeField] private int _minChargeDamage;
+        [SerializeField] private int _maxChargeDamage;
 
         private bool _abilityEnd;
         private float _currentChargeTime;
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        private GameObject _chargedSpawnEffect;
+
+        public override bool AbilityCanStart(BasePlayerController playerController) => _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -34,17 +40,22 @@ namespace Player.Type_1
             var key = playerController.GetSecondaryAbilityKey();
             if (key.KeyReleasedThisFrame || !key.KeyPressed || _currentChargeTime >= _maxChargeDuration)
             {
-                if (_currentChargeTime >= _minChargeDuration)
-                {
-                    var spawnPosition = _shootPoint.position;
-                    var direction = _shootController.GetShootLookDirection();
+                var spawnPosition = _shootController.GetShootPosition();
+                var direction = _shootController.GetShootLookDirection();
 
-                    var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
-                    var simpleProj = projectile.GetComponent<SimpleProjectile>();
-                    simpleProj.LaunchProjectile(direction);
-                }
+                var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
+                var simpleProj = projectile.GetComponent<SimpleProjectile>();
+                simpleProj.LaunchProjectile(direction);
+
+                var mappedDamage = Mathf.CeilToInt(ExtensionFunctions.Map(_currentChargeTime, 0, _maxChargeDuration, _minChargeDamage, _maxChargeDamage));
+                var simpleDamage = projectile.GetComponent<SimpleDamageOverrideTrigger>();
+                simpleDamage.SetDamageAmount(mappedDamage);
+
+                Assert.IsNotNull(_chargedSpawnEffect, "Charged Effect cannot be null here...");
+                Destroy(_chargedSpawnEffect);
 
                 _abilityEnd = true;
+                _currentCooldownDuration = _cooldownDuration;
             }
             else
             {
@@ -62,6 +73,10 @@ namespace Player.Type_1
         {
             _abilityEnd = false;
             _currentChargeTime = 0;
+
+            var shootPoint = _shootController.GetShootPoint();
+            _chargedSpawnEffect = Instantiate(_chargedObjectSpawnPrefab, shootPoint.position, Quaternion.identity);
+            _chargedSpawnEffect.transform.SetParent(shootPoint);
         }
     }
 }

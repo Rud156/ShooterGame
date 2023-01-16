@@ -42,6 +42,10 @@ namespace Player.Base
             }
         }
 
+        public Vector3 GetShootPosition() => _shootPoint.position;
+
+        public Transform GetShootPoint() => _shootPoint;
+
         #endregion External Functions
     }
 }

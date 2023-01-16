@@ -1,4 +1,4 @@
-#region
+﻿#region
 
 using UnityEngine;
 
@@ -6,10 +6,9 @@ using UnityEngine;
 
 namespace HealthSystem
 {
-    public class SimpleDamageTrigger : MonoBehaviour
+    public class SimpleDamageOverrideTrigger : MonoBehaviour
     {
-        [Header("Damage Data")]
-        [SerializeField] private int _damageAmount;
+        private int _damageAmount;
 
         #region Unity Functions
 
@@ -22,5 +21,11 @@ namespace HealthSystem
         }
 
         #endregion Unity Functions
+
+        #region External Functions
+
+        public void SetDamageAmount(int damageAmount) => _damageAmount = damageAmount;
+
+        #endregion External Functions
     }
 }

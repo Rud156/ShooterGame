@@ -16,7 +16,6 @@ namespace Player.Type_1
 
         [Header("Components")]
         [SerializeField] private BaseShootController _shootController;
-        [SerializeField] private Transform _shootPoint;
 
         [Header("Simple Shoot Data")]
         [SerializeField] private float _fireRate;
@@ -37,7 +36,7 @@ namespace Player.Type_1
             if (Time.time >= _nextShootTime)
             {
                 _nextShootTime = Time.time + _fireRate;
-                var spawnPosition = _shootPoint.position;
+                var spawnPosition = _shootController.GetShootPosition();
                 var direction = _shootController.GetShootLookDirection();
 
                 var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
