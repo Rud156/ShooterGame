@@ -6,7 +6,7 @@
     - [ ] Type 1 Character - Default Call of Duty Character
         - [X] Primary Ability (All Damage/HP/Effects)
         - [X] Secondary Ability (All Damage/HP/Effects)
-        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [X] Tertiary Ability (All Damage/HP/Effects)
         - [ ] Ultimate Ability (All Damage/HP/Effects)
 
 ## TODOs (Future)

@@ -548,8 +548,9 @@ namespace Player.Base
 
         private void UpdateCoreMovement()
         {
-            var forward = transform.forward;
-            var right = transform.right;
+            var characterTransform = transform;
+            var forward = characterTransform.forward;
+            var right = characterTransform.right;
 
             // When Custom Apply Movement Directly
             if (_playerStateStack[^1] == PlayerState.CustomMovement)
