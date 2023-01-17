@@ -2,13 +2,14 @@
 
 using Player.Base;
 using Player.Common;
+using UI;
 using UnityEngine;
 
 #endregion
 
 namespace Player.Type_1
 {
-    public class Type_1_Ulitimate : Ability
+    public class Type_1_Ultimate : Ability
     {
         private const float MaxUltimatePercent = 100;
 
@@ -42,6 +43,12 @@ namespace Player.Type_1
             _currentUltimatePercent = 0;
         }
 
+        public override void UnityUpdateDelegate(BasePlayerController playerController)
+        {
+            base.UnityUpdateDelegate(playerController);
+            DisplayUltimateToHUD();
+        }
+
         public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityFixedUpdateDelegate(playerController);
@@ -64,5 +71,24 @@ namespace Player.Type_1
                 _kitsuneRushObject = null;
             }
         }
+
+        #region External Functions
+
+        public void AddUltimateCharge(int amount)
+        {
+            _currentUltimatePercent += amount;
+            if (_currentUltimatePercent > MaxUltimatePercent)
+            {
+                _currentUltimatePercent = MaxUltimatePercent;
+            }
+        }
+
+        #endregion External Functions
+
+        #region Utils
+
+        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent);
+
+        #endregion Utils
     }
 }

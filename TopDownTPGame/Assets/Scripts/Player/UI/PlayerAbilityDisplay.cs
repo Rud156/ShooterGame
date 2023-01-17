@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,6 +15,8 @@ namespace UI
 {
     public class PlayerAbilityDisplay : MonoBehaviour
     {
+        private const float OverlayPercentTintAlpha = 0.5f;
+
         private const string PrimaryDisplayString = "PrimaryAbility";
         private const string SecondaryDisplayString = "SecondaryAbility";
         private const string TertiaryDisplayString = "TertiaryAbility";
@@ -83,24 +86,92 @@ namespace UI
             };
         }
 
+        private void CheckAndApplyDisplayStyle(List<VisualElement> elements, bool show)
+        {
+            foreach (var element in elements)
+            {
+                element.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+        }
+
         #endregion Utils
 
         #region External Functions
 
-        public void UpdateCooldownPercent(AbilityTrigger abilityTrigger, float percent)
+        public void UpdateCooldownPercent(AbilityTrigger abilityTrigger, float percent, bool show = true)
         {
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
+                {
+                    var elements = new List<VisualElement>()
+                    {
+                        _primaryDisplay.cooldownLabel,
+                        _primaryDisplay.abilityIconOverlay,
+                    };
+                    CheckAndApplyDisplayStyle(elements, show);
+
+                    if (show)
+                    {
+                        _primaryDisplay.cooldownLabel.text = percent.ToString("0.0");
+                        _primaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
+                            new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                    }
+                }
                     break;
 
                 case AbilityTrigger.Secondary:
+                {
+                    var elements = new List<VisualElement>()
+                    {
+                        _secondaryDisplay.cooldownLabel,
+                        _secondaryDisplay.abilityIconOverlay,
+                    };
+                    CheckAndApplyDisplayStyle(elements, show);
+
+                    if (show)
+                    {
+                        _secondaryDisplay.cooldownLabel.text = percent.ToString("0.0");
+                        _secondaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
+                            new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                    }
+                }
                     break;
 
                 case AbilityTrigger.Tertiary:
+                {
+                    var elements = new List<VisualElement>()
+                    {
+                        _tertiaryDisplay.cooldownLabel,
+                        _tertiaryDisplay.abilityIconOverlay,
+                    };
+                    CheckAndApplyDisplayStyle(elements, show);
+
+                    if (show)
+                    {
+                        _tertiaryDisplay.cooldownLabel.text = percent.ToString("0.0");
+                        _tertiaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
+                            new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                    }
+                }
                     break;
 
                 case AbilityTrigger.Ultimate:
+                {
+                    var elements = new List<VisualElement>()
+                    {
+                        _ultimateDisplay.cooldownLabel,
+                        _ultimateDisplay.abilityIconOverlay,
+                    };
+                    CheckAndApplyDisplayStyle(elements, show);
+
+                    if (show)
+                    {
+                        _ultimateDisplay.cooldownLabel.text = percent.ToString("0.0");
+                        _ultimateDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
+                            new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                    }
+                }
                     break;
 
                 default:
@@ -110,48 +181,62 @@ namespace UI
 
         public void UpdateCooldownTimer(AbilityTrigger abilityTrigger, float timer, float percent)
         {
+            var show = percent > 0;
+
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
                 {
-                    StyleEnum<DisplayStyle> display = percent <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
-                    _primaryDisplay.cooldownLabel.style.display = display;
-                    _primaryDisplay.abilityIconOverlay.style.display = display;
+                    var elements = new List<VisualElement>()
+                    {
+                        _primaryDisplay.cooldownLabel,
+                        _primaryDisplay.abilityIconOverlay,
+                    };
+                    CheckAndApplyDisplayStyle(elements, show);
 
-                    _primaryDisplay.cooldownLabel.text = timer.ToString("0.00");
+                    _primaryDisplay.cooldownLabel.text = timer.ToString("0.0");
                     _primaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
                 }
                     break;
 
                 case AbilityTrigger.Secondary:
                 {
-                    StyleEnum<DisplayStyle> display = percent <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
-                    _secondaryDisplay.cooldownLabel.style.display = display;
-                    _secondaryDisplay.abilityIconOverlay.style.display = display;
+                    var elements = new List<VisualElement>()
+                    {
+                        _secondaryDisplay.cooldownLabel,
+                        _secondaryDisplay.abilityIconOverlay,
+                    };
+                    CheckAndApplyDisplayStyle(elements, show);
 
-                    _secondaryDisplay.cooldownLabel.text = timer.ToString("0.00");
+                    _secondaryDisplay.cooldownLabel.text = timer.ToString("0.0");
                     _secondaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
                 }
                     break;
 
                 case AbilityTrigger.Tertiary:
                 {
-                    StyleEnum<DisplayStyle> display = percent <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
-                    _tertiaryDisplay.cooldownLabel.style.display = display;
-                    _tertiaryDisplay.abilityIconOverlay.style.display = display;
+                    var elements = new List<VisualElement>()
+                    {
+                        _tertiaryDisplay.cooldownLabel,
+                        _tertiaryDisplay.abilityIconOverlay,
+                    };
+                    CheckAndApplyDisplayStyle(elements, show);
 
-                    _tertiaryDisplay.cooldownLabel.text = timer.ToString("0.00");
+                    _tertiaryDisplay.cooldownLabel.text = timer.ToString("0.0");
                     _tertiaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
                 }
                     break;
 
                 case AbilityTrigger.Ultimate:
                 {
-                    StyleEnum<DisplayStyle> display = percent <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
-                    _ultimateDisplay.cooldownLabel.style.display = display;
-                    _ultimateDisplay.abilityIconOverlay.style.display = display;
+                    var elements = new List<VisualElement>()
+                    {
+                        _ultimateDisplay.cooldownLabel,
+                        _ultimateDisplay.abilityIconOverlay,
+                    };
+                    CheckAndApplyDisplayStyle(elements, show);
 
-                    _ultimateDisplay.cooldownLabel.text = timer.ToString("0.00");
+                    _ultimateDisplay.cooldownLabel.text = timer.ToString("0.0");
                     _ultimateDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
                 }
                     break;

@@ -650,8 +650,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
     type: 3}
-  _ultimateChargeRate: 0.5
-  _currentUltimatePercent: 0
+  _ultimateChargeRate: 0.1
 --- !u!114 &8572434850116300471
 MonoBehaviour:
   m_ObjectHideFlags: 0
