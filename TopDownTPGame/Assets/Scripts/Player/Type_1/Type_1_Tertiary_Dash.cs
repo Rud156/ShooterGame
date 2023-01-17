@@ -90,7 +90,7 @@ namespace Player.Type_1
 
                 default:
                 {
-                    if (coreInput.x < 0)
+                    if (coreInput.x > 0)
                     {
                         dashEffectPrefab = _dashEffectLeft.effectPrefab;
                         dashEffectOffset = _dashEffectLeft.effectOffset;

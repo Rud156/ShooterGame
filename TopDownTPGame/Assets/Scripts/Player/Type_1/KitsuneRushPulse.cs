@@ -54,7 +54,6 @@ namespace Player.Type_1
                 ClearAppliedCooldownPulse(); // Reset the Previous Abilities to default
                 ApplyCooldownPulse(); // Apply the new Cooldown set
 
-
                 var abilityTransform = transform;
                 var position = abilityTransform.position;
                 Instantiate(_pulseEffectPrefab, position, Quaternion.identity, abilityTransform);

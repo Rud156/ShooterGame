@@ -15,7 +15,7 @@ namespace UI
 {
     public class PlayerAbilityDisplay : MonoBehaviour
     {
-        private const float OverlayPercentTintAlpha = 0.5f;
+        private const float OverlayPercentTintAlpha = 0.75f;
 
         private const string PrimaryDisplayString = "PrimaryAbility";
         private const string SecondaryDisplayString = "SecondaryAbility";
