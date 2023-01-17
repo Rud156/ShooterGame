@@ -30,6 +30,9 @@ namespace Player.Type_1
         private float _currentPulseWaitDuration;
         private List<Ability> _lastModifiedAbilities;
 
+        private GameObject _lastBurstEffectObject;
+        private GameObject _lastPulseEffectObject;
+
         #region Unity Functions
 
         private void Start()
@@ -43,6 +46,9 @@ namespace Player.Type_1
         {
             if (_currentPulseCount <= 0)
             {
+                _lastBurstEffectObject.transform.SetParent(null);
+                _lastPulseEffectObject.transform.SetParent(null);
+
                 ClearAppliedCooldownPulse();
                 Destroy(gameObject);
                 return;
@@ -56,8 +62,8 @@ namespace Player.Type_1
 
                 var abilityTransform = transform;
                 var position = abilityTransform.position;
-                Instantiate(_pulseEffectPrefab, position, Quaternion.identity, abilityTransform);
-                Instantiate(_pulseBurstEfectPrefab, position, Quaternion.identity, abilityTransform);
+                _lastPulseEffectObject = Instantiate(_pulseEffectPrefab, position, Quaternion.identity, abilityTransform);
+                _lastBurstEffectObject = Instantiate(_pulseBurstEfectPrefab, position, Quaternion.identity, abilityTransform);
 
                 _currentPulseCount -= 1;
                 _currentPulseWaitDuration = _pulseWaitDuration;

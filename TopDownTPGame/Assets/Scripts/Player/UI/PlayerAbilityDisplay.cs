@@ -113,7 +113,7 @@ namespace UI
 
                     if (show)
                     {
-                        _primaryDisplay.cooldownLabel.text = percent.ToString("0.0");
+                        _primaryDisplay.cooldownLabel.text = $"{percent:0.0} %";
                         _primaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
                             new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
                     }
@@ -131,7 +131,7 @@ namespace UI
 
                     if (show)
                     {
-                        _secondaryDisplay.cooldownLabel.text = percent.ToString("0.0");
+                        _secondaryDisplay.cooldownLabel.text = $"{percent:0.0} %";
                         _secondaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
                             new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
                     }
@@ -149,7 +149,7 @@ namespace UI
 
                     if (show)
                     {
-                        _tertiaryDisplay.cooldownLabel.text = percent.ToString("0.0");
+                        _tertiaryDisplay.cooldownLabel.text = $"{percent:0.0} %";
                         _tertiaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
                             new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
                     }
@@ -167,7 +167,7 @@ namespace UI
 
                     if (show)
                     {
-                        _ultimateDisplay.cooldownLabel.text = percent.ToString("0.0");
+                        _ultimateDisplay.cooldownLabel.text = $"{percent:0.0} %";
                         _ultimateDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
                             new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
                     }
