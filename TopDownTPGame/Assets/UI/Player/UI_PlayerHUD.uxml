@@ -2,9 +2,9 @@
     <ui:Template name="UI_PlayerHealth" src="project://database/Assets/UI/Player/UI_PlayerHealth.uxml?fileID=9197481963319205126&amp;guid=0b6f91f0da987f2499d54451e9af81b1&amp;type=3#UI_PlayerHealth" />
     <ui:Template name="UI_PlayerAbilityGrid" src="project://database/Assets/UI/Player/UI_PlayerAbilityGrid.uxml?fileID=9197481963319205126&amp;guid=e1b6d2f0c9de4c34caad1dd5ddafa361&amp;type=3#UI_PlayerAbilityGrid" />
     <ui:Template name="UI_Crosshair" src="project://database/Assets/UI/Common/UI_Crosshair.uxml?fileID=9197481963319205126&amp;guid=ef2470810d89f7f4da8da6a9eb87cef8&amp;type=3#UI_Crosshair" />
-    <ui:Template name="DebugSettings" src="project://database/Assets/UI/Player/DebugSettings.uxml?fileID=9197481963319205126&amp;guid=6f172c8cbf384ad449d30493e5449a3d&amp;type=3#DebugSettings" />
+    <ui:Template name="DebugSettings" src="project://database/Assets/UI/Common/UI_DebugSettings.uxml?fileID=9197481963319205126&amp;guid=6f172c8cbf384ad449d30493e5449a3d&amp;type=3#UI_DebugSettings" />
     <ui:Instance template="UI_PlayerHealth" name="UI_PlayerHealth" style="height: 100px; width: 450px; min-width: 450px; min-height: 100px; bottom: 21px; position: absolute; left: 21px;" />
     <ui:Instance template="UI_PlayerAbilityGrid" name="UI_PlayerAbilityGrid" style="width: 500px; height: 135px; position: absolute; bottom: 21px; right: 7px;" />
     <ui:Instance template="UI_Crosshair" name="UI_Crosshair" style="left: 50%; top: 50%; position: relative; width: 50px; height: 50px; translate: -25px -25px;" />
-    <ui:Instance template="DebugSettings" name="DebugSettings" style="-unity-font: url(&apos;project://database/Assets/Fonts/Satoshi/Satoshi-Medium.otf?fileID=12800000&amp;guid=1f9f774862d01ad4f9e7a85afd6dbab2&amp;type=3#Satoshi-Medium&apos;); font-size: 30px; position: absolute; left: 20px; top: 20px;" />
+    <ui:Instance template="DebugSettings" name="UI_DebugSettings" style="-unity-font: url(&apos;project://database/Assets/Fonts/Satoshi/Satoshi-Medium.otf?fileID=12800000&amp;guid=1f9f774862d01ad4f9e7a85afd6dbab2&amp;type=3#Satoshi-Medium&apos;); font-size: 30px; position: absolute; left: 20px; top: 20px;" />
 </ui:UXML>

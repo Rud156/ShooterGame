@@ -10,7 +10,7 @@ namespace DebugHUD
 {
     public class HUD_FPSDisplay : MonoBehaviour
     {
-        private const string DebugDisplayString = "DebugSettings";
+        private const string DebugDisplayString = "UI_DebugSettings";
 
         [Header("Update Stats")]
         [SerializeField] private float _updateRate;

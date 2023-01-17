@@ -3,10 +3,10 @@
 ## TODOs (Current)
 
 - [ ] Polish Pass
-    - [ ] Type 1 Character - Default Call of Duty Character
-        - [X] Primary Ability (All Damage/HP/Effects)
-        - [X] Secondary Ability (All Damage/HP/Effects)
-        - [X] Tertiary Ability (All Damage/HP/Effects)
+    - [ ] Type 2 Character - Water Bender
+        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects)
         - [ ] Ultimate Ability (All Damage/HP/Effects)
 
 ## TODOs (Future)
@@ -14,11 +14,6 @@
 > Characters don't take Fall Damage
 
 - [ ] Polish Pass
-    - [ ] Type 2 Character - Water Bender
-        - [ ] Primary Ability (All Damage/HP/Effects)
-        - [ ] Secondary Ability (All Damage/HP/Effects)
-        - [ ] Tertiary Ability (All Damage/HP/Effects)
-        - [ ] Ultimate Ability (All Damage/HP/Effects)
     - [ ] Type 3 Character - Darkness Incarnated
         - [ ] Primary Ability (All Damage/HP/Effects)
         - [ ] Secondary Ability (All Damage/HP/Effects)
@@ -88,5 +83,10 @@
         - [X] Running
         - [X] Falling
         - [X] Landing
+    - [X] Type 1 Character - Default Call of Duty Character
+        - [X] Primary Ability (All Damage/HP/Effects)
+        - [X] Secondary Ability (All Damage/HP/Effects)
+        - [X] Tertiary Ability (All Damage/HP/Effects)
+        - [X] Ultimate Ability (All Damage/HP/Effects)
 - [X] ShootController that returns the correct direction where the projectile should be launched to hit the center of the screen
 - [X] Cooldown system for abilities. Can be faster cooldown, fixed amount time cooldown, percent amount cooldown...

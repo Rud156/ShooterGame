@@ -621,12 +621,12 @@ MonoBehaviour:
   _dashEffectLeft:
     effectPrefab: {fileID: 859636762055700504, guid: fda9e97465c57414698c06997146824c,
       type: 3}
-    effectOffset: {x: 13.5, y: 2.25, z: 7.3}
+    effectOffset: {x: 13.5, y: 5, z: 7.3}
     effectLocalRotation: {x: 0, y: 180, z: 180}
   _dashEffectRight:
     effectPrefab: {fileID: 760224239409828698, guid: b3783740263029c47b8a9c11b0b17b05,
       type: 3}
-    effectOffset: {x: -13.5, y: 2.25, z: 7.3}
+    effectOffset: {x: -13.5, y: 5, z: 7.3}
     effectLocalRotation: {x: 0, y: 180, z: 180}
   _cameraHolder: {fileID: 95916529673104767}
   _dashDuration: 0.25
