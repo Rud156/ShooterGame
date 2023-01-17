@@ -72,7 +72,9 @@ namespace Player.Common
 
         #region Cooldown Modifier Functions
 
-        public void UpdateCooldownMultiplier(float cooldownMultiplier) => _cooldownMultiplier = cooldownMultiplier;
+        public void ChangeCooldownMultiplier(float cooldownMultiplier) => _cooldownMultiplier = cooldownMultiplier;
+
+        public void ResetCooldownMultiplier() => _cooldownMultiplier = DefaultCooldownMultiplier;
 
         public void FixedCooldownReduction(float amount)
         {

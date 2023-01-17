@@ -87,6 +87,27 @@ namespace UI
 
         #region External Functions
 
+        public void UpdateCooldownPercent(AbilityTrigger abilityTrigger, float percent)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
         public void UpdateCooldownTimer(AbilityTrigger abilityTrigger, float timer, float percent)
         {
             switch (abilityTrigger)

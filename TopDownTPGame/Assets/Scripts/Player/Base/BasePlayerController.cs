@@ -113,7 +113,15 @@ namespace Player.Base
             PushPlayerState(PlayerState.Idle);
         }
 
-        private void OnDestroy() => DeInitializeInputEvents();
+        private void OnDestroy()
+        {
+            foreach (var ability in _playerAbilities)
+            {
+                ability.ClearAllAbilityData(this);
+            }
+
+            DeInitializeInputEvents();
+        }
 
         private void Update()
         {

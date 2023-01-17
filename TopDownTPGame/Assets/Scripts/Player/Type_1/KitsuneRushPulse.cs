@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Generic;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -12,8 +13,12 @@ namespace Player.Type_1
     {
         private const int MaxCollidersCheck = 10;
 
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _pulseEffectPrefab;
+        [SerializeField] private GameObject _pulseBurstEfectPrefab;
+
         [Header("Pulse Data")]
-        [SerializeField] private float _pulseCount;
+        [SerializeField] private int _pulseCount;
         [SerializeField] private float _pulseRadius;
         [SerializeField] private float _pulseWaitDuration;
         [SerializeField] private LayerMask _pulseMask;
@@ -21,9 +26,58 @@ namespace Player.Type_1
         [Header("Cooldown Modifier")]
         [SerializeField] private float _cooldownMultiplier;
 
+        private int _currentPulseCount;
+        private float _currentPulseWaitDuration;
+        private List<Ability> _lastModifiedAbilities;
+
         #region Unity Functions
 
-        private void Update()
+        private void Start()
+        {
+            _lastModifiedAbilities = new List<Ability>();
+            _currentPulseCount = _pulseCount;
+            _currentPulseWaitDuration = 0;
+        }
+
+        private void FixedUpdate()
+        {
+            if (_currentPulseCount <= 0)
+            {
+                ClearAppliedCooldownPulse();
+                Destroy(gameObject);
+                return;
+            }
+
+            _currentPulseWaitDuration -= Time.fixedDeltaTime;
+            if (_currentPulseWaitDuration <= 0)
+            {
+                ClearAppliedCooldownPulse(); // Reset the Previous Abilities to default
+                ApplyCooldownPulse(); // Apply the new Cooldown set
+
+
+                var abilityTransform = transform;
+                var position = abilityTransform.position;
+                Instantiate(_pulseEffectPrefab, position, Quaternion.identity, abilityTransform);
+                Instantiate(_pulseBurstEfectPrefab, position, Quaternion.identity, abilityTransform);
+
+                _currentPulseCount -= 1;
+                _currentPulseWaitDuration = _pulseWaitDuration;
+            }
+        }
+
+        #endregion Unity Functions
+
+        #region Utils
+
+        private void ClearAppliedCooldownPulse()
+        {
+            foreach (var ability in _lastModifiedAbilities)
+            {
+                ability.ResetCooldownMultiplier();
+            }
+        }
+
+        private void ApplyCooldownPulse()
         {
             var hitColliders = new Collider[MaxCollidersCheck];
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, hitColliders, _pulseMask);
@@ -40,12 +94,13 @@ namespace Player.Type_1
                     var abilities = hitColliders[i].GetComponents<Ability>();
                     foreach (var ability in abilities)
                     {
-                        // TODO: Complete this function...
+                        ability.ChangeCooldownMultiplier(_cooldownMultiplier);
+                        _lastModifiedAbilities.Add(ability);
                     }
                 }
             }
         }
 
-        #endregion Unity Functions
+        #endregion Utils
     }
 }
