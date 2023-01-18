@@ -298,7 +298,7 @@ Transform:
   - {fileID: 2637092012017492159}
   - {fileID: 1362992553}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2637092012038209768
 CharacterController:
@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 250
+  _maxShootDistance: 50
   _shootMask:
     serializedVersion: 2
     m_Bits: 65
@@ -458,14 +458,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad5650b55f27b54bb2fd16e62f154d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: d8108e50be9cf7f49878337929803edd, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
   _cooldownDuration: 0
-  _slashSidePrefab: {fileID: 3515318782041256082, guid: dd3921cfe0d81e84cbb7343f630cea0c,
+  _slashSidePrefab: {fileID: 5610884078883986163, guid: 4fa745a0b9c0b8c4cb6c10a333e6a885,
     type: 3}
-  _slashFrontPrefab: {fileID: 3515318782041256082, guid: cc66f744fd654e147972ca75e7c91165,
+  _shootFrontPrefab: {fileID: 1151988907945508128, guid: 6481fd2296d78e74e9315a48641f1306,
     type: 3}
   _prefabInit: {fileID: 3703342411328765957}
   _shootPoint: {fileID: 2637092012017492159}
@@ -551,8 +551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76390daee0fb4e14e8a7a79ef9a1b7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 2bccd332882fcd14b9e4c377e432c587, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
   _cooldownDuration: 0
@@ -572,8 +572,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f525029af354a7489effea69236763d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: e691198d56e3a1848b5009e1ff94dbb5, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
   _cooldownDuration: 0
@@ -598,8 +598,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2cd1299f741b5a4996ff282d624a7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
   _cooldownDuration: 0
@@ -625,9 +625,8 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
-  _debugDamageAmount: 0
-  _debugHealAmount: 0
-  _currentHealth: 0
+  _debugDamageAmount: 30
+  _debugHealAmount: 40
 --- !u!114 &6432708683422574492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,7 +757,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2637092012727805909}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.23, z: -3.44}
+  m_LocalPosition: {x: 0, y: 2.25, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

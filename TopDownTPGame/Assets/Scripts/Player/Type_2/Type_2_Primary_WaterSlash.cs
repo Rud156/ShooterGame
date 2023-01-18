@@ -18,12 +18,14 @@ namespace Player.Type_2
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _slashSidePrefab;
-        [SerializeField] private GameObject _slashFrontPrefab;
+        [SerializeField] private GameObject _shootFrontPrefab;
 
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
 
         [Header("Water Lines Data")]
+        [SerializeField] private Vector3 _leftSlashRotation;
+        [SerializeField] private Vector3 _rightSlashRotation;
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private AnimationCurve _leftEaseCurve;
         [SerializeField] private AnimationCurve _rightEaseCurve;
@@ -145,7 +147,7 @@ namespace Player.Type_2
         {
             var spawnPosition = _shootPoint.position;
 
-            var projectile = Instantiate(_slashFrontPrefab, spawnPosition, Quaternion.identity);
+            var projectile = Instantiate(_shootFrontPrefab, spawnPosition, Quaternion.identity);
             return projectile;
         }
 
