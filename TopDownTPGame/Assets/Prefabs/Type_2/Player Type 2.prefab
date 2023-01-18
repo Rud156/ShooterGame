@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 882969865}
   - component: {fileID: 882969868}
   - component: {fileID: 882969867}
-  - component: {fileID: 882969866}
   m_Layer: 6
   m_Name: Front Piece
   m_TagString: Untagged
@@ -84,27 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &882969866
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 882969864}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1362992552
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2637092012017492158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -463,12 +441,14 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _cooldownDuration: 0
-  _slashSidePrefab: {fileID: 5610884078883986163, guid: 4fa745a0b9c0b8c4cb6c10a333e6a885,
+  _slashLeftPrefab: {fileID: 5610884078883986163, guid: 4fa745a0b9c0b8c4cb6c10a333e6a885,
+    type: 3}
+  _slashRightPrefab: {fileID: 5610884078883986163, guid: 0237a9152d1898b4e9381a9425783132,
     type: 3}
   _shootFrontPrefab: {fileID: 1151988907945508128, guid: 6481fd2296d78e74e9315a48641f1306,
     type: 3}
   _prefabInit: {fileID: 3703342411328765957}
-  _shootPoint: {fileID: 2637092012017492159}
+  _shootController: {fileID: 3268835866765903229}
   _leftEaseCurve:
     serializedVersion: 2
     m_Curve:
@@ -481,24 +461,6 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - serializedVersion: 3
-      time: 0.21072283
-      value: 0.6681084
-      inSlope: 1.2853734
-      outSlope: 1.2853734
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.6941299
-      value: 0.9055053
-      inSlope: 0.20582488
-      outSlope: 0.20582488
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.28172943
-      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
@@ -536,7 +498,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _slashDuration: 0.25
-  _resetDuration: 2.5
+  _resetDuration: 1.5
   _leftSlash: {fileID: 0}
   _rightSlash: {fileID: 0}
 --- !u!114 &5610458570850552265

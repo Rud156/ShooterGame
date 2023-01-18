@@ -17,16 +17,15 @@ namespace Player.Type_2
     public class Type_2_Primary_WaterSlash : Ability
     {
         [Header("Prefabs")]
-        [SerializeField] private GameObject _slashSidePrefab;
+        [SerializeField] private GameObject _slashLeftPrefab;
+        [SerializeField] private GameObject _slashRightPrefab;
         [SerializeField] private GameObject _shootFrontPrefab;
 
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
+        [SerializeField] private BaseShootController _shootController;
 
         [Header("Water Lines Data")]
-        [SerializeField] private Vector3 _leftSlashRotation;
-        [SerializeField] private Vector3 _rightSlashRotation;
-        [SerializeField] private Transform _shootPoint;
         [SerializeField] private AnimationCurve _leftEaseCurve;
         [SerializeField] private AnimationCurve _rightEaseCurve;
         [SerializeField] private float _slashDuration;
@@ -40,6 +39,8 @@ namespace Player.Type_2
         private bool _abilityEnd;
 
         private GameObject _sideSlashObject;
+        private Vector3 _lastMappedPosition;
+
         private int _randomSlashIndex;
         private float _currentTime;
         private float _lastTriggeredTime;
@@ -115,6 +116,8 @@ namespace Player.Type_2
         private GameObject CreateSlashPrefabAndUpdateRandomIndex(WaterControlState waterControlState)
         {
             var spawnPosition = Vector3.zero;
+            GameObject prefab = null;
+
             switch (waterControlState)
             {
                 case WaterControlState.LeftSlash:
@@ -122,6 +125,7 @@ namespace Player.Type_2
                     var totalSplines = _leftSlash.Splines.Count;
                     var randomIndex = Random.Range(0, totalSplines);
                     spawnPosition = _leftSlash.EvaluatePosition(randomIndex, 0);
+                    prefab = _slashLeftPrefab;
                     _randomSlashIndex = randomIndex;
                 }
                     break;
@@ -131,22 +135,25 @@ namespace Player.Type_2
                     var totalSplines = _leftSlash.Splines.Count;
                     var randomIndex = Random.Range(0, totalSplines);
                     spawnPosition = _rightSlash.EvaluatePosition(randomIndex, 0);
+                    prefab = _slashRightPrefab;
                     _randomSlashIndex = randomIndex;
                 }
                     break;
 
                 case WaterControlState.ShootFront:
                     throw new Exception("Invalid State for this GameObject");
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(waterControlState), waterControlState, null);
             }
 
-            var projectile = Instantiate(_slashSidePrefab, spawnPosition, Quaternion.identity);
+            var projectile = Instantiate(prefab, spawnPosition, Quaternion.identity);
             return projectile;
         }
 
         private GameObject CreateFrontSlash()
         {
-            var spawnPosition = _shootPoint.position;
-
+            var spawnPosition = _shootController.GetShootPosition();
             var projectile = Instantiate(_shootFrontPrefab, spawnPosition, Quaternion.identity);
             return projectile;
         }
@@ -157,6 +164,7 @@ namespace Player.Type_2
 
             var percent = _currentTime / _slashDuration;
             var position = Vector3.zero;
+            Vector3 rotation = Vector3.zero;
 
             switch (waterControlState)
             {
@@ -164,6 +172,7 @@ namespace Player.Type_2
                 {
                     var mappedPercent = _leftEaseCurve.Evaluate(percent);
                     position = _leftSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
+                    rotation = _leftSlash.EvaluateTangent(_randomSlashIndex, mappedPercent);
                 }
                     break;
 
@@ -171,6 +180,7 @@ namespace Player.Type_2
                 {
                     var mappedPercent = _rightEaseCurve.Evaluate(percent);
                     position = _rightSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
+                    rotation = _rightSlash.EvaluateTangent(_randomSlashIndex, mappedPercent);
                 }
                     break;
 
@@ -179,6 +189,9 @@ namespace Player.Type_2
             }
 
             _sideSlashObject.transform.position = position;
+            _sideSlashObject.transform.rotation = Quaternion.LookRotation(rotation);
+
+            _lastMappedPosition = position;
 
             _currentTime += Time.fixedDeltaTime;
             if (_currentTime >= _slashDuration)
@@ -194,7 +207,7 @@ namespace Player.Type_2
         private void UpdateFrontSlash()
         {
             var frontSlashObject = CreateFrontSlash();
-            var direction = transform.forward;
+            var direction = _shootController.GetShootLookDirection();
             var simpleProj = frontSlashObject.GetComponent<SimpleProjectile>();
             simpleProj.LaunchProjectile(direction);
 
