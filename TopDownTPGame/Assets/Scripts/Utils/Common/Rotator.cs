@@ -19,33 +19,42 @@ namespace Utils.Common
 
         #region Unity Functions
 
-        private void Start() => _currentRotationAxis = _rotationAxis;
+        private void Start()
+        {
+            _currentRotationAxis = _rotationAxis;
+            if (_rotateOnStart)
+            {
+                _isRotating = true;
+            }
+        }
 
         private void Update()
         {
-            if (_isRotating)
+            if (!_isRotating)
             {
-                var rotation = new Vector3();
-                switch (_rotationAxis)
-                {
-                    case RotationAxis.XAxis:
-                        rotation.x += _rotationSpeed;
-                        break;
-
-                    case RotationAxis.YAxis:
-                        rotation.y += _rotationSpeed;
-                        break;
-
-                    case RotationAxis.ZAxis:
-                        rotation.z += _rotationSpeed;
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                transform.Rotate(rotation * Time.deltaTime);
+                return;
             }
+
+            var rotation = new Vector3();
+            switch (_rotationAxis)
+            {
+                case RotationAxis.XAxis:
+                    rotation.x += _rotationSpeed;
+                    break;
+
+                case RotationAxis.YAxis:
+                    rotation.y += _rotationSpeed;
+                    break;
+
+                case RotationAxis.ZAxis:
+                    rotation.z += _rotationSpeed;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            transform.Rotate(rotation * Time.deltaTime);
         }
 
         #endregion Unity Functions

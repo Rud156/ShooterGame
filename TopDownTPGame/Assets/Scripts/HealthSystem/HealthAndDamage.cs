@@ -23,7 +23,7 @@ namespace HealthSystem
         [SerializeField] private int _debugDamageAmount;
         [SerializeField] private int _debugHealAmount;
 
-        private int _currentHealth;
+        public int _currentHealth;
         private List<Tuple<string, HealModifier>> _healModifiers;
         private List<Tuple<string, DamageModifier>> _damageModifiers;
 

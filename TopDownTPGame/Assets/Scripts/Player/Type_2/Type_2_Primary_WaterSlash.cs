@@ -31,6 +31,11 @@ namespace Player.Type_2
         [SerializeField] private float _slashDuration;
         [SerializeField] private float _resetDuration;
 
+        [Header("General Data")]
+        [SerializeField] private float _overheatTime;
+        [SerializeField] private float _overheatAmountPerShot;
+        [SerializeField] private float _overheatCooldownMultiplier;
+
         [Header("Post Start Filled")]
         [SerializeField] private SplineContainer _leftSlash;
         [SerializeField] private SplineContainer _rightSlash;
@@ -39,7 +44,7 @@ namespace Player.Type_2
         private bool _abilityEnd;
 
         private GameObject _sideSlashObject;
-        private Vector3 _lastMappedPosition;
+        private float _currentOverheatTime;
 
         private int _randomSlashIndex;
         private float _currentTime;
@@ -94,6 +99,20 @@ namespace Player.Type_2
             }
 
             _abilityEnd = false;
+            if (_currentCooldownDuration > 0)
+            {
+                SetState(WaterControlState.LeftSlash);
+            }
+            else
+            {
+                _currentOverheatTime += _overheatAmountPerShot;
+                if (_currentOverheatTime >= _overheatTime)
+                {
+                    _currentCooldownDuration = _cooldownDuration;
+                    _currentOverheatTime = 0;
+                }
+            }
+
             switch (_waterControlState)
             {
                 case WaterControlState.LeftSlash:
@@ -111,12 +130,22 @@ namespace Player.Type_2
             }
         }
 
+        public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
+        {
+            base.UnityFixedUpdateDelegate(playerController);
+
+            if (_currentOverheatTime > 0 && _abilityEnd)
+            {
+                _currentOverheatTime -= Time.fixedDeltaTime * _overheatCooldownMultiplier;
+            }
+        }
+
         #region Ability Updates
 
         private GameObject CreateSlashPrefabAndUpdateRandomIndex(WaterControlState waterControlState)
         {
             var spawnPosition = Vector3.zero;
-            GameObject prefab = null;
+            GameObject prefab;
 
             switch (waterControlState)
             {
@@ -164,7 +193,7 @@ namespace Player.Type_2
 
             var percent = _currentTime / _slashDuration;
             var position = Vector3.zero;
-            Vector3 rotation = Vector3.zero;
+            var rotation = Vector3.zero;
 
             switch (waterControlState)
             {
@@ -186,12 +215,13 @@ namespace Player.Type_2
 
                 case WaterControlState.ShootFront:
                     throw new Exception("Invalid State for this GameObject");
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(waterControlState), waterControlState, null);
             }
 
             _sideSlashObject.transform.position = position;
             _sideSlashObject.transform.rotation = Quaternion.LookRotation(rotation);
-
-            _lastMappedPosition = position;
 
             _currentTime += Time.fixedDeltaTime;
             if (_currentTime >= _slashDuration)
@@ -237,6 +267,9 @@ namespace Player.Type_2
                 case WaterControlState.ShootFront:
                     SetState(WaterControlState.LeftSlash);
                     break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

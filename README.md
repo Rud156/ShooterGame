@@ -4,7 +4,7 @@
 
 - [ ] Polish Pass
     - [ ] Type 2 Character - Water Bender
-        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [X] Primary Ability (All Damage/HP/Effects)
         - [ ] Secondary Ability (All Damage/HP/Effects)
         - [ ] Tertiary Ability (All Damage/HP/Effects)
         - [ ] Ultimate Ability (All Damage/HP/Effects)

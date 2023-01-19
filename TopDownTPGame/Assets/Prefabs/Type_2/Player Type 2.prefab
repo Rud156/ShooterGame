@@ -440,7 +440,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
-  _cooldownDuration: 0
+  _cooldownDuration: 3
   _slashLeftPrefab: {fileID: 5610884078883986163, guid: 4fa745a0b9c0b8c4cb6c10a333e6a885,
     type: 3}
   _slashRightPrefab: {fileID: 5610884078883986163, guid: 0237a9152d1898b4e9381a9425783132,
@@ -499,6 +499,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   _slashDuration: 0.25
   _resetDuration: 1.5
+  _overheatTime: 3
+  _overheatAmountPerShot: 0.3
+  _overheatCooldownMultiplier: 0.1
   _leftSlash: {fileID: 0}
   _rightSlash: {fileID: 0}
 --- !u!114 &5610458570850552265
