@@ -50,7 +50,7 @@ namespace Ability_Scripts.Spawns
             _destroyTimeLeft = _destroyDuration;
         }
 
-        private void OnDestroy() => _healthAndDamage.OnHealthChanged += HandleHealthAndDamage;
+        private void OnDestroy() => _healthAndDamage.OnHealthChanged -= HandleHealthAndDamage;
 
         private void FixedUpdate()
         {
