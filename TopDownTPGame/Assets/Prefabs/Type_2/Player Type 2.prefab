@@ -520,10 +520,10 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
-  _cooldownDuration: 0
+  _cooldownDuration: 14
   _iceWallPrefab: {fileID: 8855951514977000263, guid: 54b25c9551d650942a2936e1e39b341c,
     type: 3}
-  _spawnPoint: {fileID: 2637092012017492159}
+  _shootController: {fileID: 3268835866765903229}
   _spawnOffset: {x: 0, y: -2.21, z: 0.75}
 --- !u!114 &2637092012433437204
 MonoBehaviour:
@@ -592,6 +592,7 @@ MonoBehaviour:
   _autoHealPerTickAmount: 1
   _debugDamageAmount: 30
   _debugHealAmount: 40
+  _currentHealth: 0
 --- !u!114 &6432708683422574492
 MonoBehaviour:
   m_ObjectHideFlags: 0

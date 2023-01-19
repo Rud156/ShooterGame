@@ -5,7 +5,7 @@
 - [ ] Polish Pass
     - [ ] Type 2 Character - Water Bender
         - [X] Primary Ability (All Damage/HP/Effects)
-        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [X] Secondary Ability (All Damage/HP/Effects)
         - [ ] Tertiary Ability (All Damage/HP/Effects)
         - [ ] Ultimate Ability (All Damage/HP/Effects)
 
@@ -90,3 +90,8 @@
         - [X] Ultimate Ability (All Damage/HP/Effects)
 - [X] ShootController that returns the correct direction where the projectile should be launched to hit the center of the screen
 - [X] Cooldown system for abilities. Can be faster cooldown, fixed amount time cooldown, percent amount cooldown...
+
+
+## External Credits
+- https://opengameart.org/content/lava-meets-water
+- https://opengameart.org/content/snow-flake

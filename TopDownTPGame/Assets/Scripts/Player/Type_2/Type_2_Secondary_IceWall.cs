@@ -13,19 +13,21 @@ namespace Player.Type_2
         [Header("Prefabs")]
         [SerializeField] private GameObject _iceWallPrefab;
 
+        [Header("Component")]
+        [SerializeField] private BaseShootController _shootController;
+
         [Header("Spawn Data")]
-        [SerializeField] private Transform _spawnPoint;
         [SerializeField] private Vector3 _spawnOffset;
 
         private bool _abilityEnd;
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded;
+        public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded && _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            var spawnPosition = _spawnPoint.position;
+            var spawnPosition = _shootController.GetShootPosition();
             var forward = transform.forward;
             var right = transform.right;
 
@@ -34,6 +36,8 @@ namespace Player.Type_2
 
             Instantiate(_iceWallPrefab, spawnPosition, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0));
             _abilityEnd = true;
+
+            _currentCooldownDuration = _cooldownDuration;
         }
 
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
