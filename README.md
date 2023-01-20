@@ -2,6 +2,7 @@
 
 ## TODOs (Current)
 
+- [ ] Add a windup time for every ultimate
 - [ ] Polish Pass
     - [ ] Type 2 Character - Water Bender
         - [X] Primary Ability (All Damage/HP/Effects)
