@@ -57,6 +57,7 @@ namespace Player.Base
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
 
+        public float GravityMultiplier => _gravityMultiplier;
         public bool IsGrounded => _isGrounded;
         private bool _isGrounded;
 
