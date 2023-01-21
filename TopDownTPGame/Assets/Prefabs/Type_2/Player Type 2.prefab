@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 918dc81966c65de4b922bfe5eeaa194a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -177,7 +177,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 918dc81966c65de4b922bfe5eeaa194a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -497,8 +497,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _slashDuration: 0.25
-  _resetDuration: 1.5
+  _slashDuration: 0.15
+  _resetDuration: 0.5
   _overheatTime: 3
   _overheatAmountPerShot: 0.2
   _overheatCooldownMultiplier: 0.1
@@ -538,21 +538,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f525029af354a7489effea69236763d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: e691198d56e3a1848b5009e1ff94dbb5, type: 3}
+  _icon: {fileID: 21300000, guid: 1d9ea5b62e3c7ad4b96aba9b0b6aef6a, type: 3}
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
   _cooldownDuration: 0
-  _waterMovementPrefab: {fileID: 1222397518879067017, guid: e181fab74af0d7440970d1ec16003dfa,
-    type: 3}
   _characterController: {fileID: 2637092012038209768}
-  _playerMainMesh: {fileID: 2029409439}
-  _spawnParent: {fileID: 1362992553}
-  _spawnOffset: {x: 0, y: -0.64, z: 0}
-  _rbModifiedHeight: 0.5
-  _rbModifiedYOffset: -0.5
+  _playerRenderers:
+  - {fileID: 2029409442}
+  - {fileID: 882969867}
+  _defaultMaterial: {fileID: 2100000, guid: 918dc81966c65de4b922bfe5eeaa194a, type: 2}
+  _abilityMaterial: {fileID: 2100000, guid: 8180121e3ddd8244e912617ce06e35de, type: 2}
   _movementSpeed: 60
   _abilityDuration: 3
+  _dashVelocity: 80
+  _dashDuration: 0.25
 --- !u!114 &2637092012433437213
 MonoBehaviour:
   m_ObjectHideFlags: 0

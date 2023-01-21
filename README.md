@@ -6,7 +6,7 @@
     - [ ] Type 2 Character - Water Bender
         - [X] Primary Ability (All Damage/HP/Effects)
         - [X] Secondary Ability (All Damage/HP/Effects)
-        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects) (Update to be like Yelan's Movement)
         - [ ] Ultimate Ability (All Damage/HP/Effects)
 
 ## TODOs (Future)
@@ -54,7 +54,7 @@
     - [X]  Ability Primary - Water slash attacks since if the player swings around their camera too much the game
       experience will not be good
     - [X]  Ability Secondary - Create an Ice Wall that block incoming damage (Can be Broken)
-    - [X]  Ability Tertiary - Become water and move anywhere without taking damage
+    - [X]  Ability Tertiary - Yelan's Movement Ability from Genshin Impact. Player does not take damage in this state
     - [X]  Ability Ultimate - Water bubble to trap the enemy
 - [X]  Type 3 - Darkness (Fade)
     - [X]  Ability Primary - Kasumi but not as overpowered
