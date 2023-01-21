@@ -17,9 +17,11 @@ namespace Player.Type_2
         [SerializeField] private BaseShootController _shootController;
 
         [Header("Spawn Data")]
+        [SerializeField] private float _windUpTime;
         [SerializeField] private Vector3 _spawnOffset;
 
         private bool _abilityEnd;
+        private float _currentWindUpTime;
 
         public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded && _currentCooldownDuration <= 0;
 
@@ -27,6 +29,12 @@ namespace Player.Type_2
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
+            _currentWindUpTime -= Time.fixedDeltaTime;
+            if (_currentWindUpTime > 0)
+            {
+                return;
+            }
+
             var spawnPosition = _shootController.GetShootPosition();
             var forward = transform.forward;
             var right = transform.right;
@@ -44,7 +52,8 @@ namespace Player.Type_2
 
         public override void StartAbility(BasePlayerController playerController)
         {
-            // Don't do anything here...
+            _currentWindUpTime = _windUpTime;
+            _abilityEnd = false;
         }
     }
 }
