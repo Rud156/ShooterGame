@@ -17,30 +17,37 @@ namespace Player.Type_1
         [SerializeField] private GameObject _ultimatePulsePrefab;
 
         [Header("Ultimate Data")]
+        [SerializeField] private float _windUptime;
         [SerializeField] private float _ultimateChargeRate;
 
         private float _currentUltimatePercent;
         private GameObject _kitsuneRushObject;
 
+        private float _currentWindUpTime;
+        private bool _abilityEnd;
+
         public override bool AbilityCanStart(BasePlayerController playerController) => _currentUltimatePercent >= MaxUltimatePercent;
 
-        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => true;
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            // Nothing to update here...
+            _currentWindUpTime -= Time.fixedDeltaTime;
+            if (_currentWindUpTime <= 0)
+            {
+                var characterTransform = transform;
+                _kitsuneRushObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
+                _abilityEnd = true;
+            }
         }
 
-        public override void EndAbility(BasePlayerController playerController)
-        {
-            // Nothing to do here...
-        }
+        public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
         public override void StartAbility(BasePlayerController playerController)
         {
-            var characterTransform = transform;
-            _kitsuneRushObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
+            _currentWindUpTime = _windUptime;
             _currentUltimatePercent = 0;
+            _abilityEnd = false;
         }
 
         public override void UnityUpdateDelegate(BasePlayerController playerController)

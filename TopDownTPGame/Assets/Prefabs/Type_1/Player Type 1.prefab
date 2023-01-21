@@ -389,7 +389,7 @@ Transform:
   - {fileID: 95916530296144473}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -628,6 +628,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
     type: 3}
+  _windUptime: 0.25
   _ultimateChargeRate: 0.1
 --- !u!114 &8572434850116300471
 MonoBehaviour:
