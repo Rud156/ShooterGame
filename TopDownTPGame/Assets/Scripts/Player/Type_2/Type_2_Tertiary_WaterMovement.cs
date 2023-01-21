@@ -13,6 +13,9 @@ namespace Player.Type_2
         [Header("Prefabs")]
         [SerializeField] private GameObject _waterMovementPrefab;
 
+        [Header("Components")]
+        [SerializeField] private CharacterController _characterController;
+
         [Header("Spawn Data")]
         [SerializeField] private GameObject _playerMainMesh;
         [SerializeField] private Transform _spawnParent;
@@ -41,8 +44,9 @@ namespace Player.Type_2
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            var forward = transform.forward;
-            var right = transform.right;
+            var playerTransform = transform;
+            var forward = playerTransform.forward;
+            var right = playerTransform.right;
 
             var coreInput = playerController.GetCoreMoveInput();
             var movement = forward * coreInput.y + right * coreInput.x;
@@ -63,9 +67,8 @@ namespace Player.Type_2
 
         public override void EndAbility(BasePlayerController playerController)
         {
-            var characterController = playerController.GetComponent<CharacterController>();
-            characterController.height = _originalHeight;
-            characterController.center = _originalCenterOffset;
+            _characterController.height = _originalHeight;
+            _characterController.center = _originalCenterOffset;
 
             _playerMainMesh.SetActive(true);
             Destroy(_customMeshEffect);
@@ -77,17 +80,16 @@ namespace Player.Type_2
             _currentDuration = _abilityDuration;
             _abilityUpdatedOnce = false;
 
-            var characterController = playerController.GetComponent<CharacterController>();
-            _originalHeight = characterController.height;
-            _originalCenterOffset = characterController.center;
+            _originalHeight = _characterController.height;
+            _originalCenterOffset = _characterController.center;
 
-            characterController.height = _rbModifiedHeight;
-            characterController.center = new Vector3(0, _rbModifiedYOffset, 0);
+            _characterController.height = _rbModifiedHeight;
+            _characterController.center = new Vector3(0, _rbModifiedYOffset, 0);
 
             _playerMainMesh.SetActive(false);
             var customMeshEffect = Instantiate(_waterMovementPrefab, transform.position, Quaternion.identity);
             customMeshEffect.transform.SetParent(_spawnParent);
-            customMeshEffect.transform.localPosition = customMeshEffect.transform.localPosition + _spawnOffset;
+            customMeshEffect.transform.localPosition += _spawnOffset;
             _customMeshEffect = customMeshEffect;
         }
 

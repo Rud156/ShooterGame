@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad5650b55f27b54bb2fd16e62f154d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: d8108e50be9cf7f49878337929803edd, type: 3}
+  _icon: {fileID: 21300000, guid: a874b9d53af35224387f244cf7d12637, type: 3}
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
@@ -545,6 +545,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _waterMovementPrefab: {fileID: 1222397518879067017, guid: e181fab74af0d7440970d1ec16003dfa,
     type: 3}
+  _characterController: {fileID: 2637092012038209768}
   _playerMainMesh: {fileID: 2029409439}
   _spawnParent: {fileID: 1362992553}
   _spawnOffset: {x: 0, y: -0.64, z: 0}
@@ -564,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2cd1299f741b5a4996ff282d624a7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: cdec13907ffc75749ab2ed436bec6b14, type: 3}
+  _icon: {fileID: 21300000, guid: 8bb94d3dbca5edb4999f7262b2e052e4, type: 3}
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
