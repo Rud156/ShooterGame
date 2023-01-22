@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
 #endregion
 
@@ -14,13 +14,13 @@ namespace Player.Type_2
 {
     public class Type_2_Tertiary_WaterMovement : Ability
     {
+        private const int MaxCollidersCheck = 10;
+
         [Header("Prefabs")]
-        [SerializeField] private GameObject _burstTriggerPrefab;
+        [SerializeField] private GameObject _markerEffectPrefab;
+        [SerializeField] private GameObject _damageBurstEffectPrefab;
         [SerializeField] private GameObject _dashTrailEffectPrefab;
         [SerializeField] private GameObject _holdRunTrailEffectPrefab;
-
-        [Header("Components")]
-        [SerializeField] private CharacterController _characterController;
 
         [Header("Render Data")]
         [SerializeField] private List<Renderer> _playerRenderers;
@@ -38,7 +38,13 @@ namespace Player.Type_2
         [SerializeField] private float _dashVelocity;
         [SerializeField] private float _dashDuration;
 
+        [Header("Damage Data")]
+        [SerializeField] private LayerMask _damageCheckMask;
+        [SerializeField] private float _damageCheckRadius;
+        [SerializeField] private int _damageAmount;
+
         private GameObject _abilityStateEffectObject;
+        private List<BurstDamageData> _burstDamageMarkers;
 
         private AbilityState _abilityState;
         private float _currentTimer;
@@ -72,6 +78,18 @@ namespace Player.Type_2
 
         public override void EndAbility(BasePlayerController playerController)
         {
+            foreach (var burstDamageData in _burstDamageMarkers)
+            {
+                burstDamageData.burstDamageMarker.SetDamageAmount(_damageAmount);
+                burstDamageData.burstDamageMarker.ApplyDamage();
+                Destroy(burstDamageData.markedEffectObject);
+
+                var position = burstDamageData.burstDamageMarker.transform.position;
+                Instantiate(_damageBurstEffectPrefab, position, Quaternion.identity);
+            }
+
+            _burstDamageMarkers.Clear();
+
             foreach (var playerRenderer in _playerRenderers)
             {
                 playerRenderer.material = _defaultMaterial;
@@ -85,6 +103,12 @@ namespace Player.Type_2
         {
             SetAbilityState(AbilityState.Tap);
             _currentTimer = _holdTriggerDuration;
+        }
+
+        public override void UnityStartDelegate(BasePlayerController playerController)
+        {
+            base.UnityStartDelegate(playerController);
+            _burstDamageMarkers = new List<BurstDamageData>();
         }
 
         public override Vector3 GetMovementData() => _computedVelocity;
@@ -145,6 +169,8 @@ namespace Player.Type_2
             _computedVelocity = forward;
             _computedVelocity = _dashVelocity * _computedVelocity.normalized;
             _computedVelocity.y = 0;
+
+            CheckAndApplyDamageMarker();
         }
 
         private void SetupHoldRunMovement()
@@ -180,12 +206,64 @@ namespace Player.Type_2
                 _computedVelocity.y += Physics.gravity.y * playerController.GravityMultiplier;
             }
 
-            // TODO: Complete Trigger on another Health Object...
+            CheckAndApplyDamageMarker();
+        }
+
+        private void CheckAndApplyDamageMarker()
+        {
+            var hitColliders = new Collider[MaxCollidersCheck];
+            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _damageCheckRadius, hitColliders, _damageCheckMask);
+
+            for (var i = 0; i < targetsHit; i++)
+            {
+                // Do not target itself
+                if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                {
+                    continue;
+                }
+
+                var hasHealth = hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage);
+                var hasBurstDamageMarker = hitColliders[i].TryGetComponent(out BurstDamageMarker burstDamageMarker);
+                if (hasHealth && hasBurstDamageMarker)
+                {
+                    var ownerId = burstDamageMarker.GetOwner();
+                    var myId = GetInstanceID();
+                    if (ownerId != myId)
+                    {
+                        hasBurstDamageMarker = false;
+                    }
+                }
+
+                if (hasHealth && !hasBurstDamageMarker)
+                {
+                    var burstDamage = hitColliders[i].gameObject.AddComponent<BurstDamageMarker>();
+                    burstDamage.SetOwner(GetInstanceID());
+
+                    var targetTransform = hitColliders[i].transform;
+                    var effect = Instantiate(_markerEffectPrefab, targetTransform.position, Quaternion.identity, targetTransform);
+
+                    _burstDamageMarkers.Add(new BurstDamageData()
+                    {
+                        burstDamageMarker = burstDamage,
+                        markedEffectObject = effect,
+                    });
+                }
+            }
         }
 
         private void SetAbilityState(AbilityState abilityState) => _abilityState = abilityState;
 
         #endregion Utils
+
+        #region Structs
+
+        private struct BurstDamageData
+        {
+            public BurstDamageMarker burstDamageMarker;
+            public GameObject markedEffectObject;
+        }
+
+        #endregion Structs
 
         #region Enums
 

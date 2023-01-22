@@ -543,16 +543,28 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 0
   _cooldownDuration: 0
+  _markerEffectPrefab: {fileID: 0}
+  _damageBurstEffectPrefab: {fileID: 0}
+  _dashTrailEffectPrefab: {fileID: 0}
+  _holdRunTrailEffectPrefab: {fileID: 0}
   _characterController: {fileID: 2637092012038209768}
   _playerRenderers:
   - {fileID: 2029409442}
   - {fileID: 882969867}
   _defaultMaterial: {fileID: 2100000, guid: 918dc81966c65de4b922bfe5eeaa194a, type: 2}
   _abilityMaterial: {fileID: 2100000, guid: 8180121e3ddd8244e912617ce06e35de, type: 2}
-  _movementSpeed: 60
-  _abilityDuration: 3
+  _holdRunEffectOffset: {x: 0, y: 0, z: 0}
+  _holdTriggerDuration: 0.2
+  _holdRunVelocity: 60
+  _holdRunDuration: 3
+  _dashEffectOffset: {x: 0, y: 0, z: 0}
   _dashVelocity: 80
   _dashDuration: 0.25
+  _damageCheckMask:
+    serializedVersion: 2
+    m_Bits: 1
+  _damageCheckRadius: 5
+  _damageAmount: 20
 --- !u!114 &2637092012433437213
 MonoBehaviour:
   m_ObjectHideFlags: 0

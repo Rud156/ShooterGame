@@ -1,10 +1,10 @@
     #region
 
-using Player.Base;
-using Player.Common;
-using UnityEngine;
+    using Player.Base;
+    using Player.Common;
+    using UnityEngine;
 
-#endregion
+    #endregion
 
 namespace Player.Type_2
 {
