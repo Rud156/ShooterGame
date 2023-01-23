@@ -222,7 +222,6 @@ namespace Player.Type_2
         {
             var hitColliders = new Collider[MaxCollidersCheck];
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _damageCheckRadius, hitColliders, _damageCheckMask);
-            DebugExtension.DebugWireSphere(transform.position, Color.white, _damageCheckRadius);
 
             for (var i = 0; i < targetsHit; i++)
             {
