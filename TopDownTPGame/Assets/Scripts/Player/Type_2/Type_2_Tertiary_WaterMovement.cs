@@ -50,7 +50,7 @@ namespace Player.Type_2
         private float _currentTimer;
         private Vector3 _computedVelocity;
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded;
+        public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded && _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityState == AbilityState.End;
 
@@ -71,6 +71,10 @@ namespace Player.Type_2
                     UpdateHoldRunMovement(playerController);
                     break;
 
+                case AbilityState.End:
+                    // Do nothing here...
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -83,6 +87,7 @@ namespace Player.Type_2
                 burstDamageData.burstDamageMarker.SetDamageAmount(_damageAmount);
                 burstDamageData.burstDamageMarker.ApplyDamage();
                 Destroy(burstDamageData.markedEffectObject);
+                Destroy(burstDamageData.burstDamageMarker);
 
                 var position = burstDamageData.burstDamageMarker.transform.position;
                 Instantiate(_damageBurstEffectPrefab, position, Quaternion.identity);
@@ -95,6 +100,8 @@ namespace Player.Type_2
                 playerRenderer.material = _defaultMaterial;
             }
 
+            _currentCooldownDuration = _cooldownDuration;
+
             Destroy(_abilityStateEffectObject);
             _abilityStateEffectObject = null;
         }
@@ -103,6 +110,7 @@ namespace Player.Type_2
         {
             SetAbilityState(AbilityState.Tap);
             _currentTimer = _holdTriggerDuration;
+            _computedVelocity = Vector3.zero;
         }
 
         public override void UnityStartDelegate(BasePlayerController playerController)
@@ -166,8 +174,7 @@ namespace Player.Type_2
             var forward = characterTransform.forward;
 
             // Override X and Z
-            _computedVelocity = forward;
-            _computedVelocity = _dashVelocity * _computedVelocity.normalized;
+            _computedVelocity = forward.normalized * _dashVelocity;
             _computedVelocity.y = 0;
 
             CheckAndApplyDamageMarker();
@@ -191,13 +198,15 @@ namespace Player.Type_2
         private void UpdateHoldRunMovement(BasePlayerController playerController)
         {
             _currentTimer -= Time.fixedDeltaTime;
+            var key = playerController.GetTertiaryAbilityKey();
+            if (_currentTimer <= 0 || key.KeyPressedThisFrame)
+            {
+                SetAbilityState(AbilityState.End);
+            }
 
-            var coreInput = playerController.GetCoreMoveInput();
-            var playerTransform = transform;
-            var forward = playerTransform.forward;
-            var right = playerTransform.right;
+            var forward = transform.forward;
 
-            var movement = forward * coreInput.y + right * coreInput.x;
+            var movement = forward;
             movement = _holdRunVelocity * movement.normalized;
             _computedVelocity.x = movement.x;
             _computedVelocity.z = movement.z;
@@ -213,6 +222,7 @@ namespace Player.Type_2
         {
             var hitColliders = new Collider[MaxCollidersCheck];
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _damageCheckRadius, hitColliders, _damageCheckMask);
+            DebugExtension.DebugWireSphere(transform.position, Color.white, _damageCheckRadius);
 
             for (var i = 0; i < targetsHit; i++)
             {

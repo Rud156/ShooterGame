@@ -542,28 +542,31 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
-  _cooldownDuration: 0
-  _markerEffectPrefab: {fileID: 0}
-  _damageBurstEffectPrefab: {fileID: 0}
-  _dashTrailEffectPrefab: {fileID: 0}
-  _holdRunTrailEffectPrefab: {fileID: 0}
-  _characterController: {fileID: 2637092012038209768}
+  _cooldownDuration: 7
+  _markerEffectPrefab: {fileID: 8160184973231911241, guid: 199b7c15692db1947aa70ad0e5a62301,
+    type: 3}
+  _damageBurstEffectPrefab: {fileID: 168058103202751482, guid: 730386caebd4dc846850e53629da47e1,
+    type: 3}
+  _dashTrailEffectPrefab: {fileID: 4581791113312155467, guid: ed3fa45c44aceef479ace8b50e33ea83,
+    type: 3}
+  _holdRunTrailEffectPrefab: {fileID: 4581791113312155467, guid: ed3fa45c44aceef479ace8b50e33ea83,
+    type: 3}
   _playerRenderers:
   - {fileID: 2029409442}
   - {fileID: 882969867}
   _defaultMaterial: {fileID: 2100000, guid: 918dc81966c65de4b922bfe5eeaa194a, type: 2}
   _abilityMaterial: {fileID: 2100000, guid: 8180121e3ddd8244e912617ce06e35de, type: 2}
-  _holdRunEffectOffset: {x: 0, y: 0, z: 0}
+  _holdRunEffectOffset: {x: 0, y: 0, z: 1}
   _holdTriggerDuration: 0.2
-  _holdRunVelocity: 60
-  _holdRunDuration: 3
-  _dashEffectOffset: {x: 0, y: 0, z: 0}
+  _holdRunVelocity: 50
+  _holdRunDuration: 5
+  _dashEffectOffset: {x: 0, y: 0, z: 1}
   _dashVelocity: 80
   _dashDuration: 0.25
   _damageCheckMask:
     serializedVersion: 2
     m_Bits: 1
-  _damageCheckRadius: 5
+  _damageCheckRadius: 3
   _damageAmount: 20
 --- !u!114 &2637092012433437213
 MonoBehaviour:
