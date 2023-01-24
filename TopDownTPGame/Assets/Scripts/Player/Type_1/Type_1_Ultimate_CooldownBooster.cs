@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Player.Type_1
 {
-    public class Type_1_Ultimate : Ability
+    public class Type_1_Ultimate_CooldownBooster : Ability
     {
         private const float MaxUltimatePercent = 100;
 
@@ -94,7 +94,7 @@ namespace Player.Type_1
 
         #region Utils
 
-        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent);
+        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, MaxUltimatePercent);
 
         #endregion Utils
     }

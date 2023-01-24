@@ -586,11 +586,12 @@ MonoBehaviour:
   _abilityType: 1
   _cooldownDuration: 0
   _abilityCastRadius: 10
-  _castOffset: {x: 0, y: 2.5, z: 0}
   _abilityMask:
     serializedVersion: 2
     m_Bits: 64
-  _abilityDuration: 3
+  _freezeDuration: 7
+  _windUpTime: 0.15
+  _ultimateChargeRate: 0.1
 --- !u!114 &3408678438235963055
 MonoBehaviour:
   m_ObjectHideFlags: 0

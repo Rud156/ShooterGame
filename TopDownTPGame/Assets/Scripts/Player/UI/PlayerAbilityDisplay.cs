@@ -94,11 +94,19 @@ namespace UI
             }
         }
 
+        private void DisplayCooldownLabelAndOverlay(AbilityDisplayItem abilityDisplayItem, float percent, float maxPercent)
+        {
+            abilityDisplayItem.cooldownLabel.text = $"{percent:0.0} %";
+            abilityDisplayItem.abilityIconOverlay.style.unityBackgroundImageTintColor = percent >= maxPercent
+                ? new Color(1, 1, 1, 0)
+                : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+        }
+
         #endregion Utils
 
         #region External Functions
 
-        public void UpdateCooldownPercent(AbilityTrigger abilityTrigger, float percent, bool show = true)
+        public void UpdateCooldownPercent(AbilityTrigger abilityTrigger, float percent, float maxPercent, bool show = true)
         {
             switch (abilityTrigger)
             {
@@ -113,9 +121,7 @@ namespace UI
 
                     if (show)
                     {
-                        _primaryDisplay.cooldownLabel.text = $"{percent:0.0} %";
-                        _primaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
-                            new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                        DisplayCooldownLabelAndOverlay(_primaryDisplay, percent, maxPercent);
                     }
                 }
                     break;
@@ -131,9 +137,7 @@ namespace UI
 
                     if (show)
                     {
-                        _secondaryDisplay.cooldownLabel.text = $"{percent:0.0} %";
-                        _secondaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
-                            new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                        DisplayCooldownLabelAndOverlay(_secondaryDisplay, percent, maxPercent);
                     }
                 }
                     break;
@@ -149,9 +153,7 @@ namespace UI
 
                     if (show)
                     {
-                        _tertiaryDisplay.cooldownLabel.text = $"{percent:0.0} %";
-                        _tertiaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
-                            new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                        DisplayCooldownLabelAndOverlay(_tertiaryDisplay, percent, maxPercent);
                     }
                 }
                     break;
@@ -167,9 +169,7 @@ namespace UI
 
                     if (show)
                     {
-                        _ultimateDisplay.cooldownLabel.text = $"{percent:0.0} %";
-                        _ultimateDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor =
-                            new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                        DisplayCooldownLabelAndOverlay(_ultimateDisplay, percent, maxPercent);
                     }
                 }
                     break;

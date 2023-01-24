@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5352708457230724645}
   - component: {fileID: 5352708457230724644}
   - component: {fileID: 5352708457230724643}
-  - component: {fileID: 5352708457230724642}
+  - component: {fileID: 529044912}
   m_Layer: 0
   m_Name: WaterBubble
   m_TagString: Untagged
@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 6270656398724780802}
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,24 +85,97 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5352708457230724642
-SphereCollider:
+--- !u!114 &529044912
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5352708457230724641}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5ce0f3002417b4da9c0dcb4d7eba00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 20
+  _rotationAxis: 2
+  _rotateOnStart: 1
+--- !u!1001 &1853126304
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5352708457230724645}
+    m_Modifications:
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270656397289006557, guid: 42d1bcb00169a264c9906856323dfb00,
+        type: 3}
+      propertyPath: m_Name
+      value: BubbleFrozenEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 42d1bcb00169a264c9906856323dfb00, type: 3}
+--- !u!4 &6270656398724780802 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6270656397289006498, guid: 42d1bcb00169a264c9906856323dfb00,
+    type: 3}
+  m_PrefabInstance: {fileID: 1853126304}
+  m_PrefabAsset: {fileID: 0}

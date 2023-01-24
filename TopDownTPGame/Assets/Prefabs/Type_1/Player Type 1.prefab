@@ -581,7 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e8bdbc4ab03a445a032fa7a738dc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 0ad2337320c1b5841ba3ceb24de6e91a, type: 3}
+  _icon: {fileID: 21300000, guid: 8b2b2198bf13feb40a52ab13c5d231d6, type: 3}
   _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
@@ -621,7 +621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d97c83c25cd6f3147bdf961842f727b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 25126c248902e8347a4a2f96259cb92b, type: 3}
+  _icon: {fileID: 21300000, guid: 348ed09d7cbb6734ba68c88b7db4bd5d, type: 3}
   _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
   _abilityTrigger: 3
   _abilityType: 1

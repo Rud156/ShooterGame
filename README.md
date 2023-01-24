@@ -3,10 +3,10 @@
 ## TODOs (Current)
 
 - [ ] Polish Pass
-    - [ ] Type 2 Character - Water Bender
-        - [X] Primary Ability (All Damage/HP/Effects)
-        - [X] Secondary Ability (All Damage/HP/Effects)
-        - [X] Tertiary Ability (All Damage/HP/Effects)
+    - [ ] Type 3 Character - Darkness Incarnated
+        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects)
         - [ ] Ultimate Ability (All Damage/HP/Effects)
 
 ## TODOs (Future)
@@ -14,11 +14,6 @@
 > Characters don't take Fall Damage
 
 - [ ] Polish Pass
-    - [ ] Type 3 Character - Darkness Incarnated
-        - [ ] Primary Ability (All Damage/HP/Effects)
-        - [ ] Secondary Ability (All Damage/HP/Effects)
-        - [ ] Tertiary Ability (All Damage/HP/Effects)
-        - [ ] Ultimate Ability (All Damage/HP/Effects)
     - [ ] Type 4 Character - Grenadier
         - [ ] Primary Ability (All Damage/HP/Effects)
         - [ ] Secondary Ability (All Damage/HP/Effects)
@@ -84,6 +79,11 @@
         - [X] Falling
         - [X] Landing
     - [X] Type 1 Character - Default Call of Duty Character
+        - [X] Primary Ability (All Damage/HP/Effects)
+        - [X] Secondary Ability (All Damage/HP/Effects)
+        - [X] Tertiary Ability (All Damage/HP/Effects)
+        - [X] Ultimate Ability (All Damage/HP/Effects)
+    - [X] Type 2 Character - Water Bender
         - [X] Primary Ability (All Damage/HP/Effects)
         - [X] Secondary Ability (All Damage/HP/Effects)
         - [X] Tertiary Ability (All Damage/HP/Effects)
