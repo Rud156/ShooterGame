@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8855951514977000252}
   - component: {fileID: 6678552366994652362}
   m_Layer: 0
-  m_Name: Ice Wall
+  m_Name: IceWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
