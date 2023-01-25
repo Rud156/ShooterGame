@@ -710,7 +710,6 @@ MonoBehaviour:
   _autoHealPerTickAmount: 0
   _debugDamageAmount: 40
   _debugHealAmount: 30
-  _currentHealth: 0
 --- !u!1 &876598210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,6 +1048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _overlayColor: {r: 0, g: 0, b: 0, a: 1}
+  _overlayMaxAlpha: 0.75
 --- !u!1 &1471821480
 GameObject:
   m_ObjectHideFlags: 0
