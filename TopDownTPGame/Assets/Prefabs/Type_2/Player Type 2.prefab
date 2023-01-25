@@ -276,7 +276,7 @@ Transform:
   - {fileID: 2637092012017492159}
   - {fileID: 1362992553}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2637092012038209768
 CharacterController:
@@ -423,7 +423,12 @@ MonoBehaviour:
   _abilityPrefab: {fileID: 1502905930425212743, guid: 204d146b2b5e8a64c98f571965281a2b,
     type: 3}
   _abilityCameraParentPrefab: {fileID: 0}
+  _abilityCameraHolderPrefab: {fileID: 0}
   _cameraHolder: {fileID: 2637092012472504217}
+  _camera: {fileID: 2637092012727805912}
+  _defaultOffset: {x: 0, y: 0, z: 0}
+  _cameraParentOffset: {x: 0, y: 0, z: 0}
+  _cameraHolderOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &2637092012038209775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,6 +615,7 @@ MonoBehaviour:
   _autoHealPerTickAmount: 1
   _debugDamageAmount: 30
   _debugHealAmount: 40
+  _currentHealth: 0
 --- !u!114 &6432708683422574492
 MonoBehaviour:
   m_ObjectHideFlags: 0

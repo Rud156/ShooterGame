@@ -529,7 +529,7 @@ PrefabInstance:
     - target: {fileID: 1683011238459484368, guid: 4f7788d356f1c404b8495c6897ad3361,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.6899862
+      value: -1.95
       objectReference: {fileID: 0}
     - target: {fileID: 1683011238459484368, guid: 4f7788d356f1c404b8495c6897ad3361,
         type: 3}
@@ -710,6 +710,7 @@ MonoBehaviour:
   _autoHealPerTickAmount: 0
   _debugDamageAmount: 40
   _debugHealAmount: 30
+  _currentHealth: 0
 --- !u!1 &876598210
 GameObject:
   m_ObjectHideFlags: 0

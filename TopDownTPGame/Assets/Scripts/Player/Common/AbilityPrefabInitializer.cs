@@ -11,9 +11,16 @@ namespace Player.Common
         [Header("Prefabs")]
         [SerializeField] private GameObject _abilityPrefab;
         [SerializeField] private GameObject _abilityCameraParentPrefab;
+        [SerializeField] private GameObject _abilityCameraHolderPrefab;
 
         [Header("Components")]
         [SerializeField] private Transform _cameraHolder;
+        [SerializeField] private Transform _camera;
+
+        [Header("Offsets")]
+        [SerializeField] private Vector3 _defaultOffset;
+        [SerializeField] private Vector3 _cameraParentOffset;
+        [SerializeField] private Vector3 _cameraHolderOffset;
 
         private bool _isInitialized;
 
@@ -35,12 +42,20 @@ namespace Player.Common
             _isInitialized = true;
             if (_abilityPrefab != null)
             {
-                Instantiate(_abilityPrefab, transform);
+                var instance = Instantiate(_abilityPrefab, transform);
+                instance.transform.localPosition += _defaultOffset;
             }
 
             if (_abilityCameraParentPrefab != null)
             {
-                Instantiate(_abilityCameraParentPrefab, _cameraHolder);
+                var instance = Instantiate(_abilityCameraParentPrefab, _camera);
+                instance.transform.localPosition += _cameraParentOffset;
+            }
+
+            if (_abilityCameraHolderPrefab != null)
+            {
+                var instance = Instantiate(_abilityCameraHolderPrefab, _cameraHolder);
+                instance.transform.localPosition += _cameraHolderOffset;
             }
         }
 

@@ -1,5 +1,6 @@
 #region
 
+using System;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
@@ -11,21 +12,23 @@ namespace Player.Type_3
 {
     public class Type_3_Primary_DarkShoot : Ability
     {
-        private const int MaxColliders = 10;
+        private const int MaxCollidersCheck = 10;
 
         [Header("Prefabs")]
-        [SerializeField] private GameObject _markerEffectPrefab;
         [SerializeField] private GameObject _damageEffectPrefab;
 
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
+        [SerializeField] private Transform _mainCamera;
 
         [Header("Shoot Data")]
         [SerializeField] private float _fireRate;
         [SerializeField] private LayerMask _attackMask;
+        [SerializeField] private int _damageAmount;
 
         [Header("Post Start Filled")]
         [SerializeField] private Transform _frontCollider;
+        [SerializeField] private Transform _raycastPoint;
 
         private float _nextShootTime;
         private bool _abilityEnd;
@@ -40,8 +43,12 @@ namespace Player.Type_3
             {
                 _nextShootTime = Time.time + _fireRate;
 
-                var hitColliders = new Collider[MaxColliders];
+                var hitColliders = new Collider[MaxCollidersCheck];
                 var totalHitColliders = Physics.OverlapBoxNonAlloc(_frontCollider.position, _frontCollider.localScale / 2, hitColliders, _frontCollider.rotation, _attackMask);
+
+                var nearestDistance = float.PositiveInfinity;
+                Transform nearestTransform = null;
+                HealthAndDamage nearestHealthAndDamage = null;
                 for (var i = 0; i < totalHitColliders; i++)
                 {
                     // Do not target itself
@@ -52,8 +59,19 @@ namespace Player.Type_3
 
                     if (hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
                     {
-                        break;
+                        var distance = Vector3.Distance(_raycastPoint.position, hitColliders[i].transform.position);
+                        if (distance < nearestDistance)
+                        {
+                            nearestDistance = distance;
+                            nearestTransform = hitColliders[i].transform;
+                            nearestHealthAndDamage = healthAndDamage;
+                        }
                     }
+                }
+
+                if (nearestTransform != null)
+                {
+                    // TODO: Figure out how to do LOS for target
                 }
             }
 
@@ -73,12 +91,8 @@ namespace Player.Type_3
             base.UnityStartDelegate(playerController);
 
             _prefabInit.AbilityPrefabInit();
-            _frontCollider = transform.Find("CameraHolder/Type_3_CameraPrefab(Clone)/FrontColliderDetector");
-        }
-
-        public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
-        {
-            base.UnityFixedUpdateDelegate(playerController);
+            _frontCollider = transform.Find("CameraHolder/Main Camera/Type_3_CameraPrefab(Clone)/FrontColliderDetector");
+            _raycastPoint = transform.Find("CameraHolder/Main Camera/Type_3_CameraPrefab(Clone)/RaycastShootPoint");
         }
     }
 }

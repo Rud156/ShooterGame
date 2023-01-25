@@ -381,7 +381,7 @@ Transform:
   - {fileID: 1683011238445074564}
   - {fileID: 3729988723055359378}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1683011238459484371
 CharacterController:
@@ -529,7 +529,12 @@ MonoBehaviour:
     type: 3}
   _abilityCameraParentPrefab: {fileID: 7651119961102127592, guid: fd483c2c56f27f74ca5d710e24e97e67,
     type: 3}
+  _abilityCameraHolderPrefab: {fileID: 0}
   _cameraHolder: {fileID: 1683011237826357154}
+  _camera: {fileID: 1683011238075420643}
+  _defaultOffset: {x: 0, y: 0, z: 0}
+  _cameraParentOffset: {x: 0, y: 0, z: 3}
+  _cameraHolderOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1683011238459484372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,16 +547,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5faec0a1748b4bc418b1984cb2238a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 04f36e220d53bf0479c3abc46d4f1b8b, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
   _cooldownDuration: 0
+  _damageEffectPrefab: {fileID: 7891259392760164114, guid: 38149fd665e688b469d853178bf64142,
+    type: 3}
   _prefabInit: {fileID: -1176642752491111730}
+  _mainCamera: {fileID: 1683011238075420643}
   _fireRate: 0.75
   _attackMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2147483647
+  _damageAmount: 30
   _frontCollider: {fileID: 0}
 --- !u!114 &680768254
 MonoBehaviour:
@@ -565,8 +574,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66038cc86881f134bbf2002decc00a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 2347da56012799f4e832b83be163a9ba, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
   _cooldownDuration: 0
@@ -611,8 +620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc0b15f7d06bf2c44b0dde06f8368137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: b9cc6b1f888a9ca4e9386cf3f3c0359a, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
   _cooldownDuration: 0
@@ -634,8 +643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9652e01996dab4f88368b468006b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 4d650dba14e6e2d4281764d88a6cf622, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
   _cooldownDuration: 0
@@ -659,6 +668,7 @@ MonoBehaviour:
   _autoHealPerTickAmount: 1
   _debugDamageAmount: 0
   _debugHealAmount: 0
+  _currentHealth: 0
 --- !u!114 &6594609260255980422
 MonoBehaviour:
   m_ObjectHideFlags: 0
