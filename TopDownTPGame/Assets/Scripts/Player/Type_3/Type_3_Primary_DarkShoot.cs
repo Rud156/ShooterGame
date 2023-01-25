@@ -18,7 +18,6 @@ namespace Player.Type_3
 
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
-        [SerializeField] private UnityEngine.Camera _mainCamera;
 
         [Header("Shoot Data")]
         [SerializeField] private float _fireRate;
