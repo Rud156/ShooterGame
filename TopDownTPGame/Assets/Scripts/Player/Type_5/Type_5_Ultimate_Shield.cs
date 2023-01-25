@@ -15,6 +15,8 @@ public class Type_5_Ultimate_Shield : Ability
     [SerializeField] private float _shieldDuration;
     [SerializeField] private LayerMask _shieldDeployMask;
 
+    private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+
     private bool _abilityEnd;
 
     public override bool AbilityCanStart(BasePlayerController playerController) => true;
@@ -23,18 +25,17 @@ public class Type_5_Ultimate_Shield : Ability
 
     public override void AbilityUpdate(BasePlayerController playerController)
     {
-        Collider[] hitColliders = new Collider[MaxCollidersCheck];
-        int targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _shieldDeployRadius, hitColliders, _shieldDeployMask);
-        for (int i = 0; i < targetsHit; i++)
+        var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _shieldDeployRadius, _hitColliders, _shieldDeployMask);
+        for (var i = 0; i < targetsHit; i++)
         {
             // Do not target itself
-            if (hitColliders[i] == null)
+            if (_hitColliders[i] == null)
             {
                 continue;
             }
 
             // TODO: Also check team here...
-            if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+            if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
             {
                 targetController.CharacterEnableEngineerShield(_shieldDuration);
             }

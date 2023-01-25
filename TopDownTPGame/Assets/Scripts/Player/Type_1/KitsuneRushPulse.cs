@@ -26,6 +26,8 @@ namespace Player.Type_1
         [Header("Cooldown Modifier")]
         [SerializeField] private float _cooldownMultiplier;
 
+        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+
         private int _currentPulseCount;
         private float _currentPulseWaitDuration;
         private List<Ability> _lastModifiedAbilities;
@@ -84,19 +86,18 @@ namespace Player.Type_1
 
         private void ApplyCooldownPulse()
         {
-            var hitColliders = new Collider[MaxCollidersCheck];
-            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, hitColliders, _pulseMask);
+            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, _hitColliders, _pulseMask);
 
             for (var i = 0; i < targetsHit; i++)
             {
-                if (hitColliders[i] == null)
+                if (_hitColliders[i] == null)
                 {
                     continue;
                 }
 
-                if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+                if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
-                    var abilities = hitColliders[i].GetComponents<Ability>();
+                    var abilities = _hitColliders[i].GetComponents<Ability>();
                     foreach (var ability in abilities)
                     {
                         ability.ChangeCooldownMultiplier(_cooldownMultiplier);

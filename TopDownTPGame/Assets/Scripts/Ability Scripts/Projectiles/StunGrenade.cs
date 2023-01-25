@@ -29,6 +29,8 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private float _stunDuration;
         [SerializeField] private LayerMask _stunMask;
 
+        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+
         private Rigidbody _rb;
         private bool _isInitialized;
 
@@ -65,19 +67,18 @@ namespace Ability_Scripts.Projectiles
         {
             // TODO: Add Stun effect to players
 
-            var hitColliders = new Collider[MaxCollidersCheck];
-            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, hitColliders, _stunMask);
+            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, _hitColliders, _stunMask);
 
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (hitColliders[i] == null)
+                if (_hitColliders[i] == null)
                 {
                     continue;
                 }
 
                 // TODO: Also check team here...
-                if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+                if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
                     targetController.StunCharacter(_stunDuration);
                 }
@@ -85,7 +86,7 @@ namespace Ability_Scripts.Projectiles
 
             if (!_isSecondary)
             {
-                float angleDifference = 360 / _secondaryGrenadeCount;
+                var angleDifference = 360.0f / _secondaryGrenadeCount;
                 float startAngle = 0;
 
                 for (var i = 0; i < _secondaryGrenadeCount; i++)

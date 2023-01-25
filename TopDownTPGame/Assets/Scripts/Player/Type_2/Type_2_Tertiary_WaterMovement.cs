@@ -43,6 +43,8 @@ namespace Player.Type_2
         [SerializeField] private float _damageCheckRadius;
         [SerializeField] private int _damageAmount;
 
+        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+
         private GameObject _abilityStateEffectObject;
         private List<BurstDamageData> _burstDamageMarkers;
 
@@ -220,19 +222,18 @@ namespace Player.Type_2
 
         private void CheckAndApplyDamageMarker()
         {
-            var hitColliders = new Collider[MaxCollidersCheck];
-            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _damageCheckRadius, hitColliders, _damageCheckMask);
+            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _damageCheckRadius, _hitColliders, _damageCheckMask);
 
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
                 {
                     continue;
                 }
 
-                var hasHealth = hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage);
-                var hasBurstDamageMarker = hitColliders[i].TryGetComponent(out BurstDamageMarker burstDamageMarker);
+                var hasHealth = _hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage);
+                var hasBurstDamageMarker = _hitColliders[i].TryGetComponent(out BurstDamageMarker burstDamageMarker);
                 if (hasHealth && hasBurstDamageMarker)
                 {
                     var ownerId = burstDamageMarker.GetOwner();
@@ -245,10 +246,10 @@ namespace Player.Type_2
 
                 if (hasHealth && !hasBurstDamageMarker)
                 {
-                    var burstDamage = hitColliders[i].gameObject.AddComponent<BurstDamageMarker>();
+                    var burstDamage = _hitColliders[i].gameObject.AddComponent<BurstDamageMarker>();
                     burstDamage.SetOwner(GetInstanceID());
 
-                    var targetTransform = hitColliders[i].transform;
+                    var targetTransform = _hitColliders[i].transform;
                     var effect = Instantiate(_markerEffectPrefab, targetTransform.position, Quaternion.identity, targetTransform);
 
                     _burstDamageMarkers.Add(new BurstDamageData()

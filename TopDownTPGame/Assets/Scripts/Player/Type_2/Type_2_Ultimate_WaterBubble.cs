@@ -23,6 +23,8 @@ namespace Player.Type_2
         [SerializeField] private float _windUpTime;
         [SerializeField] private float _ultimateChargeRate;
 
+        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+
         private float _currentWindUpTime;
         private float _currentUltimatePercent;
         private bool _abilityEnd;
@@ -40,18 +42,16 @@ namespace Player.Type_2
             }
 
             var castPosition = transform.position;
-            var hitColliders = new Collider[MaxCollidersCheck];
-
-            var totalHitColliders = Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, hitColliders, _abilityMask);
+            var totalHitColliders = Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, _hitColliders, _abilityMask);
             for (var i = 0; i < totalHitColliders; i++)
             {
                 // Do not target itself
-                if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
                 {
                     continue;
                 }
 
-                if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+                if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
                     targetController.FreezeCharacter(_freezeDuration);
                 }

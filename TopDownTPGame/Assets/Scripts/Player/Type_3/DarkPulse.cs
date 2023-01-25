@@ -17,6 +17,8 @@ namespace Player.Type_3
         [SerializeField] private float _pulseRadius;
         [SerializeField] private LayerMask _pulseMask;
 
+        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+
         private int _currentPulseCount;
         private float _currentPulseDuration;
         private bool _pulseTriggered;
@@ -27,19 +29,18 @@ namespace Player.Type_3
         {
             if (!_pulseTriggered)
             {
-                var hitColliders = new Collider[MaxCollidersCheck];
-                var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, hitColliders, _pulseMask);
+                var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, _hitColliders, _pulseMask);
 
                 for (int i = 0; i < targetsHit; i++)
                 {
                     // Do not target itself
-                    if (hitColliders[i] == null || hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                    if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
                     {
                         continue;
                     }
 
                     // TODO: Also check team here...
-                    if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+                    if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                     {
                         targetController.PlayerEnabledParanoia(_pulseDuration);
                     }
