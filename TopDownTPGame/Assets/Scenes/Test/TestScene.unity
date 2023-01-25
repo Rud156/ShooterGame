@@ -710,6 +710,7 @@ MonoBehaviour:
   _autoHealPerTickAmount: 0
   _debugDamageAmount: 40
   _debugHealAmount: 30
+  _displayDebugVisibility: 1
   _currentHealth: 0
 --- !u!1 &876598210
 GameObject:

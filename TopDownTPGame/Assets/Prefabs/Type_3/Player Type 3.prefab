@@ -555,13 +555,14 @@ MonoBehaviour:
   _damageEffectPrefab: {fileID: 7891259392760164114, guid: 38149fd665e688b469d853178bf64142,
     type: 3}
   _prefabInit: {fileID: -1176642752491111730}
-  _mainCamera: {fileID: 1683011238075420643}
+  _mainCamera: {fileID: 1683011238075420640}
   _fireRate: 0.75
   _attackMask:
     serializedVersion: 2
     m_Bits: 2147483647
   _damageAmount: 30
   _frontCollider: {fileID: 0}
+  _raycastPoint: {fileID: 0}
 --- !u!114 &680768254
 MonoBehaviour:
   m_ObjectHideFlags: 0

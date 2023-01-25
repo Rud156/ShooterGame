@@ -1,6 +1,5 @@
 #region
 
-using System;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
@@ -19,7 +18,7 @@ namespace Player.Type_3
 
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
-        [SerializeField] private Transform _mainCamera;
+        [SerializeField] private UnityEngine.Camera _mainCamera;
 
         [Header("Shoot Data")]
         [SerializeField] private float _fireRate;
@@ -28,7 +27,6 @@ namespace Player.Type_3
 
         [Header("Post Start Filled")]
         [SerializeField] private Transform _frontCollider;
-        [SerializeField] private Transform _raycastPoint;
 
         private float _nextShootTime;
         private bool _abilityEnd;
@@ -46,9 +44,6 @@ namespace Player.Type_3
                 var hitColliders = new Collider[MaxCollidersCheck];
                 var totalHitColliders = Physics.OverlapBoxNonAlloc(_frontCollider.position, _frontCollider.localScale / 2, hitColliders, _frontCollider.rotation, _attackMask);
 
-                var nearestDistance = float.PositiveInfinity;
-                Transform nearestTransform = null;
-                HealthAndDamage nearestHealthAndDamage = null;
                 for (var i = 0; i < totalHitColliders; i++)
                 {
                     // Do not target itself
@@ -59,19 +54,10 @@ namespace Player.Type_3
 
                     if (hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
                     {
-                        var distance = Vector3.Distance(_raycastPoint.position, hitColliders[i].transform.position);
-                        if (distance < nearestDistance)
-                        {
-                            nearestDistance = distance;
-                            nearestTransform = hitColliders[i].transform;
-                            nearestHealthAndDamage = healthAndDamage;
-                        }
+                        // TODO: Use a bunch of Raycasts triggering towards the target and see if any hits it.
+                        // If any hit means the object is visible in LOS of the player (Kinda)
+                        break;
                     }
-                }
-
-                if (nearestTransform != null)
-                {
-                    // TODO: Figure out how to do LOS for target
                 }
             }
 
@@ -92,7 +78,6 @@ namespace Player.Type_3
 
             _prefabInit.AbilityPrefabInit();
             _frontCollider = transform.Find("CameraHolder/Main Camera/Type_3_CameraPrefab(Clone)/FrontColliderDetector");
-            _raycastPoint = transform.Find("CameraHolder/Main Camera/Type_3_CameraPrefab(Clone)/RaycastShootPoint");
         }
     }
 }
