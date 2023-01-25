@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 250
+  _maxShootDistance: 50
   _shootMask:
     serializedVersion: 2
     m_Bits: 65
@@ -659,7 +659,6 @@ MonoBehaviour:
   _autoHealPerTickAmount: 1
   _debugDamageAmount: 0
   _debugHealAmount: 0
-  _currentHealth: 0
 --- !u!114 &6594609260255980422
 MonoBehaviour:
   m_ObjectHideFlags: 0

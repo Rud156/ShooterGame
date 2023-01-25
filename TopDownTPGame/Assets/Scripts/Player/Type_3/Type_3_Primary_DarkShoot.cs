@@ -1,5 +1,6 @@
 #region
 
+using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -11,6 +12,10 @@ namespace Player.Type_3
     public class Type_3_Primary_DarkShoot : Ability
     {
         private const int MaxColliders = 10;
+
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _markerEffectPrefab;
+        [SerializeField] private GameObject _damageEffectPrefab;
 
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
@@ -24,18 +29,6 @@ namespace Player.Type_3
 
         private float _nextShootTime;
         private bool _abilityEnd;
-
-        #region Unity Functions
-
-        public override void UnityStartDelegate(BasePlayerController playerController)
-        {
-            base.UnityStartDelegate(playerController);
-
-            _prefabInit.AbilityPrefabInit();
-            _frontCollider = transform.Find("CameraHolder/Type_3_CameraPrefab(Clone)/FrontColliderDetector");
-        }
-
-        #endregion Unity Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
@@ -57,12 +50,8 @@ namespace Player.Type_3
                         continue;
                     }
 
-                    // TODO: Also check team here...
-                    if (hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+                    if (hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
                     {
-                        // TODO: Implement damage here...
-
-                        // Only hit one target...
                         break;
                     }
                 }
@@ -78,5 +67,18 @@ namespace Player.Type_3
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
         public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
+
+        public override void UnityStartDelegate(BasePlayerController playerController)
+        {
+            base.UnityStartDelegate(playerController);
+
+            _prefabInit.AbilityPrefabInit();
+            _frontCollider = transform.Find("CameraHolder/Type_3_CameraPrefab(Clone)/FrontColliderDetector");
+        }
+
+        public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
+        {
+            base.UnityFixedUpdateDelegate(playerController);
+        }
     }
 }
