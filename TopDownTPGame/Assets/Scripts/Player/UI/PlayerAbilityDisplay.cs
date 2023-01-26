@@ -11,12 +11,10 @@ using Utils.Misc;
 
 #endregion
 
-namespace UI
+namespace Player.UI
 {
     public class PlayerAbilityDisplay : MonoBehaviour
     {
-        private const float OverlayPercentTintAlpha = 0.75f;
-
         private const string PrimaryDisplayString = "PrimaryAbility";
         private const string SecondaryDisplayString = "SecondaryAbility";
         private const string TertiaryDisplayString = "TertiaryAbility";
@@ -24,6 +22,7 @@ namespace UI
 
         [Header("Display")]
         [SerializeField] private Color _overlayColor;
+        [SerializeField] [Range(0, 1)] private float _overlayMaxAlpha;
 
         private VisualElement _root;
         private AbilityDisplayItem _primaryDisplay;
@@ -94,12 +93,20 @@ namespace UI
             }
         }
 
-        private void DisplayCooldownLabelAndOverlay(AbilityDisplayItem abilityDisplayItem, float percent, float maxPercent)
+        private void DisplayCooldownLabelPercentAndOverlay(AbilityDisplayItem abilityDisplayItem, float percent, float maxPercent)
         {
             abilityDisplayItem.cooldownLabel.text = $"{percent:0.0} %";
             abilityDisplayItem.abilityIconOverlay.style.unityBackgroundImageTintColor = percent >= maxPercent
                 ? new Color(1, 1, 1, 0)
-                : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, OverlayPercentTintAlpha);
+                : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha);
+        }
+
+        private void DisplayCooldownLabelTimerAndOverlay(AbilityDisplayItem abilityDisplayItem, float timer, float percent)
+        {
+            abilityDisplayItem.cooldownLabel.text = timer.ToString("0.0");
+            abilityDisplayItem.abilityIconOverlay.style.unityBackgroundImageTintColor = percent <= 0
+                ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0)
+                : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha);
         }
 
         #endregion Utils
@@ -118,11 +125,7 @@ namespace UI
                         _primaryDisplay.abilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
-
-                    if (show)
-                    {
-                        DisplayCooldownLabelAndOverlay(_primaryDisplay, percent, maxPercent);
-                    }
+                    DisplayCooldownLabelPercentAndOverlay(_primaryDisplay, percent, maxPercent);
                 }
                     break;
 
@@ -134,11 +137,7 @@ namespace UI
                         _secondaryDisplay.abilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
-
-                    if (show)
-                    {
-                        DisplayCooldownLabelAndOverlay(_secondaryDisplay, percent, maxPercent);
-                    }
+                    DisplayCooldownLabelPercentAndOverlay(_secondaryDisplay, percent, maxPercent);
                 }
                     break;
 
@@ -150,11 +149,7 @@ namespace UI
                         _tertiaryDisplay.abilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
-
-                    if (show)
-                    {
-                        DisplayCooldownLabelAndOverlay(_tertiaryDisplay, percent, maxPercent);
-                    }
+                    DisplayCooldownLabelPercentAndOverlay(_tertiaryDisplay, percent, maxPercent);
                 }
                     break;
 
@@ -166,11 +161,7 @@ namespace UI
                         _ultimateDisplay.abilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
-
-                    if (show)
-                    {
-                        DisplayCooldownLabelAndOverlay(_ultimateDisplay, percent, maxPercent);
-                    }
+                    DisplayCooldownLabelPercentAndOverlay(_ultimateDisplay, percent, maxPercent);
                 }
                     break;
 
@@ -193,9 +184,7 @@ namespace UI
                         _primaryDisplay.abilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
-
-                    _primaryDisplay.cooldownLabel.text = timer.ToString("0.0");
-                    _primaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                    DisplayCooldownLabelTimerAndOverlay(_primaryDisplay, timer, percent);
                 }
                     break;
 
@@ -207,9 +196,7 @@ namespace UI
                         _secondaryDisplay.abilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
-
-                    _secondaryDisplay.cooldownLabel.text = timer.ToString("0.0");
-                    _secondaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                    DisplayCooldownLabelTimerAndOverlay(_secondaryDisplay, timer, percent);
                 }
                     break;
 
@@ -221,9 +208,7 @@ namespace UI
                         _tertiaryDisplay.abilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
-
-                    _tertiaryDisplay.cooldownLabel.text = timer.ToString("0.0");
-                    _tertiaryDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                    DisplayCooldownLabelTimerAndOverlay(_tertiaryDisplay, timer, percent);
                 }
                     break;
 
@@ -235,9 +220,7 @@ namespace UI
                         _ultimateDisplay.abilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
-
-                    _ultimateDisplay.cooldownLabel.text = timer.ToString("0.0");
-                    _ultimateDisplay.abilityIconOverlay.style.unityBackgroundImageTintColor = new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, percent);
+                    DisplayCooldownLabelTimerAndOverlay(_ultimateDisplay, timer, percent);
                 }
                     break;
 

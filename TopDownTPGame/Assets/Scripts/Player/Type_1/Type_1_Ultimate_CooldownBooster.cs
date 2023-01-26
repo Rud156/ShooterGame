@@ -2,7 +2,7 @@
 
 using Player.Base;
 using Player.Common;
-using UI;
+using Player.UI;
 using UnityEngine;
 
 #endregion

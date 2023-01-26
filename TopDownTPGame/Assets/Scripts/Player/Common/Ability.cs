@@ -1,7 +1,7 @@
 #region
 
 using Player.Base;
-using UI;
+using Player.UI;
 using UnityEngine;
 using Utils.Misc;
 
