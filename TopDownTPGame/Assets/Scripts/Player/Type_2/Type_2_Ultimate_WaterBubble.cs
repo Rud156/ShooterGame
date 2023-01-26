@@ -29,6 +29,8 @@ namespace Player.Type_2
         private float _currentUltimatePercent;
         private bool _abilityEnd;
 
+        #region Ability Functions
+
         public override bool AbilityCanStart(BasePlayerController playerController) => _currentUltimatePercent >= MaxUltimatePercent;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
@@ -69,6 +71,10 @@ namespace Player.Type_2
             _currentWindUpTime = _windUpTime;
         }
 
+        #endregion Ability Functions
+
+        #region Unity Functions
+
         public override void UnityUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityUpdateDelegate(playerController);
@@ -89,9 +95,7 @@ namespace Player.Type_2
             }
         }
 
-        public override void ClearAllAbilityData(BasePlayerController playerController)
-        {
-        }
+        #endregion Unity Functions
 
         #region External Functions
 

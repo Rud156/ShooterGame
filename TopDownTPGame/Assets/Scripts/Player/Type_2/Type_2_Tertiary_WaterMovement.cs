@@ -52,6 +52,8 @@ namespace Player.Type_2
         private float _currentTimer;
         private Vector3 _computedVelocity;
 
+        #region Ability Functions
+
         public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded && _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityState == AbilityState.End;
@@ -115,13 +117,23 @@ namespace Player.Type_2
             _computedVelocity = Vector3.zero;
         }
 
+        #endregion Ability Functions
+
+        #region Unity Functions
+
         public override void UnityStartDelegate(BasePlayerController playerController)
         {
             base.UnityStartDelegate(playerController);
             _burstDamageMarkers = new List<BurstDamageData>();
         }
 
+        #endregion Unity Functions
+
+        #region Specific Data
+
         public override Vector3 GetMovementData() => _computedVelocity;
+
+        #endregion Specific Data
 
         #region Utils
 

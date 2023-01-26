@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 418013023188048172}
   - component: {fileID: 418013023188048175}
   m_Layer: 0
-  m_Name: Dark Pulse
+  m_Name: DarkPulse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

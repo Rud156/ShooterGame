@@ -30,19 +30,9 @@ namespace Player.Type_3
         private float _currentTime;
         private bool _abilityEnd;
 
-        #region Unity Functions
+        #region Ability Functions
 
-        public override void UnityStartDelegate(BasePlayerController playerController)
-        {
-            base.UnityStartDelegate(playerController);
-
-            _prefabInit.AbilityPrefabInit();
-            _slash = transform.Find("Type_3_NormalPrefab(Clone)/SlashPaths/Slash").GetComponent<SplineContainer>();
-        }
-
-        #endregion Unity Functions
-
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        public override bool AbilityCanStart(BasePlayerController playerController) => _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -50,10 +40,12 @@ namespace Player.Type_3
         {
             Assert.IsNotNull(_slashObject);
 
-            float percent = _currentTime / _slashDuration;
-            float mappedPercent = _slashEaseCurve.Evaluate(percent);
+            var percent = _currentTime / _slashDuration;
+            var mappedPercent = _slashEaseCurve.Evaluate(percent);
             Vector3 position = _slash.EvaluatePosition(_randomSlashIndex, mappedPercent);
+            Vector3 rotation = _slash.EvaluateTangent(_randomSlashIndex, mappedPercent);
             _slashObject.transform.position = position;
+            _slashObject.transform.rotation = Quaternion.LookRotation(rotation);
 
             _currentTime += Time.fixedDeltaTime;
             if (_currentTime >= _slashDuration)
@@ -61,6 +53,7 @@ namespace Player.Type_3
                 Destroy(_slashObject);
                 _slashObject = null;
                 _abilityEnd = true;
+                _currentCooldownDuration = _cooldownDuration;
             }
         }
 
@@ -72,15 +65,29 @@ namespace Player.Type_3
 
         public override void StartAbility(BasePlayerController playerController)
         {
-            int totalSplines = _slash.Splines.Count;
-            int randomIndex = Random.Range(0, totalSplines);
+            var totalSplines = _slash.Splines.Count;
+            var randomIndex = Random.Range(0, totalSplines);
             Vector3 spawnPosition = _slash.EvaluatePosition(randomIndex, 0);
-            GameObject projectile = Instantiate(_slashPrefab, spawnPosition, Quaternion.identity);
+            var projectile = Instantiate(_slashPrefab, spawnPosition, Quaternion.identity);
 
             _slashObject = projectile;
             _randomSlashIndex = randomIndex;
             _currentTime = 0;
             _abilityEnd = false;
         }
+
+        #endregion Ability Functions
+
+        #region Unity Functions
+
+        public override void UnityStartDelegate(BasePlayerController playerController)
+        {
+            base.UnityStartDelegate(playerController);
+
+            _prefabInit.AbilityPrefabInit();
+            _slash = transform.Find("Type_3_NormalPrefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();
+        }
+
+        #endregion Unity Functions
     }
 }

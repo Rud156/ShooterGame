@@ -50,20 +50,7 @@ namespace Player.Type_2
         private float _currentTime;
         private float _lastTriggeredTime;
 
-        #region Unity Functions
-
-        public override void UnityStartDelegate(BasePlayerController playerController)
-        {
-            base.UnityStartDelegate(playerController);
-
-            _prefabInit.AbilityPrefabInit();
-            _leftSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();
-            _rightSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/RightSlash").GetComponent<SplineContainer>();
-
-            SetState(WaterControlState.LeftSlash);
-        }
-
-        #endregion Unity Functions
+        #region Ability Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
@@ -130,6 +117,21 @@ namespace Player.Type_2
             }
         }
 
+        #endregion Ability Functions
+
+        #region Unity Functions
+
+        public override void UnityStartDelegate(BasePlayerController playerController)
+        {
+            base.UnityStartDelegate(playerController);
+
+            _prefabInit.AbilityPrefabInit();
+            _leftSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();
+            _rightSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/RightSlash").GetComponent<SplineContainer>();
+
+            SetState(WaterControlState.LeftSlash);
+        }
+
         public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityFixedUpdateDelegate(playerController);
@@ -140,11 +142,13 @@ namespace Player.Type_2
             }
         }
 
+        #endregion Unity Functions
+
         #region Ability Updates
 
         private GameObject CreateSlashPrefabAndUpdateRandomIndex(WaterControlState waterControlState)
         {
-            var spawnPosition = Vector3.zero;
+            Vector3 spawnPosition;
             GameObject prefab;
 
             switch (waterControlState)
@@ -180,7 +184,7 @@ namespace Player.Type_2
             return projectile;
         }
 
-        private GameObject CreateFrontSlash()
+        private GameObject CreateFrontBullet()
         {
             var spawnPosition = _shootController.GetShootPosition();
             var projectile = Instantiate(_shootFrontPrefab, spawnPosition, Quaternion.identity);
@@ -192,8 +196,8 @@ namespace Player.Type_2
             Assert.IsNotNull(_sideSlashObject);
 
             var percent = _currentTime / _slashDuration;
-            var position = Vector3.zero;
-            var rotation = Vector3.zero;
+            Vector3 position;
+            Vector3 rotation;
 
             switch (waterControlState)
             {
@@ -236,7 +240,7 @@ namespace Player.Type_2
 
         private void UpdateFrontSlash()
         {
-            var frontSlashObject = CreateFrontSlash();
+            var frontSlashObject = CreateFrontBullet();
             var direction = _shootController.GetShootLookDirection();
             var simpleProj = frontSlashObject.GetComponent<SimpleProjectile>();
             simpleProj.LaunchProjectile(direction);

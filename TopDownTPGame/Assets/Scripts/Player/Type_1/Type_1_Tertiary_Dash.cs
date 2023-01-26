@@ -31,6 +31,8 @@ namespace Player.Type_1
 
         private GameObject _dashEffectObject;
 
+        #region Ability Functions
+
         public override bool AbilityCanStart(BasePlayerController playerController) => _currentCooldownDuration <= 0 && _currentDashTimeLeft <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _currentDashTimeLeft <= 0;
@@ -114,7 +116,13 @@ namespace Player.Type_1
             _currentCooldownDuration = _cooldownDuration;
         }
 
+        #endregion Ability Functions
+
+        #region Specific Data
+
         public override Vector3 GetMovementData() => _computedVelocity;
+
+        #endregion Specific Data
 
         #region Structs
 

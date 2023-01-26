@@ -31,6 +31,8 @@ namespace Player.Type_1
 
         private GameObject _chargedSpawnEffect;
 
+        #region Ability Functions
+
         public override bool AbilityCanStart(BasePlayerController playerController) => _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
@@ -78,5 +80,7 @@ namespace Player.Type_1
             _chargedSpawnEffect = Instantiate(_chargedObjectSpawnPrefab, shootPoint.position, Quaternion.identity);
             _chargedSpawnEffect.transform.SetParent(shootPoint);
         }
+
+        #endregion Ability Functions
     }
 }

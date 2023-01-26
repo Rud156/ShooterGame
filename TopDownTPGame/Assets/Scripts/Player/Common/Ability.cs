@@ -29,6 +29,8 @@ namespace Player.Common
 
         #region Core Ability Functions
 
+        #region Ability Functions
+
         public abstract void StartAbility(BasePlayerController playerController);
 
         public abstract void AbilityUpdate(BasePlayerController playerController);
@@ -42,6 +44,10 @@ namespace Player.Common
         public virtual void ClearAllAbilityData(BasePlayerController playerController)
         {
         }
+
+        #endregion Ability Functions
+
+        #region Unity Functions
 
         public virtual void UnityStartDelegate(BasePlayerController playerController)
         {
@@ -67,6 +73,8 @@ namespace Player.Common
                 PlayerAbilityDisplay.Instance.UpdateCooldownTimer(_abilityTrigger, _currentCooldownDuration, _currentCooldownDuration / _cooldownDuration);
             }
         }
+
+        #endregion Unity Functions
 
         #endregion Core Ability Functions
 

@@ -26,6 +26,8 @@ namespace Player.Type_1
         private float _currentWindUpTime;
         private bool _abilityEnd;
 
+        #region Ability Functions
+
         public override bool AbilityCanStart(BasePlayerController playerController) => _currentUltimatePercent >= MaxUltimatePercent;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
@@ -50,6 +52,19 @@ namespace Player.Type_1
             _abilityEnd = false;
         }
 
+        public override void ClearAllAbilityData(BasePlayerController playerController)
+        {
+            if (_kitsuneRushObject != null)
+            {
+                Destroy(_kitsuneRushObject);
+                _kitsuneRushObject = null;
+            }
+        }
+
+        #endregion Ability Functions
+
+        #region Unity Functions
+
         public override void UnityUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityUpdateDelegate(playerController);
@@ -70,14 +85,7 @@ namespace Player.Type_1
             }
         }
 
-        public override void ClearAllAbilityData(BasePlayerController playerController)
-        {
-            if (_kitsuneRushObject != null)
-            {
-                Destroy(_kitsuneRushObject);
-                _kitsuneRushObject = null;
-            }
-        }
+        #endregion Unity Functions
 
         #region External Functions
 

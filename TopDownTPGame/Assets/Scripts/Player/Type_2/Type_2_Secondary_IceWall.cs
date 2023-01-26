@@ -1,10 +1,10 @@
-    #region
+#region
 
-    using Player.Base;
-    using Player.Common;
-    using UnityEngine;
+using Player.Base;
+using Player.Common;
+using UnityEngine;
 
-    #endregion
+#endregion
 
 namespace Player.Type_2
 {
@@ -22,6 +22,8 @@ namespace Player.Type_2
 
         private bool _abilityEnd;
         private float _currentWindUpTime;
+
+        #region Ability Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded && _currentCooldownDuration <= 0;
 
@@ -55,5 +57,7 @@ namespace Player.Type_2
             _currentWindUpTime = _windUpTime;
             _abilityEnd = false;
         }
+
+        #endregion Ability Functions
     }
 }

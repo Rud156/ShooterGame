@@ -27,6 +27,8 @@ namespace Player.Type_1
 
         private float _currentOverheatTime;
 
+        #region Ability Functions
+
         public override bool AbilityCanStart(BasePlayerController playerController) => _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
@@ -64,6 +66,10 @@ namespace Player.Type_1
 
         public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
 
+        #endregion Ability Functions
+
+        #region Unity Functions
+
         public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityFixedUpdateDelegate(playerController);
@@ -73,5 +79,7 @@ namespace Player.Type_1
                 _currentOverheatTime -= Time.fixedDeltaTime * _overheatCooldownMultiplier;
             }
         }
+
+        #endregion Unity Functions
     }
 }
