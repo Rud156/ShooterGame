@@ -2,7 +2,6 @@
 
 using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 #endregion
 
@@ -11,7 +10,7 @@ namespace Player.Base
     public class PlayerBaseEffectsController : MonoBehaviour
     {
         [Header("Effects Prefab")]
-        [SerializeField] private EffectSpawnData _fallingEffect;
+        [SerializeField] private EffectSpawnData _jumpEffect;
         [SerializeField] private EffectSpawnData _runEffect;
         [SerializeField] private EffectSpawnData _landEffect;
 
@@ -19,20 +18,20 @@ namespace Player.Base
         [SerializeField] private Transform _player;
         [SerializeField] private BasePlayerController _playerController;
 
-        private GameObject _fallingEffectObject;
-
         #region Unity Functions
 
         private void Start()
         {
             _playerController.OnPlayerGroundedChanged += HandlePlayerGroundedChanged;
             _playerController.OnPlayerStateChanged += HandlePlayerStateChanged;
+            _playerController.OnPlayerJumped += HandlePlayerJumped;
         }
 
         private void OnDestroy()
         {
             _playerController.OnPlayerGroundedChanged -= HandlePlayerGroundedChanged;
             _playerController.OnPlayerStatePushed -= HandlePlayerStateChanged;
+            _playerController.OnPlayerJumped -= HandlePlayerJumped;
         }
 
         #endregion Unity Functions
@@ -44,9 +43,10 @@ namespace Player.Base
             // This means we landed on the ground
             if (!previousState && newState)
             {
-                var position = transform.position;
-                position += _landEffect.spawnOffset;
-                Instantiate(_landEffect.effectPrefab, position, _landEffect.effectPrefab.transform.rotation);
+                var characterTransform = transform;
+                var position = characterTransform.position;
+                var landEffect = Instantiate(_landEffect.effectPrefab, position, _landEffect.effectPrefab.transform.rotation, characterTransform);
+                landEffect.transform.localPosition += _landEffect.spawnOffset;
             }
         }
 
@@ -73,27 +73,19 @@ namespace Player.Base
                     break;
 
                 case PlayerState.Falling:
-                {
-                    Assert.IsNull(_fallingEffectObject, "Falling Effect should not have a value here...");
-                    var position = transform.position;
-
-                    _fallingEffectObject = Instantiate(_fallingEffect.effectPrefab, position, _fallingEffect.effectPrefab.transform.rotation, _player);
-                    _fallingEffectObject.transform.localPosition += _fallingEffect.spawnOffset;
-                }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(currentState), currentState, null);
             }
+        }
 
-            if (currentState != PlayerState.Falling)
-            {
-                if (_fallingEffectObject != null)
-                {
-                    Destroy(_fallingEffectObject);
-                    _fallingEffectObject = null;
-                }
-            }
+        private void HandlePlayerJumped()
+        {
+            var characterTransform = transform;
+            var position = characterTransform.position;
+            var landEffect = Instantiate(_jumpEffect.effectPrefab, position, _jumpEffect.effectPrefab.transform.rotation, characterTransform);
+            landEffect.transform.localPosition += _jumpEffect.spawnOffset;
         }
 
         #endregion Utils

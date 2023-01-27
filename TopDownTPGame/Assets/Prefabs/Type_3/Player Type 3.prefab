@@ -483,10 +483,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345262e5f1c94398aea3044918997584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fallingEffect:
-    spawnOffset: {x: 0, y: -1, z: 0}
-    effectPrefab: {fileID: 4310403025927699439, guid: 08090a5eccf5faf44a6ec590c4962cec,
-      type: 3}
+  _jumpEffect:
+    spawnOffset: {x: 0, y: 0, z: -1.5}
+    effectPrefab: {fileID: 0}
   _runEffect:
     spawnOffset: {x: 0, y: 0, z: -1.5}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
