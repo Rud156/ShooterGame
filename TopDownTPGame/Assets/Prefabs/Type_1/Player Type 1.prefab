@@ -474,7 +474,7 @@ MonoBehaviour:
   _maxShootDistance: 50
   _shootMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 193
   _shootPoint: {fileID: 95916530296144473}
   _cameraMainPoint: {fileID: 95916529393616190}
   _closeShootClearPoint: {fileID: 492630955}
@@ -646,6 +646,8 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
+  _minHealthDecayGuard: 0
+  _decayClearRate: 0
   _debugDamageAmount: 40
   _debugHealAmount: 30
 --- !u!114 &7127077101925072532

@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &418013023188048175
 MonoBehaviour:
@@ -44,9 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3461b719b185e4b81a09562c3894dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pulseCount: 3
+  _pulseEffectPrefab: {fileID: 0}
+  _pulseBurstEffectPrefab: {fileID: 0}
+  _pulseCount: 5
   _pulseDuration: 4
-  _pulseRadius: 10
+  _pulseRadius: 50
   _pulseMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 193
+  _paranoiaDuration: 3.5
+  _healthDecayAmount: 50
+  _healthDecayDuration: 3

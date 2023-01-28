@@ -1,5 +1,6 @@
 #region
 
+using System;
 using Player.Base;
 using Player.Common;
 using Player.UI;
@@ -174,7 +175,7 @@ namespace Player.Type_3
 
         #region Structs
 
-        [System.Serializable]
+        [Serializable]
         private struct DashEffect
         {
             public GameObject effectPrefab;

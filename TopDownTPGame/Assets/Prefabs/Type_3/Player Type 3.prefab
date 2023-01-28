@@ -466,7 +466,7 @@ MonoBehaviour:
   _maxShootDistance: 50
   _shootMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 193
   _shootPoint: {fileID: 1683011238445074564}
   _cameraMainPoint: {fileID: 1683011238075420643}
   _closeShootClearPoint: {fileID: 1966050272888304651}
@@ -558,7 +558,7 @@ MonoBehaviour:
   _fireRate: 0.75
   _attackMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 193
   _damageAmount: 30
   _raycastDistance: 15.5
   _overheatTime: 7
@@ -673,6 +673,8 @@ MonoBehaviour:
   _cooldownDuration: 0
   _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
     type: 3}
+  _windUpTime: 0.25
+  _ultimateChargeRate: 20
 --- !u!114 &7031137311574653001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -689,6 +691,8 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
+  _minHealthDecayGuard: 0
+  _decayClearRate: 0
   _debugDamageAmount: 0
   _debugHealAmount: 0
 --- !u!114 &6594609260255980422

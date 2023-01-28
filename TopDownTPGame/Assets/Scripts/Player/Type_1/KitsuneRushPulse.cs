@@ -87,7 +87,6 @@ namespace Player.Type_1
         private void ApplyCooldownPulse()
         {
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, _hitColliders, _pulseMask);
-
             for (var i = 0; i < targetsHit; i++)
             {
                 if (_hitColliders[i] == null)

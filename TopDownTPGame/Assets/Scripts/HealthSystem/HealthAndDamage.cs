@@ -19,6 +19,10 @@ namespace HealthSystem
         [SerializeField] private float _autoHealTickRate;
         [SerializeField] private int _autoHealPerTickAmount;
 
+        [Header("Health Decay")]
+        [SerializeField] private float _minHealthDecayGuard;
+        [SerializeField] private float _decayClearRate;
+
         [Header("Debug")]
         [SerializeField] private int _debugDamageAmount;
         [SerializeField] private int _debugHealAmount;
@@ -97,6 +101,14 @@ namespace HealthSystem
         public void SetAutoHealState(AutoHealWhen autoHealWhen) => _currentAutoHealState = autoHealWhen;
 
         #endregion Auto Heal
+
+        #region Decay
+
+        public void ApplyHealthDecay(float decayAmount, float decayDuration)
+        {
+        }
+
+        #endregion Decay
 
         #region Modifiers Update
 
