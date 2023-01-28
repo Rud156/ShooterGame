@@ -39,13 +39,13 @@ namespace HealthSystem
         public delegate void DamageModifierRemoved(DamageModifier damageModifier, int currentHealth);
 
 
-        public HealthChanged OnHealthChanged;
-        public DamageTaken OnDamageTaken;
-        public Healed OnHealed;
-        public HealModifierAdded OnHealModifierAdded;
-        public HealModifierRemoved OnHealModifierRemoved;
-        public DamageModifierAdded OnDamageModifierAdded;
-        public DamageModifierRemoved OnDamageModifierRemoved;
+        public event HealthChanged OnHealthChanged;
+        public event DamageTaken OnDamageTaken;
+        public event Healed OnHealed;
+        public event HealModifierAdded OnHealModifierAdded;
+        public event HealModifierRemoved OnHealModifierRemoved;
+        public event DamageModifierAdded OnDamageModifierAdded;
+        public event DamageModifierRemoved OnDamageModifierRemoved;
 
         #region Unity Functions
 

@@ -266,24 +266,36 @@ namespace Player.UI
             }
         }
 
-        public void UpdateStackCount(AbilityTrigger abilityTrigger, int stackCount)
+        public void UpdateStackCount(AbilityTrigger abilityTrigger, int stackCount, bool show = true)
         {
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
+                {
                     _primaryDisplay.stackCountLabel.text = stackCount.ToString();
+                    _primaryDisplay.stackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                }
                     break;
 
                 case AbilityTrigger.Secondary:
+                {
                     _secondaryDisplay.stackCountLabel.text = stackCount.ToString();
+                    _secondaryDisplay.stackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                }
                     break;
 
                 case AbilityTrigger.Tertiary:
+                {
                     _tertiaryDisplay.stackCountLabel.text = stackCount.ToString();
+                    _tertiaryDisplay.stackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                }
                     break;
 
                 case AbilityTrigger.Ultimate:
+                {
                     _ultimateDisplay.stackCountLabel.text = stackCount.ToString();
+                    _ultimateDisplay.stackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                }
                     break;
 
                 default:

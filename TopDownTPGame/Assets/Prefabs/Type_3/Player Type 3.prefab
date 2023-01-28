@@ -627,11 +627,12 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
-  _cooldownDuration: 0
+  _cooldownDuration: 5
+  _dashEffectPrefab: {fileID: 0}
   _cameraHolder: {fileID: 1683011237826357154}
   _dashCharges: 3
-  _dashDuration: 0.3
-  _dashVelocity: 50
+  _dashDuration: 0.25
+  _dashVelocity: 80
   _dashEndFloatDuration: 0.25
   _dashEndFloatFallMultiplier: 2.5
 --- !u!114 &1683011237795699243

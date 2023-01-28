@@ -76,13 +76,13 @@ namespace Player.Base
         public delegate void PlayerAbilityStarted(Ability ability);
         public delegate void PlayerAbilityEnded(Ability ability);
 
-        public PlayerStatePushed OnPlayerStatePushed;
-        public PlayerStatePopped OnPlayerStatePopped;
-        public PlayerStateChanged OnPlayerStateChanged;
-        public PlayerGroundedChange OnPlayerGroundedChanged;
-        public PlayerJumped OnPlayerJumped;
-        public PlayerAbilityStarted OnPlayerAbilityStarted;
-        public PlayerAbilityEnded OnPlayerAbilityEnded;
+        public event PlayerStatePushed OnPlayerStatePushed;
+        public event PlayerStatePopped OnPlayerStatePopped;
+        public event PlayerStateChanged OnPlayerStateChanged;
+        public event PlayerGroundedChange OnPlayerGroundedChanged;
+        public event PlayerJumped OnPlayerJumped;
+        public event PlayerAbilityStarted OnPlayerAbilityStarted;
+        public event PlayerAbilityEnded OnPlayerAbilityEnded;
 
         #region Unity Functions
 

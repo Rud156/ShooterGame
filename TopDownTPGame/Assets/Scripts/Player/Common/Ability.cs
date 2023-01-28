@@ -27,6 +27,10 @@ namespace Player.Common
         protected float _currentCooldownDuration;
         protected float _cooldownMultiplier = DefaultCooldownMultiplier;
 
+        public delegate void AbilityCooldownComplete();
+
+        public event AbilityCooldownComplete OnAbilityCooldownComplete;
+
         #region Core Ability Functions
 
         #region Ability Functions
@@ -68,6 +72,7 @@ namespace Player.Common
                 if (_currentCooldownDuration < 0)
                 {
                     _currentCooldownDuration = 0;
+                    OnAbilityCooldownComplete?.Invoke();
                 }
 
                 PlayerAbilityDisplay.Instance.UpdateCooldownTimer(_abilityTrigger, _currentCooldownDuration, _currentCooldownDuration / _cooldownDuration);
