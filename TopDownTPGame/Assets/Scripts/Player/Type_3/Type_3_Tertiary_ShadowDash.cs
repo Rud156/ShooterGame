@@ -13,7 +13,10 @@ namespace Player.Type_3
     public class Type_3_Tertiary_ShadowDash : Ability
     {
         [Header("Prefabs")]
-        [SerializeField] private GameObject _dashEffectPrefab;
+        [SerializeField] private DashEffect _dashEffectForward;
+        [SerializeField] private DashEffect _dashEffectBackward;
+        [SerializeField] private DashEffect _dashEffectLeft;
+        [SerializeField] private DashEffect _dashEffectRight;
 
         [Header("Components")]
         [SerializeField] private Transform _cameraHolder;
@@ -26,6 +29,8 @@ namespace Player.Type_3
         [Header("Dash Float")]
         [SerializeField] private float _dashEndFloatDuration;
         [SerializeField] private float _dashEndFloatFallMultiplier;
+
+        private GameObject _dashEffectObject;
 
         private int _currentDashesLeftCount;
         private float _currentDashTimeLeft;
@@ -65,9 +70,15 @@ namespace Player.Type_3
             {
                 _currentCooldownDuration = _cooldownDuration;
             }
+
+            Destroy(_dashEffectObject);
         }
 
-        public override void StartAbility(BasePlayerController playerController) => _currentDashTimeLeft = _dashDuration;
+        public override void StartAbility(BasePlayerController playerController)
+        {
+            _currentDashTimeLeft = _dashDuration;
+            DisplayDashEffect(playerController);
+        }
 
         #endregion Ability Functions
 
@@ -106,11 +117,71 @@ namespace Player.Type_3
             }
         }
 
-        private void UpdateDashCountChanged()
+        private void UpdateDashCountChanged() => PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentDashesLeftCount);
+
+        private void DisplayDashEffect(BasePlayerController playerController)
         {
-            PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentDashesLeftCount);
+            var coreInput = playerController.GetCoreMoveInput();
+            // Basically when there is no input use forward only...
+            if (ExtensionFunctions.IsNearlyEqual(coreInput.x, 0) && ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))
+            {
+                coreInput.y = 1;
+            }
+
+            GameObject dashEffectPrefab;
+            Vector3 dashEffectOffset;
+            Vector3 dashEffectRotation;
+
+            switch (coreInput.y)
+            {
+                case > 0:
+                    dashEffectPrefab = _dashEffectForward.effectPrefab;
+                    dashEffectOffset = _dashEffectForward.effectOffset;
+                    dashEffectRotation = _dashEffectForward.effectLocalRotation;
+                    break;
+
+                case < 0:
+                    dashEffectPrefab = _dashEffectBackward.effectPrefab;
+                    dashEffectOffset = _dashEffectBackward.effectOffset;
+                    dashEffectRotation = _dashEffectBackward.effectLocalRotation;
+                    break;
+
+                default:
+                {
+                    if (coreInput.x > 0)
+                    {
+                        dashEffectPrefab = _dashEffectLeft.effectPrefab;
+                        dashEffectOffset = _dashEffectLeft.effectOffset;
+                        dashEffectRotation = _dashEffectLeft.effectLocalRotation;
+                    }
+                    else
+                    {
+                        dashEffectPrefab = _dashEffectRight.effectPrefab;
+                        dashEffectOffset = _dashEffectRight.effectOffset;
+                        dashEffectRotation = _dashEffectRight.effectLocalRotation;
+                    }
+
+                    break;
+                }
+            }
+
+            _dashEffectObject = Instantiate(dashEffectPrefab, _cameraHolder.position, Quaternion.identity, _cameraHolder);
+            _dashEffectObject.transform.localPosition += dashEffectOffset;
+            _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
         }
 
         #endregion Utils
+
+        #region Structs
+
+        [System.Serializable]
+        private struct DashEffect
+        {
+            public GameObject effectPrefab;
+            public Vector3 effectOffset;
+            public Vector3 effectLocalRotation;
+        }
+
+        #endregion Structs
     }
 }

@@ -164,7 +164,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683011238075420654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.23, z: -3.44}
+  m_LocalPosition: {x: 0, y: 2.25, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -628,7 +628,26 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 0
   _cooldownDuration: 5
-  _dashEffectPrefab: {fileID: 0}
+  _dashEffectForward:
+    effectPrefab: {fileID: 5267843241776696678, guid: ed2368563d002b6479ea7d316bd71b59,
+      type: 3}
+    effectOffset: {x: 0, y: 2.25, z: 0}
+    effectLocalRotation: {x: 0, y: 180, z: 180}
+  _dashEffectBackward:
+    effectPrefab: {fileID: 1014844992124265296, guid: 389f5ccb016164d489241bb05d279ba4,
+      type: 3}
+    effectOffset: {x: 0, y: 2.25, z: 0}
+    effectLocalRotation: {x: 0, y: 180, z: 180}
+  _dashEffectLeft:
+    effectPrefab: {fileID: 859636762055700504, guid: d225805883ab28c41b40e65a8c701938,
+      type: 3}
+    effectOffset: {x: 13.5, y: 5, z: 0}
+    effectLocalRotation: {x: 0, y: 180, z: 180}
+  _dashEffectRight:
+    effectPrefab: {fileID: 760224239409828698, guid: 7258658e0edd5b2489085d06cbdbc24c,
+      type: 3}
+    effectOffset: {x: -13.5, y: 5, z: 0}
+    effectLocalRotation: {x: 0, y: 180, z: 180}
   _cameraHolder: {fileID: 1683011237826357154}
   _dashCharges: 3
   _dashDuration: 0.25

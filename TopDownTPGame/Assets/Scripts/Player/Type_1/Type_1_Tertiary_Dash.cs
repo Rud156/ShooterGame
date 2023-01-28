@@ -72,6 +72,12 @@ namespace Player.Type_1
             _currentDashTimeLeft = _dashDuration;
 
             var coreInput = playerController.GetCoreMoveInput();
+            // Basically when there is no input use forward only...
+            if (ExtensionFunctions.IsNearlyEqual(coreInput.x, 0) && ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))
+            {
+                coreInput.y = 1;
+            }
+
             GameObject dashEffectPrefab;
             Vector3 dashEffectOffset;
             Vector3 dashEffectRotation;
