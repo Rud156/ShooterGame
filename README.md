@@ -93,6 +93,12 @@
 - [X] Cooldown system for abilities. Can be faster cooldown, fixed amount time cooldown, percent amount cooldown...
 - [X] Add a Windup Time for every Ultimate
 
+## Colors
+- Purple - 5200FF
+- Red - FF0000
+- White - FFFFFF
+- Light Blue - 00EBFF
+
 ## External Credits
 
 - https://opengameart.org/content/lava-meets-water
