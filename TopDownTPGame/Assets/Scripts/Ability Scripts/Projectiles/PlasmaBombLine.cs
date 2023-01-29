@@ -1,5 +1,6 @@
 #region
 
+using HealthSystem;
 using UnityEngine;
 
 #endregion
@@ -10,15 +11,18 @@ namespace Ability_Scripts.Projectiles
     public class PlasmaBombLine : MonoBehaviour, IProjectile
     {
         [Header("Prefabs")]
+        [SerializeField] private GameObject _destroyEffectPrefab;
         [SerializeField] private GameObject _plasmaPulsePrefab;
 
-        [Header("Prjectile Data")]
+        [Header("Projectile Data")]
         [SerializeField] private float _projectileLaunchVelocity;
         [SerializeField] private float _projectileDestroyTime;
         [SerializeField] private float _pulseDropRate;
 
+        [Header("Damage Data")]
+        [SerializeField] private int _damageAmount;
+
         private Rigidbody _rb;
-        private bool _isLaunched;
         private bool _isInitialized;
 
         private float _destroyTimeLeft;
@@ -28,13 +32,10 @@ namespace Ability_Scripts.Projectiles
 
         private void Start() => Init();
 
+        private void OnTriggerEnter(Collider other) => ProjectileHit(other);
+
         private void FixedUpdate()
         {
-            if (!_isLaunched)
-            {
-                return;
-            }
-
             _destroyTimeLeft -= Time.fixedDeltaTime;
             if (_destroyTimeLeft < 0)
             {
@@ -56,17 +57,26 @@ namespace Ability_Scripts.Projectiles
         {
             Init();
 
-            _isLaunched = true;
             _rb.velocity = direction * _projectileLaunchVelocity;
             _destroyTimeLeft = _projectileDestroyTime;
         }
 
         public void ProjectileDestroy()
         {
+            if (_destroyEffectPrefab)
+            {
+                Instantiate(_destroyEffectPrefab, transform.position, Quaternion.identity);
+            }
+
+            Destroy(gameObject);
         }
 
         public void ProjectileHit(Collider other)
         {
+            if (other.TryGetComponent(out HealthAndDamage healthAndDamage))
+            {
+                healthAndDamage.TakeDamage(_damageAmount);
+            }
         }
 
         #endregion External Functions

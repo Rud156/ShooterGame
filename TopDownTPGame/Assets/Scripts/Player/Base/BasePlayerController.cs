@@ -408,11 +408,11 @@ namespace Player.Base
 
         public void CharacterEnableEngineerShield(float duration)
         {
-            // TODO: Add handling for effect and stuff
-
+            var effect = SpawnGenericEffectsAndInputPrefab(PlayerEffectsAndInputModifierType.EngineerShield);
             _playerEffectsInputsModifiers.Add(
                 new PlayerEffectsAndInputModifiers()
                 {
+                    Effect = effect,
                     CurrentDuration = duration,
                     IsTimed = true,
                     ModifierType = PlayerEffectsAndInputModifierType.EngineerShield,

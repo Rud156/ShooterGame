@@ -129,7 +129,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504131108382786863}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -362,8 +362,8 @@ MonoBehaviour:
   _plasmaBombPrefab: {fileID: 4947489715981850301, guid: e967618039d656546ac03453bac3afef,
     type: 3}
   _cameraHolder: {fileID: 1504131108770834952}
-  _shootPoint: {fileID: 1504131108382786862}
-  _fireRate: 0.5
+  _shootController: {fileID: 795477187898822337}
+  _fireRate: 1
 --- !u!114 &-8520166292908909276
 MonoBehaviour:
   m_ObjectHideFlags: 0

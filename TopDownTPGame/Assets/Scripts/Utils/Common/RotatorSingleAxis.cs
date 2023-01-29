@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Utils.Common
 {
-    public class Rotator : MonoBehaviour
+    public class RotatorSingleAxis : MonoBehaviour
     {
         [Header("Rotation Data")]
         [SerializeField] private float _rotationSpeed;

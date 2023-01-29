@@ -16,7 +16,7 @@ namespace Player.Type_4
 
         [Header("Components")]
         [SerializeField] private Transform _cameraHolder;
-        [SerializeField] private Transform _shootPoint;
+        [SerializeField] private BaseShootController _shootController;
 
         [Header("Plasma Shoot Data")]
         [SerializeField] private float _fireRate;
@@ -34,8 +34,8 @@ namespace Player.Type_4
             {
                 _nextShootTime = Time.time + _fireRate;
 
-                var spawnPosition = _shootPoint.position;
-                var direction = _cameraHolder.forward;
+                var spawnPosition = _shootController.GetShootPosition();
+                var direction = _shootController.GetShootLookDirection();
 
                 var projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
                 var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
