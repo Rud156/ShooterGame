@@ -40,6 +40,9 @@ namespace Player.Type_3
                 var characterTransform = transform;
                 var darkPulse = Instantiate(_darkPulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
 
+                var darkObject = darkPulse.GetComponent<DarkPulse>();
+                darkObject.SetOwnerInstanceId(gameObject.GetInstanceID());
+
                 _darkPulseObject = darkPulse;
                 _abilityEnd = true;
             }

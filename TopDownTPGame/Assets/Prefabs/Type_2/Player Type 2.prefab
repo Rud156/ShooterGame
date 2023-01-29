@@ -346,6 +346,12 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 2
+  _playerEffectsAndInputData:
+  - effectPrefab: {fileID: 969310629795772795, guid: ececb48e1e0c2d1449d1a915c49b89bb,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    effectParent: {fileID: 2637092012727805912}
+    modifierType: 1
 --- !u!114 &3268835866765903229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,6 +623,8 @@ MonoBehaviour:
   _decayClearRate: 0
   _debugDamageAmount: 30
   _debugHealAmount: 40
+  _debugDecayAmount: 0
+  _debugDecayDuration: 0
 --- !u!114 &6432708683422574492
 MonoBehaviour:
   m_ObjectHideFlags: 0

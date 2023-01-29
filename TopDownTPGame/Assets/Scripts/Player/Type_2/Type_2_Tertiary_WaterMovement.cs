@@ -88,12 +88,12 @@ namespace Player.Type_2
         {
             foreach (var burstDamageData in _burstDamageMarkers)
             {
-                burstDamageData.burstDamageMarker.SetDamageAmount(_damageAmount);
-                burstDamageData.burstDamageMarker.ApplyDamage();
-                Destroy(burstDamageData.markedEffectObject);
-                Destroy(burstDamageData.burstDamageMarker);
+                burstDamageData.BurstDamageMarker.SetDamageAmount(_damageAmount);
+                burstDamageData.BurstDamageMarker.ApplyDamage();
+                Destroy(burstDamageData.MarkedEffectObject);
+                Destroy(burstDamageData.BurstDamageMarker);
 
-                var position = burstDamageData.burstDamageMarker.transform.position;
+                var position = burstDamageData.BurstDamageMarker.transform.position;
                 Instantiate(_damageBurstEffectPrefab, position, Quaternion.identity);
             }
 
@@ -266,8 +266,8 @@ namespace Player.Type_2
 
                     _burstDamageMarkers.Add(new BurstDamageData()
                     {
-                        burstDamageMarker = burstDamage,
-                        markedEffectObject = effect,
+                        BurstDamageMarker = burstDamage,
+                        MarkedEffectObject = effect,
                     });
                 }
             }
@@ -281,8 +281,8 @@ namespace Player.Type_2
 
         private struct BurstDamageData
         {
-            public BurstDamageMarker burstDamageMarker;
-            public GameObject markedEffectObject;
+            public BurstDamageMarker BurstDamageMarker;
+            public GameObject MarkedEffectObject;
         }
 
         #endregion Structs

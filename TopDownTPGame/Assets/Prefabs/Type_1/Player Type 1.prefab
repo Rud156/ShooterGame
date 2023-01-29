@@ -459,6 +459,12 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 2
+  _playerEffectsAndInputData:
+  - effectPrefab: {fileID: 969310629795772795, guid: ececb48e1e0c2d1449d1a915c49b89bb,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    effectParent: {fileID: 95916529393616190}
+    modifierType: 1
 --- !u!114 &1948321099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,7 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
-  _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
   _cooldownDuration: 3
@@ -557,7 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
-  _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
   _cooldownDuration: 5
@@ -582,7 +588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 8b2b2198bf13feb40a52ab13c5d231d6, type: 3}
-  _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
   _cooldownDuration: 7
@@ -622,7 +628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 348ed09d7cbb6734ba68c88b7db4bd5d, type: 3}
-  _background: {fileID: 21300000, guid: f4e7a8f895301d942bfecc55c0a45e04, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
   _cooldownDuration: 0
@@ -650,6 +656,8 @@ MonoBehaviour:
   _decayClearRate: 0
   _debugDamageAmount: 40
   _debugHealAmount: 30
+  _debugDecayAmount: 0
+  _debugDecayDuration: 0
 --- !u!114 &7127077101925072532
 MonoBehaviour:
   m_ObjectHideFlags: 0

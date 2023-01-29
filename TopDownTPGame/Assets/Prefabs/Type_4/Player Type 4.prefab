@@ -117,7 +117,7 @@ GameObject:
   m_Layer: 6
   m_Name: Shoot Point
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -252,6 +252,12 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 2
+  _playerEffectsAndInputData:
+  - effectPrefab: {fileID: 969310629795772795, guid: ececb48e1e0c2d1449d1a915c49b89bb,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    effectParent: {fileID: 1504131108474634825}
+    modifierType: 1
 --- !u!114 &795477187898822337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,8 +457,12 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
+  _minHealthDecayGuard: 0
+  _decayClearRate: 0
   _debugDamageAmount: 0
   _debugHealAmount: 0
+  _debugDecayAmount: 0
+  _debugDecayDuration: 0
 --- !u!114 &3858859646320302021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,7 +549,7 @@ GameObject:
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

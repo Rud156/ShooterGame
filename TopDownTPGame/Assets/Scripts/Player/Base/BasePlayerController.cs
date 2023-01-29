@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Effects;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,6 +41,7 @@ namespace Player.Base
 
         [Header("Custom Effects")]
         [SerializeField] private List<PlayerInputRestrictingData> _playerInputRestrictingEffectsData;
+        [SerializeField] private List<PlayerEffectsAndInputData> _playerEffectsAndInputData;
 
         // Input
         private Vector2 _coreMoveInput;
@@ -221,7 +223,7 @@ namespace Player.Base
             }
         }
 
-        private PlayerInputRestrictingData GetCustomEffectForState(PlayerInputRestrictingState playerState)
+        private PlayerInputRestrictingData GetCustomEffectForInputRestrictingState(PlayerInputRestrictingState playerState)
         {
             foreach (var effect in _playerInputRestrictingEffectsData)
             {
@@ -243,19 +245,27 @@ namespace Player.Base
             }
         }
 
-        private void DestroyPlayerInputCustomEffect(PlayerInputRestrictingStoreData playerCustomEffectOutput) => Destroy(playerCustomEffectOutput.Effect);
-
-        private GameObject SpawnGenericEffectPrefab(PlayerInputRestrictingState stateType)
+        private void DestroyPlayerInputCustomEffect(PlayerInputRestrictingStoreData playerCustomEffectOutput)
         {
-            var customEffect = GetCustomEffectForState(stateType);
-            var spawnPosition = transform.position;
-            var forward = transform.forward;
-            var right = transform.right;
+            if (playerCustomEffectOutput.Effect != null)
+            {
+                if (playerCustomEffectOutput.Effect.TryGetComponent(out DestroyParticleEffectSlowlyEmission emission))
+                {
+                    emission.DestroyEffect();
+                }
+                else
+                {
+                    Destroy(playerCustomEffectOutput.Effect);
+                }
+            }
+        }
 
-            spawnPosition += forward * customEffect.effectSpawnOffset.z + right * customEffect.effectSpawnOffset.x;
-            spawnPosition.y += customEffect.effectSpawnOffset.y;
-
-            var effect = Instantiate(customEffect.effectPrefab, spawnPosition, Quaternion.identity);
+        private GameObject SpawnGenericInputRestrictingPrefab(PlayerInputRestrictingState stateType)
+        {
+            var customEffect = GetCustomEffectForInputRestrictingState(stateType);
+            var characterTransform = transform;
+            var effect = Instantiate(customEffect.effectPrefab, characterTransform.position, Quaternion.identity, characterTransform);
+            effect.transform.localPosition += customEffect.effectSpawnOffset;
             return effect;
         }
 
@@ -263,7 +273,7 @@ namespace Player.Base
         {
             SetupPlayerInputRestrictingState();
 
-            var effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Frozen);
+            var effect = SpawnGenericInputRestrictingPrefab(PlayerInputRestrictingState.Frozen);
             _playerInputRestrictingEffects.Add(
                 new PlayerInputRestrictingStoreData()
                 {
@@ -278,7 +288,7 @@ namespace Player.Base
         {
             SetupPlayerInputRestrictingState();
 
-            var effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Knockback);
+            var effect = SpawnGenericInputRestrictingPrefab(PlayerInputRestrictingState.Knockback);
             _playerInputRestrictingEffects.Add(
                 new PlayerInputRestrictingStoreData()
                 {
@@ -294,7 +304,7 @@ namespace Player.Base
         {
             SetupPlayerInputRestrictingState();
 
-            var effect = SpawnGenericEffectPrefab(PlayerInputRestrictingState.Stun);
+            var effect = SpawnGenericInputRestrictingPrefab(PlayerInputRestrictingState.Stun);
             _playerInputRestrictingEffects.Add(
                 new PlayerInputRestrictingStoreData()
                 {
@@ -319,6 +329,7 @@ namespace Player.Base
                     movementModifier.CurrentDuration -= Time.fixedDeltaTime;
                     if (movementModifier.CurrentDuration <= 0)
                     {
+                        RemoveEffectsAndInputModifierEffects(_playerEffectsInputsModifiers[i]);
                         _playerEffectsInputsModifiers.RemoveAt(i);
                     }
                     else
@@ -328,6 +339,7 @@ namespace Player.Base
                 }
                 else if (_playerEffectsInputsModifiers[i].ModifierType == PlayerEffectsAndInputModifierType.ConstantSpeedFall && _isGrounded)
                 {
+                    RemoveEffectsAndInputModifierEffects(_playerEffectsInputsModifiers[i]);
                     _playerEffectsInputsModifiers.RemoveAt(i);
                 }
             }
@@ -339,7 +351,23 @@ namespace Player.Base
             {
                 if (string.Equals(_playerEffectsInputsModifiers[i].ModifierIdentifier, identifier))
                 {
+                    RemoveEffectsAndInputModifierEffects(_playerEffectsInputsModifiers[i]);
                     _playerEffectsInputsModifiers.RemoveAt(i);
+                }
+            }
+        }
+
+        private void RemoveEffectsAndInputModifierEffects(PlayerEffectsAndInputModifiers effectsAndInputModifiers)
+        {
+            if (effectsAndInputModifiers.Effect != null)
+            {
+                if (effectsAndInputModifiers.Effect.TryGetComponent(out DestroyParticleEffectSlowlyEmission emission))
+                {
+                    emission.DestroyEffect();
+                }
+                else
+                {
+                    Destroy(effectsAndInputModifiers.Effect);
                 }
             }
         }
@@ -365,11 +393,11 @@ namespace Player.Base
 
         public void PlayerEnabledParanoia(float duration)
         {
-            // TODO: Trigger with Global UI Handler to implement Paranoia
-
+            var effect = SpawnGenericEffectsAndInputPrefab(PlayerEffectsAndInputModifierType.Paranoia);
             _playerEffectsInputsModifiers.Add(
                 new PlayerEffectsAndInputModifiers()
                 {
+                    Effect = effect,
                     CurrentDuration = duration,
                     IsTimed = true,
                     ModifierType = PlayerEffectsAndInputModifierType.Paranoia,
@@ -391,6 +419,33 @@ namespace Player.Base
                     ModifierIdentifier = string.Empty,
                 }
             );
+        }
+
+        private GameObject SpawnGenericEffectsAndInputPrefab(PlayerEffectsAndInputModifierType effectsAndInputModifierType)
+        {
+            var customEffect = GetCustomEffectForEffectsAndInputModifierState(effectsAndInputModifierType);
+            var parent = customEffect.effectParent;
+            if (parent == null)
+            {
+                parent = transform;
+            }
+
+            var effect = Instantiate(customEffect.effectPrefab, parent.position, Quaternion.identity, parent);
+            effect.transform.localPosition += customEffect.effectSpawnOffset;
+            return effect;
+        }
+
+        private PlayerEffectsAndInputData GetCustomEffectForEffectsAndInputModifierState(PlayerEffectsAndInputModifierType effectsAndInputModifierType)
+        {
+            foreach (var effect in _playerEffectsAndInputData)
+            {
+                if (effect.modifierType == effectsAndInputModifierType)
+                {
+                    return effect;
+                }
+            }
+
+            throw new Exception("Invalid State Requested");
         }
 
         #region Updates
@@ -890,11 +945,21 @@ namespace Player.Base
 
         private struct PlayerEffectsAndInputModifiers
         {
+            public GameObject Effect;
             public string ModifierIdentifier;
             public PlayerEffectsAndInputModifierType ModifierType;
             public bool IsTimed;
             public float CurrentDuration;
             public float FloatModifierAmount;
+        }
+
+        [Serializable]
+        private struct PlayerEffectsAndInputData
+        {
+            public GameObject effectPrefab;
+            public Vector3 effectSpawnOffset;
+            public Transform effectParent;
+            public PlayerEffectsAndInputModifierType modifierType;
         }
 
         #endregion Structs

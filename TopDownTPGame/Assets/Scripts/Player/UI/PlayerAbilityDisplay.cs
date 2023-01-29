@@ -39,49 +39,49 @@ namespace Player.UI
             var primaryAbility = _root.Q<VisualElement>(PrimaryDisplayString);
             _primaryDisplay = new AbilityDisplayItem()
             {
-                itemRoot = primaryAbility,
-                abilityBackground = primaryAbility.Q<VisualElement>("Backing"),
-                abilityIcon = primaryAbility.Q<VisualElement>("AbilityIcon"),
-                abilityIconOverlay = primaryAbility.Q<VisualElement>("AbilityIconOverlay"),
-                cooldownLabel = primaryAbility.Q<Label>("CooldownTimer"),
-                stackCountLabel = primaryAbility.Q<Label>("StackCount"),
-                abilityTriggerLabel = primaryAbility.Q<Label>("AbilityTrigger")
+                ItemRoot = primaryAbility,
+                AbilityBackground = primaryAbility.Q<VisualElement>("Backing"),
+                AbilityIcon = primaryAbility.Q<VisualElement>("AbilityIcon"),
+                AbilityIconOverlay = primaryAbility.Q<VisualElement>("AbilityIconOverlay"),
+                CooldownLabel = primaryAbility.Q<Label>("CooldownTimer"),
+                StackCountLabel = primaryAbility.Q<Label>("StackCount"),
+                AbilityTriggerLabel = primaryAbility.Q<Label>("AbilityTrigger")
             };
 
             var secondaryAbility = _root.Q<VisualElement>(SecondaryDisplayString);
             _secondaryDisplay = new AbilityDisplayItem()
             {
-                itemRoot = secondaryAbility,
-                abilityBackground = secondaryAbility.Q<VisualElement>("Backing"),
-                abilityIcon = secondaryAbility.Q<VisualElement>("AbilityIcon"),
-                abilityIconOverlay = secondaryAbility.Q<VisualElement>("AbilityIconOverlay"),
-                cooldownLabel = secondaryAbility.Q<Label>("CooldownTimer"),
-                stackCountLabel = secondaryAbility.Q<Label>("StackCount"),
-                abilityTriggerLabel = secondaryAbility.Q<Label>("AbilityTrigger")
+                ItemRoot = secondaryAbility,
+                AbilityBackground = secondaryAbility.Q<VisualElement>("Backing"),
+                AbilityIcon = secondaryAbility.Q<VisualElement>("AbilityIcon"),
+                AbilityIconOverlay = secondaryAbility.Q<VisualElement>("AbilityIconOverlay"),
+                CooldownLabel = secondaryAbility.Q<Label>("CooldownTimer"),
+                StackCountLabel = secondaryAbility.Q<Label>("StackCount"),
+                AbilityTriggerLabel = secondaryAbility.Q<Label>("AbilityTrigger")
             };
 
             var tertiaryAbility = _root.Q<VisualElement>(TertiaryDisplayString);
             _tertiaryDisplay = new AbilityDisplayItem()
             {
-                itemRoot = tertiaryAbility,
-                abilityBackground = tertiaryAbility.Q<VisualElement>("Backing"),
-                abilityIcon = tertiaryAbility.Q<VisualElement>("AbilityIcon"),
-                abilityIconOverlay = tertiaryAbility.Q<VisualElement>("AbilityIconOverlay"),
-                cooldownLabel = tertiaryAbility.Q<Label>("CooldownTimer"),
-                stackCountLabel = tertiaryAbility.Q<Label>("StackCount"),
-                abilityTriggerLabel = tertiaryAbility.Q<Label>("AbilityTrigger")
+                ItemRoot = tertiaryAbility,
+                AbilityBackground = tertiaryAbility.Q<VisualElement>("Backing"),
+                AbilityIcon = tertiaryAbility.Q<VisualElement>("AbilityIcon"),
+                AbilityIconOverlay = tertiaryAbility.Q<VisualElement>("AbilityIconOverlay"),
+                CooldownLabel = tertiaryAbility.Q<Label>("CooldownTimer"),
+                StackCountLabel = tertiaryAbility.Q<Label>("StackCount"),
+                AbilityTriggerLabel = tertiaryAbility.Q<Label>("AbilityTrigger")
             };
 
             var ultimateAbility = _root.Q<VisualElement>(UltimateDisplayString);
             _ultimateDisplay = new AbilityDisplayItem()
             {
-                itemRoot = ultimateAbility,
-                abilityBackground = ultimateAbility.Q<VisualElement>("Backing"),
-                abilityIcon = ultimateAbility.Q<VisualElement>("AbilityIcon"),
-                abilityIconOverlay = ultimateAbility.Q<VisualElement>("AbilityIconOverlay"),
-                cooldownLabel = ultimateAbility.Q<Label>("CooldownTimer"),
-                stackCountLabel = ultimateAbility.Q<Label>("StackCount"),
-                abilityTriggerLabel = ultimateAbility.Q<Label>("AbilityTrigger")
+                ItemRoot = ultimateAbility,
+                AbilityBackground = ultimateAbility.Q<VisualElement>("Backing"),
+                AbilityIcon = ultimateAbility.Q<VisualElement>("AbilityIcon"),
+                AbilityIconOverlay = ultimateAbility.Q<VisualElement>("AbilityIconOverlay"),
+                CooldownLabel = ultimateAbility.Q<Label>("CooldownTimer"),
+                StackCountLabel = ultimateAbility.Q<Label>("StackCount"),
+                AbilityTriggerLabel = ultimateAbility.Q<Label>("AbilityTrigger")
             };
         }
 
@@ -95,16 +95,16 @@ namespace Player.UI
 
         private void DisplayCooldownLabelPercentAndOverlay(AbilityDisplayItem abilityDisplayItem, float percent, float maxPercent)
         {
-            abilityDisplayItem.cooldownLabel.text = $"{percent:0.0} %";
-            abilityDisplayItem.abilityIconOverlay.style.unityBackgroundImageTintColor = percent >= maxPercent
+            abilityDisplayItem.CooldownLabel.text = $"{percent:0.0} %";
+            abilityDisplayItem.AbilityIconOverlay.style.unityBackgroundImageTintColor = percent >= maxPercent
                 ? new Color(1, 1, 1, 0)
                 : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha);
         }
 
         private void DisplayCooldownLabelTimerAndOverlay(AbilityDisplayItem abilityDisplayItem, float timer, float percent)
         {
-            abilityDisplayItem.cooldownLabel.text = timer.ToString("0.0");
-            abilityDisplayItem.abilityIconOverlay.style.unityBackgroundImageTintColor = percent <= 0
+            abilityDisplayItem.CooldownLabel.text = timer.ToString("0.0");
+            abilityDisplayItem.AbilityIconOverlay.style.unityBackgroundImageTintColor = percent <= 0
                 ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0)
                 : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha);
         }
@@ -121,8 +121,8 @@ namespace Player.UI
                 {
                     var elements = new List<VisualElement>()
                     {
-                        _primaryDisplay.cooldownLabel,
-                        _primaryDisplay.abilityIconOverlay,
+                        _primaryDisplay.CooldownLabel,
+                        _primaryDisplay.AbilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
                     DisplayCooldownLabelPercentAndOverlay(_primaryDisplay, percent, maxPercent);
@@ -133,8 +133,8 @@ namespace Player.UI
                 {
                     var elements = new List<VisualElement>()
                     {
-                        _secondaryDisplay.cooldownLabel,
-                        _secondaryDisplay.abilityIconOverlay,
+                        _secondaryDisplay.CooldownLabel,
+                        _secondaryDisplay.AbilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
                     DisplayCooldownLabelPercentAndOverlay(_secondaryDisplay, percent, maxPercent);
@@ -145,8 +145,8 @@ namespace Player.UI
                 {
                     var elements = new List<VisualElement>()
                     {
-                        _tertiaryDisplay.cooldownLabel,
-                        _tertiaryDisplay.abilityIconOverlay,
+                        _tertiaryDisplay.CooldownLabel,
+                        _tertiaryDisplay.AbilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
                     DisplayCooldownLabelPercentAndOverlay(_tertiaryDisplay, percent, maxPercent);
@@ -157,8 +157,8 @@ namespace Player.UI
                 {
                     var elements = new List<VisualElement>()
                     {
-                        _ultimateDisplay.cooldownLabel,
-                        _ultimateDisplay.abilityIconOverlay,
+                        _ultimateDisplay.CooldownLabel,
+                        _ultimateDisplay.AbilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
                     DisplayCooldownLabelPercentAndOverlay(_ultimateDisplay, percent, maxPercent);
@@ -180,8 +180,8 @@ namespace Player.UI
                 {
                     var elements = new List<VisualElement>()
                     {
-                        _primaryDisplay.cooldownLabel,
-                        _primaryDisplay.abilityIconOverlay,
+                        _primaryDisplay.CooldownLabel,
+                        _primaryDisplay.AbilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
                     DisplayCooldownLabelTimerAndOverlay(_primaryDisplay, timer, percent);
@@ -192,8 +192,8 @@ namespace Player.UI
                 {
                     var elements = new List<VisualElement>()
                     {
-                        _secondaryDisplay.cooldownLabel,
-                        _secondaryDisplay.abilityIconOverlay,
+                        _secondaryDisplay.CooldownLabel,
+                        _secondaryDisplay.AbilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
                     DisplayCooldownLabelTimerAndOverlay(_secondaryDisplay, timer, percent);
@@ -204,8 +204,8 @@ namespace Player.UI
                 {
                     var elements = new List<VisualElement>()
                     {
-                        _tertiaryDisplay.cooldownLabel,
-                        _tertiaryDisplay.abilityIconOverlay,
+                        _tertiaryDisplay.CooldownLabel,
+                        _tertiaryDisplay.AbilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
                     DisplayCooldownLabelTimerAndOverlay(_tertiaryDisplay, timer, percent);
@@ -216,8 +216,8 @@ namespace Player.UI
                 {
                     var elements = new List<VisualElement>()
                     {
-                        _ultimateDisplay.cooldownLabel,
-                        _ultimateDisplay.abilityIconOverlay,
+                        _ultimateDisplay.CooldownLabel,
+                        _ultimateDisplay.AbilityIconOverlay,
                     };
                     CheckAndApplyDisplayStyle(elements, show);
                     DisplayCooldownLabelTimerAndOverlay(_ultimateDisplay, timer, percent);
@@ -236,28 +236,28 @@ namespace Player.UI
                 case AbilityTrigger.Primary:
                 {
                     var displayString = InputManager.Instance.PlayerInput.AbilityPrimary.GetBindingDisplayString();
-                    _primaryDisplay.abilityTriggerLabel.text = displayString;
+                    _primaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Secondary:
                 {
                     var displayString = InputManager.Instance.PlayerInput.AbilitySecondary.GetBindingDisplayString();
-                    _secondaryDisplay.abilityTriggerLabel.text = displayString;
+                    _secondaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Tertiary:
                 {
                     var displayString = InputManager.Instance.PlayerInput.AbilityTertiary.GetBindingDisplayString();
-                    _tertiaryDisplay.abilityTriggerLabel.text = displayString;
+                    _tertiaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Ultimate:
                 {
                     var displayString = InputManager.Instance.PlayerInput.AbilityUltimate.GetBindingDisplayString();
-                    _ultimateDisplay.abilityTriggerLabel.text = displayString;
+                    _ultimateDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
@@ -272,29 +272,29 @@ namespace Player.UI
             {
                 case AbilityTrigger.Primary:
                 {
-                    _primaryDisplay.stackCountLabel.text = stackCount.ToString();
-                    _primaryDisplay.stackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _primaryDisplay.StackCountLabel.text = stackCount.ToString();
+                    _primaryDisplay.StackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
                 }
                     break;
 
                 case AbilityTrigger.Secondary:
                 {
-                    _secondaryDisplay.stackCountLabel.text = stackCount.ToString();
-                    _secondaryDisplay.stackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _secondaryDisplay.StackCountLabel.text = stackCount.ToString();
+                    _secondaryDisplay.StackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
                 }
                     break;
 
                 case AbilityTrigger.Tertiary:
                 {
-                    _tertiaryDisplay.stackCountLabel.text = stackCount.ToString();
-                    _tertiaryDisplay.stackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _tertiaryDisplay.StackCountLabel.text = stackCount.ToString();
+                    _tertiaryDisplay.StackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
                 }
                     break;
 
                 case AbilityTrigger.Ultimate:
                 {
-                    _ultimateDisplay.stackCountLabel.text = stackCount.ToString();
-                    _ultimateDisplay.stackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _ultimateDisplay.StackCountLabel.text = stackCount.ToString();
+                    _ultimateDisplay.StackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
                 }
                     break;
 
@@ -308,23 +308,23 @@ namespace Player.UI
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
-                    _primaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
-                    _primaryDisplay.abilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
+                    _primaryDisplay.AbilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    _primaryDisplay.AbilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
                 case AbilityTrigger.Secondary:
-                    _secondaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
-                    _secondaryDisplay.abilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
+                    _secondaryDisplay.AbilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    _secondaryDisplay.AbilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
                 case AbilityTrigger.Tertiary:
-                    _tertiaryDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
-                    _tertiaryDisplay.abilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
+                    _tertiaryDisplay.AbilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    _tertiaryDisplay.AbilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
                 case AbilityTrigger.Ultimate:
-                    _ultimateDisplay.abilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
-                    _ultimateDisplay.abilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
+                    _ultimateDisplay.AbilityBackground.style.backgroundImage = new StyleBackground(abilityBackground);
+                    _ultimateDisplay.AbilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
                 default:
@@ -338,29 +338,29 @@ namespace Player.UI
             {
                 case AbilityTrigger.Primary:
                 {
-                    _primaryDisplay.abilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
-                    _primaryDisplay.abilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _primaryDisplay.AbilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _primaryDisplay.AbilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
                 }
                     break;
 
                 case AbilityTrigger.Secondary:
                 {
-                    _secondaryDisplay.abilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
-                    _secondaryDisplay.abilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _secondaryDisplay.AbilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _secondaryDisplay.AbilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
                 }
                     break;
 
                 case AbilityTrigger.Tertiary:
                 {
-                    _tertiaryDisplay.abilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
-                    _tertiaryDisplay.abilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _tertiaryDisplay.AbilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _tertiaryDisplay.AbilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
                 }
                     break;
 
                 case AbilityTrigger.Ultimate:
                 {
-                    _ultimateDisplay.abilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
-                    _ultimateDisplay.abilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _ultimateDisplay.AbilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
+                    _ultimateDisplay.AbilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
                 }
                     break;
 
@@ -397,13 +397,13 @@ namespace Player.UI
 
         private struct AbilityDisplayItem
         {
-            public VisualElement itemRoot;
-            public Label cooldownLabel;
-            public Label stackCountLabel;
-            public VisualElement abilityBackground;
-            public VisualElement abilityIcon;
-            public VisualElement abilityIconOverlay;
-            public Label abilityTriggerLabel;
+            public VisualElement ItemRoot;
+            public Label CooldownLabel;
+            public Label StackCountLabel;
+            public VisualElement AbilityBackground;
+            public VisualElement AbilityIcon;
+            public VisualElement AbilityIconOverlay;
+            public Label AbilityTriggerLabel;
         }
 
         #endregion Structs

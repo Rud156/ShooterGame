@@ -24,7 +24,7 @@ namespace Player.Type_3
 
         [Header("Affect Data")]
         [SerializeField] private float _paranoiaDuration;
-        [SerializeField] private float _healthDecayAmount;
+        [SerializeField] private int _healthDecayAmount;
         [SerializeField] private float _healthDecayDuration;
 
         private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
@@ -34,6 +34,8 @@ namespace Player.Type_3
 
         private GameObject _lastBurstEffectObject;
         private GameObject _lastPulseEffectObject;
+
+        private int _ownerId;
 
         #region Unity Functions
 
@@ -70,6 +72,12 @@ namespace Player.Type_3
 
         #endregion Unity Functions
 
+        #region External Functions
+
+        public void SetOwnerInstanceId(int ownerId) => _ownerId = ownerId;
+
+        #endregion External Functions
+
         #region Utils
 
         private void ApplyParanoiaPulse()
@@ -78,7 +86,7 @@ namespace Player.Type_3
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i] == null)
+                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == _ownerId)
                 {
                     continue;
                 }

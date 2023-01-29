@@ -451,6 +451,12 @@ MonoBehaviour:
       type: 3}
     effectSpawnOffset: {x: 0, y: 0, z: 0}
     targetState: 2
+  _playerEffectsAndInputData:
+  - effectPrefab: {fileID: 969310629795772795, guid: ececb48e1e0c2d1449d1a915c49b89bb,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    effectParent: {fileID: 1683011238075420643}
+    modifierType: 1
 --- !u!114 &8602320672462730023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,7 +680,7 @@ MonoBehaviour:
   _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
     type: 3}
   _windUpTime: 0.25
-  _ultimateChargeRate: 20
+  _ultimateChargeRate: 0.1
 --- !u!114 &7031137311574653001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,10 +697,12 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
-  _minHealthDecayGuard: 0
-  _decayClearRate: 0
-  _debugDamageAmount: 0
-  _debugHealAmount: 0
+  _minHealthDecayGuard: 5
+  _decayClearRate: 35
+  _debugDamageAmount: 40
+  _debugHealAmount: 30
+  _debugDecayAmount: 70
+  _debugDecayDuration: 3
 --- !u!114 &6594609260255980422
 MonoBehaviour:
   m_ObjectHideFlags: 0

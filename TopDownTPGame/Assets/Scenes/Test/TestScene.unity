@@ -712,6 +712,8 @@ MonoBehaviour:
   _decayClearRate: 0
   _debugDamageAmount: 40
   _debugHealAmount: 30
+  _debugDecayAmount: 0
+  _debugDecayDuration: 0
 --- !u!1 &876598210
 GameObject:
   m_ObjectHideFlags: 0
