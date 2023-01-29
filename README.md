@@ -88,7 +88,7 @@
         - [X] Secondary Ability (All Damage/HP/Effects)
         - [X] Tertiary Ability (All Damage/HP/Effects)
         - [X] Ultimate Ability (All Damage/HP/Effects)
-  - [X] Type 3 Character - Darkness Incarnated
+    - [X] Type 3 Character - Darkness Incarnated
         - [X] Primary Ability (All Damage/HP/Effects)
         - [X] Secondary Ability (All Damage/HP/Effects)
         - [X] Tertiary Ability (All Damage/HP/Effects)
