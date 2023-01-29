@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1050605402142570254}
   m_Layer: 6
-  m_Name: Type_4_CameraPrefab
+  m_Name: Type_4_CameraHolderPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

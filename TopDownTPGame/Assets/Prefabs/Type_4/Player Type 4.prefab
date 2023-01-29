@@ -182,7 +182,7 @@ Transform:
   - {fileID: 1504131108382786862}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 250
+  _maxShootDistance: 50
   _shootMask:
     serializedVersion: 2
     m_Bits: 65
@@ -291,8 +291,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpEffect:
-    spawnOffset: {x: 0, y: 0, z: 0}
-    effectPrefab: {fileID: 0}
+    spawnOffset: {x: 0, y: -0.72, z: 0}
+    effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
+      type: 3}
   _runEffect:
     spawnOffset: {x: 0, y: 0, z: -1.5}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
@@ -333,11 +334,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityPrefab: {fileID: 1050605402142570255, guid: e5a6335db6c4b14428de94aaa5fde280,
     type: 3}
-  _abilityCameraParentPrefab: {fileID: 1050605402142570255, guid: 67301d8de3ff0aa4e9d8e3a33d3ffc4e,
+  _abilityCameraParentPrefab: {fileID: 0}
+  _abilityCameraHolderPrefab: {fileID: 1050605402142570255, guid: 67301d8de3ff0aa4e9d8e3a33d3ffc4e,
     type: 3}
-  _abilityCameraHolderPrefab: {fileID: 0}
   _cameraHolder: {fileID: 1504131108770834952}
-  _camera: {fileID: 0}
+  _camera: {fileID: 1504131108474634825}
   _defaultOffset: {x: 0, y: 0, z: 0}
   _cameraParentOffset: {x: 0, y: 0, z: 0}
   _cameraHolderOffset: {x: 0, y: 0, z: 0}
@@ -353,8 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676d8150c3055544488591678fa2048b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: bd6251ac1bb4e934db0008ab4525e549, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
   _cooldownDuration: 0
@@ -375,8 +376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b56bd1daf86a0348b1f7567fa7e3b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: cacb29af613fee443aae9dfa948d22b5, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
   _cooldownDuration: 0
@@ -401,8 +402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1c9216ea357724893e12a8b9eedf5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 8f95e935466c6364d9533f6601014c9a, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
   _cooldownDuration: 0
@@ -430,8 +431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7d916f8521afc448cfce02242bc008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 613e7dcd9585fdb4592b4db569558a12, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
   _cooldownDuration: 0
