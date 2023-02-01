@@ -51,7 +51,7 @@ namespace Player.Type_5
             var cameraForward = _cameraHolder.forward;
             var hit = Physics.Raycast(cameraPosition, cameraForward, out var hitInfo, _spawnMaxDistance, _turretMask);
             Debug.DrawRay(cameraPosition, cameraForward * _spawnMaxDistance, color: Color.red);
-            PlayerInputKey primaryKey = playerController.GetPrimaryAbilityKey();
+            PlayerInputKey primaryKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             if (hit)
             {
                 // TODO: Do not spawn the turret if it spawn inside some geometry...
@@ -69,9 +69,9 @@ namespace Player.Type_5
                 }
             }
 
-            var secondaryKey = playerController.GetSecondaryAbilityKey();
-            var tertiaryKey = playerController.GetTertiaryAbilityKey();
-            var ultimateKey = playerController.GetUltimateAbilityKey();
+            var secondaryKey = playerController.GetKeyForAbilityTrigger(AbilityTrigger.Secondary);
+            var tertiaryKey = playerController.GetKeyForAbilityTrigger(AbilityTrigger.Tertiary);
+            var ultimateKey = playerController.GetKeyForAbilityTrigger(AbilityTrigger.Ultimate);
 
             if (secondaryKey.KeyPressedThisFrame || tertiaryKey.KeyPressedThisFrame || ultimateKey.KeyPressedThisFrame)
             {

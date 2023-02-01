@@ -15,52 +15,54 @@ namespace Player.Type_4
         [SerializeField] private GameObject _homingMissilePrefab;
 
         [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
-        [SerializeField] private Transform _cameraPoint;
+        [SerializeField] private BaseShootController _shootController;
 
         [Header("Spawn Data")]
-        [SerializeField] private float _fireRate;
+        [SerializeField] private float _windUpTime;
         [SerializeField] private float _targetDistance;
         [SerializeField] private LayerMask _targetMask;
 
-        private float _nextShootTime;
+        private float _currentWindUpTime;
         private bool _abilityEnd;
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        #region Ability Functions
+
+        public override bool AbilityCanStart(BasePlayerController playerController) => _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            if (Time.time > _nextShootTime)
+            _currentWindUpTime -= Time.fixedDeltaTime;
+            if (_currentWindUpTime <= 0)
             {
-                _nextShootTime = Time.time + _fireRate;
+                var shootPosition = _shootController.GetShootPosition();
+                var direction = _shootController.GetShootLookDirection();
 
-                var hit = Physics.Raycast(_cameraPoint.position, _cameraHolder.forward, out var hitInfo, _targetDistance, _targetMask);
+                var hit = Physics.Raycast(shootPosition, direction, out var hitInfo, _targetDistance, _targetMask);
                 if (hit)
                 {
-                    if (hitInfo.collider.gameObject.TryGetComponent(out BasePlayerController targetController))
-                    {
-                        // Do something here...
-                    }
-
-                    var missile = Instantiate(_homingMissilePrefab, _cameraPoint.position, Quaternion.identity);
+                    var lookDirection = Quaternion.LookRotation(direction);
+                    var missile = Instantiate(_homingMissilePrefab, shootPosition, lookDirection);
                     var homingTarget = missile.GetComponent<PlasmaHomingMissile>();
 
                     var target = hitInfo.collider.transform;
                     homingTarget.SetTarget(target);
                 }
-            }
 
-            var inputKey = playerController.GetSecondaryAbilityKey();
-            if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
-            {
                 _abilityEnd = true;
+                _currentCooldownDuration = _cooldownDuration;
             }
         }
 
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
-        public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
+        public override void StartAbility(BasePlayerController playerController)
+        {
+            _abilityEnd = false;
+            _currentWindUpTime = _windUpTime;
+        }
+
+        #endregion Ability Functions
     }
 }

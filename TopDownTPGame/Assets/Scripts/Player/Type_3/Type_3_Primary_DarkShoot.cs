@@ -95,7 +95,7 @@ namespace Player.Type_3
                 }
             }
 
-            var inputKey = playerController.GetPrimaryAbilityKey();
+            var inputKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {
                 _abilityEnd = true;

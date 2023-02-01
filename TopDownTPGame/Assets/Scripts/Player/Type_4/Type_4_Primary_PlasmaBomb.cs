@@ -24,6 +24,8 @@ namespace Player.Type_4
         private float _nextShootTime;
         private bool _abilityEnd;
 
+        #region Ability Functions
+
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
@@ -42,7 +44,7 @@ namespace Player.Type_4
                 plasmaBomb.LaunchProjectile(direction);
             }
 
-            var inputKey = playerController.GetPrimaryAbilityKey();
+            var inputKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {
                 _abilityEnd = true;
@@ -52,5 +54,7 @@ namespace Player.Type_4
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
         public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
+
+        #endregion Ability Functions
     }
 }

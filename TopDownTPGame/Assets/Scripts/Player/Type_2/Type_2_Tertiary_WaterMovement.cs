@@ -141,7 +141,7 @@ namespace Player.Type_2
         {
             _currentTimer -= Time.fixedDeltaTime;
 
-            var key = playerController.GetTertiaryAbilityKey();
+            var key = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             switch (_abilityState)
             {
                 case AbilityState.Tap when key.KeyReleasedThisFrame:
@@ -212,7 +212,7 @@ namespace Player.Type_2
         private void UpdateHoldRunMovement(BasePlayerController playerController)
         {
             _currentTimer -= Time.fixedDeltaTime;
-            var key = playerController.GetTertiaryAbilityKey();
+            var key = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             if (_currentTimer <= 0 || key.KeyPressedThisFrame)
             {
                 SetAbilityState(AbilityState.End);

@@ -9,6 +9,9 @@ namespace Ability_Scripts.Projectiles
     [RequireComponent(typeof(Rigidbody))]
     public class PlasmaHomingMissile : MonoBehaviour, IProjectile
     {
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _destroyEffect;
+
         [Header("Homing Data")]
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private float _projectileVelocity;
@@ -22,6 +25,8 @@ namespace Ability_Scripts.Projectiles
         #region Unity Functions
 
         private void Start() => _rb = GetComponent<Rigidbody>();
+
+        private void OnTriggerEnter(Collider other) => ProjectileHit(other);
 
         private void FixedUpdate()
         {
@@ -54,11 +59,13 @@ namespace Ability_Scripts.Projectiles
         {
         }
 
-        public void ProjectileDestroy() => Destroy(gameObject);
-
-        public void ProjectileHit(Collider other)
+        public void ProjectileDestroy()
         {
+            Instantiate(_destroyEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
+
+        public void ProjectileHit(Collider other) => ProjectileDestroy();
 
         #endregion External Functions
     }

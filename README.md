@@ -5,7 +5,7 @@
 - [ ] Polish Pass
     - [ ] Type 4 Character - Grenadier
         - [X] Primary Ability (All Damage/HP/Effects)
-        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [X] Secondary Ability (All Damage/HP/Effects)
         - [ ] Tertiary Ability (All Damage/HP/Effects)
         - [ ] Ultimate Ability (All Damage/HP/Effects)
 

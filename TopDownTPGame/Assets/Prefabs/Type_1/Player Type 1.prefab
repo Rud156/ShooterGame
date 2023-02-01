@@ -550,6 +550,11 @@ MonoBehaviour:
   _fireRate: 0.3
   _overheatTime: 3
   _overheatCooldownMultiplier: 0.75
+  _maxChargeAmount: 100
+  _chargeGainedForShootStaticObject: 1
+  _chargeGainedForShootCharacters: 5
+  _chargeDecayDelay: 5
+  _chargeDecayRate: 1
 --- !u!114 &95916530318942731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,10 +574,9 @@ MonoBehaviour:
   _cooldownDuration: 5
   _chargedObjectPrefab: {fileID: 9002442166465085074, guid: 8f41e4a6fa74be6488bfae50f32803e3,
     type: 3}
-  _chargedObjectSpawnPrefab: {fileID: 977387626057760654, guid: 48702555078b42747afb7c60f63883d0,
-    type: 3}
   _shootController: {fileID: 1948321099}
-  _maxChargeDuration: 3
+  _type1Primary: {fileID: 95916530318942730}
+  _windUpTime: 0.75
   _minChargeDamage: 5
   _maxChargeDamage: 75
 --- !u!114 &95916530318942729

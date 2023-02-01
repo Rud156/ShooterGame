@@ -18,8 +18,8 @@ namespace Player.Common
         [SerializeField] private Sprite _background;
 
         [Header("Core Ability Data")]
-        [SerializeField] private AbilityTrigger _abilityTrigger;
-        [SerializeField] private AbilityType _abilityType;
+        [SerializeField] protected AbilityTrigger _abilityTrigger;
+        [SerializeField] protected AbilityType _abilityType;
 
         [Header("Cooldown")]
         [SerializeField] protected float _cooldownDuration;

@@ -380,16 +380,16 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
-  _cooldownDuration: 0
+  _cooldownDuration: 7
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
-  _cameraHolder: {fileID: 1504131108770834952}
-  _cameraPoint: {fileID: 1504131108474634825}
-  _fireRate: 0.5
-  _targetDistance: 50
+  _shootController: {fileID: 795477187898822337}
+  _cameraPoint: {fileID: 7325897107652618601}
+  _windUpTime: 0.25
+  _targetDistance: 250
   _targetMask:
     serializedVersion: 2
-    m_Bits: 183
+    m_Bits: 193
 --- !u!114 &253607354497569646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,6 +464,7 @@ MonoBehaviour:
   _debugHealAmount: 0
   _debugDecayAmount: 0
   _debugDecayDuration: 0
+  _currentHealth: 0
 --- !u!114 &3858859646320302021
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -914,12 +914,6 @@ namespace Player.Base
         }
 
         public Vector2 GetCoreMoveInput() => _coreMoveInput;
-        public PlayerInputKey GetJumpKey() => _jumpKey;
-        public PlayerInputKey GetRunKey() => _runKey;
-        public PlayerInputKey GetPrimaryAbilityKey() => _abilityPrimaryKey;
-        public PlayerInputKey GetSecondaryAbilityKey() => _abilitySecondaryKey;
-        public PlayerInputKey GetTertiaryAbilityKey() => _abilityTertiaryKey;
-        public PlayerInputKey GetUltimateAbilityKey() => _abilityUltimateKey;
 
         #endregion New Input System
 

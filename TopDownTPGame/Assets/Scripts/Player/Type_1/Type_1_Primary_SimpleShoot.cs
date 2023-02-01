@@ -1,9 +1,11 @@
 #region
 
 using Ability_Scripts.Projectiles;
+using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -22,10 +24,20 @@ namespace Player.Type_1
         [SerializeField] private float _overheatTime;
         [SerializeField] private float _overheatCooldownMultiplier;
 
+        [Header("Charge Data")]
+        [SerializeField] private float _maxChargeAmount;
+        [SerializeField] private float _chargeGainedForShootStaticObject;
+        [SerializeField] private float _chargeGainedForShootCharacters;
+        [SerializeField] private float _chargeDecayDelay;
+        [SerializeField] private float _chargeDecayRate;
+
         private float _nextShootTime;
         private bool _abilityEnd;
 
         private float _currentOverheatTime;
+
+        private float _currentChargeAmount;
+        private float _currentChargeDecay;
 
         #region Ability Functions
 
@@ -45,6 +57,9 @@ namespace Player.Type_1
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 simpleProj.LaunchProjectile(direction);
 
+                var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
+                simpleDamage.SetCollisionCallback(ProjectileHitCollider);
+
                 _currentOverheatTime += _fireRate;
             }
 
@@ -55,7 +70,7 @@ namespace Player.Type_1
                 _abilityEnd = true;
             }
 
-            var inputKey = playerController.GetPrimaryAbilityKey();
+            var inputKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {
                 _abilityEnd = true;
@@ -78,8 +93,45 @@ namespace Player.Type_1
             {
                 _currentOverheatTime -= Time.fixedDeltaTime * _overheatCooldownMultiplier;
             }
+
+            if (_currentChargeDecay > 0)
+            {
+                _currentChargeDecay -= Time.fixedDeltaTime;
+            }
+            else
+            {
+                if (_currentChargeAmount > 0)
+                {
+                    _currentChargeAmount -= Time.fixedDeltaTime * _chargeDecayRate;
+                }
+            }
+
+            // This is a fallback since adding/subtracting is not checking limits
+            _currentChargeAmount = Mathf.Clamp(_currentChargeAmount, 0, _maxChargeAmount);
         }
 
         #endregion Unity Functions
+
+        #region External Functions
+
+        private void ProjectileHitCollider(Collider other)
+        {
+            if (other.CompareTag(TagManager.Player))
+            {
+                _currentChargeAmount += _chargeGainedForShootCharacters;
+                _currentChargeDecay = _chargeDecayDelay;
+            }
+            else if (other.TryGetComponent(out HealthAndDamage _))
+            {
+                _currentChargeAmount += _chargeGainedForShootStaticObject;
+                _currentChargeDecay = _chargeDecayDelay;
+            }
+        }
+
+        public float GetCurrentChargeAmount() => _currentChargeAmount;
+
+        public float GetMaxChargeAmount() => _maxChargeAmount;
+
+        #endregion External Functions
     }
 }
