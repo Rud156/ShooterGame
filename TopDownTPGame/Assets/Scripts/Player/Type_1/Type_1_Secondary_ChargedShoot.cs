@@ -4,6 +4,7 @@ using Ability_Scripts.Projectiles;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
+using Player.UI;
 using UnityEngine;
 using Utils.Misc;
 
@@ -52,8 +53,8 @@ namespace Player.Type_1
                 var simpleDamage = projectile.GetComponent<SimpleDamageOverrideTrigger>();
                 simpleDamage.SetDamageAmount(mappedDamage);
 
+                _type1Primary.UseStoredCharge(chargeAmount);
                 _abilityEnd = true;
-                _currentCooldownDuration = _cooldownDuration;
             }
         }
 
@@ -66,5 +67,18 @@ namespace Player.Type_1
         }
 
         #endregion Ability Functions
+
+        #region Unity Functions
+
+        public override void UnityUpdateDelegate(BasePlayerController playerController)
+        {
+            base.UnityUpdateDelegate(playerController);
+
+            var chargeAmount = Mathf.CeilToInt(_type1Primary.GetCurrentChargeAmount());
+            PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Secondary, chargeAmount);
+            PlayerAbilityDisplay.Instance.UpdateOverlayStatus(AbilityTrigger.Secondary, chargeAmount <= 0);
+        }
+
+        #endregion Unity Functions
     }
 }

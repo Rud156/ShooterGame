@@ -13,6 +13,8 @@ namespace Player.Type_1
 {
     public class Type_1_Primary_SimpleShoot : Ability
     {
+        private const int MaxChargeAmount = 100;
+
         [Header("Prefabs")]
         [SerializeField] private GameObject _projectilePrefab;
 
@@ -25,7 +27,6 @@ namespace Player.Type_1
         [SerializeField] private float _overheatCooldownMultiplier;
 
         [Header("Charge Data")]
-        [SerializeField] private float _maxChargeAmount;
         [SerializeField] private float _chargeGainedForShootStaticObject;
         [SerializeField] private float _chargeGainedForShootCharacters;
         [SerializeField] private float _chargeDecayDelay;
@@ -107,7 +108,7 @@ namespace Player.Type_1
             }
 
             // This is a fallback since adding/subtracting is not checking limits
-            _currentChargeAmount = Mathf.Clamp(_currentChargeAmount, 0, _maxChargeAmount);
+            _currentChargeAmount = Mathf.Clamp(_currentChargeAmount, 0, MaxChargeAmount);
         }
 
         #endregion Unity Functions
@@ -130,7 +131,9 @@ namespace Player.Type_1
 
         public float GetCurrentChargeAmount() => _currentChargeAmount;
 
-        public float GetMaxChargeAmount() => _maxChargeAmount;
+        public void UseStoredCharge(float amount) => _currentChargeAmount -= amount;
+
+        public float GetMaxChargeAmount() => MaxChargeAmount;
 
         #endregion External Functions
     }

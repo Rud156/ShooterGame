@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 667fc62e00fb63c408ca9352122f1a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 5000
   _autoHealWhen: 0
   _autoHealTickRate: 0
   _autoHealPerTickAmount: 0
@@ -641,7 +641,6 @@ MonoBehaviour:
   _debugHealAmount: 30
   _debugDecayAmount: 0
   _debugDecayDuration: 0
-  _currentHealth: 0
 --- !u!1 &876598210
 GameObject:
   m_ObjectHideFlags: 0

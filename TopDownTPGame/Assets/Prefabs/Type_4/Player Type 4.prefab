@@ -384,7 +384,6 @@ MonoBehaviour:
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
   _shootController: {fileID: 795477187898822337}
-  _cameraPoint: {fileID: 7325897107652618601}
   _windUpTime: 0.25
   _targetDistance: 250
   _targetMask:
@@ -464,7 +463,6 @@ MonoBehaviour:
   _debugHealAmount: 0
   _debugDecayAmount: 0
   _debugDecayDuration: 0
-  _currentHealth: 0
 --- !u!114 &3858859646320302021
 MonoBehaviour:
   m_ObjectHideFlags: 0

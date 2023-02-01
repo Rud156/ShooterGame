@@ -369,6 +369,51 @@ namespace Player.UI
             }
         }
 
+        public void UpdateOverlayStatus(AbilityTrigger abilityTrigger, bool show)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                {
+                    _primaryDisplay.AbilityIconOverlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _primaryDisplay.AbilityIconOverlay.style.unityBackgroundImageTintColor = show
+                        ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha)
+                        : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0);
+                }
+                    break;
+
+                case AbilityTrigger.Secondary:
+                {
+                    _secondaryDisplay.AbilityIconOverlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _secondaryDisplay.AbilityIconOverlay.style.unityBackgroundImageTintColor = show
+                        ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha)
+                        : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0);
+                }
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                {
+                    _tertiaryDisplay.AbilityIconOverlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _tertiaryDisplay.AbilityIconOverlay.style.unityBackgroundImageTintColor = show
+                        ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha)
+                        : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0);
+                }
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                {
+                    _ultimateDisplay.AbilityIconOverlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _ultimateDisplay.AbilityIconOverlay.style.unityBackgroundImageTintColor = show
+                        ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha)
+                        : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0);
+                }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
         #endregion External Functions
 
         #region Singleton

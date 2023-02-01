@@ -389,7 +389,7 @@ Transform:
   - {fileID: 95916530296144473}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -550,11 +550,12 @@ MonoBehaviour:
   _fireRate: 0.3
   _overheatTime: 3
   _overheatCooldownMultiplier: 0.75
-  _maxChargeAmount: 100
-  _chargeGainedForShootStaticObject: 1
-  _chargeGainedForShootCharacters: 5
+  _chargeGainedForShootStaticObject: 5
+  _chargeGainedForShootCharacters: 15
   _chargeDecayDelay: 5
   _chargeDecayRate: 1
+  _currentChargeAmount: 0
+  _currentChargeDecay: 0
 --- !u!114 &95916530318942731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,8 +577,8 @@ MonoBehaviour:
     type: 3}
   _shootController: {fileID: 1948321099}
   _type1Primary: {fileID: 95916530318942730}
-  _windUpTime: 0.75
-  _minChargeDamage: 5
+  _windUpTime: 0.5
+  _minChargeDamage: 1
   _maxChargeDamage: 75
 --- !u!114 &95916530318942729
 MonoBehaviour:
@@ -662,6 +663,7 @@ MonoBehaviour:
   _debugHealAmount: 30
   _debugDecayAmount: 0
   _debugDecayDuration: 0
+  _currentHealth: 0
 --- !u!114 &7127077101925072532
 MonoBehaviour:
   m_ObjectHideFlags: 0
