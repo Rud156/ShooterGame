@@ -16,6 +16,7 @@ namespace Player.Type_4
 
         [Header("Components")]
         [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private Transform _missileShootPoint;
 
         [Header("Spawn Data")]
         [SerializeField] private float _windUpTime;
@@ -43,7 +44,7 @@ namespace Player.Type_4
                 if (hit)
                 {
                     var lookDirection = Quaternion.LookRotation(direction);
-                    var missile = Instantiate(_homingMissilePrefab, shootPosition, lookDirection);
+                    var missile = Instantiate(_homingMissilePrefab, _missileShootPoint.position, lookDirection);
                     var homingTarget = missile.GetComponent<PlasmaHomingMissile>();
 
                     var target = hitInfo.collider.transform;

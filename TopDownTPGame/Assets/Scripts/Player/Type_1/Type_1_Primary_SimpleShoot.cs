@@ -129,11 +129,11 @@ namespace Player.Type_1
             }
         }
 
-        public float GetCurrentChargeAmount() => _currentChargeAmount;
+        public int GetCurrentChargeAmount() => Mathf.CeilToInt(_currentChargeAmount);
 
-        public void UseStoredCharge(float amount) => _currentChargeAmount -= amount;
+        public void UseStoredCharge(int amount) => _currentChargeAmount -= amount;
 
-        public float GetMaxChargeAmount() => MaxChargeAmount;
+        public int GetMaxChargeAmount() => MaxChargeAmount;
 
         #endregion External Functions
     }

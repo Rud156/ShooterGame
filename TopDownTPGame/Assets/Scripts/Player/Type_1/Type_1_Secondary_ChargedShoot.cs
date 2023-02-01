@@ -74,7 +74,7 @@ namespace Player.Type_1
         {
             base.UnityUpdateDelegate(playerController);
 
-            var chargeAmount = Mathf.CeilToInt(_type1Primary.GetCurrentChargeAmount());
+            var chargeAmount = _type1Primary.GetCurrentChargeAmount();
             PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Secondary, chargeAmount);
             PlayerAbilityDisplay.Instance.UpdateOverlayStatus(AbilityTrigger.Secondary, chargeAmount <= 0);
         }
