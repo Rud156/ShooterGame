@@ -1,8 +1,10 @@
 #region
 
+using System;
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
+using Player.UI;
 using UnityEngine;
 using Utils.Misc;
 
@@ -18,14 +20,19 @@ namespace Player.Type_4
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
         [SerializeField] private Transform _cameraHolder;
+        [SerializeField] private BaseShootController _shootController;
 
         [Header("Satchel Data")]
+        [SerializeField] private float _minSatchelAffectRadius;
         [SerializeField] private float _satchelAffectRadius;
         [SerializeField] private float _satchelVelocity;
         [SerializeField] private float _airControlMultiplier;
         [SerializeField] private float _minForceDuration;
         [SerializeField] private float _maxForceDuration;
         [SerializeField] private float _satchelGravityMultiplier;
+
+        [Header("Dash Charges")]
+        [SerializeField] private int _satchelCount;
 
         [Header("Post Start Filled")]
         [SerializeField] private Transform _orbitShootPoint;
@@ -38,18 +45,9 @@ namespace Player.Type_4
         private Vector3 _direction;
         private float _satchelSpawnedDuration;
 
-        #region Unity Functions
+        private int _currentSatchelsLeft;
 
-        public override void UnityStartDelegate(BasePlayerController playerController)
-        {
-            base.UnityStartDelegate(playerController);
-
-            _prefabInit.AbilityPrefabInit();
-            _orbitShootPoint = transform.Find("CameraHolder/Type_4_CameraPrefab(Clone)/BelowShootPoint");
-            _staticShootPoint = transform.Find("Type_4_NormalPrefab(Clone)/BelowShootPoint");
-        }
-
-        #endregion Unity Functions
+        #region Ability Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) => true;
 
@@ -76,7 +74,40 @@ namespace Player.Type_4
             _computedVelocity = Vector3.zero;
         }
 
+        #endregion Ability Functions
+
+        #region Unity Functions
+
+        public override void UnityStartDelegate(BasePlayerController playerController)
+        {
+            OnAbilityCooldownComplete += HandleCooldownComplete;
+            base.UnityStartDelegate(playerController);
+
+            _prefabInit.AbilityPrefabInit();
+            _orbitShootPoint = transform.Find("CameraHolder/Type_4_CameraHolderPrefab(Clone)/BelowShootPoint");
+            _staticShootPoint = transform.Find("Type_4_NormalPrefab(Clone)/BelowShootPoint");
+
+            _currentSatchelsLeft = _satchelCount;
+        }
+
+        private void OnDestroy()
+        {
+            OnAbilityCooldownComplete -= HandleCooldownComplete;
+        }
+
+        public override void UnityUpdateDelegate(BasePlayerController playerController)
+        {
+            base.UnityUpdateDelegate(playerController);
+            UpdateDashCountChanged();
+        }
+
+        #endregion Unity Functions
+
+        #region Specific Data
+
         public override Vector3 GetMovementData() => _computedVelocity;
+
+        #endregion Specific Data
 
         #region Ability Updates
 
@@ -84,7 +115,7 @@ namespace Player.Type_4
         {
             if (_satchelObject == null)
             {
-                var direction = _cameraHolder.forward;
+                var direction = _shootController.GetShootLookDirection();
 
                 var shootPosition = playerController.IsGrounded ? _staticShootPoint.position : _orbitShootPoint.position;
                 var satchel = Instantiate(_satchelPrefab, shootPosition, Quaternion.identity);
@@ -93,20 +124,28 @@ namespace Player.Type_4
 
                 _satchelObject = satchelNade;
                 _abilityEnd = true;
+
+                _currentSatchelsLeft -= 1;
+                if (_currentSatchelsLeft <= 0)
+                {
+                    _currentCooldownDuration = _cooldownDuration;
+                }
             }
             else
             {
                 var distance = Vector3.Distance(transform.position, _satchelObject.transform.position);
-                DebugExtension.DebugWireSphere(_satchelObject.transform.position, _satchelAffectRadius, duration: 10);
-
                 if (distance > _satchelAffectRadius)
                 {
                     _abilityEnd = true;
                 }
                 else
                 {
-                    var mappedDuration = ExtensionFunctions.Map(distance, 0, _satchelAffectRadius, _maxForceDuration, _minForceDuration);
                     var direction = transform.position - _satchelObject.transform.position;
+                    var mappedDuration = _maxForceDuration;
+                    if (distance > _minSatchelAffectRadius)
+                    {
+                        mappedDuration = ExtensionFunctions.Map(distance, _minSatchelAffectRadius, _satchelAffectRadius, _maxForceDuration, _minForceDuration);
+                    }
 
                     _satchelSpawnedDuration = mappedDuration;
                     _direction = direction.normalized;
@@ -140,6 +179,17 @@ namespace Player.Type_4
                 _abilityEnd = true;
             }
         }
+
+        private void HandleCooldownComplete()
+        {
+            _currentSatchelsLeft = Mathf.Clamp(_currentSatchelsLeft + 1, 0, _satchelCount);
+            if (_currentSatchelsLeft < _satchelCount)
+            {
+                _currentCooldownDuration = _cooldownDuration;
+            }
+        }
+
+        private void UpdateDashCountChanged() => PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentSatchelsLeft);
 
         #endregion Ability Updates
     }

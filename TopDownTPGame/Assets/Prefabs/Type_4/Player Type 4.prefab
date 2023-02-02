@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 253607355822462598}
   - component: {fileID: 253607355822462597}
   - component: {fileID: 253607355822462596}
-  - component: {fileID: 253607355822462599}
   m_Layer: 6
   m_Name: Front Piece
   m_TagString: Untagged
@@ -84,27 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &253607355822462599
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253607355822462593}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1504131108382786863
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,12 +389,15 @@ MonoBehaviour:
     type: 3}
   _prefabInit: {fileID: 253607354497569653}
   _cameraHolder: {fileID: 1504131108770834952}
-  _satchelAffectRadius: 10
+  _shootController: {fileID: 795477187898822337}
+  _minSatchelAffectRadius: 7
+  _satchelAffectRadius: 15
   _satchelVelocity: 35
   _airControlMultiplier: 1
   _minForceDuration: 0.25
   _maxForceDuration: 1
   _satchelGravityMultiplier: 0.5
+  _satchelCount: 20
   _orbitShootPoint: {fileID: 0}
   _staticShootPoint: {fileID: 0}
 --- !u!114 &134541335

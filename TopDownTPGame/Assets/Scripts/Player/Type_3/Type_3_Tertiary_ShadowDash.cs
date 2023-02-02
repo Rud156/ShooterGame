@@ -66,7 +66,6 @@ namespace Player.Type_3
             playerController.PlayerConstantSpeedFallTimed(_dashEndFloatDuration, _dashEndFloatFallMultiplier);
 
             _currentDashesLeftCount -= 1;
-            UpdateDashCountChanged();
             if (_currentDashesLeftCount <= 0)
             {
                 _currentCooldownDuration = _cooldownDuration;
@@ -92,10 +91,15 @@ namespace Player.Type_3
             base.UnityStartDelegate(playerController);
 
             _currentDashesLeftCount = _dashCharges;
-            PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentDashesLeftCount);
         }
 
         private void OnDestroy() => OnAbilityCooldownComplete -= HandleCooldownComplete;
+
+        public override void UnityUpdateDelegate(BasePlayerController playerController)
+        {
+            base.UnityUpdateDelegate(playerController);
+            UpdateDashCountChanged();
+        }
 
         #endregion Unity Functions
 
@@ -110,8 +114,6 @@ namespace Player.Type_3
         private void HandleCooldownComplete()
         {
             _currentDashesLeftCount = Mathf.Clamp(_currentDashesLeftCount + 1, 0, _dashCharges);
-            UpdateDashCountChanged();
-
             if (_currentDashesLeftCount < _dashCharges)
             {
                 _currentCooldownDuration = _cooldownDuration;

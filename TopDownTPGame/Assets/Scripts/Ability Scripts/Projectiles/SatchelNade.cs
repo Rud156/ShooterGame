@@ -9,6 +9,9 @@ namespace Ability_Scripts.Projectiles
     [RequireComponent(typeof(Rigidbody))]
     public class SatchelNade : MonoBehaviour, IProjectile
     {
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _satchelExplodePrefab;
+
         [Header("Satchel Data")]
         [SerializeField] private float _additionalGravity;
         [SerializeField] private float _satchelLaunchForce;
@@ -44,7 +47,11 @@ namespace Ability_Scripts.Projectiles
             _rb.AddForce(direction * _satchelLaunchForce, ForceMode.Impulse);
         }
 
-        public void ProjectileDestroy() => Destroy(gameObject);
+        public void ProjectileDestroy()
+        {
+            Instantiate(_satchelExplodePrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
 
         public void ProjectileHit(Collider other)
         {
