@@ -17,6 +17,12 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private float _satchelLaunchForce;
         [SerializeField] private float _destroyDuration;
 
+        [Header("Satchel Launch Data")]
+        [SerializeField] private float _affectRadius;
+        [SerializeField] private float _minRaidusForMaxAffect;
+        [SerializeField] private float _minAffectAcceleration;
+        [SerializeField] private float _maxAffectAcceleration;
+
         private Rigidbody _rb;
         private bool _isInitialized;
 
@@ -54,6 +60,10 @@ namespace Ability_Scripts.Projectiles
         }
 
         public void ProjectileHit(Collider other)
+        {
+        }
+
+        public void LaunchPlayersWithSatchel()
         {
         }
 

@@ -1,12 +1,10 @@
 #region
 
-using System;
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
 using Player.UI;
 using UnityEngine;
-using Utils.Misc;
 
 #endregion
 
@@ -22,15 +20,6 @@ namespace Player.Type_4
         [SerializeField] private Transform _cameraHolder;
         [SerializeField] private BaseShootController _shootController;
 
-        [Header("Satchel Data")]
-        [SerializeField] private float _minSatchelAffectRadius;
-        [SerializeField] private float _satchelAffectRadius;
-        [SerializeField] private float _satchelVelocity;
-        [SerializeField] private float _airControlMultiplier;
-        [SerializeField] private float _minForceDuration;
-        [SerializeField] private float _maxForceDuration;
-        [SerializeField] private float _satchelGravityMultiplier;
-
         [Header("Dash Charges")]
         [SerializeField] private int _satchelCount;
 
@@ -41,38 +30,19 @@ namespace Player.Type_4
         private SatchelNade _satchelObject;
         private bool _abilityEnd;
 
-        private Vector3 _computedVelocity;
-        private Vector3 _direction;
-        private float _satchelSpawnedDuration;
-
         private int _currentSatchelsLeft;
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        public override bool AbilityCanStart(BasePlayerController playerController) => _currentSatchelsLeft > 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
-        public override void AbilityUpdate(BasePlayerController playerController)
-        {
-            if (_satchelSpawnedDuration <= 0)
-            {
-                InitialSatchelActivation(playerController);
-            }
-            else
-            {
-                UpdateSatchelMovement(playerController);
-            }
-        }
+        public override void AbilityUpdate(BasePlayerController playerController) => InitialSatchelActivation(playerController);
 
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
-        public override void StartAbility(BasePlayerController playerController)
-        {
-            _abilityEnd = false;
-            _satchelSpawnedDuration = 0;
-            _computedVelocity = Vector3.zero;
-        }
+        public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
 
         #endregion Ability Functions
 
@@ -90,10 +60,7 @@ namespace Player.Type_4
             _currentSatchelsLeft = _satchelCount;
         }
 
-        private void OnDestroy()
-        {
-            OnAbilityCooldownComplete -= HandleCooldownComplete;
-        }
+        private void OnDestroy() => OnAbilityCooldownComplete -= HandleCooldownComplete;
 
         public override void UnityUpdateDelegate(BasePlayerController playerController)
         {
@@ -102,12 +69,6 @@ namespace Player.Type_4
         }
 
         #endregion Unity Functions
-
-        #region Specific Data
-
-        public override Vector3 GetMovementData() => _computedVelocity;
-
-        #endregion Specific Data
 
         #region Ability Updates
 
@@ -133,50 +94,9 @@ namespace Player.Type_4
             }
             else
             {
-                var distance = Vector3.Distance(transform.position, _satchelObject.transform.position);
-                if (distance > _satchelAffectRadius)
-                {
-                    _abilityEnd = true;
-                }
-                else
-                {
-                    var direction = transform.position - _satchelObject.transform.position;
-                    var mappedDuration = _maxForceDuration;
-                    if (distance > _minSatchelAffectRadius)
-                    {
-                        mappedDuration = ExtensionFunctions.Map(distance, _minSatchelAffectRadius, _satchelAffectRadius, _maxForceDuration, _minForceDuration);
-                    }
-
-                    _satchelSpawnedDuration = mappedDuration;
-                    _direction = direction.normalized;
-                    _computedVelocity = Vector3.zero;
-                }
-
+                _satchelObject.LaunchPlayersWithSatchel();
                 _satchelObject.ProjectileDestroy();
                 _satchelObject = null;
-            }
-        }
-
-        private void UpdateSatchelMovement(BasePlayerController playerController)
-        {
-            _satchelSpawnedDuration -= Time.fixedDeltaTime;
-
-            var coreInput = playerController.GetCoreMoveInput();
-            var forward = _cameraHolder.forward;
-            var right = _cameraHolder.right;
-
-            var satchelMovement = forward * coreInput.y + right * coreInput.x;
-            satchelMovement.y = 0;
-            satchelMovement = _airControlMultiplier * _satchelVelocity * satchelMovement.normalized;
-
-            _computedVelocity = _direction * _satchelVelocity;
-            _computedVelocity.x += satchelMovement.x;
-            _computedVelocity.z += satchelMovement.z;
-            _computedVelocity.y += Physics.gravity.y * _satchelGravityMultiplier;
-
-            if (_satchelSpawnedDuration < 0)
-            {
-                _abilityEnd = true;
             }
         }
 

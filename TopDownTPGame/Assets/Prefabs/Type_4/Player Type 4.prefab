@@ -383,21 +383,14 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 8f95e935466c6364d9533f6601014c9a, type: 3}
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
-  _abilityType: 0
-  _cooldownDuration: 0
+  _abilityType: 1
+  _cooldownDuration: 7
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
   _prefabInit: {fileID: 253607354497569653}
   _cameraHolder: {fileID: 1504131108770834952}
   _shootController: {fileID: 795477187898822337}
-  _minSatchelAffectRadius: 7
-  _satchelAffectRadius: 15
-  _satchelVelocity: 35
-  _airControlMultiplier: 1
-  _minForceDuration: 0.25
-  _maxForceDuration: 1
-  _satchelGravityMultiplier: 0.5
-  _satchelCount: 20
+  _satchelCount: 2
   _orbitShootPoint: {fileID: 0}
   _staticShootPoint: {fileID: 0}
 --- !u!114 &134541335

@@ -372,6 +372,19 @@ namespace Player.Base
             }
         }
 
+        private int HasEffectInputModifierType(PlayerEffectsAndInputModifierType modifierType)
+        {
+            for (var i = 0; i < _playerEffectsInputsModifiers.Count; i++)
+            {
+                if (_playerEffectsInputsModifiers[i].ModifierType == modifierType)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         public void PlayerConstantSpeedFallTimed(float duration, float multiplier)
         {
             if (_isGrounded)
@@ -680,18 +693,10 @@ namespace Player.Base
             {
                 if (_characterVelocity.y < 0)
                 {
-                    float constantSpeedFall = 0;
-                    var hasValue = false;
-                    for (var i = 0; i < _playerEffectsInputsModifiers.Count; i++)
-                    {
-                        if (_playerEffectsInputsModifiers[i].ModifierType == PlayerEffectsAndInputModifierType.ConstantSpeedFall)
-                        {
-                            constantSpeedFall += _playerEffectsInputsModifiers[i].FloatModifierAmount;
-                            hasValue = true;
-                        }
-                    }
+                    var constantSpeedFallIndex = HasEffectInputModifierType(PlayerEffectsAndInputModifierType.ConstantSpeedFall);
+                    var constantSpeedFall = constantSpeedFallIndex != -1 ? _playerEffectsInputsModifiers[constantSpeedFallIndex].FloatModifierAmount : 0;
 
-                    if (hasValue)
+                    if (constantSpeedFallIndex != -1)
                     {
                         var gravityY = Physics.gravity.y * _gravityMultiplier;
                         _characterVelocity.y = gravityY * constantSpeedFall;
