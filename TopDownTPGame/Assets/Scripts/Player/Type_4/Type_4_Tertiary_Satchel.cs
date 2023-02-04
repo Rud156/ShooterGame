@@ -23,10 +23,6 @@ namespace Player.Type_4
         [Header("Dash Charges")]
         [SerializeField] private int _satchelCount;
 
-        [Header("Post Start Filled")]
-        [SerializeField] private Transform _orbitShootPoint;
-        [SerializeField] private Transform _staticShootPoint;
-
         private SatchelNade _satchelObject;
         private bool _abilityEnd;
 
@@ -54,9 +50,6 @@ namespace Player.Type_4
             base.UnityStartDelegate(playerController);
 
             _prefabInit.AbilityPrefabInit();
-            _orbitShootPoint = transform.Find("CameraHolder/Type_4_CameraHolderPrefab(Clone)/BelowShootPoint");
-            _staticShootPoint = transform.Find("Type_4_NormalPrefab(Clone)/BelowShootPoint");
-
             _currentSatchelsLeft = _satchelCount;
         }
 
@@ -77,9 +70,9 @@ namespace Player.Type_4
             if (_satchelObject == null)
             {
                 var direction = _shootController.GetShootLookDirection();
+                var shootPoint = _shootController.GetShootPosition();
 
-                var shootPosition = playerController.IsGrounded ? _staticShootPoint.position : _orbitShootPoint.position;
-                var satchel = Instantiate(_satchelPrefab, shootPosition, Quaternion.identity);
+                var satchel = Instantiate(_satchelPrefab, shootPoint, Quaternion.identity);
                 var satchelNade = satchel.GetComponent<SatchelNade>();
                 satchelNade.LaunchProjectile(direction);
 

@@ -390,9 +390,7 @@ MonoBehaviour:
   _prefabInit: {fileID: 253607354497569653}
   _cameraHolder: {fileID: 1504131108770834952}
   _shootController: {fileID: 795477187898822337}
-  _satchelCount: 2
-  _orbitShootPoint: {fileID: 0}
-  _staticShootPoint: {fileID: 0}
+  _satchelCount: 2000
 --- !u!114 &134541335
 MonoBehaviour:
   m_ObjectHideFlags: 0
