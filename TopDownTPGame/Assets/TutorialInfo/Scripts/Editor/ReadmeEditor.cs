@@ -1,27 +1,30 @@
-﻿using System.IO;
-using System.Reflection;
-using UnityEditor;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System;
+using System.IO;
+using System.Reflection;
 
 [CustomEditor(typeof(Readme))]
 [InitializeOnLoad]
 public class ReadmeEditor : Editor
 {
-    private static string s_ShowedReadmeSessionStateName = "ReadmeEditor.showedReadme";
+    static string s_ShowedReadmeSessionStateName = "ReadmeEditor.showedReadme";
+    
+    static string s_ReadmeSourceDirectory = "Assets/TutorialInfo";
 
-    private static string s_ReadmeSourceDirectory = "Assets/TutorialInfo";
-
-    private const float k_Space = 16f;
+    const float k_Space = 16f;
 
     static ReadmeEditor()
     {
         EditorApplication.delayCall += SelectReadmeAutomatically;
     }
 
-    private static void RemoveTutorial()
+    static void RemoveTutorial()
     {
         if (EditorUtility.DisplayDialog("Remove Readme Assets",
-
+            
             $"All contents under {s_ReadmeSourceDirectory} will be removed, are you sure you want to proceed?",
             "Proceed",
             "Cancel"))
@@ -48,7 +51,7 @@ public class ReadmeEditor : Editor
         }
     }
 
-    private static void SelectReadmeAutomatically()
+    static void SelectReadmeAutomatically()
     {
         if (!SessionState.GetBool(s_ShowedReadmeSessionStateName, false))
         {
@@ -63,7 +66,7 @@ public class ReadmeEditor : Editor
         }
     }
 
-    private static void LoadLayout()
+    static void LoadLayout()
     {
         var assembly = typeof(EditorApplication).Assembly;
         var windowLayoutType = assembly.GetType("UnityEditor.WindowLayout", true);
@@ -71,7 +74,7 @@ public class ReadmeEditor : Editor
         method.Invoke(null, new object[] { Path.Combine(Application.dataPath, "TutorialInfo/Layout.wlt"), false });
     }
 
-    private static Readme SelectReadme()
+    static Readme SelectReadme()
     {
         var ids = AssetDatabase.FindAssets("Readme t:Readme");
         if (ids.Length == 1)
@@ -106,6 +109,7 @@ public class ReadmeEditor : Editor
             GUILayout.Space(k_Space);
             GUILayout.BeginVertical();
             {
+
                 GUILayout.FlexibleSpace();
                 GUILayout.Label(readme.title, TitleStyle);
                 GUILayout.FlexibleSpace();
@@ -150,49 +154,49 @@ public class ReadmeEditor : Editor
         }
     }
 
-    private bool m_Initialized;
+    bool m_Initialized;
 
-    private GUIStyle LinkStyle
+    GUIStyle LinkStyle
     {
         get { return m_LinkStyle; }
     }
 
     [SerializeField]
-    private GUIStyle m_LinkStyle;
+    GUIStyle m_LinkStyle;
 
-    private GUIStyle TitleStyle
+    GUIStyle TitleStyle
     {
         get { return m_TitleStyle; }
     }
 
     [SerializeField]
-    private GUIStyle m_TitleStyle;
+    GUIStyle m_TitleStyle;
 
-    private GUIStyle HeadingStyle
+    GUIStyle HeadingStyle
     {
         get { return m_HeadingStyle; }
     }
 
     [SerializeField]
-    private GUIStyle m_HeadingStyle;
+    GUIStyle m_HeadingStyle;
 
-    private GUIStyle BodyStyle
+    GUIStyle BodyStyle
     {
         get { return m_BodyStyle; }
     }
 
     [SerializeField]
-    private GUIStyle m_BodyStyle;
+    GUIStyle m_BodyStyle;
 
-    private GUIStyle ButtonStyle
+    GUIStyle ButtonStyle
     {
         get { return m_ButtonStyle; }
     }
 
     [SerializeField]
-    private GUIStyle m_ButtonStyle;
+    GUIStyle m_ButtonStyle;
 
-    private void Init()
+    void Init()
     {
         if (m_Initialized)
             return;
@@ -221,7 +225,7 @@ public class ReadmeEditor : Editor
         m_Initialized = true;
     }
 
-    private bool LinkLabel(GUIContent label, params GUILayoutOption[] options)
+    bool LinkLabel(GUIContent label, params GUILayoutOption[] options)
     {
         var position = GUILayoutUtility.GetRect(label, LinkStyle, options);
 
