@@ -5,6 +5,8 @@ namespace Player.Common
         Primary,
         Secondary,
         Tertiary,
-        Ultimate
+        Ultimate,
+
+        ExternalAddedAbility, // These are more like Movement Restricting Effects for Abilities
     };
 }

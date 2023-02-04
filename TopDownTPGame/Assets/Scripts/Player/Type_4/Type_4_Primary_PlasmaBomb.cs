@@ -26,7 +26,7 @@ namespace Player.Type_4
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController);
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 

@@ -40,7 +40,6 @@ namespace Player.Base
         [SerializeField] private List<Ability> _playerAbilities;
 
         [Header("Custom Effects")]
-        [SerializeField] private List<PlayerInputRestrictingData> _playerInputRestrictingEffectsData;
         [SerializeField] private List<PlayerEffectsAndInputData> _playerEffectsAndInputData;
 
         // Input
@@ -67,8 +66,7 @@ namespace Player.Base
         private List<PlayerEffectsAndInputModifiers> _playerEffectsInputsModifiers;
 
         // Custom Ability
-        private Ability _currentAbility;
-        private List<PlayerInputRestrictingStoreData> _playerInputRestrictingEffects; // Change this to be ability based
+        private List<Ability> _currentActiveAbilities;
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -94,8 +92,8 @@ namespace Player.Base
 
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
-            _playerInputRestrictingEffects = new List<PlayerInputRestrictingStoreData>();
             _playerEffectsInputsModifiers = new List<PlayerEffectsAndInputModifiers>();
+            _currentActiveAbilities = new List<Ability>();
 
             _coreMoveInput = new Vector2();
             _runKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
@@ -138,184 +136,27 @@ namespace Player.Base
             DelegateFixedUpdateAbilities();
 
             // These inputs are global and should always be processed...
-            UpdateCustomAbilityEffects();
             UpdatePlayerEffectsAndInputModifiers();
 
-            // Since this is where input handling happens. Input to be delayed can be done here...
-            var isInputRestricted = (int)_playerStateStack[^1] >= (int)PlayerState.CustomInputRestrictingStates;
-            if (!isInputRestricted)
+            UpdateGroundedState();
+            if (_playerStateStack[^1] != PlayerState.CustomMovement)
             {
-                UpdateGroundedState();
-                ProcessConstantSpeedFall();
                 ProcessJumpInput();
-                CheckAndActivateCustomMovementAbility();
-                UpdatePlayerMovement();
-
-                if (_playerStateStack[^1] != PlayerState.CustomMovement)
-                {
-                    ProcessGlobalGravity();
-                }
-
-                ApplyFinalMovement();
-                CheckAndActivateOtherAbilities();
-                UpdateCustomAbilities();
+                ProcessGlobalGravity();
+                ProcessConstantSpeedFall();
             }
+
+            CheckAndActivateCustomMovementAbility();
+            UpdatePlayerMovement();
+
+            ApplyFinalMovement();
+            CheckAndActivateOtherAbilities();
+            UpdateCustomAbilities();
 
             MarkFrameInputsAsRead();
         }
 
         #endregion Unity Functions
-
-        #region Player Input Restricting States
-
-        private void UpdateCustomAbilityEffects()
-        {
-            if (_playerStateStack[^1] != PlayerState.CustomInputRestrictingStates)
-            {
-                return;
-            }
-
-            for (var i = _playerInputRestrictingEffects.Count - 1; i >= 0; i--)
-            {
-                var customAbility = _playerInputRestrictingEffects[i];
-                customAbility.TickDuration();
-                _playerInputRestrictingEffects[i] = customAbility;
-
-                switch (_playerInputRestrictingEffects[i].TargetState)
-                {
-                    case PlayerInputRestrictingState.Frozen:
-                    case PlayerInputRestrictingState.Stun:
-                        break;
-
-                    case PlayerInputRestrictingState.Knockback:
-                    {
-                        _characterVelocity = _playerInputRestrictingEffects[i].CustomEffectVectorData1;
-                        _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
-                    }
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                if (_playerInputRestrictingEffects[i].CustomEffectDuration <= 0)
-                {
-                    switch (_playerInputRestrictingEffects[i].TargetState)
-                    {
-                        case PlayerInputRestrictingState.Frozen:
-                        case PlayerInputRestrictingState.Knockback:
-                        case PlayerInputRestrictingState.Stun:
-                        {
-                            DestroyPlayerInputCustomEffect(_playerInputRestrictingEffects[i]);
-                            _playerInputRestrictingEffects.RemoveAt(i);
-                        }
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
-            }
-
-            if (_playerInputRestrictingEffects.Count <= 0)
-            {
-                PopPlayerState();
-            }
-        }
-
-        private PlayerInputRestrictingData GetCustomEffectForInputRestrictingState(PlayerInputRestrictingState playerState)
-        {
-            foreach (var effect in _playerInputRestrictingEffectsData)
-            {
-                if (effect.targetState == playerState)
-                {
-                    return effect;
-                }
-            }
-
-            throw new Exception("Invalid State Requested");
-        }
-
-        private void SetupPlayerInputRestrictingState()
-        {
-            var topState = _playerStateStack[^1];
-            if (topState != PlayerState.CustomInputRestrictingStates)
-            {
-                PushPlayerState(PlayerState.CustomInputRestrictingStates);
-            }
-        }
-
-        private void DestroyPlayerInputCustomEffect(PlayerInputRestrictingStoreData playerCustomEffectOutput)
-        {
-            if (playerCustomEffectOutput.Effect != null)
-            {
-                if (playerCustomEffectOutput.Effect.TryGetComponent(out DestroyParticleEffectSlowlyEmission emission))
-                {
-                    emission.DestroyEffect();
-                }
-                else
-                {
-                    Destroy(playerCustomEffectOutput.Effect);
-                }
-            }
-        }
-
-        private GameObject SpawnGenericInputRestrictingPrefab(PlayerInputRestrictingState stateType)
-        {
-            var customEffect = GetCustomEffectForInputRestrictingState(stateType);
-            var characterTransform = transform;
-            var effect = Instantiate(customEffect.effectPrefab, characterTransform.position, Quaternion.identity, characterTransform);
-            effect.transform.localPosition += customEffect.effectSpawnOffset;
-            return effect;
-        }
-
-        public void FreezeCharacter(float abilityDuration)
-        {
-            SetupPlayerInputRestrictingState();
-
-            var effect = SpawnGenericInputRestrictingPrefab(PlayerInputRestrictingState.Frozen);
-            _playerInputRestrictingEffects.Add(
-                new PlayerInputRestrictingStoreData()
-                {
-                    Effect = effect,
-                    TargetState = PlayerInputRestrictingState.Frozen,
-                    CustomEffectDuration = abilityDuration
-                }
-            );
-        }
-
-        public void KnockbackCharacter(float knockbackDuration, Vector3 knockbackForce)
-        {
-            SetupPlayerInputRestrictingState();
-
-            var effect = SpawnGenericInputRestrictingPrefab(PlayerInputRestrictingState.Knockback);
-            _playerInputRestrictingEffects.Add(
-                new PlayerInputRestrictingStoreData()
-                {
-                    Effect = effect,
-                    TargetState = PlayerInputRestrictingState.Knockback,
-                    CustomEffectDuration = knockbackDuration,
-                    CustomEffectVectorData1 = knockbackForce,
-                }
-            );
-        }
-
-        public void StunCharacter(float duration)
-        {
-            SetupPlayerInputRestrictingState();
-
-            var effect = SpawnGenericInputRestrictingPrefab(PlayerInputRestrictingState.Stun);
-            _playerInputRestrictingEffects.Add(
-                new PlayerInputRestrictingStoreData()
-                {
-                    Effect = effect,
-                    TargetState = PlayerInputRestrictingState.Stun,
-                    CustomEffectDuration = duration,
-                }
-            );
-        }
-
-        #endregion Player Input Restricting States
 
         #region Player Effects and Input Modifiers
 
@@ -518,9 +359,6 @@ namespace Player.Base
                     UpdateCustomMovementState();
                     break;
 
-                case PlayerState.CustomInputRestrictingStates:
-                    throw new Exception("Invalid State Inside Movement");
-
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -576,20 +414,29 @@ namespace Player.Base
 
         private void UpdateCustomMovementState()
         {
-            if (_currentAbility == null)
+            if (_currentActiveAbilities.Count <= 0)
             {
                 PopPlayerState();
                 return;
             }
 
-            _currentAbility.AbilityUpdate(this);
-            _characterVelocity = _currentAbility.GetMovementData();
-            if (_currentAbility.AbilityNeedsToEnd(this))
+            for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
             {
-                _currentAbility.EndAbility(this);
-                OnPlayerAbilityEnded?.Invoke(_currentAbility);
-                _currentAbility = null;
-                PopPlayerState();
+                // Don't process Non Movement Abilities here...
+                var currentAbility = _currentActiveAbilities[i];
+                if (currentAbility.GetAbilityType() != AbilityType.Movement)
+                {
+                    continue;
+                }
+
+                currentAbility.AbilityUpdate(this);
+                _characterVelocity = currentAbility.GetMovementData();
+                if (currentAbility.AbilityNeedsToEnd(this))
+                {
+                    currentAbility.EndAbility(this);
+                    OnPlayerAbilityEnded?.Invoke(currentAbility);
+                    _currentActiveAbilities.RemoveAt(i);
+                }
             }
         }
 
@@ -599,25 +446,18 @@ namespace Player.Base
 
         private void CheckAndActivateCustomMovementAbility()
         {
-            if (_currentAbility != null)
-            {
-                return;
-            }
-
             foreach (var ability in _playerAbilities)
             {
                 var key = GetKeyForAbilityTrigger(ability.GetAbilityTrigger());
 
                 if (ability.GetAbilityType() == AbilityType.Movement &&
                     ability.AbilityCanStart(this) &&
-                    key.KeyPressedThisFrame &&
-                    _currentAbility == null)
+                    key.KeyPressedThisFrame)
                 {
-                    _currentAbility = ability;
-
-                    _currentAbility.StartAbility(this);
-                    OnPlayerAbilityStarted?.Invoke(_currentAbility);
+                    ability.StartAbility(this);
+                    OnPlayerAbilityStarted?.Invoke(ability);
                     PushPlayerState(PlayerState.CustomMovement);
+                    _currentActiveAbilities.Add(ability);
                     break;
                 }
             }
@@ -719,15 +559,10 @@ namespace Player.Base
 
         #endregion Core Movement
 
-        #region Non Movement Abilities
+        #region Non Movement Abilities And Generic Ability Functions
 
         private void CheckAndActivateOtherAbilities()
         {
-            if (_currentAbility != null)
-            {
-                return;
-            }
-
             foreach (var ability in _playerAbilities)
             {
                 var abilityTrigger = ability.GetAbilityTrigger();
@@ -735,13 +570,11 @@ namespace Player.Base
 
                 if (ability.GetAbilityType() != AbilityType.Movement &&
                     ability.AbilityCanStart(this) &&
-                    _currentAbility == null &&
                     key.KeyPressedThisFrame)
                 {
-                    _currentAbility = ability;
-
-                    _currentAbility.StartAbility(this);
-                    OnPlayerAbilityStarted?.Invoke(_currentAbility);
+                    ability.StartAbility(this);
+                    OnPlayerAbilityStarted?.Invoke(ability);
+                    _currentActiveAbilities.Add(ability);
                     break;
                 }
             }
@@ -750,18 +583,39 @@ namespace Player.Base
         private void UpdateCustomAbilities()
         {
             // This means there is an ability not active OR the ability active is only for Movement
-            if (_currentAbility == null || _playerStateStack[^1] == PlayerState.CustomMovement)
+            if (_currentActiveAbilities.Count <= 0 || _playerStateStack[^1] == PlayerState.CustomMovement)
             {
                 return;
             }
 
-            _currentAbility.AbilityUpdate(this);
-            if (_currentAbility.AbilityNeedsToEnd(this))
+            for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
             {
-                _currentAbility.EndAbility(this);
-                OnPlayerAbilityEnded?.Invoke(_currentAbility);
-                _currentAbility = null;
+                // Do not process Movement Abilities here...
+                var currentAbility = _currentActiveAbilities[i];
+                if (currentAbility.GetAbilityType() != AbilityType.NonMovement)
+                {
+                    continue;
+                }
+
+                currentAbility.AbilityUpdate(this);
+                if (currentAbility.AbilityNeedsToEnd(this))
+                {
+                    currentAbility.EndAbility(this);
+                    OnPlayerAbilityEnded?.Invoke(currentAbility);
+                    _currentActiveAbilities.RemoveAt(i);
+                }
             }
+        }
+
+        public List<AbilityTrigger> GetActiveAbilities()
+        {
+            var activeAbilityTriggers = new List<AbilityTrigger>();
+            foreach (var ability in _currentActiveAbilities)
+            {
+                activeAbilityTriggers.Add(ability.GetAbilityTrigger());
+            }
+
+            return activeAbilityTriggers;
         }
 
         private void DelegateUpdateAbilities()
@@ -780,7 +634,7 @@ namespace Player.Base
             }
         }
 
-        #endregion Non Movement Abilities
+        #endregion Non Movement Abilities And Generic Ability Functions
 
         #region Player State
 
@@ -914,6 +768,7 @@ namespace Player.Base
                 AbilityTrigger.Secondary => _abilitySecondaryKey,
                 AbilityTrigger.Tertiary => _abilityTertiaryKey,
                 AbilityTrigger.Ultimate => _abilityUltimateKey,
+                AbilityTrigger.ExternalAddedAbility => throw new Exception("Invalid Trigger Type"),
                 _ => throw new Exception("Invalid Trigger Type"),
             };
         }
@@ -923,24 +778,6 @@ namespace Player.Base
         #endregion New Input System
 
         #region Structs
-
-        [Serializable]
-        private struct PlayerInputRestrictingData
-        {
-            public GameObject effectPrefab;
-            public Vector3 effectSpawnOffset;
-            public PlayerInputRestrictingState targetState;
-        }
-
-        private struct PlayerInputRestrictingStoreData
-        {
-            public GameObject Effect;
-            public PlayerInputRestrictingState TargetState;
-            public float CustomEffectDuration;
-            public float CustomEffectFloatData1;
-            public Vector3 CustomEffectVectorData1;
-            public void TickDuration() => CustomEffectDuration -= Time.fixedDeltaTime;
-        }
 
         private struct PlayerEffectsAndInputModifiers
         {
@@ -964,13 +801,6 @@ namespace Player.Base
         #endregion Structs
 
         #region Enums
-
-        private enum PlayerInputRestrictingState
-        {
-            Frozen,
-            Knockback,
-            Stun,
-        }
 
         private enum PlayerEffectsAndInputModifierType
         {

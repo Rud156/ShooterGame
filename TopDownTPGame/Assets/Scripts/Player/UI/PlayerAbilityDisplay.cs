@@ -165,6 +165,7 @@ namespace Player.UI
                 }
                     break;
 
+                case AbilityTrigger.ExternalAddedAbility:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
             }
@@ -224,6 +225,7 @@ namespace Player.UI
                 }
                     break;
 
+                case AbilityTrigger.ExternalAddedAbility:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
             }
@@ -261,6 +263,7 @@ namespace Player.UI
                 }
                     break;
 
+                case AbilityTrigger.ExternalAddedAbility:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
             }
@@ -298,6 +301,7 @@ namespace Player.UI
                 }
                     break;
 
+                case AbilityTrigger.ExternalAddedAbility:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
             }
@@ -327,6 +331,7 @@ namespace Player.UI
                     _ultimateDisplay.AbilityBackground.style.unityBackgroundImageTintColor = backgroundTint;
                     break;
 
+                case AbilityTrigger.ExternalAddedAbility:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
             }
@@ -364,6 +369,7 @@ namespace Player.UI
                 }
                     break;
 
+                case AbilityTrigger.ExternalAddedAbility:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
             }
@@ -409,6 +415,7 @@ namespace Player.UI
                 }
                     break;
 
+                case AbilityTrigger.ExternalAddedAbility:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
             }

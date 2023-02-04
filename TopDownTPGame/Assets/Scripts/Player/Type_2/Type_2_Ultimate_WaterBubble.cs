@@ -31,7 +31,7 @@ namespace Player.Type_2
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => _currentUltimatePercent >= MaxUltimatePercent;
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentUltimatePercent >= MaxUltimatePercent;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -55,7 +55,7 @@ namespace Player.Type_2
 
                 if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
-                    targetController.FreezeCharacter(_freezeDuration);
+                    // TODO: Add Player Freeze Ability Script
                 }
             }
 

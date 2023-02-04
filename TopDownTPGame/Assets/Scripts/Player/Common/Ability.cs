@@ -22,7 +22,7 @@ namespace Player.Common
         [Header("Core Ability Data")]
         [SerializeField] protected AbilityTrigger _abilityTrigger;
         [SerializeField] protected AbilityType _abilityType;
-        [SerializeField] private List<AbilityTrigger> _allowAbilities;
+        [SerializeField] protected List<AbilityTrigger> _allowedActiveAbilities;
 
         [Header("Cooldown")]
         [SerializeField] protected float _cooldownDuration;
@@ -44,7 +44,19 @@ namespace Player.Common
 
         public abstract void EndAbility(BasePlayerController playerController);
 
-        public abstract bool AbilityCanStart(BasePlayerController playerController);
+        public virtual bool AbilityCanStart(BasePlayerController playerController)
+        {
+            var activeAbilityTriggers = playerController.GetActiveAbilities();
+            foreach (var ability in activeAbilityTriggers)
+            {
+                if (!_allowedActiveAbilities.Contains(ability))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         public abstract bool AbilityNeedsToEnd(BasePlayerController playerController);
 
@@ -52,7 +64,7 @@ namespace Player.Common
         {
         }
 
-        public void SetCanActivateWithOtherAbilities(List<AbilityTrigger> abilityTriggers) => _allowAbilities = abilityTriggers;
+        public void SetCanActivateWithOtherAbilities(List<AbilityTrigger> abilityTriggers) => _allowedActiveAbilities = abilityTriggers;
 
         #endregion Ability Functions
 

@@ -20,7 +20,7 @@ namespace Player.Type_5
 
         private bool _abilityEnd;
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController);
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 

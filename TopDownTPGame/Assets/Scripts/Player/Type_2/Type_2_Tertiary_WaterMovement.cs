@@ -54,7 +54,8 @@ namespace Player.Type_2
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded && _currentCooldownDuration <= 0;
+        public override bool AbilityCanStart(BasePlayerController playerController) =>
+            base.AbilityCanStart(playerController) && playerController.IsGrounded && _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityState == AbilityState.End;
 

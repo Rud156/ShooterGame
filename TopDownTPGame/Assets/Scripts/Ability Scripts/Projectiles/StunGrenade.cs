@@ -80,7 +80,7 @@ namespace Ability_Scripts.Projectiles
                 // TODO: Also check team here...
                 if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
-                    targetController.StunCharacter(_stunDuration);
+                    // TODO: Add Stun Ability Script
                 }
             }
 

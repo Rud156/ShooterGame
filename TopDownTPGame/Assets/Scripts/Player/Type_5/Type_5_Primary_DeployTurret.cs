@@ -41,7 +41,7 @@ namespace Player.Type_5
 
         #endregion Unity Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => playerController.IsGrounded;
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && playerController.IsGrounded;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _placementCompleted;
 

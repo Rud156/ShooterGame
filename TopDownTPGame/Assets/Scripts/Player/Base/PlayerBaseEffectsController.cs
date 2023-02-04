@@ -58,7 +58,6 @@ namespace Player.Base
                 case PlayerState.Idle:
                 case PlayerState.Walking:
                 case PlayerState.CustomMovement:
-                case PlayerState.CustomInputRestrictingStates:
                     break;
 
                 case PlayerState.Running:

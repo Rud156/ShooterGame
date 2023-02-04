@@ -23,7 +23,7 @@ public class Type_4_Ultimate_Rocket : Ability
     private GameObject _rocketObject;
     private bool _abilityEnd;
 
-    public override bool AbilityCanStart(BasePlayerController playerController) => true;
+    public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController);
 
     public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -50,7 +50,7 @@ public class Type_4_Ultimate_Rocket : Ability
             _rocketObject = null;
 
             var knockbackVelocity = -_cameraHolder.forward * _knockbackVelocity;
-            playerController.KnockbackCharacter(_knockbackDuration, knockbackVelocity);
+            // TODO: Add Player Knockback Ability Script
         }
 
         _abilityEnd = true;
