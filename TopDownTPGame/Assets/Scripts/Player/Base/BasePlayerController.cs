@@ -68,7 +68,7 @@ namespace Player.Base
 
         // Custom Ability
         private Ability _currentAbility;
-        private List<PlayerInputRestrictingStoreData> _playerInputRestrictingEffects;
+        private List<PlayerInputRestrictingStoreData> _playerInputRestrictingEffects; // Change this to be ability based
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);

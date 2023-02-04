@@ -543,6 +543,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
+  _canActivateWhenOtherActive: 
   _cooldownDuration: 3
   _projectilePrefab: {fileID: 9002442166465085074, guid: 97e634534d4e4c74880997ac9a63bf92,
     type: 3}
@@ -554,8 +555,6 @@ MonoBehaviour:
   _chargeGainedForShootCharacters: 15
   _chargeDecayDelay: 5
   _chargeDecayRate: 1
-  _currentChargeAmount: 0
-  _currentChargeDecay: 0
 --- !u!114 &95916530318942731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,6 +571,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
+  _canActivateWhenOtherActive: 
   _cooldownDuration: 5
   _chargedObjectPrefab: {fileID: 9002442166465085074, guid: 8f41e4a6fa74be6488bfae50f32803e3,
     type: 3}
@@ -596,6 +596,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
+  _canActivateWhenOtherActive: 
   _cooldownDuration: 7
   _dashEffectForward:
     effectPrefab: {fileID: 5267843241776696678, guid: 5425d62eea49aec42904fbe816bafa0d,
@@ -636,6 +637,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
+  _canActivateWhenOtherActive: 
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
     type: 3}
@@ -663,7 +665,6 @@ MonoBehaviour:
   _debugHealAmount: 30
   _debugDecayAmount: 0
   _debugDecayDuration: 0
-  _currentHealth: 0
 --- !u!114 &7127077101925072532
 MonoBehaviour:
   m_ObjectHideFlags: 0

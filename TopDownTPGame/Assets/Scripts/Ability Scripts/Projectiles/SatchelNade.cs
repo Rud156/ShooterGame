@@ -140,7 +140,6 @@ namespace Ability_Scripts.Projectiles
             {
                 var direction = GetDirectionFromIndex(i);
                 var hit = Physics.Raycast(transform.position, direction, out var hitInfo, _raycastDistance, _raycastMask);
-                Debug.DrawRay(transform.position, direction * _raycastDistance, Color.white, 10);
                 if (hit)
                 {
                     var normal = hitInfo.normal;

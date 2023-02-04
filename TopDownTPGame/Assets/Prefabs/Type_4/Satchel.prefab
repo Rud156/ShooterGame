@@ -182,7 +182,7 @@ MonoBehaviour:
     type: 3}
   _additionalGravity: 0.15
   _satchelLaunchVelocity: 50
-  _velocityDecreaseRate: 4.5
+  _velocityDecreaseRate: 10
   _destroyDuration: 10
   _raycastDistance: 0.5
   _raycastMask:

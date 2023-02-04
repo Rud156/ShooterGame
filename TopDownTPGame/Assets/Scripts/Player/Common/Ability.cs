@@ -1,8 +1,10 @@
 #region
 
+using System.Collections.Generic;
 using Player.Base;
 using Player.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils.Misc;
 
 #endregion
@@ -20,6 +22,7 @@ namespace Player.Common
         [Header("Core Ability Data")]
         [SerializeField] protected AbilityTrigger _abilityTrigger;
         [SerializeField] protected AbilityType _abilityType;
+        [SerializeField] private List<AbilityTrigger> _allowAbilities;
 
         [Header("Cooldown")]
         [SerializeField] protected float _cooldownDuration;
@@ -48,6 +51,8 @@ namespace Player.Common
         public virtual void ClearAllAbilityData(BasePlayerController playerController)
         {
         }
+
+        public void SetCanActivateWithOtherAbilities(List<AbilityTrigger> abilityTriggers) => _allowAbilities = abilityTriggers;
 
         #endregion Ability Functions
 
