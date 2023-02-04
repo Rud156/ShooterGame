@@ -416,25 +416,7 @@ MonoBehaviour:
   - {fileID: 680768254}
   - {fileID: 377452656}
   - {fileID: 1683011237795699243}
-  _playerInputRestrictingEffectsData:
-  - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 0
-  - effectPrefab: {fileID: 1434155821187485333, guid: bddef074da1d9f64eadd4cbb76ff24f6,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 1
-  - effectPrefab: {fileID: 7981294947940924098, guid: e9dec2636deade34eb238a204a19bd2a,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 2
-  _playerEffectsAndInputData:
-  - effectPrefab: {fileID: 969310629795772795, guid: ececb48e1e0c2d1449d1a915c49b89bb,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    effectParent: {fileID: 1683011238075420643}
-    modifierType: 1
+  _playerInputModifierData: []
 --- !u!114 &8602320672462730023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,6 +517,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
+  _allowedActiveAbilities: 
   _cooldownDuration: 3
   _damageEffectPrefab: {fileID: 7891259392760164114, guid: 38149fd665e688b469d853178bf64142,
     type: 3}
@@ -565,6 +548,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
+  _allowedActiveAbilities: 
   _cooldownDuration: 3
   _slashPrefab: {fileID: 1406682108228364387, guid: b3b4ac41d4dd6a04bbe65f8ac17cc596,
     type: 3}
@@ -611,6 +595,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
+  _allowedActiveAbilities: 
   _cooldownDuration: 5
   _dashEffectForward:
     effectPrefab: {fileID: 5267843241776696678, guid: ed2368563d002b6479ea7d316bd71b59,
@@ -654,6 +639,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
+  _allowedActiveAbilities: 
   _cooldownDuration: 0
   _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
     type: 3}

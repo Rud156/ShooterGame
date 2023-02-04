@@ -37,7 +37,7 @@ public class Type_5_Ultimate_Shield : Ability
             // TODO: Also check team here...
             if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
             {
-                targetController.CharacterEnableEngineerShield(_shieldDuration);
+                // TODO: Enable Engineer Shield as an Ability
             }
         }
 

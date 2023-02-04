@@ -93,7 +93,7 @@ namespace Player.Type_3
 
                 if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
-                    targetController.PlayerEnabledParanoia(_paranoiaDuration);
+                    // TODO: Enable Paranoia as an Ability
                 }
 
                 if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))

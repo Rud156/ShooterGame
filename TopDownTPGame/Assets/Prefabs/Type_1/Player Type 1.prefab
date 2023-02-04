@@ -389,7 +389,7 @@ Transform:
   - {fileID: 95916530296144473}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -446,25 +446,7 @@ MonoBehaviour:
   - {fileID: 95916530318942731}
   - {fileID: 95916530318942729}
   - {fileID: 95916530318943220}
-  _playerInputRestrictingEffectsData:
-  - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 0
-  - effectPrefab: {fileID: 1434155821187485333, guid: bddef074da1d9f64eadd4cbb76ff24f6,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 1
-  - effectPrefab: {fileID: 7981294947940924098, guid: e9dec2636deade34eb238a204a19bd2a,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 2
-  _playerEffectsAndInputData:
-  - effectPrefab: {fileID: 969310629795772795, guid: ececb48e1e0c2d1449d1a915c49b89bb,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    effectParent: {fileID: 95916529393616190}
-    modifierType: 1
+  _playerInputModifierData: []
 --- !u!114 &1948321099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,7 +525,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
-  _canActivateWhenOtherActive: 
+  _allowedActiveAbilities: 
   _cooldownDuration: 3
   _projectilePrefab: {fileID: 9002442166465085074, guid: 97e634534d4e4c74880997ac9a63bf92,
     type: 3}
@@ -571,7 +553,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
-  _canActivateWhenOtherActive: 
+  _allowedActiveAbilities: 
   _cooldownDuration: 5
   _chargedObjectPrefab: {fileID: 9002442166465085074, guid: 8f41e4a6fa74be6488bfae50f32803e3,
     type: 3}
@@ -596,7 +578,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
-  _canActivateWhenOtherActive: 
+  _allowedActiveAbilities: 
   _cooldownDuration: 7
   _dashEffectForward:
     effectPrefab: {fileID: 5267843241776696678, guid: 5425d62eea49aec42904fbe816bafa0d,
@@ -637,7 +619,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
-  _canActivateWhenOtherActive: 
+  _allowedActiveAbilities: 
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
     type: 3}

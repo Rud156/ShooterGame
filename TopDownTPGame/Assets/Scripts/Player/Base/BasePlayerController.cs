@@ -6,6 +6,7 @@ using Effects;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Utils.Input;
 using Utils.Misc;
 
@@ -40,7 +41,7 @@ namespace Player.Base
         [SerializeField] private List<Ability> _playerAbilities;
 
         [Header("Custom Effects")]
-        [SerializeField] private List<PlayerEffectsAndInputData> _playerEffectsAndInputData;
+        [SerializeField] private List<PlayerInputModifierData> _playerInputModifierData;
 
         // Input
         private Vector2 _coreMoveInput;
@@ -63,7 +64,7 @@ namespace Player.Base
         private bool _isGrounded;
 
         // Movement Modifiers
-        private List<PlayerEffectsAndInputModifiers> _playerEffectsInputsModifiers;
+        private List<PlayerInputModifiers> _playerInputsModifiers;
 
         // Custom Ability
         private List<Ability> _currentActiveAbilities;
@@ -92,7 +93,7 @@ namespace Player.Base
 
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
-            _playerEffectsInputsModifiers = new List<PlayerEffectsAndInputModifiers>();
+            _playerInputsModifiers = new List<PlayerInputModifiers>();
             _currentActiveAbilities = new List<Ability>();
 
             _coreMoveInput = new Vector2();
@@ -136,7 +137,7 @@ namespace Player.Base
             DelegateFixedUpdateAbilities();
 
             // These inputs are global and should always be processed...
-            UpdatePlayerEffectsAndInputModifiers();
+            UpdatePlayerInputModifiers();
 
             UpdateGroundedState();
             if (_playerStateStack[^1] != PlayerState.CustomMovement)
@@ -160,64 +161,64 @@ namespace Player.Base
 
         #region Player Effects and Input Modifiers
 
-        private void UpdatePlayerEffectsAndInputModifiers()
+        private void UpdatePlayerInputModifiers()
         {
-            for (var i = _playerEffectsInputsModifiers.Count - 1; i >= 0; i--)
+            for (var i = _playerInputsModifiers.Count - 1; i >= 0; i--)
             {
-                var movementModifier = _playerEffectsInputsModifiers[i];
+                var movementModifier = _playerInputsModifiers[i];
                 if (movementModifier.IsTimed)
                 {
                     movementModifier.CurrentDuration -= Time.fixedDeltaTime;
                     if (movementModifier.CurrentDuration <= 0)
                     {
-                        RemoveEffectsAndInputModifierEffects(_playerEffectsInputsModifiers[i]);
-                        _playerEffectsInputsModifiers.RemoveAt(i);
+                        RemoveInputModifierEffects(_playerInputsModifiers[i]);
+                        _playerInputsModifiers.RemoveAt(i);
                     }
                     else
                     {
-                        _playerEffectsInputsModifiers[i] = movementModifier;
+                        _playerInputsModifiers[i] = movementModifier;
                     }
                 }
-                else if (_playerEffectsInputsModifiers[i].ModifierType == PlayerEffectsAndInputModifierType.ConstantSpeedFall && _isGrounded)
+                else if (_playerInputsModifiers[i].ModifierType == PlayerInputModifierType.ConstantSpeedFall && _isGrounded)
                 {
-                    RemoveEffectsAndInputModifierEffects(_playerEffectsInputsModifiers[i]);
-                    _playerEffectsInputsModifiers.RemoveAt(i);
+                    RemoveInputModifierEffects(_playerInputsModifiers[i]);
+                    _playerInputsModifiers.RemoveAt(i);
                 }
             }
         }
 
-        private void CheckAndRemovePlayerEffectsAndInputsModifier(string identifier)
+        private void CheckAndRemovePlayerAndInputsModifier(string identifier)
         {
-            for (var i = 0; i < _playerEffectsInputsModifiers.Count; i++)
+            for (var i = 0; i < _playerInputsModifiers.Count; i++)
             {
-                if (string.Equals(_playerEffectsInputsModifiers[i].ModifierIdentifier, identifier))
+                if (string.Equals(_playerInputsModifiers[i].ModifierIdentifier, identifier))
                 {
-                    RemoveEffectsAndInputModifierEffects(_playerEffectsInputsModifiers[i]);
-                    _playerEffectsInputsModifiers.RemoveAt(i);
+                    RemoveInputModifierEffects(_playerInputsModifiers[i]);
+                    _playerInputsModifiers.RemoveAt(i);
                 }
             }
         }
 
-        private void RemoveEffectsAndInputModifierEffects(PlayerEffectsAndInputModifiers effectsAndInputModifiers)
+        private void RemoveInputModifierEffects(PlayerInputModifiers inputModifiers)
         {
-            if (effectsAndInputModifiers.Effect != null)
+            if (inputModifiers.Effect != null)
             {
-                if (effectsAndInputModifiers.Effect.TryGetComponent(out DestroyParticleEffectSlowlyEmission emission))
+                if (inputModifiers.Effect.TryGetComponent(out DestroyParticleEffectSlowlyEmission emission))
                 {
                     emission.DestroyEffect();
                 }
                 else
                 {
-                    Destroy(effectsAndInputModifiers.Effect);
+                    Destroy(inputModifiers.Effect);
                 }
             }
         }
 
-        private int HasEffectInputModifierType(PlayerEffectsAndInputModifierType modifierType)
+        private int HasInputModifierType(PlayerInputModifierType modifierType)
         {
-            for (var i = 0; i < _playerEffectsInputsModifiers.Count; i++)
+            for (var i = 0; i < _playerInputsModifiers.Count; i++)
             {
-                if (_playerEffectsInputsModifiers[i].ModifierType == modifierType)
+                if (_playerInputsModifiers[i].ModifierType == modifierType)
                 {
                     return i;
                 }
@@ -233,51 +234,21 @@ namespace Player.Base
                 return;
             }
 
-            _playerEffectsInputsModifiers.Add(
-                new PlayerEffectsAndInputModifiers()
+            _playerInputsModifiers.Add(
+                new PlayerInputModifiers()
                 {
                     CurrentDuration = duration,
                     IsTimed = true,
                     FloatModifierAmount = multiplier,
-                    ModifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
+                    ModifierType = PlayerInputModifierType.ConstantSpeedFall,
                     ModifierIdentifier = string.Empty,
                 }
             );
         }
 
-        public void PlayerEnabledParanoia(float duration)
+        private GameObject SpawnGenericInputEffectPrefab(PlayerInputModifierType inputModifierType)
         {
-            var effect = SpawnGenericEffectsAndInputPrefab(PlayerEffectsAndInputModifierType.Paranoia);
-            _playerEffectsInputsModifiers.Add(
-                new PlayerEffectsAndInputModifiers()
-                {
-                    Effect = effect,
-                    CurrentDuration = duration,
-                    IsTimed = true,
-                    ModifierType = PlayerEffectsAndInputModifierType.Paranoia,
-                    ModifierIdentifier = string.Empty,
-                }
-            );
-        }
-
-        public void CharacterEnableEngineerShield(float duration)
-        {
-            var effect = SpawnGenericEffectsAndInputPrefab(PlayerEffectsAndInputModifierType.EngineerShield);
-            _playerEffectsInputsModifiers.Add(
-                new PlayerEffectsAndInputModifiers()
-                {
-                    Effect = effect,
-                    CurrentDuration = duration,
-                    IsTimed = true,
-                    ModifierType = PlayerEffectsAndInputModifierType.EngineerShield,
-                    ModifierIdentifier = string.Empty,
-                }
-            );
-        }
-
-        private GameObject SpawnGenericEffectsAndInputPrefab(PlayerEffectsAndInputModifierType effectsAndInputModifierType)
-        {
-            var customEffect = GetCustomEffectForEffectsAndInputModifierState(effectsAndInputModifierType);
+            var customEffect = GetCustomEffectForInputModifierState(inputModifierType);
             var parent = customEffect.effectParent;
             if (parent == null)
             {
@@ -289,11 +260,11 @@ namespace Player.Base
             return effect;
         }
 
-        private PlayerEffectsAndInputData GetCustomEffectForEffectsAndInputModifierState(PlayerEffectsAndInputModifierType effectsAndInputModifierType)
+        private PlayerInputModifierData GetCustomEffectForInputModifierState(PlayerInputModifierType inputModifierType)
         {
-            foreach (var effect in _playerEffectsAndInputData)
+            foreach (var effect in _playerInputModifierData)
             {
-                if (effect.modifierType == effectsAndInputModifierType)
+                if (effect.modifierType == inputModifierType)
                 {
                     return effect;
                 }
@@ -313,11 +284,11 @@ namespace Player.Base
 
             if (_constantSpeedFallKey.KeyPressedThisFrame)
             {
-                _playerEffectsInputsModifiers.Add(
-                    new PlayerEffectsAndInputModifiers()
+                _playerInputsModifiers.Add(
+                    new PlayerInputModifiers()
                     {
                         IsTimed = false,
-                        ModifierType = PlayerEffectsAndInputModifierType.ConstantSpeedFall,
+                        ModifierType = PlayerInputModifierType.ConstantSpeedFall,
                         ModifierIdentifier = MovementHoldIdentifier,
                         FloatModifierAmount = _constantSpeedFallMultiplier,
                     }
@@ -325,7 +296,7 @@ namespace Player.Base
             }
             else if (_constantSpeedFallKey.KeyReleasedThisFrame || !_constantSpeedFallKey.KeyPressed)
             {
-                CheckAndRemovePlayerEffectsAndInputsModifier(MovementHoldIdentifier);
+                CheckAndRemovePlayerAndInputsModifier(MovementHoldIdentifier);
             }
         }
 
@@ -533,8 +504,8 @@ namespace Player.Base
             {
                 if (_characterVelocity.y < 0)
                 {
-                    var constantSpeedFallIndex = HasEffectInputModifierType(PlayerEffectsAndInputModifierType.ConstantSpeedFall);
-                    var constantSpeedFall = constantSpeedFallIndex != -1 ? _playerEffectsInputsModifiers[constantSpeedFallIndex].FloatModifierAmount : 0;
+                    var constantSpeedFallIndex = HasInputModifierType(PlayerInputModifierType.ConstantSpeedFall);
+                    var constantSpeedFall = constantSpeedFallIndex != -1 ? _playerInputsModifiers[constantSpeedFallIndex].FloatModifierAmount : 0;
 
                     if (constantSpeedFallIndex != -1)
                     {
@@ -616,6 +587,22 @@ namespace Player.Base
             }
 
             return activeAbilityTriggers;
+        }
+
+        public void CheckAndAddExternalAbility(Ability ability)
+        {
+            // This Ability will already have started 
+            if (ability.AbilityCanStart(this))
+            {
+                ability.StartAbility(this);
+                OnPlayerAbilityStarted?.Invoke(ability);
+                if (ability.GetAbilityType() == AbilityType.Movement)
+                {
+                    PushPlayerState(PlayerState.CustomMovement);
+                }
+
+                _currentActiveAbilities.Add(ability);
+            }
         }
 
         private void DelegateUpdateAbilities()
@@ -779,34 +766,32 @@ namespace Player.Base
 
         #region Structs
 
-        private struct PlayerEffectsAndInputModifiers
+        private struct PlayerInputModifiers
         {
             public GameObject Effect;
             public string ModifierIdentifier;
-            public PlayerEffectsAndInputModifierType ModifierType;
+            public PlayerInputModifierType ModifierType;
             public bool IsTimed;
             public float CurrentDuration;
             public float FloatModifierAmount;
         }
 
         [Serializable]
-        private struct PlayerEffectsAndInputData
+        private struct PlayerInputModifierData
         {
             public GameObject effectPrefab;
             public Vector3 effectSpawnOffset;
             public Transform effectParent;
-            public PlayerEffectsAndInputModifierType modifierType;
+            public PlayerInputModifierType modifierType;
         }
 
         #endregion Structs
 
         #region Enums
 
-        private enum PlayerEffectsAndInputModifierType
+        private enum PlayerInputModifierType
         {
             ConstantSpeedFall,
-            Paranoia,
-            EngineerShield,
         }
 
         #endregion Enums

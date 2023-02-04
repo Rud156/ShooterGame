@@ -160,7 +160,7 @@ Transform:
   - {fileID: 1504131108382786862}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -217,25 +217,7 @@ MonoBehaviour:
   - {fileID: -8520166292908909276}
   - {fileID: 253607354497569646}
   - {fileID: 134541335}
-  _playerInputRestrictingEffectsData:
-  - effectPrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 0
-  - effectPrefab: {fileID: 1434155821187485333, guid: bddef074da1d9f64eadd4cbb76ff24f6,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 1
-  - effectPrefab: {fileID: 7981294947940924098, guid: e9dec2636deade34eb238a204a19bd2a,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    targetState: 2
-  _playerEffectsAndInputData:
-  - effectPrefab: {fileID: 969310629795772795, guid: ececb48e1e0c2d1449d1a915c49b89bb,
-      type: 3}
-    effectSpawnOffset: {x: 0, y: 0, z: 0}
-    effectParent: {fileID: 1504131108474634825}
-    modifierType: 1
+  _playerInputModifierData: []
 --- !u!114 &795477187898822337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +318,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
-  _canActivateWhenOtherActive: 
+  _allowedActiveAbilities: 
   _cooldownDuration: 0
   _plasmaBombPrefab: {fileID: 4947489715981850301, guid: e967618039d656546ac03453bac3afef,
     type: 3}
@@ -359,7 +341,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
-  _canActivateWhenOtherActive: 
+  _allowedActiveAbilities: 
   _cooldownDuration: 7
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
@@ -386,7 +368,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 1
-  _canActivateWhenOtherActive: 000000000100000003000000
+  _allowedActiveAbilities: 
   _cooldownDuration: 7
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
@@ -410,7 +392,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
-  _canActivateWhenOtherActive: 
+  _allowedActiveAbilities: 
   _cooldownDuration: 0
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
