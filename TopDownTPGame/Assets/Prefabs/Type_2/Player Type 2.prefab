@@ -582,11 +582,12 @@ MonoBehaviour:
   _abilityType: 1
   _allowedActiveAbilities: 
   _cooldownDuration: 0
+  _waterBubblePrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
+    type: 3}
   _abilityCastRadius: 10
   _abilityMask:
     serializedVersion: 2
     m_Bits: 64
-  _freezeDuration: 7
   _windUpTime: 0.15
   _ultimateChargeRate: 0.1
 --- !u!114 &3408678438235963055

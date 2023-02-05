@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Player.Base;
 using Player.UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utils.Misc;
 
 #endregion
@@ -64,17 +63,18 @@ namespace Player.Common
         {
         }
 
-        public void SetCanActivateWithOtherAbilities(List<AbilityTrigger> abilityTriggers) => _allowedActiveAbilities = abilityTriggers;
-
         #endregion Ability Functions
 
         #region Unity Functions
 
         public virtual void UnityStartDelegate(BasePlayerController playerController)
         {
-            PlayerAbilityDisplay.Instance.UpdateAbilityTrigger(_abilityTrigger);
-            PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
-            PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
+            if (_abilityTrigger != AbilityTrigger.ExternalAddedAbility)
+            {
+                PlayerAbilityDisplay.Instance.UpdateAbilityTrigger(_abilityTrigger);
+                PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
+                PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
+            }
         }
 
         public virtual void UnityUpdateDelegate(BasePlayerController playerController)

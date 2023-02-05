@@ -3,6 +3,7 @@
 using HealthSystem;
 using Player.Base;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -13,6 +14,7 @@ namespace Player.Type_3
         private const int MaxCollidersCheck = 10;
 
         [Header("Prefabs")]
+        [SerializeField] private GameObject _paranoiaPrefab;
         [SerializeField] private GameObject _pulseEffectPrefab;
         [SerializeField] private GameObject _pulseBurstEffectPrefab;
 
@@ -23,7 +25,6 @@ namespace Player.Type_3
         [SerializeField] private LayerMask _pulseMask;
 
         [Header("Affect Data")]
-        [SerializeField] private float _paranoiaDuration;
         [SerializeField] private int _healthDecayAmount;
         [SerializeField] private float _healthDecayDuration;
 
@@ -86,14 +87,23 @@ namespace Player.Type_3
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == _ownerId)
+                if (_hitColliders[i] == null)
                 {
                     continue;
                 }
 
                 if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
-                    // TODO: Enable Paranoia as an Ability
+                    var position = targetController.transform.position;
+                    var paranoia = Instantiate(_paranoiaPrefab, position, Quaternion.identity);
+
+                    var targetTransform = targetController.transform;
+                    var cameraTransform = targetTransform.Find(TagManager.Camera);
+                    paranoia.transform.SetParent(cameraTransform);
+                    paranoia.transform.localPosition = Vector3.zero;
+
+                    var paranoiaEffect = paranoia.GetComponent<Type_3_Ultimate_DarkPulseParanoia>();
+                    targetController.CheckAndAddExternalAbility(paranoiaEffect);
                 }
 
                 if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))

@@ -14,10 +14,12 @@ namespace Player.Type_2
         private const int MaxCollidersCheck = 10;
         private const float MaxUltimatePercent = 100;
 
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _waterBubblePrefab;
+
         [Header("Bubble Data")]
         [SerializeField] private float _abilityCastRadius;
         [SerializeField] private LayerMask _abilityMask;
-        [SerializeField] private float _freezeDuration;
 
         [Header("Ultimate Data")]
         [SerializeField] private float _windUpTime;
@@ -55,7 +57,11 @@ namespace Player.Type_2
 
                 if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
-                    // TODO: Add Player Freeze Ability Script
+                    var targetTransform = targetController.transform;
+                    var position = targetTransform.position;
+                    var waterBubble = Instantiate(_waterBubblePrefab, position, Quaternion.identity, targetTransform);
+                    var waterBubbleFrozen = waterBubble.GetComponent<Type_2_Ultimate_WaterBubbleFrozen>();
+                    targetController.CheckAndAddExternalAbility(waterBubbleFrozen);
                 }
             }
 

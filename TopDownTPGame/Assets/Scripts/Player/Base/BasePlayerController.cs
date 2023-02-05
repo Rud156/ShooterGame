@@ -6,7 +6,6 @@ using Effects;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using Utils.Input;
 using Utils.Misc;
 
@@ -147,11 +146,10 @@ namespace Player.Base
                 ProcessConstantSpeedFall();
             }
 
-            CheckAndActivateCustomMovementAbility();
+            CheckAndActivateAbilities();
             UpdatePlayerMovement();
 
             ApplyFinalMovement();
-            CheckAndActivateOtherAbilities();
             UpdateCustomAbilities();
 
             MarkFrameInputsAsRead();
@@ -385,12 +383,7 @@ namespace Player.Base
 
         private void UpdateCustomMovementState()
         {
-            if (_currentActiveAbilities.Count <= 0)
-            {
-                PopPlayerState();
-                return;
-            }
-
+            var hasMovementAbility = false;
             for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
             {
                 // Don't process Non Movement Abilities here...
@@ -408,31 +401,21 @@ namespace Player.Base
                     OnPlayerAbilityEnded?.Invoke(currentAbility);
                     _currentActiveAbilities.RemoveAt(i);
                 }
+                else
+                {
+                    hasMovementAbility = true;
+                }
+            }
+
+            if (_currentActiveAbilities.Count <= 0 || !hasMovementAbility)
+            {
+                PopPlayerState();
             }
         }
 
         #endregion Movement
 
         #region Core Movement
-
-        private void CheckAndActivateCustomMovementAbility()
-        {
-            foreach (var ability in _playerAbilities)
-            {
-                var key = GetKeyForAbilityTrigger(ability.GetAbilityTrigger());
-
-                if (ability.GetAbilityType() == AbilityType.Movement &&
-                    ability.AbilityCanStart(this) &&
-                    key.KeyPressedThisFrame)
-                {
-                    ability.StartAbility(this);
-                    OnPlayerAbilityStarted?.Invoke(ability);
-                    PushPlayerState(PlayerState.CustomMovement);
-                    _currentActiveAbilities.Add(ability);
-                    break;
-                }
-            }
-        }
 
         private void UpdateCoreMovement()
         {
@@ -525,27 +508,31 @@ namespace Player.Base
         }
 
         private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
+
         public Vector3 GetCharacterVelocity() => _characterVelocity;
-        public float GetCurrentStateVelocity() => _currentStateVelocity;
 
         #endregion Core Movement
 
-        #region Non Movement Abilities And Generic Ability Functions
+        #region Ability Functions
 
-        private void CheckAndActivateOtherAbilities()
+        private void CheckAndActivateAbilities()
         {
             foreach (var ability in _playerAbilities)
             {
                 var abilityTrigger = ability.GetAbilityTrigger();
                 var key = GetKeyForAbilityTrigger(abilityTrigger);
 
-                if (ability.GetAbilityType() != AbilityType.Movement &&
-                    ability.AbilityCanStart(this) &&
-                    key.KeyPressedThisFrame)
+                if (ability.AbilityCanStart(this) && key.KeyPressedThisFrame)
                 {
                     ability.StartAbility(this);
                     OnPlayerAbilityStarted?.Invoke(ability);
                     _currentActiveAbilities.Add(ability);
+
+                    if (ability.GetAbilityType() == AbilityType.Movement && _playerStateStack[^1] != PlayerState.CustomMovement)
+                    {
+                        PushPlayerState(PlayerState.CustomMovement);
+                    }
+
                     break;
                 }
             }
@@ -553,12 +540,6 @@ namespace Player.Base
 
         private void UpdateCustomAbilities()
         {
-            // This means there is an ability not active OR the ability active is only for Movement
-            if (_currentActiveAbilities.Count <= 0 || _playerStateStack[^1] == PlayerState.CustomMovement)
-            {
-                return;
-            }
-
             for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
             {
                 // Do not process Movement Abilities here...
@@ -596,7 +577,7 @@ namespace Player.Base
             {
                 ability.StartAbility(this);
                 OnPlayerAbilityStarted?.Invoke(ability);
-                if (ability.GetAbilityType() == AbilityType.Movement)
+                if (ability.GetAbilityType() == AbilityType.Movement && _playerStateStack[^1] != PlayerState.CustomMovement)
                 {
                     PushPlayerState(PlayerState.CustomMovement);
                 }
@@ -621,7 +602,7 @@ namespace Player.Base
             }
         }
 
-        #endregion Non Movement Abilities And Generic Ability Functions
+        #endregion Ability Functions
 
         #region Player State
 

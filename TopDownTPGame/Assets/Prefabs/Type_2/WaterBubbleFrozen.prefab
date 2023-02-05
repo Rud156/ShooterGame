@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 5352708457230724644}
   - component: {fileID: 5352708457230724643}
   - component: {fileID: 529044912}
+  - component: {fileID: -3214905585277274376}
   m_Layer: 0
-  m_Name: WaterBubble
+  m_Name: WaterBubbleFrozen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,6 +101,25 @@ MonoBehaviour:
   _rotationSpeed: 20
   _rotationAxis: 2
   _rotateOnStart: 1
+--- !u!114 &-3214905585277274376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5352708457230724641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69df1e07e7f94e67b8301599fbead81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _background: {fileID: 0}
+  _abilityTrigger: 4
+  _abilityType: 0
+  _allowedActiveAbilities: 
+  _cooldownDuration: 0
+  _frozenDuration: 7
 --- !u!1001 &1853126304
 PrefabInstance:
   m_ObjectHideFlags: 0
