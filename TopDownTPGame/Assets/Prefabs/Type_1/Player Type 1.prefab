@@ -429,16 +429,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 40
-  _walkSpeed: 20
-  _airControlMultiplier: 0.3
-  _gravityMultiplier: 0.25
+  _runSpeed: 30
+  _walkSpeed: 15
+  _airControlMultiplier: 0.1
+  _gravityMultiplier: 0.2
   _groundedCheckPoint: {fileID: 95916529477622696}
   _groundedCheckDistance: 0.65
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
-  _jumpVelocity: 50
+  _jumpVelocity: 35
   _constantSpeedFallEnabled: 0
   _constantSpeedFallMultiplier: 0
   _playerAbilities:
@@ -525,7 +525,8 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 0
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 3
   _projectilePrefab: {fileID: 9002442166465085074, guid: 97e634534d4e4c74880997ac9a63bf92,
     type: 3}
@@ -553,7 +554,8 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 1
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 5
   _chargedObjectPrefab: {fileID: 9002442166465085074, guid: 8f41e4a6fa74be6488bfae50f32803e3,
     type: 3}
@@ -578,7 +580,8 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 0
-  _allowedActiveAbilities: 
+  _abilityNameType: 2
+  _allowedActiveAbilities: 15000000
   _cooldownDuration: 7
   _dashEffectForward:
     effectPrefab: {fileID: 5267843241776696678, guid: 5425d62eea49aec42904fbe816bafa0d,
@@ -619,7 +622,8 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 3
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
     type: 3}

@@ -21,12 +21,10 @@ namespace Player.Type_4
         [SerializeField] private SatchelVelocityState _velocityState;
         [SerializeField] private float _currentTimer;
 
-        private float _startVelocity;
         private float _currentVelocity;
         private Vector3 _direction;
 
-        private Vector3 _currentComputedVelocity;
-        private Vector3 _finalVelocity;
+        private Vector3 _computedVelocity;
 
         #region Ability Functions
 
@@ -52,15 +50,15 @@ namespace Player.Type_4
 
                 case SatchelVelocityState.VelocityDecrease:
                 {
-                    var yVelocity = _currentComputedVelocity.y;
+                    var yVelocity = _computedVelocity.y;
                     _currentVelocity -= _velocityDecreaseRate * Time.fixedDeltaTime;
                     if (_currentVelocity < 0)
                     {
                         _currentVelocity = 0;
                     }
 
-                    _currentComputedVelocity = _direction * _currentVelocity;
-                    _currentComputedVelocity.y = yVelocity;
+                    _computedVelocity = _direction * _currentVelocity;
+                    _computedVelocity.y = yVelocity;
 
                     if (!playerController.IsGrounded)
                     {
@@ -96,7 +94,7 @@ namespace Player.Type_4
 
         #region Specific Data
 
-        public override Vector3 GetMovementData() => _finalVelocity;
+        public override Vector3 GetMovementData() => _computedVelocity;
 
         #endregion Specific Data
 
@@ -104,9 +102,8 @@ namespace Player.Type_4
 
         public void ApplySatchelMovement(Vector3 direction, float velocity)
         {
-            _currentComputedVelocity = direction * velocity;
+            _computedVelocity = direction * velocity;
             _currentVelocity = velocity;
-            _startVelocity = velocity;
 
             _currentTimer = _velocityDecreaseRateDelay;
             _direction = direction;
@@ -118,7 +115,7 @@ namespace Player.Type_4
 
         #region Utils
 
-        private void ProcessGravity() => _currentComputedVelocity.y += Physics.gravity.y * _gravityMultiplier;
+        private void ProcessGravity() => _computedVelocity.y += Physics.gravity.y * _gravityMultiplier;
 
         private void ApplyCoreMovement(BasePlayerController playerController)
         {
@@ -129,11 +126,13 @@ namespace Player.Type_4
 
             var airMovement = forward * coreInput.y + right * coreInput.x;
             airMovement.y = 0;
-            airMovement = _airControlMultiplier * _startVelocity * airMovement.normalized;
+            airMovement = _airControlMultiplier * _currentVelocity * airMovement.normalized;
 
-            _finalVelocity.x = airMovement.x + _currentComputedVelocity.x;
-            _finalVelocity.y = _currentComputedVelocity.y;
-            _finalVelocity.z = airMovement.z + _currentComputedVelocity.z;
+            airMovement.x += _computedVelocity.x;
+            airMovement.z += _computedVelocity.z;
+
+            _computedVelocity.x = airMovement.x;
+            _computedVelocity.z = airMovement.z;
         }
 
         private void SetSatchelVelocityState(SatchelVelocityState velocityState) => _velocityState = velocityState;

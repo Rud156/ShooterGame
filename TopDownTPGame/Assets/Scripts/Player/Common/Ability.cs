@@ -21,7 +21,8 @@ namespace Player.Common
         [Header("Core Ability Data")]
         [SerializeField] protected AbilityTrigger _abilityTrigger;
         [SerializeField] protected AbilityType _abilityType;
-        [SerializeField] protected List<AbilityTrigger> _allowedActiveAbilities;
+        [SerializeField] protected AbilityNameType _abilityNameType;
+        [SerializeField] protected List<AbilityNameType> _allowedActiveAbilities;
 
         [Header("Cooldown")]
         [SerializeField] protected float _cooldownDuration;
@@ -49,7 +50,7 @@ namespace Player.Common
             foreach (var ability in abilities)
             {
                 var abilityType = ability.GetAbilityType();
-                var abilityTrigger = ability.GetAbilityTrigger();
+                var abilityName = ability.GetAbilityNameType();
 
                 // Basically cannot run more than 1 Movement Ability at once...
                 if (abilityType == AbilityType.Movement && _abilityType == AbilityType.Movement)
@@ -57,7 +58,7 @@ namespace Player.Common
                     return false;
                 }
 
-                if (!_allowedActiveAbilities.Contains(abilityTrigger))
+                if (!_allowedActiveAbilities.Contains(abilityName))
                 {
                     return false;
                 }
@@ -141,6 +142,8 @@ namespace Player.Common
         public AbilityType GetAbilityType() => _abilityType;
 
         public AbilityTrigger GetAbilityTrigger() => _abilityTrigger;
+
+        public AbilityNameType GetAbilityNameType() => _abilityNameType;
 
         #endregion Getters
 

@@ -160,7 +160,7 @@ Transform:
   - {fileID: 1504131108382786862}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -200,16 +200,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 40
-  _walkSpeed: 20
-  _airControlMultiplier: 0.3
-  _gravityMultiplier: 0.25
+  _runSpeed: 30
+  _walkSpeed: 15
+  _airControlMultiplier: 0.1
+  _gravityMultiplier: 0.2
   _groundedCheckPoint: {fileID: 1504131108692597983}
   _groundedCheckDistance: 0.65
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
-  _jumpVelocity: 50
+  _jumpVelocity: 35
   _constantSpeedFallEnabled: 0
   _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
@@ -318,7 +318,8 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 12
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 0
   _plasmaBombPrefab: {fileID: 4947489715981850301, guid: e967618039d656546ac03453bac3afef,
     type: 3}
@@ -341,7 +342,8 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 13
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 7
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
@@ -368,7 +370,8 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 14
+  _allowedActiveAbilities: 15000000
   _cooldownDuration: 7
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
@@ -392,7 +395,8 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 15
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 0
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}

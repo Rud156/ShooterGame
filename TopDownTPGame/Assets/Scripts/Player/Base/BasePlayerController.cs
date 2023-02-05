@@ -450,7 +450,6 @@ namespace Player.Base
 
                 airMovement.x += _characterVelocity.x;
                 airMovement.z += _characterVelocity.z;
-                airMovement = airMovement.normalized * _currentStateVelocity;
 
                 _characterVelocity.x = airMovement.x;
                 _characterVelocity.z = airMovement.z;

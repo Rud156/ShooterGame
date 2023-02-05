@@ -398,16 +398,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 40
-  _walkSpeed: 20
-  _airControlMultiplier: 0.3
-  _gravityMultiplier: 0.25
+  _runSpeed: 30
+  _walkSpeed: 15
+  _airControlMultiplier: 0.1
+  _gravityMultiplier: 0.2
   _groundedCheckPoint: {fileID: 1252368708560691525}
   _groundedCheckDistance: 0.65
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
-  _jumpVelocity: 50
+  _jumpVelocity: 35
   _constantSpeedFallEnabled: 0
   _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
@@ -493,7 +493,8 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 0
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 16
+  _allowedActiveAbilities: 15000000
   _cooldownDuration: 0
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
@@ -520,7 +521,8 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 1
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 17
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 0
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
@@ -542,7 +544,8 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 2
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 18
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 0
   _shieldPrefab: {fileID: 7981294947940924098, guid: 1ea4fde9248da5041a535aa2d7ba7f1d,
     type: 3}
@@ -564,7 +567,8 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 3
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _abilityNameType: 19
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 0
   _shieldDeployRadius: 25
   _shieldDuration: 7
