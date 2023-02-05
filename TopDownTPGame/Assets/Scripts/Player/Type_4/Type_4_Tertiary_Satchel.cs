@@ -87,7 +87,6 @@ namespace Player.Type_4
             }
             else
             {
-                _satchelObject.LaunchPlayersWithSatchel();
                 _satchelObject.ProjectileDestroy();
                 _satchelObject = null;
                 _abilityEnd = true;

@@ -39,7 +39,7 @@ namespace Player.Type_3
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => _currentDashesLeftCount > 0;
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentDashesLeftCount > 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _currentDashTimeLeft <= 0;
 

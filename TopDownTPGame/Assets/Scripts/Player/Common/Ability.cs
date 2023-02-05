@@ -45,10 +45,19 @@ namespace Player.Common
 
         public virtual bool AbilityCanStart(BasePlayerController playerController)
         {
-            var activeAbilityTriggers = playerController.GetActiveAbilities();
-            foreach (var ability in activeAbilityTriggers)
+            var abilities = playerController.GetActiveAbilities();
+            foreach (var ability in abilities)
             {
-                if (!_allowedActiveAbilities.Contains(ability))
+                var abilityType = ability.GetAbilityType();
+                var abilityTrigger = ability.GetAbilityTrigger();
+
+                // Basically cannot run more than 1 Movement Ability at once...
+                if (abilityType == AbilityType.Movement && _abilityType == AbilityType.Movement)
+                {
+                    return false;
+                }
+
+                if (!_allowedActiveAbilities.Contains(abilityTrigger))
                 {
                     return false;
                 }

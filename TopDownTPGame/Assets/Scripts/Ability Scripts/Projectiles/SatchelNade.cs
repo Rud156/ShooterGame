@@ -1,6 +1,9 @@
 #region
 
+using Player.Base;
+using Player.Type_4;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -10,6 +13,7 @@ namespace Ability_Scripts.Projectiles
     public class SatchelNade : MonoBehaviour, IProjectile
     {
         [Header("Prefabs")]
+        [SerializeField] private GameObject _satchLaunchPrefab;
         [SerializeField] private GameObject _satchelExplodePrefab;
 
         [Header("Satchel Data")]
@@ -23,10 +27,11 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private LayerMask _raycastMask;
 
         [Header("Satchel Explode Launch Data")]
-        [SerializeField] private float _affectRadius;
-        [SerializeField] private float _minRaidusForMaxAffect;
-        [SerializeField] private float _minAffectAcceleration;
-        [SerializeField] private float _maxAffectAcceleration;
+        [SerializeField] private float _maxRadiusForAffect;
+        [SerializeField] private float _minRadiusForMaxAffect;
+        [SerializeField] private float _minVelocity;
+        [SerializeField] private float _maxVelocity;
+        [SerializeField] private LayerMask _affectMask;
 
         private Rigidbody _rb;
         private BoxCollider _collider;
@@ -69,15 +74,12 @@ namespace Ability_Scripts.Projectiles
 
         public void ProjectileDestroy()
         {
+            LaunchPlayersWithSatchel();
             Instantiate(_satchelExplodePrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
 
         public void ProjectileHit(Collider other)
-        {
-        }
-
-        public void LaunchPlayersWithSatchel()
         {
         }
 
@@ -98,6 +100,35 @@ namespace Ability_Scripts.Projectiles
             _isInitialized = true;
             _destroyTimeLeft = _destroyDuration;
             _isStuck = false;
+        }
+
+        private void LaunchPlayersWithSatchel()
+        {
+            var colliders = Physics.OverlapSphere(transform.position, _maxRadiusForAffect, _affectMask);
+            foreach (var targetCollider in colliders)
+            {
+                if (targetCollider.TryGetComponent(out BasePlayerController targetController))
+                {
+                    var hitObjectPosition = targetCollider.transform.position;
+                    var position = transform.position;
+
+                    var direction = hitObjectPosition - position;
+                    var distance = Vector3.Distance(position, hitObjectPosition);
+                    var isInLos = Physics.Raycast(position, direction, out var hitInfo, distance, _affectMask);
+
+                    if (isInLos && hitInfo.collider.gameObject.GetInstanceID() == targetCollider.gameObject.GetInstanceID())
+                    {
+                        var velocityApplied = distance <= _minRadiusForMaxAffect
+                            ? _maxVelocity
+                            : ExtensionFunctions.Map(distance, _minRadiusForMaxAffect, _maxRadiusForAffect, _maxVelocity, _minVelocity);
+
+                        var satchelMovementObject = Instantiate(_satchLaunchPrefab, hitObjectPosition, Quaternion.identity, targetCollider.transform);
+                        var satchelMovement = satchelMovementObject.GetComponent<Type_4_Tertiary_SatchelMovement>();
+                        satchelMovement.ApplySatchelMovement(direction, velocityApplied);
+                        targetController.CheckAndAddExternalAbility(satchelMovement);
+                    }
+                }
+            }
         }
 
         private void UpdateSatchelVelocity()

@@ -67,6 +67,7 @@ namespace Player.Base
 
         // Custom Ability
         private List<Ability> _currentActiveAbilities;
+        private List<Ability> _abilitiesToAddNextFrame;
 
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -94,6 +95,7 @@ namespace Player.Base
             _playerStateStack = new List<PlayerState>();
             _playerInputsModifiers = new List<PlayerInputModifiers>();
             _currentActiveAbilities = new List<Ability>();
+            _abilitiesToAddNextFrame = new List<Ability>();
 
             _coreMoveInput = new Vector2();
             _runKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
@@ -132,6 +134,9 @@ namespace Player.Base
 
         private void FixedUpdate()
         {
+            // Process these at the beginning to not cause a race condition
+            ProcessNextFrameAbilities();
+
             // Handle Fixed General Ability Update
             DelegateFixedUpdateAbilities();
 
@@ -524,14 +529,21 @@ namespace Player.Base
 
                 if (ability.AbilityCanStart(this) && key.KeyPressedThisFrame)
                 {
+                    if (ability.GetAbilityType() == AbilityType.Movement)
+                    {
+                        if (_playerStateStack[^1] != PlayerState.CustomMovement)
+                        {
+                            PushPlayerState(PlayerState.CustomMovement);
+                        }
+                        else
+                        {
+                            RemoveExistingMovementAbility();
+                        }
+                    }
+
                     ability.StartAbility(this);
                     OnPlayerAbilityStarted?.Invoke(ability);
                     _currentActiveAbilities.Add(ability);
-
-                    if (ability.GetAbilityType() == AbilityType.Movement && _playerStateStack[^1] != PlayerState.CustomMovement)
-                    {
-                        PushPlayerState(PlayerState.CustomMovement);
-                    }
 
                     break;
                 }
@@ -559,30 +571,49 @@ namespace Player.Base
             }
         }
 
-        public List<AbilityTrigger> GetActiveAbilities()
+        public List<Ability> GetActiveAbilities() => _currentActiveAbilities;
+
+        public void CheckAndAddExternalAbility(Ability ability) => _abilitiesToAddNextFrame.Add(ability);
+
+        private void ProcessNextFrameAbilities()
         {
-            var activeAbilityTriggers = new List<AbilityTrigger>();
-            foreach (var ability in _currentActiveAbilities)
+            foreach (var ability in _abilitiesToAddNextFrame)
             {
-                activeAbilityTriggers.Add(ability.GetAbilityTrigger());
+                // This Ability will already have started 
+                if (ability.AbilityCanStart(this))
+                {
+                    if (ability.GetAbilityType() == AbilityType.Movement)
+                    {
+                        if (_playerStateStack[^1] != PlayerState.CustomMovement)
+                        {
+                            PushPlayerState(PlayerState.CustomMovement);
+                        }
+                        else
+                        {
+                            RemoveExistingMovementAbility();
+                        }
+                    }
+
+                    ability.StartAbility(this);
+                    OnPlayerAbilityStarted?.Invoke(ability);
+                    _currentActiveAbilities.Add(ability);
+                }
             }
 
-            return activeAbilityTriggers;
+            _abilitiesToAddNextFrame.Clear();
         }
 
-        public void CheckAndAddExternalAbility(Ability ability)
+        private void RemoveExistingMovementAbility()
         {
-            // This Ability will already have started 
-            if (ability.AbilityCanStart(this))
+            for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
             {
-                ability.StartAbility(this);
-                OnPlayerAbilityStarted?.Invoke(ability);
-                if (ability.GetAbilityType() == AbilityType.Movement && _playerStateStack[^1] != PlayerState.CustomMovement)
+                var currentAbility = _currentActiveAbilities[i];
+                if (currentAbility.GetAbilityType() == AbilityType.Movement)
                 {
-                    PushPlayerState(PlayerState.CustomMovement);
+                    currentAbility.EndAbility(this);
+                    OnPlayerAbilityEnded?.Invoke(currentAbility);
+                    _currentActiveAbilities.RemoveAt(i);
                 }
-
-                _currentActiveAbilities.Add(ability);
             }
         }
 

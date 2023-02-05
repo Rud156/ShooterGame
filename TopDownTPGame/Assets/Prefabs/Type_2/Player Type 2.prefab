@@ -276,7 +276,7 @@ Transform:
   - {fileID: 2637092012017492159}
   - {fileID: 1362992553}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2637092012038209768
 CharacterController:
@@ -433,7 +433,7 @@ MonoBehaviour:
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
-  _allowedActiveAbilities: 
+  _allowedActiveAbilities: 02000000
   _cooldownDuration: 3
   _slashLeftPrefab: {fileID: 5610884078883986163, guid: 4fa745a0b9c0b8c4cb6c10a333e6a885,
     type: 3}
