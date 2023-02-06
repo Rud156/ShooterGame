@@ -440,8 +440,6 @@ namespace Player.Base
                 groundedMovement.y = 0;
                 groundedMovement = _currentStateVelocity * groundedMovement.normalized;
 
-                // Debug.Log($"Grounded -> X: {groundedMovement.x}, Z: {groundedMovement.z}, Mag: {groundedMovement.magnitude}");
-
                 _characterVelocity.x = groundedMovement.x;
                 _characterVelocity.z = groundedMovement.z;
             }

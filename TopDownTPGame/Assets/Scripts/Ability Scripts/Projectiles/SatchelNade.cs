@@ -110,7 +110,6 @@ namespace Ability_Scripts.Projectiles
         private void LaunchPlayersWithSatchel()
         {
             var colliders = Physics.OverlapSphere(transform.position, _maxRadiusForAffect, _affectMask);
-            DebugExtension.DebugWireSphere(transform.position, Color.white, _maxRadiusForAffect, 10);
             foreach (var targetCollider in colliders)
             {
                 if (targetCollider.TryGetComponent(out BasePlayerController targetController))
@@ -127,8 +126,6 @@ namespace Ability_Scripts.Projectiles
                         var velocityApplied = distance <= _minRadiusForMaxAffect
                             ? _maxVelocity
                             : ExtensionFunctions.Map(distance, _minRadiusForMaxAffect, _maxRadiusForAffect, _maxVelocity, _minVelocity);
-
-                        Debug.Log($"Velocity: {velocityApplied}");
 
                         var satchelMovementObject = Instantiate(_satchLaunchPrefab, hitObjectPosition, Quaternion.identity, targetCollider.transform);
                         var satchelMovement = satchelMovementObject.GetComponent<Type_4_Tertiary_SatchelMovement>();
