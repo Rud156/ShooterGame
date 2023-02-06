@@ -49,6 +49,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 4
   _abilityType: 1
+  _abilityNameType: 21
   _allowedActiveAbilities: 
   _cooldownDuration: 0
   _destroyParticleEffect: {fileID: 6364840929258679652}

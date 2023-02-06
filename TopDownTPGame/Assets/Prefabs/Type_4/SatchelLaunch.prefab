@@ -48,16 +48,13 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 4
   _abilityType: 0
+  _abilityNameType: 22
   _allowedActiveAbilities: 
   _cooldownDuration: 0
-  _gravityMultiplier: 0.2
-  _airControlMultiplier: 0.5
+  _gravityMultiplier: 0.15
+  _airControlMultiplier: 0.05
   _velocityDecreaseRateDelay: 0.25
   _velocityDecreaseRate: 3
   _satchelAffectTime: 2.5
   _velocityState: 0
   _currentTimer: 0
-  _startVelocity: 0
-  _currentVelocity: 0
-  _direction: {x: 0, y: 0, z: 0}
-  _computedVelocity: {x: 0, y: 0, z: 0}

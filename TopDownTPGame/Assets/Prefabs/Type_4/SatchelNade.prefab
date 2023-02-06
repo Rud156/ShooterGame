@@ -92,11 +92,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3462899490673628824}
-  - component: {fileID: 3462899490673628804}
   - component: {fileID: 3462899490673628805}
   - component: {fileID: 3462899490673628826}
   m_Layer: 7
-  m_Name: Satchel
+  m_Name: SatchelNade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,27 +117,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3462899490673628804
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3462899490673628828}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.25, y: 0.25, z: 0.25}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3462899490673628805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -192,8 +170,8 @@ MonoBehaviour:
     m_Bits: 65
   _maxRadiusForAffect: 15
   _minRadiusForMaxAffect: 5
-  _minVelocity: 10
-  _maxVelocity: 50
+  _minVelocity: 5
+  _maxVelocity: 45
   _affectMask:
     serializedVersion: 2
     m_Bits: 64

@@ -34,7 +34,6 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private LayerMask _affectMask;
 
         private Rigidbody _rb;
-        private BoxCollider _collider;
         private bool _isInitialized;
 
         private Vector3 _currentVelocity;
@@ -45,6 +44,14 @@ namespace Ability_Scripts.Projectiles
         #region Unity Functions
 
         private void Start() => Init();
+
+        private void Update()
+        {
+            if (!_isStuck)
+            {
+                CheckCollisionWithObject();
+            }
+        }
 
         private void FixedUpdate()
         {
@@ -57,7 +64,6 @@ namespace Ability_Scripts.Projectiles
             if (!_isStuck)
             {
                 UpdateSatchelVelocity();
-                CheckCollisionWithObject();
             }
         }
 
@@ -95,7 +101,6 @@ namespace Ability_Scripts.Projectiles
             }
 
             _rb = GetComponent<Rigidbody>();
-            _collider = GetComponent<BoxCollider>();
 
             _isInitialized = true;
             _destroyTimeLeft = _destroyDuration;
@@ -105,6 +110,7 @@ namespace Ability_Scripts.Projectiles
         private void LaunchPlayersWithSatchel()
         {
             var colliders = Physics.OverlapSphere(transform.position, _maxRadiusForAffect, _affectMask);
+            DebugExtension.DebugWireSphere(transform.position, Color.white, _maxRadiusForAffect, 10);
             foreach (var targetCollider in colliders)
             {
                 if (targetCollider.TryGetComponent(out BasePlayerController targetController))
@@ -112,7 +118,7 @@ namespace Ability_Scripts.Projectiles
                     var hitObjectPosition = targetCollider.transform.position;
                     var position = transform.position;
 
-                    var direction = hitObjectPosition - position;
+                    var direction = (hitObjectPosition - position).normalized;
                     var distance = Vector3.Distance(position, hitObjectPosition);
                     var isInLos = Physics.Raycast(position, direction, out var hitInfo, distance, _affectMask);
 
@@ -121,6 +127,8 @@ namespace Ability_Scripts.Projectiles
                         var velocityApplied = distance <= _minRadiusForMaxAffect
                             ? _maxVelocity
                             : ExtensionFunctions.Map(distance, _minRadiusForMaxAffect, _maxRadiusForAffect, _maxVelocity, _minVelocity);
+
+                        Debug.Log($"Velocity: {velocityApplied}");
 
                         var satchelMovementObject = Instantiate(_satchLaunchPrefab, hitObjectPosition, Quaternion.identity, targetCollider.transform);
                         var satchelMovement = satchelMovementObject.GetComponent<Type_4_Tertiary_SatchelMovement>();
@@ -189,7 +197,6 @@ namespace Ability_Scripts.Projectiles
         {
             _rb.velocity = Vector3.zero;
             _rb.isKinematic = true;
-            _collider.enabled = false;
         }
 
         private Vector3 GetDirectionFromIndex(int index)

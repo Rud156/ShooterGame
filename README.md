@@ -6,7 +6,7 @@
     - [ ] Type 4 Character - Grenadier
         - [X] Primary Ability (All Damage/HP/Effects)
         - [X] Secondary Ability (All Damage/HP/Effects)
-        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [X] Tertiary Ability (All Damage/HP/Effects)
             - Satchel tries to go to crosshair location. It fails if the range is too far since it has a max launch velocity with Gravity
             - Has a relatively small radius of impact
             - Cannot be affected through walls. Needs LOS

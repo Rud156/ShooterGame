@@ -21,9 +21,7 @@ namespace Player.Type_4
         [SerializeField] private SatchelVelocityState _velocityState;
         [SerializeField] private float _currentTimer;
 
-        private float _currentVelocity;
-        private Vector3 _direction;
-
+        private float _maxStartVelocity;
         private Vector3 _computedVelocity;
 
         #region Ability Functions
@@ -50,19 +48,14 @@ namespace Player.Type_4
 
                 case SatchelVelocityState.VelocityDecrease:
                 {
-                    var yVelocity = _computedVelocity.y;
-                    _currentVelocity -= _velocityDecreaseRate * Time.fixedDeltaTime;
-                    if (_currentVelocity < 0)
-                    {
-                        _currentVelocity = 0;
-                    }
-
-                    _computedVelocity = _direction * _currentVelocity;
-                    _computedVelocity.y = yVelocity;
-
+                    DecreaseVelocity();
                     if (!playerController.IsGrounded)
                     {
                         ProcessGravity();
+                    }
+                    else
+                    {
+                        _computedVelocity.y = 0;
                     }
 
                     _currentTimer -= Time.fixedDeltaTime;
@@ -103,10 +96,9 @@ namespace Player.Type_4
         public void ApplySatchelMovement(Vector3 direction, float velocity)
         {
             _computedVelocity = direction * velocity;
-            _currentVelocity = velocity;
+            _maxStartVelocity = velocity;
 
             _currentTimer = _velocityDecreaseRateDelay;
-            _direction = direction;
 
             SetSatchelVelocityState(SatchelVelocityState.FullVelocity);
         }
@@ -126,13 +118,39 @@ namespace Player.Type_4
 
             var airMovement = forward * coreInput.y + right * coreInput.x;
             airMovement.y = 0;
-            airMovement = _airControlMultiplier * _currentVelocity * airMovement.normalized;
+            airMovement = airMovement.normalized * (_airControlMultiplier * _maxStartVelocity);
 
-            airMovement.x += _computedVelocity.x;
-            airMovement.z += _computedVelocity.z;
+            var clampedXVelocity = Mathf.Clamp(_computedVelocity.x + airMovement.x, -_maxStartVelocity, _maxStartVelocity);
+            var clampedZVelocity = Mathf.Clamp(_computedVelocity.z + airMovement.z, -_maxStartVelocity, _maxStartVelocity);
 
-            _computedVelocity.x = airMovement.x;
-            _computedVelocity.z = airMovement.z;
+            _computedVelocity.x = clampedXVelocity;
+            _computedVelocity.z = clampedZVelocity;
+        }
+
+        private void DecreaseVelocity()
+        {
+            var xVelocity = _computedVelocity.x;
+            if (xVelocity < 0)
+            {
+                xVelocity += _velocityDecreaseRate * Time.fixedDeltaTime;
+            }
+            else
+            {
+                xVelocity -= _velocityDecreaseRate * Time.fixedDeltaTime;
+            }
+
+            var zVelocity = _computedVelocity.z;
+            if (zVelocity < 0)
+            {
+                zVelocity += _velocityDecreaseRate * Time.fixedDeltaTime;
+            }
+            else
+            {
+                zVelocity -= _velocityDecreaseRate * Time.fixedDeltaTime;
+            }
+
+            _computedVelocity.x = xVelocity;
+            _computedVelocity.z = zVelocity;
         }
 
         private void SetSatchelVelocityState(SatchelVelocityState velocityState) => _velocityState = velocityState;

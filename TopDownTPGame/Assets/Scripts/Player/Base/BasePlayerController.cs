@@ -17,6 +17,7 @@ namespace Player.Base
     public class BasePlayerController : MonoBehaviour
     {
         private const string MovementHoldIdentifier = "MovementHold";
+        private const float MaxDirectionalInputAmount = 15;
 
         [Header("Basic Move")]
         [SerializeField] private float _runSpeed;
@@ -439,6 +440,8 @@ namespace Player.Base
                 groundedMovement.y = 0;
                 groundedMovement = _currentStateVelocity * groundedMovement.normalized;
 
+                // Debug.Log($"Grounded -> X: {groundedMovement.x}, Z: {groundedMovement.z}, Mag: {groundedMovement.magnitude}");
+
                 _characterVelocity.x = groundedMovement.x;
                 _characterVelocity.z = groundedMovement.z;
             }
@@ -446,13 +449,13 @@ namespace Player.Base
             {
                 var airMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
                 airMovement.y = 0;
-                airMovement = _airControlMultiplier * _currentStateVelocity * airMovement.normalized;
+                airMovement = airMovement.normalized * (_airControlMultiplier * _currentStateVelocity);
 
-                airMovement.x += _characterVelocity.x;
-                airMovement.z += _characterVelocity.z;
+                var clampedXVelocity = Mathf.Clamp(_characterVelocity.x + airMovement.x, -MaxDirectionalInputAmount, MaxDirectionalInputAmount);
+                var clampedZVelocity = Mathf.Clamp(_characterVelocity.z + airMovement.z, -MaxDirectionalInputAmount, MaxDirectionalInputAmount);
 
-                _characterVelocity.x = airMovement.x;
-                _characterVelocity.z = airMovement.z;
+                _characterVelocity.x = clampedXVelocity;
+                _characterVelocity.z = clampedZVelocity;
             }
         }
 
@@ -471,7 +474,7 @@ namespace Player.Base
         private void UpdateGroundedState()
         {
             var isGrounded = Physics.Raycast(_groundedCheckPoint.position, Vector3.down, _groundedCheckDistance, _groundedCheckMask);
-            if (isGrounded && !_isGrounded)
+            if (isGrounded)
             {
                 _characterVelocity.y = 0;
             }

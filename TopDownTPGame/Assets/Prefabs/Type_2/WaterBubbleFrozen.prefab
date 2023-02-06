@@ -117,6 +117,7 @@ MonoBehaviour:
   _background: {fileID: 0}
   _abilityTrigger: 4
   _abilityType: 0
+  _abilityNameType: 20
   _allowedActiveAbilities: 
   _cooldownDuration: 0
   _frozenDuration: 7
