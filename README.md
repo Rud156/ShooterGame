@@ -3,30 +3,16 @@
 ## TODOs (Current)
 
 - [ ] Polish Pass
-    - [ ] Type 4 Character - Grenadier
-        - [X] Primary Ability (All Damage/HP/Effects)
-        - [X] Secondary Ability (All Damage/HP/Effects)
-        - [X] Tertiary Ability (All Damage/HP/Effects)
-            - Satchel tries to go to crosshair location. It fails if the range is too far since it has a max launch velocity with Gravity
-            - Has a relatively small radius of impact
-            - Cannot be affected through walls. Needs LOS
-            - Satchel applies a short duration of high acceleration
-            - Then the drops acceleration to 0
-            - Gravity keeps affecting and velocity also slowly decreases
-            - The player needs to look towards the direction they want to go in and also press the appropriate key
-            - Literally a stronger jump with an initial direction applied
-        - [ ] Ultimate Ability (All Damage/HP/Effects)
+    - [ ] Type 5 Character - Engineer
+        - [ ] Primary Ability (All Damage/HP/Effects)
+        - [ ] Secondary Ability (All Damage/HP/Effects)
+        - [ ] Tertiary Ability (All Damage/HP/Effects)
+        - [ ] Ultimate Ability (All Damage/HP/Effects)    
 
 ## TODOs (Future)
 
 > Characters don't take Fall Damage
 
-- [ ] Polish Pass
-    - [ ] Type 5 Character - Engineer
-        - [ ] Primary Ability (All Damage/HP/Effects)
-        - [ ] Secondary Ability (All Damage/HP/Effects)
-        - [ ] Tertiary Ability (All Damage/HP/Effects)
-        - [ ] Ultimate Ability (All Damage/HP/Effects)
 - [ ] Animation Polish
     - [ ] Type 1
     - [ ] Type 2
@@ -100,6 +86,19 @@
         - [X] Primary Ability (All Damage/HP/Effects)
         - [X] Secondary Ability (All Damage/HP/Effects)
         - [X] Tertiary Ability (All Damage/HP/Effects)
+        - [X] Ultimate Ability (All Damage/HP/Effects)
+    - [X] Type 4 Character - Grenadier
+        - [X] Primary Ability (All Damage/HP/Effects)
+        - [X] Secondary Ability (All Damage/HP/Effects)
+        - [X] Tertiary Ability (All Damage/HP/Effects)
+            - Satchel tries to go to crosshair location. It fails if the range is too far since it has a max launch velocity with Gravity
+            - Has a relatively small radius of impact
+            - Cannot be affected through walls. Needs LOS
+            - Satchel applies a short duration of high acceleration
+            - Then the drops acceleration to 0
+            - Gravity keeps affecting and velocity also slowly decreases
+            - The player needs to look towards the direction they want to go in and also press the appropriate key
+            - Literally a stronger jump with an initial direction applied
         - [X] Ultimate Ability (All Damage/HP/Effects)
 - [X] ShootController that returns the correct direction where the projectile should be launched to hit the center of
   the screen

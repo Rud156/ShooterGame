@@ -264,7 +264,7 @@ PrefabInstance:
     - target: {fileID: 4041867313488362309, guid: c913d69efbd0cb84b8c81af80ea6be3b,
         type: 3}
       propertyPath: m_Name
-      value: RocketTrailEffect
+      value: HomingMissileTrailEffect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

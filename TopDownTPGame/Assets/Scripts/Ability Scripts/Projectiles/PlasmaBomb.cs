@@ -52,7 +52,6 @@ namespace Ability_Scripts.Projectiles
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _bombDamageRadius, _hitColliders, _bombMask);
             for (var i = 0; i < targetsHit; i++)
             {
-                // Do not target itself
                 if (_hitColliders[i] == null)
                 {
                     continue;

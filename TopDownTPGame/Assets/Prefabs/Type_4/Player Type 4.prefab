@@ -400,10 +400,8 @@ MonoBehaviour:
   _cooldownDuration: 0
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
-  _cameraHolder: {fileID: 1504131108770834952}
-  _shootPoint: {fileID: 1504131108382786862}
-  _knockbackDuration: 0.25
-  _knockbackVelocity: 21
+  _baseShootController: {fileID: 795477187898822337}
+  _ultimateChargeRate: 0.1
 --- !u!114 &5502045882867128996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,6 +424,7 @@ MonoBehaviour:
   _debugHealAmount: 0
   _debugDecayAmount: 0
   _debugDecayDuration: 0
+  _currentHealth: 0
 --- !u!114 &3858859646320302021
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 #region
 
+using HealthSystem;
 using UnityEngine;
 
 #endregion
@@ -9,9 +10,17 @@ namespace Ability_Scripts.Projectiles
     [RequireComponent(typeof(Rigidbody))]
     public class RocketProjectile : MonoBehaviour, IProjectile
     {
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _destroyEffect;
+
         [Header("Rocket Data")]
         [SerializeField] private float _projectileLaunchVelocity;
         [SerializeField] private float _projectileDestroyTime;
+
+        [Header("Damage Data")]
+        [SerializeField] private float _damageRadius;
+        [SerializeField] private int _damageAmount;
+        [SerializeField] private LayerMask _rocketMask;
 
         private Rigidbody _rb;
         private bool _isInitialized;
@@ -22,6 +31,16 @@ namespace Ability_Scripts.Projectiles
         #region Unity Functions
 
         private void Start() => Init();
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!_isLaunched)
+            {
+                return;
+            }
+
+            ProjectileDestroy();
+        }
 
         private void FixedUpdate()
         {
@@ -46,13 +65,30 @@ namespace Ability_Scripts.Projectiles
             _destroyTimeLeft = _projectileDestroyTime;
         }
 
-        public void ProjectileDestroy() => Destroy(gameObject);
+        public void ProjectileDestroy()
+        {
+            ApplyDamageForRocket();
+            Instantiate(_destroyEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
 
         public void ProjectileHit(Collider other)
         {
         }
 
         #region Utils
+
+        private void ApplyDamageForRocket()
+        {
+            var targetsHit = Physics.OverlapSphere(transform.position, _damageRadius, _rocketMask);
+            for (var i = 0; i < targetsHit.Length; i++)
+            {
+                if (targetsHit[i].TryGetComponent(out HealthAndDamage healthAndDamage))
+                {
+                    healthAndDamage.TakeDamage(_damageAmount);
+                }
+            }
+        }
 
         private void Init()
         {
