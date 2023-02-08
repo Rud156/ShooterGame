@@ -358,7 +358,7 @@ Transform:
   - {fileID: 1252368709447252148}
   - {fileID: 3889310737721836962}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1252368709468985571
 CharacterController:
@@ -489,8 +489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9088e90a569b94f97d8a0e91126a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 9662b5bd26505c641802da5ea62eec8c, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 16
@@ -517,8 +517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd55d6d2b5df50e4aa379ae9bf569c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 8fe0a2878e93bbf4285ac45f916548e3, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 17
@@ -540,8 +540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4434bfc81670f3643afb9105611e2142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 6852cac379f31484e97d5eb50fcd9226, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 2
   _abilityType: 1
   _abilityNameType: 18
@@ -563,8 +563,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb703c24ead9061479b85731c979334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _background: {fileID: 0}
+  _icon: {fileID: 21300000, guid: c5fe5c824a147e7419b26a8bb0a5f42d, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 19
@@ -597,6 +597,7 @@ MonoBehaviour:
   _debugHealAmount: 0
   _debugDecayAmount: 0
   _debugDecayDuration: 0
+  _currentHealth: 0
 --- !u!114 &3600043951216142606
 MonoBehaviour:
   m_ObjectHideFlags: 0
