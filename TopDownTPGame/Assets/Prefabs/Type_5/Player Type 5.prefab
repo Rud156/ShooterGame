@@ -501,10 +501,10 @@ MonoBehaviour:
   _cameraHolder: {fileID: 1252368709025650578}
   _cameraPoint: {fileID: 1252368708745134035}
   _spawnMaxDistance: 10
-  _spawnOffset: {x: 0, y: 0.5, z: 0}
+  _spawnOffset: {x: 0, y: 0, z: 0}
   _turretMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 1
 --- !u!114 &448688126214188792
 MonoBehaviour:
   m_ObjectHideFlags: 0
