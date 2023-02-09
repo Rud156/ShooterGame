@@ -495,12 +495,13 @@ MonoBehaviour:
   _abilityType: 1
   _abilityNameType: 16
   _allowedActiveAbilities: 15000000
-  _cooldownDuration: 0
+  _cooldownDuration: 3
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
-  _cameraHolder: {fileID: 1252368709025650578}
+  _baseShootController: {fileID: 5021002024800133882}
   _cameraPoint: {fileID: 1252368708745134035}
-  _spawnMaxDistance: 10
+  _spawnMaxDistance: 25
+  _maxTurretsCanSpawn: 2
   _spawnOffset: {x: 0, y: 0, z: 0}
   _turretMask:
     serializedVersion: 2
