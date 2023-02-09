@@ -1,5 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.Serialization;
+﻿#region
+
+using UnityEngine;
+
+#endregion
 
 namespace Utils.Materials
 {

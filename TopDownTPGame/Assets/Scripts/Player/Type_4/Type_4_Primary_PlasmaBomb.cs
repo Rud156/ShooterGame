@@ -15,7 +15,6 @@ namespace Player.Type_4
         [SerializeField] private GameObject _plasmaBombPrefab;
 
         [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
         [SerializeField] private BaseShootController _shootController;
 
         [Header("Plasma Shoot Data")]

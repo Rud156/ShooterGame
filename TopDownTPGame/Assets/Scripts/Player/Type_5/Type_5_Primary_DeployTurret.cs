@@ -2,11 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
-using Utils.Input;
 using Utils.Materials;
 
 #endregion
@@ -19,12 +17,12 @@ namespace Player.Type_5
         [SerializeField] private GameObject _turretPrefab;
 
         [Header("Components")]
-        [SerializeField] private BaseShootController _baseShootController;
-        [SerializeField] private Transform _cameraPoint;
+        [SerializeField] private Transform _camera;
 
         [Header("Spawn Data")]
         [SerializeField] private float _spawnMaxDistance;
         [SerializeField] private int _maxTurretsCanSpawn;
+        [SerializeField] private float _minYNormalThreshold;
         [SerializeField] private Vector3 _spawnOffset;
         [SerializeField] private LayerMask _turretMask;
 
@@ -36,10 +34,9 @@ namespace Player.Type_5
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) =>
-            base.AbilityCanStart(playerController) && _currentCooldownDuration <= 0 && playerController.IsGrounded;
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentCooldownDuration <= 0;
 
-        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _turretState == TurretState.Placed || _turretState == TurretState.Cancelled;
+        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _turretState is TurretState.Placed or TurretState.Cancelled;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
@@ -112,33 +109,41 @@ namespace Player.Type_5
 
         private void UpdateTurretPlacement(BasePlayerController playerController)
         {
-            var cameraPosition = _cameraPoint.position;
-            var direction = _baseShootController.GetShootLookDirection();
+            var cameraPosition = _camera.position;
+            var direction = _camera.forward;
             var hit = Physics.Raycast(cameraPosition, direction, out var hitInfo, _spawnMaxDistance, _turretMask);
-            Debug.DrawRay(cameraPosition, direction * _spawnMaxDistance, color: Color.red);
 
             if (hit)
             {
                 _turretObject.transform.position = hitInfo.point + _spawnOffset;
                 _turretObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
 
-                var primaryKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
-                if (primaryKey.KeyPressedThisFrame)
+                var yNormal = hitInfo.normal.y;
+                if (IsNormalInAcceptedRange(yNormal))
                 {
-                    UpdateTurretMaterial(1);
-                    _turretObject.transform.SetParent(hitInfo.transform);
-                    _spawnedTurrets.Add(_turretObject);
+                    UpdateTurretMaterial(2);
 
-                    _turretObject = null;
-                    _currentCooldownDuration = _cooldownDuration;
+                    var primaryKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
+                    if (primaryKey.KeyPressedThisFrame)
+                    {
+                        _turretObject.transform.SetParent(hitInfo.transform);
+                        UpdateTurretMaterial(1);
+
+                        _spawnedTurrets.Add(_turretObject);
+                        _turretObject = null;
+                        _currentCooldownDuration = _cooldownDuration;
+                        SetTurretState(TurretState.Placed);
+                    }
                 }
-
-                UpdateTurretMaterial(2);
+                else
+                {
+                    UpdateTurretMaterial(3);
+                }
             }
             else
             {
                 var endPosition = direction * _spawnMaxDistance;
-                _turretObject.transform.position = endPosition;
+                _turretObject.transform.position = cameraPosition + endPosition;
                 UpdateTurretMaterial(3);
             }
 
@@ -154,6 +159,8 @@ namespace Player.Type_5
         }
 
         #endregion Turret State Updates
+
+        private bool IsNormalInAcceptedRange(float currentYNormal) => currentYNormal >= _minYNormalThreshold && currentYNormal <= 1;
 
         private void UpdateTurretMaterial(int materialIndex) => _turretMaterialSwitcher.SwitchMaterial(materialIndex);
 

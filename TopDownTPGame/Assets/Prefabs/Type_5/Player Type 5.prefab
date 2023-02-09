@@ -428,10 +428,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 250
+  _maxShootDistance: 50
   _shootMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 1
   _shootPoint: {fileID: 1252368709447252148}
   _cameraMainPoint: {fileID: 1252368708745134035}
   _closeShootClearPoint: {fileID: 8467959500002590892}
@@ -449,8 +449,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpEffect:
-    spawnOffset: {x: 0, y: 0, z: 0}
-    effectPrefab: {fileID: 0}
+    spawnOffset: {x: 0, y: -0.72, z: 0}
+    effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
+      type: 3}
   _runEffect:
     spawnOffset: {x: 0, y: 0, z: -1.5}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
@@ -494,14 +495,14 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 16
-  _allowedActiveAbilities: 15000000
+  _allowedActiveAbilities: 1500000016000000
   _cooldownDuration: 3
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
-  _baseShootController: {fileID: 5021002024800133882}
-  _cameraPoint: {fileID: 1252368708745134035}
-  _spawnMaxDistance: 25
+  _camera: {fileID: 1252368708745134035}
+  _spawnMaxDistance: 15
   _maxTurretsCanSpawn: 2
+  _minYNormalThreshold: 0.7
   _spawnOffset: {x: 0, y: 0, z: 0}
   _turretMask:
     serializedVersion: 2
