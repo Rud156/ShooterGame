@@ -1,7 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using HealthSystem;
 using UnityEngine;
 using Utils.Misc;
+using Random = UnityEngine.Random;
+
+#endregion
 
 namespace Ability_Scripts.Spawns
 {
@@ -15,25 +20,40 @@ namespace Ability_Scripts.Spawns
         [SerializeField] private float _targetingRadius;
         [SerializeField] private LayerMask _targetingMask;
         [SerializeField] private float _stayOnTargetMinDuration;
-        [SerializeField] private float _targetLowestHealthDelay;
+        [SerializeField] [Range(0, 1)] private float _targetLowestHealthRatio;
 
         [Header("Shooting Data")]
         [SerializeField] private float _warmUpTime;
-        [SerializeField] private float _damagePerTick;
+        [SerializeField] private int _damagePerSec;
 
         private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
-        private TurretState _turretState;
-        private float _currentTimer;
+        [SerializeField] private TurretState _turretState;
+        [SerializeField] private TurretTargetingState _turretTargetingState;
+
+        [SerializeField] private float _currentTargetingDuration;
+        [SerializeField] private float _currentTimer;
+
+        [SerializeField] private Transform _currentTarget;
+        [SerializeField] private HealthAndDamage _targetHealthAndDamage;
 
         private int _ownerId;
 
         #region Unity Functions
 
+        private void Start()
+        {
+            SetTurretState(TurretState.InActive);
+            SetTurretTargetingState(TurretTargetingState.FindTarget);
+        }
+
         private void Update()
         {
             switch (_turretState)
             {
+                case TurretState.InActive:
+                    break;
+
                 case TurretState.Idle:
                     UpdateIdleState();
                     break;
@@ -70,7 +90,7 @@ namespace Ability_Scripts.Spawns
 
             for (var i = 0; i < hitCount; i++)
             {
-                if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
+                if (_hitColliders[i].TryGetComponent(out HealthAndDamage _))
                 {
                     if (HasDirectLineOfSight(_hitColliders[i].transform))
                     {
@@ -93,21 +113,89 @@ namespace Ability_Scripts.Spawns
             if (_currentTimer <= 0)
             {
                 SetTurretState(TurretState.Targeting);
+                SetTurretTargetingState(TurretTargetingState.FindTarget);
             }
         }
 
         private void UpdateTargetingState()
         {
+            switch (_turretTargetingState)
+            {
+                case TurretTargetingState.FindTarget:
+                {
+                    var random = Random.value;
+                    if (random <= _targetLowestHealthRatio)
+                    {
+                        _targetHealthAndDamage = GetLowestHealthAndDamage();
+                        if (_targetHealthAndDamage == null)
+                        {
+                            SetTurretState(TurretState.Idle);
+                            return;
+                        }
+
+                        _currentTarget = _targetHealthAndDamage.transform;
+                    }
+                    else
+                    {
+                        _targetHealthAndDamage = GetNearestHealthAndDamage();
+                        if (_targetHealthAndDamage == null)
+                        {
+                            SetTurretState(TurretState.Idle);
+                            return;
+                        }
+
+                        _currentTarget = _targetHealthAndDamage.transform;
+                    }
+
+                    _currentTimer = _stayOnTargetMinDuration;
+                    _currentTargetingDuration = 1;
+                    SetTurretTargetingState(TurretTargetingState.TrackAndDamageTarget);
+                }
+                    break;
+
+                case TurretTargetingState.TrackAndDamageTarget:
+                {
+                    if (_currentTarget == null || _targetHealthAndDamage == null)
+                    {
+                        SetTurretState(TurretState.Idle);
+                        return;
+                    }
+
+                    _currentTimer -= Time.fixedDeltaTime;
+                    if (_currentTimer <= 0)
+                    {
+                        SetTurretTargetingState(TurretTargetingState.FindTarget);
+                    }
+
+                    _currentTargetingDuration -= Time.fixedDeltaTime;
+                    if (_currentTargetingDuration <= 0)
+                    {
+                        _targetHealthAndDamage.TakeDamage(_damagePerSec);
+                        _currentTargetingDuration = 1;
+                    }
+
+                    var direction = _currentTarget.transform.position - _shootPoint.position;
+                    var lookRotation = Quaternion.LookRotation(direction);
+                    _turretTop.rotation = lookRotation;
+                    Debug.DrawLine(_shootPoint.position, _currentTarget.position, Color.red);
+                }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         #endregion Turret State Updates
+
+        #region Enemy Functions
 
         private bool HasDirectLineOfSight(Transform target)
         {
             var startPosition = _shootPoint.position;
             var direction = target.position - startPosition;
             var hit = Physics.Raycast(startPosition, direction, out var hitInfo, _targetingRadius, _targetingMask);
-            return hit && hitInfo.transform.gameObject.GetInstanceID() == target.GetInstanceID();
+            return hit && hitInfo.transform.gameObject.GetInstanceID() == target.gameObject.GetInstanceID();
         }
 
         private HealthAndDamage GetNearestHealthAndDamage()
@@ -164,7 +252,17 @@ namespace Ability_Scripts.Spawns
             return lowestHealthAndDamage;
         }
 
+        #endregion Enemy Functions
+
+        #region State Changes
+
+        public void SetTurretActiveState(bool isActive) => SetTurretState(isActive ? TurretState.Idle : TurretState.InActive);
+
         private void SetTurretState(TurretState turretState) => _turretState = turretState;
+
+        private void SetTurretTargetingState(TurretTargetingState turretTargetingState) => _turretTargetingState = turretTargetingState;
+
+        #endregion State Changes
 
         #endregion Utils
 
@@ -172,9 +270,16 @@ namespace Ability_Scripts.Spawns
 
         private enum TurretState
         {
+            InActive,
             Idle,
             WarmUp,
             Targeting,
+        }
+
+        private enum TurretTargetingState
+        {
+            FindTarget,
+            TrackAndDamageTarget,
         }
 
         #endregion Enums

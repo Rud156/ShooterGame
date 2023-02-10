@@ -106,10 +106,6 @@ namespace Player.Type_5
             _turretObject = Instantiate(_turretPrefab, transform.position, Quaternion.identity);
             _turretMaterialSwitcher = _turretObject.GetComponent<BaseMaterialSwitcher>();
 
-            var turretController = _turretObject.GetComponent<Type_4_TurretController>();
-            turretController.SetOwnerInstanceId(gameObject.GetInstanceID());
-
-
             SetTurretState(TurretState.Placement);
         }
 
@@ -133,6 +129,10 @@ namespace Player.Type_5
                     if (primaryKey.KeyPressedThisFrame)
                     {
                         _turretObject.transform.SetParent(hitInfo.transform);
+                        var turretController = _turretObject.GetComponent<Type_4_TurretController>();
+                        turretController.SetTurretActiveState(true);
+                        turretController.SetOwnerInstanceId(gameObject.GetInstanceID());
+
                         UpdateTurretMaterial(1);
 
                         _spawnedTurrets.Add(_turretObject);
