@@ -28,14 +28,14 @@ namespace Ability_Scripts.Spawns
 
         private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
-        [SerializeField] private TurretState _turretState;
-        [SerializeField] private TurretTargetingState _turretTargetingState;
+        private TurretState _turretState;
+        private TurretTargetingState _turretTargetingState;
 
-        [SerializeField] private float _currentTargetingDuration;
-        [SerializeField] private float _currentTimer;
+        private float _currentTargetingDuration;
+        private float _currentTimer;
 
-        [SerializeField] private Transform _currentTarget;
-        [SerializeField] private HealthAndDamage _targetHealthAndDamage;
+        private Transform _currentTarget;
+        private HealthAndDamage _targetHealthAndDamage;
 
         private int _ownerId;
 
@@ -174,10 +174,18 @@ namespace Ability_Scripts.Spawns
                         _currentTargetingDuration = 1;
                     }
 
-                    var direction = _currentTarget.transform.position - _shootPoint.position;
+                    var targetPosition = _currentTarget.transform.position;
+                    var shootPosition = _shootPoint.position;
+                    var direction = targetPosition - shootPosition;
                     var lookRotation = Quaternion.LookRotation(direction);
                     _turretTop.rotation = lookRotation;
-                    Debug.DrawLine(_shootPoint.position, _currentTarget.position, Color.red);
+                    Debug.DrawLine(shootPosition, targetPosition, Color.red);
+
+                    var distance = Vector3.Distance(targetPosition, shootPosition);
+                    if (distance > _targetingRadius)
+                    {
+                        SetTurretState(TurretState.Idle);
+                    }
                 }
                     break;
 
