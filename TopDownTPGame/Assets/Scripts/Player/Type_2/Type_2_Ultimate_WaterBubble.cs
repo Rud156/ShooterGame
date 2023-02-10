@@ -4,6 +4,7 @@ using Player.Base;
 using Player.Common;
 using Player.UI;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -11,9 +12,6 @@ namespace Player.Type_2
 {
     public class Type_2_Ultimate_WaterBubble : Ability
     {
-        private const int MaxCollidersCheck = 10;
-        private const float MaxUltimatePercent = 100;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _waterBubblePrefab;
 
@@ -25,7 +23,7 @@ namespace Player.Type_2
         [SerializeField] private float _windUpTime;
         [SerializeField] private float _ultimateChargeRate;
 
-        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
         private float _currentWindUpTime;
         private float _currentUltimatePercent;
@@ -33,7 +31,8 @@ namespace Player.Type_2
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentUltimatePercent >= MaxUltimatePercent;
+        public override bool AbilityCanStart(BasePlayerController playerController) =>
+            base.AbilityCanStart(playerController) && _currentUltimatePercent >= StaticData.MaxUltimatePercent;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -91,12 +90,12 @@ namespace Player.Type_2
         {
             base.UnityFixedUpdateDelegate(playerController);
 
-            if (_currentUltimatePercent < MaxUltimatePercent)
+            if (_currentUltimatePercent < StaticData.MaxUltimatePercent)
             {
                 _currentUltimatePercent += Time.fixedDeltaTime * _ultimateChargeRate;
-                if (_currentUltimatePercent > MaxUltimatePercent)
+                if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
                 {
-                    _currentUltimatePercent = MaxUltimatePercent;
+                    _currentUltimatePercent = StaticData.MaxUltimatePercent;
                 }
             }
         }
@@ -108,9 +107,9 @@ namespace Player.Type_2
         public void AddUltimateCharge(int amount)
         {
             _currentUltimatePercent += amount;
-            if (_currentUltimatePercent > MaxUltimatePercent)
+            if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
             {
-                _currentUltimatePercent = MaxUltimatePercent;
+                _currentUltimatePercent = StaticData.MaxUltimatePercent;
             }
         }
 
@@ -118,7 +117,7 @@ namespace Player.Type_2
 
         #region Utils
 
-        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, MaxUltimatePercent);
+        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
 
         #endregion Utils
     }

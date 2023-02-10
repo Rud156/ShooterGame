@@ -6,6 +6,7 @@ using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -13,8 +14,6 @@ namespace Player.Type_3
 {
     public class Type_3_Primary_DarkShoot : Ability
     {
-        private const int MaxCollidersCheck = 10;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _damageEffectPrefab;
 
@@ -35,7 +34,7 @@ namespace Player.Type_3
         [SerializeField] private Transform _frontCollider;
         [SerializeField] private List<Transform> _raycastPoints;
 
-        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
         private float _nextShootTime;
         private float _currentOverheatTime;

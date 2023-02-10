@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Ability_Scripts.Spawns;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -104,6 +105,11 @@ namespace Player.Type_5
 
             _turretObject = Instantiate(_turretPrefab, transform.position, Quaternion.identity);
             _turretMaterialSwitcher = _turretObject.GetComponent<BaseMaterialSwitcher>();
+
+            var turretController = _turretObject.GetComponent<Type_4_TurretController>();
+            turretController.SetOwnerInstanceId(gameObject.GetInstanceID());
+
+
             SetTurretState(TurretState.Placement);
         }
 

@@ -17,7 +17,6 @@ namespace Player.Base
     public class BasePlayerController : MonoBehaviour
     {
         private const string MovementHoldIdentifier = "MovementHold";
-        private const float MaxDirectionalInputAmount = 15;
 
         [Header("Basic Move")]
         [SerializeField] private float _runSpeed;
@@ -449,8 +448,8 @@ namespace Player.Base
                 airMovement.y = 0;
                 airMovement = airMovement.normalized * (_airControlMultiplier * _currentStateVelocity);
 
-                var clampedXVelocity = Mathf.Clamp(_characterVelocity.x + airMovement.x, -MaxDirectionalInputAmount, MaxDirectionalInputAmount);
-                var clampedZVelocity = Mathf.Clamp(_characterVelocity.z + airMovement.z, -MaxDirectionalInputAmount, MaxDirectionalInputAmount);
+                var clampedXVelocity = Mathf.Clamp(_characterVelocity.x + airMovement.x, -_currentStateVelocity, _currentStateVelocity);
+                var clampedZVelocity = Mathf.Clamp(_characterVelocity.z + airMovement.z, -_currentStateVelocity, _currentStateVelocity);
 
                 _characterVelocity.x = clampedXVelocity;
                 _characterVelocity.z = clampedZVelocity;

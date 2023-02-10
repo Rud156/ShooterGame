@@ -2,6 +2,7 @@
 
 using Player.Base;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -10,8 +11,6 @@ namespace Ability_Scripts.Projectiles
     [RequireComponent(typeof(Rigidbody))]
     public class StunGrenade : MonoBehaviour, IProjectile
     {
-        private const int MaxCollidersCheck = 10;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _miniGrenadePrefab;
 
@@ -29,7 +28,7 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private float _stunDuration;
         [SerializeField] private LayerMask _stunMask;
 
-        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
         private Rigidbody _rb;
         private bool _isInitialized;

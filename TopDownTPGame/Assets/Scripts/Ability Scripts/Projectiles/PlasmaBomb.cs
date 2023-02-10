@@ -2,6 +2,7 @@
 
 using HealthSystem;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -10,8 +11,6 @@ namespace Ability_Scripts.Projectiles
     [RequireComponent(typeof(Rigidbody))]
     public class PlasmaBomb : MonoBehaviour
     {
-        private const int MaxCollidersCheck = 10;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _destroyEffectPrefab;
 
@@ -21,7 +20,7 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private int _damageAmount;
         [SerializeField] private LayerMask _bombMask;
 
-        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
         private float _destroyTimeLeft;
 

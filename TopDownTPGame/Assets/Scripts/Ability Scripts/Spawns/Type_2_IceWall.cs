@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Ability_Scripts.Spawns
 {
-    public class IceWall : MonoBehaviour
+    public class Type_2_IceWall : MonoBehaviour
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _destroyEffectPrefab;

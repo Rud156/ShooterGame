@@ -4,6 +4,7 @@ using Player.Base;
 using Player.Common;
 using Player.UI;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -11,8 +12,6 @@ namespace Player.Type_3
 {
     public class Type_3_Ultimate_DarkPulse : Ability
     {
-        private const float MaxUltimatePercent = 100;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _darkPulsePrefab;
 
@@ -28,7 +27,7 @@ namespace Player.Type_3
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentUltimatePercent >= MaxUltimatePercent;
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentUltimatePercent >= StaticData.MaxUltimatePercent;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -79,12 +78,12 @@ namespace Player.Type_3
         {
             base.UnityFixedUpdateDelegate(playerController);
 
-            if (_currentUltimatePercent < MaxUltimatePercent)
+            if (_currentUltimatePercent < StaticData.MaxUltimatePercent)
             {
                 _currentUltimatePercent += Time.fixedDeltaTime * _ultimateChargeRate;
-                if (_currentUltimatePercent > MaxUltimatePercent)
+                if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
                 {
-                    _currentUltimatePercent = MaxUltimatePercent;
+                    _currentUltimatePercent = StaticData.MaxUltimatePercent;
                 }
             }
         }
@@ -93,7 +92,7 @@ namespace Player.Type_3
 
         #region Utils
 
-        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, MaxUltimatePercent);
+        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
 
         #endregion Utils
     }

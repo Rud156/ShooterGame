@@ -11,8 +11,6 @@ namespace Player.Type_3
 {
     public class DarkPulse : MonoBehaviour
     {
-        private const int MaxCollidersCheck = 10;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _paranoiaPrefab;
         [SerializeField] private GameObject _pulseEffectPrefab;
@@ -28,7 +26,7 @@ namespace Player.Type_3
         [SerializeField] private int _healthDecayAmount;
         [SerializeField] private float _healthDecayDuration;
 
-        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
         private int _currentPulseCount;
         private float _currentPulseWaitDuration;

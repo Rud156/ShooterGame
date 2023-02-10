@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Utils.Misc;
 
 #endregion
 
@@ -14,8 +15,6 @@ namespace Player.Type_2
 {
     public class Type_2_Tertiary_WaterMovement : Ability
     {
-        private const int MaxCollidersCheck = 10;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _markerEffectPrefab;
         [SerializeField] private GameObject _damageBurstEffectPrefab;
@@ -43,7 +42,7 @@ namespace Player.Type_2
         [SerializeField] private float _damageCheckRadius;
         [SerializeField] private int _damageAmount;
 
-        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
         private GameObject _abilityStateEffectObject;
         private List<BurstDamageData> _burstDamageMarkers;

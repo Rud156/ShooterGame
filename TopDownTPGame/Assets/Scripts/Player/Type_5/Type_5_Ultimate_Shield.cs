@@ -3,19 +3,18 @@
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
 public class Type_5_Ultimate_Shield : Ability
 {
-    private const int MaxCollidersCheck = 10;
-
     [Header("Shield Data")]
     [SerializeField] private float _shieldDeployRadius;
     [SerializeField] private float _shieldDuration;
     [SerializeField] private LayerMask _shieldDeployMask;
 
-    private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+    private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
     private bool _abilityEnd;
 

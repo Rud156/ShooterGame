@@ -4,6 +4,7 @@ using Player.Base;
 using Player.Common;
 using Player.UI;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -11,8 +12,6 @@ namespace Player.Type_1
 {
     public class Type_1_Ultimate_CooldownBooster : Ability
     {
-        private const float MaxUltimatePercent = 100;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _ultimatePulsePrefab;
 
@@ -28,7 +27,8 @@ namespace Player.Type_1
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentUltimatePercent >= MaxUltimatePercent;
+        public override bool AbilityCanStart(BasePlayerController playerController) =>
+            base.AbilityCanStart(playerController) && _currentUltimatePercent >= StaticData.MaxUltimatePercent;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -75,12 +75,12 @@ namespace Player.Type_1
         {
             base.UnityFixedUpdateDelegate(playerController);
 
-            if (_currentUltimatePercent < MaxUltimatePercent)
+            if (_currentUltimatePercent < StaticData.MaxUltimatePercent)
             {
                 _currentUltimatePercent += Time.fixedDeltaTime * _ultimateChargeRate;
-                if (_currentUltimatePercent > MaxUltimatePercent)
+                if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
                 {
-                    _currentUltimatePercent = MaxUltimatePercent;
+                    _currentUltimatePercent = StaticData.MaxUltimatePercent;
                 }
             }
         }
@@ -92,9 +92,9 @@ namespace Player.Type_1
         public void AddUltimateCharge(int amount)
         {
             _currentUltimatePercent += amount;
-            if (_currentUltimatePercent > MaxUltimatePercent)
+            if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
             {
-                _currentUltimatePercent = MaxUltimatePercent;
+                _currentUltimatePercent = StaticData.MaxUltimatePercent;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Player.Type_1
 
         #region Utils
 
-        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, MaxUltimatePercent);
+        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
 
         #endregion Utils
     }

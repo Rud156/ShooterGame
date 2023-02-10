@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -11,8 +12,6 @@ namespace Player.Type_1
 {
     public class KitsuneRushPulse : MonoBehaviour
     {
-        private const int MaxCollidersCheck = 10;
-
         [Header("Prefabs")]
         [SerializeField] private GameObject _pulseEffectPrefab;
         [SerializeField] private GameObject _pulseBurstEfectPrefab;
@@ -26,7 +25,7 @@ namespace Player.Type_1
         [Header("Cooldown Modifier")]
         [SerializeField] private float _cooldownMultiplier;
 
-        private Collider[] _hitColliders = new Collider[MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
         private int _currentPulseCount;
         private float _currentPulseWaitDuration;

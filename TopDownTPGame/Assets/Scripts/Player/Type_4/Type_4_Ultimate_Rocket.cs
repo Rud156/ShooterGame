@@ -5,13 +5,12 @@ using Player.Base;
 using Player.Common;
 using Player.UI;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
 public class Type_4_Ultimate_Rocket : Ability
 {
-    private const float MaxUltimatePercent = 100;
-
     [Header("Prefabs")]
     [SerializeField] private GameObject _rocketPrefab;
 
@@ -28,7 +27,8 @@ public class Type_4_Ultimate_Rocket : Ability
 
     #region Ability Functions
 
-    public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentUltimatePercent >= MaxUltimatePercent;
+    public override bool AbilityCanStart(BasePlayerController playerController) =>
+        base.AbilityCanStart(playerController) && _currentUltimatePercent >= StaticData.MaxUltimatePercent;
 
     public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -81,12 +81,12 @@ public class Type_4_Ultimate_Rocket : Ability
     {
         base.UnityFixedUpdateDelegate(playerController);
 
-        if (_currentUltimatePercent < MaxUltimatePercent)
+        if (_currentUltimatePercent < StaticData.MaxUltimatePercent)
         {
             _currentUltimatePercent += Time.fixedDeltaTime * _ultimateChargeRate;
-            if (_currentUltimatePercent > MaxUltimatePercent)
+            if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
             {
-                _currentUltimatePercent = MaxUltimatePercent;
+                _currentUltimatePercent = StaticData.MaxUltimatePercent;
             }
         }
     }
@@ -95,7 +95,7 @@ public class Type_4_Ultimate_Rocket : Ability
 
     #region Utils
 
-    private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, MaxUltimatePercent);
+    private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
 
     #endregion Utils
 }

@@ -209,6 +209,10 @@ namespace HealthSystem
 
         #region Damage And Heal
 
+        public int CurrentHealth => _currentHealth;
+
+        public int MaxHealth => _maxHealth;
+
         public void TakeDamage(int damageAmount)
         {
             var startHealth = _currentHealth;
