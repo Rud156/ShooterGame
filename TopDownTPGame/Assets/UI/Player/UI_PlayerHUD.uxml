@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <ui:Template name="UI_PlayerHealth" src="project://database/Assets/UI/Player/UI_PlayerHealth.uxml?fileID=9197481963319205126&amp;guid=0b6f91f0da987f2499d54451e9af81b1&amp;type=3#UI_PlayerHealth" />
     <ui:Template name="UI_PlayerAbilityGrid" src="project://database/Assets/UI/Player/UI_PlayerAbilityGrid.uxml?fileID=9197481963319205126&amp;guid=e1b6d2f0c9de4c34caad1dd5ddafa361&amp;type=3#UI_PlayerAbilityGrid" />
     <ui:Template name="UI_Crosshair" src="project://database/Assets/UI/Common/UI_Crosshair.uxml?fileID=9197481963319205126&amp;guid=ef2470810d89f7f4da8da6a9eb87cef8&amp;type=3#UI_Crosshair" />

@@ -1,4 +1,6 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance"
+         engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="UI_PlayerAbilityItem" src="project://database/Assets/UI/Player/UI_PlayerAbilityItem.uxml?fileID=9197481963319205126&amp;guid=3f41e694d59bb1d4dbafbc3bbea8e7a6&amp;type=3#UI_PlayerAbilityItem" />
     <ui:Instance template="UI_PlayerAbilityItem" name="UltimateAbility" style="scale: 1.5 1.5; translate: 27px 0; width: 100px; height: 115px; position: absolute; left: 330px; bottom: 30px;" />
     <ui:Instance template="UI_PlayerAbilityItem" name="TertiaryAbility" style="translate: 0 0; width: 100px; height: 115px; left: 220px; bottom: 0; position: absolute;" />

@@ -31,5 +31,6 @@
         Paranoia,
         SatchelMovement,
         Stun,
+        EngineerShield,
     }
 }

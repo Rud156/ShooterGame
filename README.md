@@ -2,12 +2,12 @@
 
 ## TODOs (Current)
 
-- [ ] Polish Pass
-    - [ ] Type 5 Character - Engineer
-        - [X] Primary Ability (All Damage/HP/Effects)
-        - [X] Secondary Ability (All Damage/HP/Effects)
-        - [X] Tertiary Ability (All Damage/HP/Effects)
-        - [ ] Ultimate Ability (All Damage/HP/Effects)    
+- [ ] Animation Polish and General Polish Pass 2
+    - [ ] Type 1
+        - [ ] Primary Shooting
+        - [ ] Secondary Charged Shooting
+        - [ ] Tertiary Dash
+        - [ ] Kitsune Rush
 
 ## TODOs (Future)
 
@@ -65,7 +65,7 @@
 - [X] Switch to new Unity Input system
 - [X] Add Damage and Health Systems (Both must be modifiable by effects)
 - [X] Use UIToolkit to make the UI
-- [X] Polish Pass
+- [X] Polish Pass 1
     - [X] General Character (Effects and Movement Speed)
         - [X] Idle
         - [X] Walking
@@ -99,6 +99,11 @@
             - Gravity keeps affecting and velocity also slowly decreases
             - The player needs to look towards the direction they want to go in and also press the appropriate key
             - Literally a stronger jump with an initial direction applied
+        - [X] Ultimate Ability (All Damage/HP/Effects)
+    - [X] Type 5 Character - Engineer
+        - [X] Primary Ability (All Damage/HP/Effects)
+        - [X] Secondary Ability (All Damage/HP/Effects)
+        - [X] Tertiary Ability (All Damage/HP/Effects)
         - [X] Ultimate Ability (All Damage/HP/Effects)
 - [X] ShootController that returns the correct direction where the projectile should be launched to hit the center of
   the screen

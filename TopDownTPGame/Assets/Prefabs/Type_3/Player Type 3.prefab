@@ -518,7 +518,7 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 8
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
   _damageEffectPrefab: {fileID: 7891259392760164114, guid: 38149fd665e688b469d853178bf64142,
     type: 3}
@@ -550,7 +550,7 @@ MonoBehaviour:
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 9
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
   _slashPrefab: {fileID: 1406682108228364387, guid: b3b4ac41d4dd6a04bbe65f8ac17cc596,
     type: 3}
@@ -598,7 +598,7 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 0
   _abilityNameType: 10
-  _allowedActiveAbilities: 15000000
+  _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 5
   _dashEffectForward:
     effectPrefab: {fileID: 5267843241776696678, guid: ed2368563d002b6479ea7d316bd71b59,
@@ -643,7 +643,7 @@ MonoBehaviour:
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 11
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
   _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
     type: 3}

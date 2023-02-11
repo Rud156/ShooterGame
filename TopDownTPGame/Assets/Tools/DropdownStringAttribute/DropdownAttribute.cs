@@ -1,5 +1,9 @@
+#region
+
 using System;
 using UnityEngine;
+
+#endregion
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 public class DropdownAttribute : PropertyAttribute
