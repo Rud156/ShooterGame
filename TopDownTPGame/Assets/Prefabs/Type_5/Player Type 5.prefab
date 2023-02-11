@@ -528,8 +528,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
-  _shootPoint: {fileID: 1252368709447252148}
-  _cameraHolder: {fileID: 1252368709025650578}
+  _shootController: {fileID: 5021002024800133882}
 --- !u!114 &448688126214188800
 MonoBehaviour:
   m_ObjectHideFlags: 0

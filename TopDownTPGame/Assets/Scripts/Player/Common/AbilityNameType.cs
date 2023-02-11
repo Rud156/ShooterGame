@@ -30,5 +30,6 @@
         WaterBubbleFrozen,
         Paranoia,
         SatchelMovement,
+        Stun,
     }
 }

@@ -69,6 +69,8 @@ namespace Player.Common
 
         public abstract bool AbilityNeedsToEnd(BasePlayerController playerController);
 
+        public bool HasAbilityNameInAllowedList(AbilityNameType abilityNameType) => _allowedActiveAbilities.Contains(abilityNameType);
+
         public virtual void ClearAllAbilityData(BasePlayerController playerController)
         {
         }

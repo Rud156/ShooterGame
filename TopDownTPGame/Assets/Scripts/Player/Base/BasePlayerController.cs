@@ -593,6 +593,18 @@ namespace Player.Base
                         }
                     }
 
+                    // Also check for incompatible abilities
+                    for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
+                    {
+                        var activeAbility = _currentActiveAbilities[i];
+                        if (!activeAbility.HasAbilityNameInAllowedList(activeAbility.GetAbilityNameType()))
+                        {
+                            activeAbility.EndAbility(this);
+                            OnPlayerAbilityEnded?.Invoke(activeAbility);
+                            _currentActiveAbilities.RemoveAt(i);
+                        }
+                    }
+
                     ability.StartAbility(this);
                     OnPlayerAbilityStarted?.Invoke(ability);
                     _currentActiveAbilities.Add(ability);

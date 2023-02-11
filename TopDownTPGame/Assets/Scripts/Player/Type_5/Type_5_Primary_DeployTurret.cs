@@ -63,7 +63,10 @@ namespace Player.Type_5
 
         public override void EndAbility(BasePlayerController playerController)
         {
-            // Do nothing here...
+            if (_turretObject != null)
+            {
+                Destroy(_turretObject);
+            }
         }
 
         public override void StartAbility(BasePlayerController playerController) => SetTurretState(TurretState.ShouldSpawn);

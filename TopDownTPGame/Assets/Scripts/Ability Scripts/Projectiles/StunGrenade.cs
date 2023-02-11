@@ -1,6 +1,7 @@
 #region
 
 using Player.Base;
+using Player.Type_5;
 using UnityEngine;
 using Utils.Misc;
 
@@ -13,6 +14,8 @@ namespace Ability_Scripts.Projectiles
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _miniGrenadePrefab;
+        [SerializeField] private GameObject _stunPrefab;
+        [SerializeField] private GameObject _destroyEffect;
 
         [Header("Grenade Data")]
         [SerializeField] private float _additionalGravity;
@@ -25,7 +28,6 @@ namespace Ability_Scripts.Projectiles
 
         [Header("Stun Data")]
         [SerializeField] private float _stunEffectRadius;
-        [SerializeField] private float _stunDuration;
         [SerializeField] private LayerMask _stunMask;
 
         private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
@@ -64,10 +66,8 @@ namespace Ability_Scripts.Projectiles
 
         public void ProjectileDestroy()
         {
-            // TODO: Add Stun effect to players
-
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, _hitColliders, _stunMask);
-
+            DebugExtension.DebugWireSphere(transform.position, Color.red, _stunEffectRadius);
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
@@ -76,10 +76,13 @@ namespace Ability_Scripts.Projectiles
                     continue;
                 }
 
-                // TODO: Also check team here...
                 if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
-                    // TODO: Add Stun Ability Script
+                    var targetTransform = targetController.transform;
+                    var position = targetTransform.position;
+                    var stunObject = Instantiate(_stunPrefab, position, Quaternion.identity, targetTransform);
+                    var stun = stunObject.GetComponent<Type_5_Secondary_Stun>();
+                    targetController.CheckAndAddExternalAbility(stun);
                 }
             }
 
@@ -101,6 +104,7 @@ namespace Ability_Scripts.Projectiles
                 }
             }
 
+            Instantiate(_destroyEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
 
