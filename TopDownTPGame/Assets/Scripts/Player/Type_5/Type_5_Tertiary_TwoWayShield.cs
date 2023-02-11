@@ -14,26 +14,31 @@ namespace Player.Type_5
         [Header("Prefabs")]
         [SerializeField] private GameObject _shieldPrefab;
 
-        [Header("Spawn Data")]
-        [SerializeField] private Transform _shootPoint;
-        [SerializeField] private Transform _cameraHolder;
+        [Header("Components")]
+        [SerializeField] private BaseShootController _shootController;
 
         private bool _abilityEnd;
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController);
+        #region Ability Functions
+
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            var shieldObject = Instantiate(_shieldPrefab, _shootPoint.position, Quaternion.identity);
+            var shieldObject = Instantiate(_shieldPrefab, _shootController.GetShootPosition(), Quaternion.identity);
             var shieldDeploy = shieldObject.GetComponent<ShieldDeployProjectile>();
-            shieldDeploy.LaunchProjectile(_cameraHolder.forward);
+            shieldDeploy.LaunchProjectile(_shootController.GetShootLookDirection());
+
+            _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;
         }
 
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
         public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
+
+        #endregion Ability Functions
     }
 }

@@ -26,6 +26,8 @@ namespace Ability_Scripts.Projectiles
 
         private void Start() => Init();
 
+        private void OnTriggerEnter(Collider other) => ProjectileHit(other);
+
         private void FixedUpdate()
         {
             _destroyTimeLeft -= Time.fixedDeltaTime;
@@ -53,6 +55,8 @@ namespace Ability_Scripts.Projectiles
 
         public void ProjectileHit(Collider other)
         {
+            Instantiate(_shieldPrefab, transform.position, Quaternion.identity);
+            ProjectileDestroy();
         }
 
         #endregion External Functions

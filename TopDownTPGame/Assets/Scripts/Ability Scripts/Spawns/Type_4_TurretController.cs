@@ -214,6 +214,11 @@ namespace Ability_Scripts.Spawns
 
             for (var i = 0; i < hitCount; i++)
             {
+                if (_hitColliders[i].gameObject.GetInstanceID() == _ownerId)
+                {
+                    continue;
+                }
+
                 if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
                 {
                     if (!HasDirectLineOfSight(_hitColliders[i].transform))
@@ -241,6 +246,11 @@ namespace Ability_Scripts.Spawns
 
             for (var i = 0; i < hitCount; i++)
             {
+                if (_hitColliders[i].gameObject.GetInstanceID() == _ownerId)
+                {
+                    continue;
+                }
+
                 if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
                 {
                     if (!HasDirectLineOfSight(_hitColliders[i].transform))

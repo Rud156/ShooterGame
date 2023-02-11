@@ -21,7 +21,7 @@ namespace Player.Type_5
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController);
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentCooldownDuration <= 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -30,6 +30,8 @@ namespace Player.Type_5
             var stunGrenade = Instantiate(_stunGrenadePrefab, _shootController.GetShootPosition(), Quaternion.identity);
             var projectile = stunGrenade.GetComponent<StunGrenade>();
             projectile.LaunchProjectile(_shootController.GetShootLookDirection());
+
+            _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;
         }
 

@@ -1,5 +1,6 @@
 #region
 
+using HealthSystem;
 using Player.Base;
 using Player.Type_5;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private int _secondaryGrenadeCount;
         [SerializeField] private float _launchVelocity;
         [SerializeField] private float _projectileDestroyTime;
+        [SerializeField] private int _damageAmount;
 
         [Header("Secondary Grenades")]
         [SerializeField] private float _secondaryLaunchVelocity;
@@ -67,15 +69,8 @@ namespace Ability_Scripts.Projectiles
         public void ProjectileDestroy()
         {
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, _hitColliders, _stunMask);
-            DebugExtension.DebugWireSphere(transform.position, Color.red, _stunEffectRadius);
             for (var i = 0; i < targetsHit; i++)
             {
-                // Do not target itself
-                if (_hitColliders[i] == null)
-                {
-                    continue;
-                }
-
                 if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
                 {
                     var targetTransform = targetController.transform;
@@ -83,6 +78,11 @@ namespace Ability_Scripts.Projectiles
                     var stunObject = Instantiate(_stunPrefab, position, Quaternion.identity, targetTransform);
                     var stun = stunObject.GetComponent<Type_5_Secondary_Stun>();
                     targetController.CheckAndAddExternalAbility(stun);
+                }
+
+                if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
+                {
+                    healthAndDamage.TakeDamage(_damageAmount);
                 }
             }
 

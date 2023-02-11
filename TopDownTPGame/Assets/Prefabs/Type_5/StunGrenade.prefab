@@ -176,9 +176,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7548192263693597655}
-  - component: {fileID: 7548192263693597648}
   - component: {fileID: 7548192263693597652}
   - component: {fileID: -7433943695938108305}
+  - component: {fileID: 8769402461998157669}
   m_Layer: 7
   m_Name: StunGrenade
   m_TagString: Untagged
@@ -200,29 +200,8 @@ Transform:
   m_Children:
   - {fileID: 1414490414957195193}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7548192263693597648
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7548192263693597652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -249,7 +228,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &-7433943695938108305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,8 +250,32 @@ MonoBehaviour:
   _secondaryGrenadeCount: 4
   _launchVelocity: 20
   _projectileDestroyTime: 2
+  _damageAmount: 25
   _secondaryLaunchVelocity: 0.05
   _stunEffectRadius: 10
   _stunMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!136 &8769402461998157669
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548192263693597651}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.11458695
+  m_Height: 0.4430556
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.08, z: 0}
