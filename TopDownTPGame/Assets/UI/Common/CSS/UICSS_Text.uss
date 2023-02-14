@@ -1,0 +1,19 @@
+.default_font {
+    -unity-font: url("project://database/Assets/Fonts/Satoshi/Satoshi-Medium.otf");
+}
+
+.small_text {
+    font-size: 20;
+}
+
+.medium_text {
+    font-size: 40;
+}
+
+.large_text {
+    font-size: 60;
+}
+
+.center_text {
+    -unity-text-align: middle-center;
+}

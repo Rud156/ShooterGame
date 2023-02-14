@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Common/CSS/UICSS_Overlay.uss?fileID=7433441132597879392&amp;guid=3b4c1b98b404c684fad778ed736920cc&amp;type=3#UICSS_Overlay" />
+    <Style src="project://database/Assets/UI/Common/CSS/UICSS_Text.uss?fileID=7433441132597879392&amp;guid=c5a32fcfdf9c4b64fa4b167158b62812&amp;type=3#UICSS_Text" />
+    <Style src="project://database/Assets/UI/Common/CSS/UICSS_Colors.uss?fileID=7433441132597879392&amp;guid=ab7ec7b9843a91344b5614d0904c9986&amp;type=3#UICSS_Colors" />
+    <ui:VisualElement name="PlayerBackground" picking-mode="Ignore" style="background-color: rgba(0, 0, 0, 0); height: 110px; width: 110px; background-image: url(&apos;project://database/Assets/Textures/Misc/WhitePixel.png?fileID=2800000&amp;guid=549c8ae573207db4db0c2686e842a093&amp;type=3#WhitePixel&apos;); -unity-background-image-tint-color: rgb(0, 68, 255);" />
+    <ui:VisualElement name="PlayerImage" picking-mode="Ignore" style="height: 90px; width: 90px; background-image: url(&apos;project://database/Assets/Textures/Misc/WhitePixel.png?fileID=2800000&amp;guid=549c8ae573207db4db0c2686e842a093&amp;type=3#WhitePixel&apos;); position: absolute; left: 10px; top: 10px; -unity-background-image-tint-color: rgb(255, 255, 255);" />
+    <ui:VisualElement name="PlayerIconOverlayBacker" class="overlay_backer" style="position: absolute; width: 110px; height: 110px; display: flex;" />
+    <ui:VisualElement name="PlayerIconOverlay" class="overlay_background" style="position: absolute; width: 110px; height: 110px;" />
+    <ui:Label tabindex="-1" text="10" display-tooltip-when-elided="true" name="PlayerIconLabel" class="overlay_text small_text default_font color_white center_text" style="position: absolute; width: 50px; height: 50px; left: 5px;" />
+</ui:UXML>

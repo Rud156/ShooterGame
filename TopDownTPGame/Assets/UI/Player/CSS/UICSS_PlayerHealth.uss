@@ -6,10 +6,7 @@
     min-height: initial;
     min-width: initial;
     transform-origin: left;
-    margin-left: 14px;
-    margin-right: 14px;
-    margin-top: 14px;
-    margin-bottom: 14px;
+    margin: 14px;
     top: 85px;
     flex-direction: column-reverse;
     rotate: -3deg;
@@ -25,23 +22,20 @@
 }
 
 .player_health .unity-progress-bar__progress {
-    border-left-color: rgba(0, 0, 255, 0.78);
-    border-right-color: rgba(0, 0, 255, 0.78);
-    border-top-color: rgba(0, 0, 255, 0.78);
-    border-bottom-color: rgba(0, 0, 255, 0.78);
+    border-left-color: rgba(0, 0, 255, 0.75);
+    border-right-color: rgba(0, 0, 255, 0.75);
+    border-top-color: rgba(0, 0, 255, 0.75);
+    border-bottom-color: rgba(0, 0, 255, 0.75);
     border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
-    border-top-left-radius: 1px;
-    border-bottom-left-radius: 1px;
-    border-top-right-radius: 1px;
-    border-bottom-right-radius: 1px;
+    border-radius: 1px;
     -unity-background-image-tint-color: rgba(255, 255, 255, 0);
-    background-color: rgb(255, 0, 0);
 }
 
 .player_health .unity-progress-bar__title {
+    display: none;
 }
 
 .player_health .unity-progress-bar__container {

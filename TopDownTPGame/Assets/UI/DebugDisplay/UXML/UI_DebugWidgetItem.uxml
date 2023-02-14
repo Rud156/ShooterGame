@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Common/CSS/UICSS_Text.uss?fileID=7433441132597879392&amp;guid=c5a32fcfdf9c4b64fa4b167158b62812&amp;type=3#UICSS_Text" />
+    <Style src="project://database/Assets/UI/Common/CSS/UICSS_Colors.uss?fileID=7433441132597879392&amp;guid=ab7ec7b9843a91344b5614d0904c9986&amp;type=3#UICSS_Colors" />
+    <Style src="project://database/Assets/UI/DebugDisplay/CSS/UICSS_DebugWidget.uss?fileID=7433441132597879392&amp;guid=a58c7ae1abbf6c1418bb7c22f3ac0e96&amp;type=3#UICSS_DebugWidget" />
+    <ui:VisualElement name="Backer" class="debug_widget_item_backer" style="flex-grow: 1; height: 30px; width: 200px; position: absolute;" />
+    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="Label" class="color_white default_font small_text center_text" style="width: 200px; height: 30px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+</ui:UXML>

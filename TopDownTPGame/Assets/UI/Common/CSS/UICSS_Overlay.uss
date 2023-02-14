@@ -1,0 +1,18 @@
+.overlay_text {
+    white-space: normal;
+
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: #fff;
+
+    text-shadow: 1px 1px #100130;
+}
+
+.overlay_backer {
+    background-image: url("project://database/Assets/Textures/Misc/WhitePixel.png");
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0.5);
+}
+
+.overlay_background {
+    background-image: url("project://database/Assets/Textures/Misc/WhitePixel.png");
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0.5);
+}

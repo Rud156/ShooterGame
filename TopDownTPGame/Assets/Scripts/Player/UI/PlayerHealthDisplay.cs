@@ -1,7 +1,6 @@
 #region
 
 using System.Collections;
-using HealthSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Utils.Misc;
@@ -10,12 +9,12 @@ using Utils.Misc;
 
 namespace UI
 {
-    [RequireComponent(typeof(HealthAndDamage))]
     public class PlayerHealthDisplay : MonoBehaviour
     {
-        private const string PlayerHealthBarString = "PlayerHealth";
-        private const string CurrentHealthString = "CurrentHealth";
-        private const string MaxHealthString = "MaxHealth";
+        private const string PlayerHealthBarParentString = "UI_PlayerHealthWidget";
+        private const string PlayerHealthBarString = "PlayerHealthBar";
+        private const string CurrentHealthString = "CurrentHealthLabel";
+        private const string MaxHealthString = "MaxHealthLabel";
 
         [Header("Lerp Data")]
         [SerializeField] private float _displayLerpSpeed;
@@ -32,10 +31,16 @@ namespace UI
         [SerializeField] private float _flashOnDuration;
         [SerializeField] private float _flashOffDuration;
 
-        private HealthAndDamage _healthAndDamage;
-        private VisualElement _root;
+        [Header("Bar Scaler")]
+        [SerializeField] private float _defaultScale;
+        [SerializeField] private float _biggerScale;
+        [SerializeField] private int _scaleCount;
+        [SerializeField] private float _scaleChangeDuration;
+
+        private VisualElement _parent;
 
         private VisualElement _progressBarProgress;
+        private VisualElement _progressBar;
         private ProgressBar _healthBar;
         private Label _currentHealthLabel;
         private Label _maxHealthLabel;
@@ -45,27 +50,6 @@ namespace UI
         private float _lerpAmount;
 
         #region Unity Functions
-
-        private void Start()
-        {
-            _healthAndDamage = GetComponent<HealthAndDamage>();
-            _root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
-            _healthBar = _root.Q<ProgressBar>(PlayerHealthBarString);
-            _currentHealthLabel = _root.Q<Label>(CurrentHealthString);
-            _maxHealthLabel = _root.Q<Label>(MaxHealthString);
-
-            var progressBar = _healthBar.Q<VisualElement>("unity-progress-bar");
-            var progressBackground = progressBar.Q<VisualElement>(className: "unity-progress-bar__background");
-            _progressBarProgress = progressBackground.Q<VisualElement>(className: "unity-progress-bar__progress");
-
-            var titleContainer = progressBackground.Q<VisualElement>(className: "unity-progress-bar__title-container");
-            var innerText = titleContainer.Q<Label>(className: "unity-progress-bar__title");
-            innerText.style.display = DisplayStyle.None;
-
-            _healthAndDamage.OnHealthChanged += HandleHealthChanged;
-        }
-
-        private void OnDestroy() => _healthAndDamage.OnHealthChanged -= HandleHealthChanged;
 
         private void Update()
         {
@@ -82,9 +66,9 @@ namespace UI
 
         #endregion Unity Functions
 
-        #region Health Events
+        #region External Functions
 
-        private void HandleHealthChanged(int startingHealth, int currentHealth, int maxHealth)
+        public void DisplayHealthChanged(int startingHealth, int currentHealth, int maxHealth)
         {
             _currentHealthLabel.text = currentHealth.ToString();
             _maxHealthLabel.text = maxHealth.ToString();
@@ -101,7 +85,12 @@ namespace UI
                 ? Color.Lerp(_lowHealthColor, _midHealthColor, healthRatio * 2)
                 : Color.Lerp(_midHealthColor, _fullHealthColor, (healthRatio - 0.5f) * 2);
             StartCoroutine(BarFlasher(healthColor));
+            StartCoroutine(BarScaler());
         }
+
+        #endregion External Functions
+
+        #region Bar Effects
 
         private IEnumerator BarFlasher(Color finalColor)
         {
@@ -117,6 +106,60 @@ namespace UI
             _progressBarProgress.style.backgroundColor = finalColor;
         }
 
-        #endregion Health Events
+        private IEnumerator BarScaler()
+        {
+            for (var i = 0; i < _scaleCount; i++)
+            {
+                _progressBar.style.scale = Vector2.one * _biggerScale;
+                yield return new WaitForSeconds(_scaleChangeDuration);
+                _progressBar.style.scale = Vector2.one * _defaultScale;
+                yield return new WaitForSeconds(_scaleChangeDuration);
+            }
+        }
+
+        #endregion Bar Effects
+
+        #region Utils
+
+        private void Initialize()
+        {
+            var root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
+            _parent = root.Q<VisualElement>(PlayerHealthBarParentString);
+            _healthBar = _parent.Q<ProgressBar>(PlayerHealthBarString);
+            _currentHealthLabel = _parent.Q<Label>(CurrentHealthString);
+            _maxHealthLabel = _parent.Q<Label>(MaxHealthString);
+
+            _progressBar = _healthBar.Q<VisualElement>("unity-progress-bar");
+            var progressBackground = _progressBar.Q<VisualElement>(className: "unity-progress-bar__background");
+            _progressBarProgress = progressBackground.Q<VisualElement>(className: "unity-progress-bar__progress");
+
+            var titleContainer = progressBackground.Q<VisualElement>(className: "unity-progress-bar__title-container");
+            var innerText = titleContainer.Q<Label>(className: "unity-progress-bar__title");
+            innerText.style.display = DisplayStyle.None;
+        }
+
+        #endregion Utils
+
+        #region Singleton
+
+        public static PlayerHealthDisplay Instance { get; private set; }
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+
+            if (Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Initialize();
+        }
+
+        #endregion Singleton
     }
 }
