@@ -494,7 +494,7 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 16
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
@@ -523,7 +523,7 @@ MonoBehaviour:
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 17
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 10
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
@@ -545,7 +545,7 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 1
   _abilityNameType: 18
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 25
   _shieldPrefab: {fileID: 7981294947940924098, guid: 1ea4fde9248da5041a535aa2d7ba7f1d,
     type: 3}
@@ -567,13 +567,16 @@ MonoBehaviour:
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 19
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
+  _shieldPrefab: {fileID: 4882258394201929679, guid: 8d1942f8f8e92da49a7e34727af1c49c,
+    type: 3}
   _shieldDeployRadius: 25
-  _shieldDuration: 7
   _shieldDeployMask:
     serializedVersion: 2
     m_Bits: 64
+  _windUptime: 0.3
+  _ultimateChargeRate: 50
 --- !u!114 &2669688019543946796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,12 +593,12 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
-  _minHealthDecayGuard: 0
-  _decayClearRate: 0
-  _debugDamageAmount: 0
-  _debugHealAmount: 0
-  _debugDecayAmount: 0
-  _debugDecayDuration: 0
+  _minHealthDecayGuard: 5
+  _decayClearRate: 35
+  _debugDamageAmount: 40
+  _debugHealAmount: 30
+  _debugDecayAmount: 70
+  _debugDecayDuration: 3
   _currentHealth: 0
 --- !u!1 &3889310737047096468
 GameObject:

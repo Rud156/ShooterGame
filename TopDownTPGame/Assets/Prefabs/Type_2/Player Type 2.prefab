@@ -434,7 +434,7 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 4
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
   _slashLeftPrefab: {fileID: 5610884078883986163, guid: 4fa745a0b9c0b8c4cb6c10a333e6a885,
     type: 3}
@@ -516,7 +516,7 @@ MonoBehaviour:
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 5
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 14
   _iceWallPrefab: {fileID: 8855951514977000263, guid: 54b25c9551d650942a2936e1e39b341c,
     type: 3}
@@ -540,7 +540,7 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 0
   _abilityNameType: 6
-  _allowedActiveAbilities: 15000000
+  _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 7
   _markerEffectPrefab: {fileID: 8160184973231911241, guid: 199b7c15692db1947aa70ad0e5a62301,
     type: 3}
@@ -584,7 +584,7 @@ MonoBehaviour:
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 7
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
   _waterBubblePrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
     type: 3}

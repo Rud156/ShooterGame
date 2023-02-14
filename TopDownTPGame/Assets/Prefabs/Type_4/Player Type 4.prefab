@@ -160,7 +160,7 @@ Transform:
   - {fileID: 1504131108382786862}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -319,11 +319,10 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 12
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
   _plasmaBombPrefab: {fileID: 4947489715981850301, guid: e967618039d656546ac03453bac3afef,
     type: 3}
-  _cameraHolder: {fileID: 1504131108770834952}
   _shootController: {fileID: 795477187898822337}
   _fireRate: 1
 --- !u!114 &-8520166292908909276
@@ -343,7 +342,7 @@ MonoBehaviour:
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 13
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 7
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
@@ -371,7 +370,7 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 1
   _abilityNameType: 14
-  _allowedActiveAbilities: 15000000
+  _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 7
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
@@ -396,7 +395,7 @@ MonoBehaviour:
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 15
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
@@ -418,12 +417,12 @@ MonoBehaviour:
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
-  _minHealthDecayGuard: 0
-  _decayClearRate: 0
-  _debugDamageAmount: 0
-  _debugHealAmount: 0
-  _debugDecayAmount: 0
-  _debugDecayDuration: 0
+  _minHealthDecayGuard: 5
+  _decayClearRate: 35
+  _debugDamageAmount: 40
+  _debugHealAmount: 30
+  _debugDecayAmount: 70
+  _debugDecayDuration: 3
   _currentHealth: 0
 --- !u!114 &3858859646320302021
 MonoBehaviour:

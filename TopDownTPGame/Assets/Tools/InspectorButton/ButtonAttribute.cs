@@ -1,7 +1,11 @@
-﻿namespace EditorCools
-{
-    using System;
+﻿#region
 
+using System;
+
+#endregion
+
+namespace EditorCools
+{
     [AttributeUsage(AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public sealed class ButtonAttribute : Attribute
     {

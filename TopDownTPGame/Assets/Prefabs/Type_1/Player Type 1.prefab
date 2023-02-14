@@ -526,7 +526,7 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 0
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
   _projectilePrefab: {fileID: 9002442166465085074, guid: 97e634534d4e4c74880997ac9a63bf92,
     type: 3}
@@ -555,7 +555,7 @@ MonoBehaviour:
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 1
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 5
   _chargedObjectPrefab: {fileID: 9002442166465085074, guid: 8f41e4a6fa74be6488bfae50f32803e3,
     type: 3}
@@ -581,7 +581,7 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 0
   _abilityNameType: 2
-  _allowedActiveAbilities: 15000000
+  _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 7
   _dashEffectForward:
     effectPrefab: {fileID: 5267843241776696678, guid: 5425d62eea49aec42904fbe816bafa0d,
@@ -623,7 +623,7 @@ MonoBehaviour:
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 3
-  _allowedActiveAbilities: 1500000016000000
+  _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
     type: 3}
