@@ -1,0 +1,11 @@
+.ability_trigger {
+    text-shadow: 1px 0 1px #000;
+}
+
+.cooldown_timer {
+    text-shadow: 1px 0 1px #000;
+}
+
+.stack_count {
+    text-shadow: 1px 0 1px #000;
+}
