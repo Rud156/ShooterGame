@@ -1,4 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/HUD/CSS/UICSS_Crosshair.uss?fileID=7433441132597879392&amp;guid=38d0deacaba61f949ba22a2e6cfa6d41&amp;type=3#UICSS_Crosshair" />
-    <ui:VisualElement name="CenterDot" picking-mode="Ignore" class="center_dot" style="flex-grow: 1; position: absolute; width: 10px; height: 10px;" />
+    <ui:VisualElement name="CenterDot" picking-mode="Ignore" class="center_dot" style="flex-grow: 1; position: absolute; width: 10px; height: 10px; top: 30px; left: 30px;" />
+    <ui:VisualElement name="Left" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 25px; height: 10px; top: 30px; left: 0;" />
+    <ui:VisualElement name="Right" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 25px; height: 10px; top: 30px; left: 45px;" />
+    <ui:VisualElement name="Top" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 10px; height: 25px; top: 0; left: 30px;" />
+    <ui:VisualElement name="Bottom" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 10px; height: 25px; top: 45px; left: 30px;" />
 </ui:UXML>
