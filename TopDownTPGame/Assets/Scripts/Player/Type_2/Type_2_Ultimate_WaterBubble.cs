@@ -2,7 +2,7 @@
 
 using Player.Base;
 using Player.Common;
-using Player.UI;
+using UI.Player;
 using UnityEngine;
 using Utils.Misc;
 
@@ -117,7 +117,7 @@ namespace Player.Type_2
 
         #region Utils
 
-        private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
+        private void DisplayUltimateToHUD() => HUD_PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
 
         #endregion Utils
     }

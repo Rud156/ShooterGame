@@ -11,9 +11,9 @@ using Utils.Misc;
 
 #endregion
 
-namespace Player.UI
+namespace UI.Player
 {
-    public class PlayerAbilityDisplay : MonoBehaviour
+    public class HUD_PlayerAbilityDisplay : MonoBehaviour
     {
         private const string PrimaryDisplayString = "PrimaryAbility";
         private const string SecondaryDisplayString = "SecondaryAbility";
@@ -425,7 +425,7 @@ namespace Player.UI
 
         #region Singleton
 
-        public static PlayerAbilityDisplay Instance { get; private set; }
+        public static HUD_PlayerAbilityDisplay Instance { get; private set; }
 
         private void Awake()
         {

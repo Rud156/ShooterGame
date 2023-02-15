@@ -3,7 +3,7 @@
 using System;
 using Player.Base;
 using Player.Common;
-using Player.UI;
+using UI.Player;
 using UnityEngine;
 using Utils.Misc;
 
@@ -120,7 +120,7 @@ namespace Player.Type_3
             }
         }
 
-        private void UpdateDashCountChanged() => PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentDashesLeftCount);
+        private void UpdateDashCountChanged() => HUD_PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentDashesLeftCount);
 
         private void DisplayDashEffect(BasePlayerController playerController)
         {

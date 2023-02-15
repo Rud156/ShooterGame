@@ -6,9 +6,9 @@ using Utils.Misc;
 
 #endregion
 
-namespace Player.UI
+namespace UI.Player
 {
-    public class PlayerIconDisplay : MonoBehaviour
+    public class HUD_PlayerIconDisplay : MonoBehaviour
     {
         private const string PlayerIconParentString = "UI_PlayerIconWidget";
         private const string PlayerIconString = "PlayerImage";
@@ -45,7 +45,7 @@ namespace Player.UI
 
         #region Singleton
 
-        public static PlayerIconDisplay Instance { get; private set; }
+        public static HUD_PlayerIconDisplay Instance { get; private set; }
 
         private void Awake()
         {

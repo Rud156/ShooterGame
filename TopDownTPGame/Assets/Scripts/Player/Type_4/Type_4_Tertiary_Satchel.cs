@@ -3,7 +3,7 @@
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
-using Player.UI;
+using UI.Player;
 using UnityEngine;
 
 #endregion
@@ -102,7 +102,7 @@ namespace Player.Type_4
             }
         }
 
-        private void UpdateDashCountChanged() => PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentSatchelsLeft);
+        private void UpdateDashCountChanged() => HUD_PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentSatchelsLeft);
 
         #endregion Ability Updates
     }

@@ -3,7 +3,7 @@
 using Player.Base;
 using Player.Common;
 using Player.Type_5;
-using Player.UI;
+using UI.Player;
 using UnityEngine;
 using Utils.Misc;
 
@@ -93,7 +93,7 @@ public class Type_5_Ultimate_Shield : Ability
 
     #region Utils
 
-    private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
+    private void DisplayUltimateToHUD() => HUD_PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
 
     #endregion Utils
 }

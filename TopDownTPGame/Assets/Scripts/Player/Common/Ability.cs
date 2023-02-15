@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using Player.Base;
-using Player.UI;
+using UI.Player;
 using UnityEngine;
 using Utils.Misc;
 
@@ -83,9 +83,9 @@ namespace Player.Common
         {
             if (_abilityTrigger != AbilityTrigger.ExternalAddedAbility)
             {
-                PlayerAbilityDisplay.Instance.UpdateAbilityTrigger(_abilityTrigger);
-                PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
-                PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
+                HUD_PlayerAbilityDisplay.Instance.UpdateAbilityTrigger(_abilityTrigger);
+                HUD_PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
+                HUD_PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Player.Common
                     OnAbilityCooldownComplete?.Invoke();
                 }
 
-                PlayerAbilityDisplay.Instance.UpdateCooldownTimer(_abilityTrigger, _currentCooldownDuration, _currentCooldownDuration / _cooldownDuration);
+                HUD_PlayerAbilityDisplay.Instance.UpdateCooldownTimer(_abilityTrigger, _currentCooldownDuration, _currentCooldownDuration / _cooldownDuration);
             }
         }
 

@@ -4,7 +4,7 @@ using Ability_Scripts.Projectiles;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
-using Player.UI;
+using UI.Player;
 using UnityEngine;
 using Utils.Misc;
 
@@ -75,8 +75,8 @@ namespace Player.Type_1
             base.UnityUpdateDelegate(playerController);
 
             var chargeAmount = _type1Primary.GetCurrentChargeAmount();
-            PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Secondary, chargeAmount);
-            PlayerAbilityDisplay.Instance.UpdateOverlayStatus(AbilityTrigger.Secondary, chargeAmount <= 0);
+            HUD_PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Secondary, chargeAmount);
+            HUD_PlayerAbilityDisplay.Instance.UpdateOverlayStatus(AbilityTrigger.Secondary, chargeAmount <= 0);
         }
 
         #endregion Unity Functions

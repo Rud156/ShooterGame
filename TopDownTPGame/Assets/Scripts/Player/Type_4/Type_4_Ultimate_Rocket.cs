@@ -3,7 +3,7 @@
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
-using Player.UI;
+using UI.Player;
 using UnityEngine;
 using Utils.Misc;
 
@@ -95,7 +95,7 @@ public class Type_4_Ultimate_Rocket : Ability
 
     #region Utils
 
-    private void DisplayUltimateToHUD() => PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
+    private void DisplayUltimateToHUD() => HUD_PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
 
     #endregion Utils
 }

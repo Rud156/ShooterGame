@@ -7,9 +7,9 @@ using Utils.Misc;
 
 #endregion
 
-namespace UI
+namespace UI.Player
 {
-    public class PlayerHealthDisplay : MonoBehaviour
+    public class HUD_PlayerHealthDisplay : MonoBehaviour
     {
         private const string PlayerHealthBarParentString = "UI_PlayerHealthWidget";
         private const string PlayerHealthBarString = "PlayerHealthBar";
@@ -142,7 +142,7 @@ namespace UI
 
         #region Singleton
 
-        public static PlayerHealthDisplay Instance { get; private set; }
+        public static HUD_PlayerHealthDisplay Instance { get; private set; }
 
         private void Awake()
         {
