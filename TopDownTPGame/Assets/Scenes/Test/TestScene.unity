@@ -1123,7 +1123,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1441439928}
   - component: {fileID: 1441439929}
-  - component: {fileID: 1441439930}
   - component: {fileID: 1441439931}
   m_Layer: 0
   m_Name: Player Display Controllers
@@ -1161,36 +1160,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _overlayColor: {r: 0, g: 0, b: 0, a: 1}
   _overlayMaxAlpha: 0.75
---- !u!114 &1441439930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441439927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd766ac3d2352149b3c9208feb98dd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _displayLerpSpeed: 0
-  _lerrpCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _lowHealthColor: {r: 0, g: 0, b: 0, a: 0}
-  _midHealthColor: {r: 0, g: 0, b: 0, a: 0}
-  _fullHealthColor: {r: 0, g: 0, b: 0, a: 0}
-  _flashColor: {r: 0, g: 0, b: 0, a: 0}
-  _flashCount: 0
-  _flashOnDuration: 0
-  _flashOffDuration: 0
-  _defaultScale: 0
-  _biggerScale: 0
-  _scaleCount: 0
-  _scaleChangeDuration: 0
 --- !u!114 &1441439931
 MonoBehaviour:
   m_ObjectHideFlags: 0
