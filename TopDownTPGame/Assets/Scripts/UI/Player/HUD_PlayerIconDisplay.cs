@@ -1,8 +1,11 @@
 ﻿#region
 
+using System;
+using EditorCools;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Utils.Misc;
+using Random = UnityEngine.Random;
 
 #endregion
 
@@ -16,12 +19,20 @@ namespace UI.Player
 
         private const string PlayerOverlayBackerString = "PlayerIconOverlayBacker";
         private const string PlayerIconOverlayString = "PlayerIconOverlay";
-        private const string PlayerIconLabelString = "PlayerIconLabel";
+        private const string PlayerIconOverlayLabelString = "PlayerIconOverlayLabel";
+
+        private const int PlayerIconOverlayHeight = 110;
 
         private VisualElement _parent;
 
+        // Default Elements
         private VisualElement _playerIcon;
         private VisualElement _playerIconBackground;
+
+        // Overlay
+        private VisualElement _overlayBacker;
+        private VisualElement _overlay;
+        private Label _overlayText;
 
         #region External Functions
 
@@ -33,9 +44,16 @@ namespace UI.Player
 
         public void TintPlayerBackground(Color tint) => _playerIconBackground.style.unityBackgroundImageTintColor = tint;
 
-        public void DisplayOverlayTimer(float percent, float time)
+        public void UpdateOverlay(float percent, string displayValue)
         {
-            // TODO: Complete this function...
+            var show = percent > 0;
+            _overlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+            _overlayBacker.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+            _overlayText.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+
+            _overlayText.text = displayValue;
+            var mappedHeight = ExtensionFunctions.Map(percent, 0, 1, 0, PlayerIconOverlayHeight);
+            _overlay.style.height = mappedHeight;
         }
 
         #endregion External Functions
@@ -48,9 +66,25 @@ namespace UI.Player
             _parent = root.Q<VisualElement>(PlayerIconParentString);
             _playerIcon = _parent.Q<VisualElement>(PlayerIconString);
             _playerIconBackground = _parent.Q<VisualElement>(PlayerIconBackgroundString);
+
+            _overlayBacker = _parent.Q<VisualElement>(PlayerOverlayBackerString);
+            _overlay = _parent.Q<VisualElement>(PlayerIconOverlayString);
+            _overlayText = _parent.Q<Label>(PlayerIconOverlayLabelString);
         }
 
         #endregion Utils
+
+        #region Debug Icon Display
+
+        [Button]
+        public void SetRandomOverlayValue()
+        {
+            var timer = Random.Range(0.0f, 100.0f);
+            var percent = Random.value;
+            UpdateOverlay(percent, timer.ToString("0.0"));
+        }
+
+        #endregion Debug Icon Display
 
         #region Singleton
 

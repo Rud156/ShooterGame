@@ -1,18 +1,16 @@
 .overlay_text {
     white-space: normal;
-
     -unity-text-outline-width: 1px;
-    -unity-text-outline-color: #fff;
-
-    text-shadow: 1px 1px #100130;
+    -unity-text-outline-color: rgb(255, 255, 255);
+    text-shadow: 1px 1px rgb(16, 1, 48);
 }
 
 .overlay_backer {
-    background-image: url("project://database/Assets/Textures/Misc/WhitePixel.png");
-    -unity-background-image-tint-color: rgba(0, 0, 0, 0.5);
+    background-image: url('project://database/Assets/Textures/Misc/WhitePixel.png?fileID=21300000&guid=549c8ae573207db4db0c2686e842a093&type=3#WhitePixel');
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0.75);
 }
 
 .overlay_background {
-    background-image: url("project://database/Assets/Textures/Misc/WhitePixel.png");
-    -unity-background-image-tint-color: rgba(0, 0, 0, 0.5);
+    background-image: url('project://database/Assets/Textures/Misc/WhitePixel.png?fileID=21300000&guid=549c8ae573207db4db0c2686e842a093&type=3#WhitePixel');
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0.75);
 }
