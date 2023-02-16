@@ -3,6 +3,6 @@
     <ui:VisualElement name="CenterDot" picking-mode="Ignore" class="center_dot" style="flex-grow: 1; position: absolute; width: 10px; height: 10px; top: 30px; left: 30px;" />
     <ui:VisualElement name="Left" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 5px; height: 10px; top: 30px; left: 20px; border-left-color: rgb(255, 0, 0); border-right-color: rgb(255, 0, 0); border-top-color: rgb(255, 0, 0); border-bottom-color: rgb(255, 0, 0); border-left-width: 2.5px; border-right-width: 2.5px;" />
     <ui:VisualElement name="Right" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 25px; height: 10px; top: 30px; left: 45px;" />
-    <ui:VisualElement name="Top" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 10px; height: 25px; top: 0; left: 30px;" />
-    <ui:VisualElement name="Bottom" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 10px; height: 25px; top: 45px; left: 30px;" />
+    <ui:VisualElement name="Top" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 10px; height: 10px; top: 15px; left: 30px;" />
+    <ui:VisualElement name="Bottom" picking-mode="Ignore" class="line" style="flex-grow: 1; position: absolute; width: 10px; height: 20px; top: 45px; left: 30px;" />
 </ui:UXML>

@@ -744,20 +744,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7224091d847947147a1b84c9c4c2dc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _crosshairOffset: 0
-  _crosshairThickness: 0
-  _crosshairLength: 0
+  _horizontalLineOffset: 5
+  _verticalLineOffset: 5
+  _horizontalLineThickness: 10
+  _verticalLineThickness: 10
+  _horizontalLength: 20
+  _verticalLength: 20
   _crosshairAlpha: 1
   _crosshairColor: {r: 0, g: 1, b: 1, a: 0}
-  _crosshairOutlineThickness: 0
+  _crosshairOutlineThickness: 0.5
   _crosshairOutlineAlpha: 1
-  _crosshairOutlineColor: {r: 0.02, g: 0.02, b: 0.02, a: 0}
+  _crosshairOutlineColor: {r: 0, g: 0, b: 0, a: 0}
   _centerDotThickness: 10
   _centerDotAlpha: 1
-  _centerDotColor: {r: 0.02, g: 0.02, b: 0.02, a: 0}
-  _centerDotOutlineThickness: 1
-  _centerDotOutlineAlpha: 0.5
-  _centerDotOutlineColor: {r: 1, g: 0, b: 0, a: 0}
+  _centerDotColor: {r: 0, g: 1, b: 1, a: 0}
+  _centerDotOutlineThickness: 0.5
+  _centerDotOutlineAlpha: 1
+  _centerDotOutlineColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &864060275
 Transform:
   m_ObjectHideFlags: 0

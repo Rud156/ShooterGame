@@ -18,9 +18,15 @@ namespace UI.HUD
         private const string BottomLineString = "Bottom";
 
         private const float LeftLineInitialXPosition = 25;
+        private const float RightLineInitialXPosition = 45;
         private const float LeftRightLineInitialYPosition = 35;
         private const float LeftRightLineHeightOffsetPerPixel = 0.5f;
         private const float LeftLineWidthOffsetPerPixel = 1;
+        private const float TopLineInitialYPosition = 25;
+        private const float BottomLineInitialYPosition = 45;
+        private const float TopBottomLineInitialXPosition = 35;
+        private const float TopBottomLineWidthOffsetPerPixel = 0.5f;
+        private const float TopLineHeightOffsetPerPixel = 1;
 
         private const float CenterDotInitialYPosition = 35;
         private const float CenterDotOffsetPerPixel = 0.5f;
@@ -77,7 +83,8 @@ namespace UI.HUD
         private void UpdateCrosshair()
         {
             UpdateLinesColorAndAlpha();
-            UpdateLineLengthAndPosition();
+            UpdateHorizontalLineLengthAndPosition();
+            UpdateVerticalLineLengthAndPosition();
             UpdateCenterDot();
         }
 
@@ -130,7 +137,7 @@ namespace UI.HUD
             SetElementBorderColor(_bottomLine, outlineColor);
         }
 
-        private void UpdateLineLengthAndPosition()
+        private void UpdateHorizontalLineLengthAndPosition()
         {
             // Set Size for Left and Right Lines
             _leftLine.style.width = _horizontalLength;
@@ -144,16 +151,44 @@ namespace UI.HUD
             _leftLine.style.top = finalLeftRightYOffset;
             _rightLine.style.top = finalLeftRightYOffset;
 
-            // Update Left Position for Left Line
+            // Update X Position for Left and Right Line
             var mappedLeftXOffset = _horizontalLength * LeftLineWidthOffsetPerPixel;
-            var finalLeftXOffset = LeftLineInitialXPosition - mappedLeftXOffset;
+            var finalLeftXOffset = LeftLineInitialXPosition - _horizontalLineOffset - mappedLeftXOffset;
             _leftLine.style.left = finalLeftXOffset;
+            _rightLine.style.left = RightLineInitialXPosition + _horizontalLineOffset;
 
             // Set Outlines for Left and Right Lines
             var mappedLeftRightOutlineLength = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, _horizontalLength / 2.0f);
             var mappedLeftRightOutlineThickness = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, _horizontalLineThickness / 2.0f);
             SetElementBorderThickness(_leftLine, mappedLeftRightOutlineThickness, mappedLeftRightOutlineLength);
             SetElementBorderThickness(_rightLine, mappedLeftRightOutlineThickness, mappedLeftRightOutlineLength);
+        }
+
+        private void UpdateVerticalLineLengthAndPosition()
+        {
+            // Set Size for Top and Bottom Lines
+            _topLine.style.width = _verticalLineThickness;
+            _topLine.style.height = _verticalLength;
+            _bottomLine.style.width = _verticalLineThickness;
+            _bottomLine.style.height = _verticalLength;
+
+            // Update X Position for Top and Bottom Lines
+            var mappedTopBottomXOffset = _verticalLineThickness * TopBottomLineWidthOffsetPerPixel;
+            var finalTopBottomXOffset = TopBottomLineInitialXPosition - mappedTopBottomXOffset;
+            _topLine.style.left = finalTopBottomXOffset;
+            _bottomLine.style.left = finalTopBottomXOffset;
+
+            // Update Y Position for Top and Bottom Line
+            var mappedTopYOffset = _verticalLength * TopLineHeightOffsetPerPixel;
+            var finalTopYOffset = TopLineInitialYPosition - _verticalLineOffset - mappedTopYOffset;
+            _topLine.style.top = finalTopYOffset;
+            _bottomLine.style.top = BottomLineInitialYPosition + _verticalLineOffset;
+
+            // Set Outlines for Top and Bottom Lines
+            var mappedTopBottomOutlineLength = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, _verticalLength / 2.0f);
+            var mappedTopBottomOutlineThickness = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, _verticalLineThickness / 2.0f);
+            SetElementBorderThickness(_topLine, mappedTopBottomOutlineLength, mappedTopBottomOutlineThickness);
+            SetElementBorderThickness(_bottomLine, mappedTopBottomOutlineLength, mappedTopBottomOutlineThickness);
         }
 
         #endregion Lines
