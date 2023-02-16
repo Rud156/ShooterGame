@@ -747,10 +747,11 @@ MonoBehaviour:
   _crosshairOffset: 0
   _crosshairThickness: 0
   _crosshairLength: 0
-  _crosshairAlpha: 0
-  _crosshairColor: {r: 0.02, g: 0.02, b: 0.02, a: 0}
+  _crosshairAlpha: 1
+  _crosshairColor: {r: 0, g: 1, b: 1, a: 0}
   _crosshairOutlineThickness: 0
-  _crosshairOutlineAlpha: 0
+  _crosshairOutlineAlpha: 1
+  _crosshairOutlineColor: {r: 0.02, g: 0.02, b: 0.02, a: 0}
   _centerDotThickness: 10
   _centerDotAlpha: 1
   _centerDotColor: {r: 0.02, g: 0.02, b: 0.02, a: 0}
