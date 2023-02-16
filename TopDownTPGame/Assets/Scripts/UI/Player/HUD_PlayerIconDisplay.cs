@@ -1,6 +1,5 @@
 ﻿#region
 
-using EditorCools;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Utils.Misc;
