@@ -3,6 +3,6 @@
     <Style src="project://database/Assets/UI/Common/CSS/UICSS_Text.uss?fileID=7433441132597879392&amp;guid=c5a32fcfdf9c4b64fa4b167158b62812&amp;type=3#UICSS_Text" />
     <Style src="project://database/Assets/UI/Common/CSS/UICSS_Colors.uss?fileID=7433441132597879392&amp;guid=ab7ec7b9843a91344b5614d0904c9986&amp;type=3#UICSS_Colors" />
     <ui:ProgressBar value="22" title="PlayerHealth" name="PlayerHealthBar" picking-mode="Ignore" class="player_health" style="position: absolute; top: 41px; left: 34px; flex-shrink: 1; flex-grow: 1;" />
-    <ui:Label tabindex="-1" text="20" display-tooltip-when-elided="true" name="CurrentHealthLabel" picking-mode="Ignore" class="default_font medium_text color_white" style="rotate: -3deg; -unity-text-align: middle-right; position: absolute; left: 63px; width: 85px; top: 7px;" />
-    <ui:Label tabindex="-1" text=" / 100" display-tooltip-when-elided="true" name="MaxHealthLabel" picking-mode="Ignore" class="default_font small_text color_white" style="rotate: -3deg; -unity-text-align: middle-left; position: absolute; top: 21px; left: 150px;" />
+    <ui:Label tabindex="-1" text="20" display-tooltip-when-elided="true" name="CurrentHealthLabel" picking-mode="Ignore" class="default_font medium_text color_white default_text_visibility" style="rotate: -3deg; -unity-text-align: middle-right; position: absolute; left: 63px; width: 85px; top: 7px;" />
+    <ui:Label tabindex="-1" text=" / 100" display-tooltip-when-elided="true" name="MaxHealthLabel" picking-mode="Ignore" class="default_font small_text color_white default_text_visibility" style="rotate: -3deg; -unity-text-align: middle-left; position: absolute; top: 21px; left: 150px;" />
 </ui:UXML>

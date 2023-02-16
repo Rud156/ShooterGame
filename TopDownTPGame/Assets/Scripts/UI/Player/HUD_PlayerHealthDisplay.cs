@@ -49,6 +49,10 @@ namespace UI.Player
         private float _targetHealthLerp;
         private float _lerpAmount;
 
+        // Coroutine Data
+        private bool _flashCoroutineActive;
+        private bool _scaleCoroutineActive;
+
         #region Unity Functions
 
         private void Update()
@@ -68,7 +72,7 @@ namespace UI.Player
 
         #region External Functions
 
-        public void DisplayHealthChanged(int startingHealth, int currentHealth, int maxHealth)
+        public void DisplayHealthChanged(int currentHealth, int maxHealth)
         {
             _currentHealthLabel.text = currentHealth.ToString();
             _maxHealthLabel.text = maxHealth.ToString();
@@ -84,8 +88,15 @@ namespace UI.Player
             var healthColor = healthRatio <= 0.5
                 ? Color.Lerp(_lowHealthColor, _midHealthColor, healthRatio * 2)
                 : Color.Lerp(_midHealthColor, _fullHealthColor, (healthRatio - 0.5f) * 2);
-            StartCoroutine(BarFlasher(healthColor));
-            StartCoroutine(BarScaler());
+            if (!_flashCoroutineActive)
+            {
+                StartCoroutine(BarFlasher(healthColor));
+            }
+
+            if (!_scaleCoroutineActive)
+            {
+                StartCoroutine(BarScaler());
+            }
         }
 
         #endregion External Functions
@@ -94,6 +105,7 @@ namespace UI.Player
 
         private IEnumerator BarFlasher(Color finalColor)
         {
+            _flashCoroutineActive = true;
             var startColor = _progressBarProgress.style.backgroundColor.value;
             for (var i = 0; i < _flashCount; i++)
             {
@@ -104,10 +116,12 @@ namespace UI.Player
             }
 
             _progressBarProgress.style.backgroundColor = finalColor;
+            _flashCoroutineActive = false;
         }
 
         private IEnumerator BarScaler()
         {
+            _scaleCoroutineActive = true;
             for (var i = 0; i < _scaleCount; i++)
             {
                 _progressBar.style.scale = Vector2.one * _biggerScale;
@@ -115,6 +129,8 @@ namespace UI.Player
                 _progressBar.style.scale = Vector2.one * _defaultScale;
                 yield return new WaitForSeconds(_scaleChangeDuration);
             }
+
+            _scaleCoroutineActive = false;
         }
 
         #endregion Bar Effects
@@ -132,10 +148,6 @@ namespace UI.Player
             _progressBar = _healthBar.Q<VisualElement>("unity-progress-bar");
             var progressBackground = _progressBar.Q<VisualElement>(className: "unity-progress-bar__background");
             _progressBarProgress = progressBackground.Q<VisualElement>(className: "unity-progress-bar__progress");
-
-            var titleContainer = progressBackground.Q<VisualElement>(className: "unity-progress-bar__title-container");
-            var innerText = titleContainer.Q<Label>(className: "unity-progress-bar__title");
-            innerText.style.display = DisplayStyle.None;
         }
 
         #endregion Utils

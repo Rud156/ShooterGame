@@ -632,6 +632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 5000
+  _displayToHUD: 0
   _autoHealWhen: 0
   _autoHealTickRate: 0
   _autoHealPerTickAmount: 0
@@ -1124,6 +1125,7 @@ GameObject:
   - component: {fileID: 1441439928}
   - component: {fileID: 1441439929}
   - component: {fileID: 1441439931}
+  - component: {fileID: 1441439932}
   m_Layer: 0
   m_Name: Player Display Controllers
   m_TagString: Untagged
@@ -1172,6 +1174,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa0b88f6bcc47d098e416eebdc445e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1441439932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441439927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd766ac3d2352149b3c9208feb98dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayLerpSpeed: 3
+  _lerrpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.2024858
+      value: 1.1143978
+      inSlope: 1.0192437
+      outSlope: 1.0192437
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.56122494
+      value: 0.93827075
+      inSlope: -0.019299632
+      outSlope: -0.019299632
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11692707
+      outWeight: 0.2673472
+    - serializedVersion: 3
+      time: 0.80998147
+      value: 1.0367497
+      inSlope: 0.2101707
+      outSlope: 0.2101707
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  _midHealthColor: {r: 1, g: 1, b: 0, a: 1}
+  _fullHealthColor: {r: 0, g: 1, b: 0, a: 1}
+  _flashColor: {r: 1, g: 1, b: 1, a: 1}
+  _flashCount: 2
+  _flashOnDuration: 0.1
+  _flashOffDuration: 0.05
+  _defaultScale: 1
+  _biggerScale: 1.2
+  _scaleCount: 2
+  _scaleChangeDuration: 0.1
+  _flashCoroutineActive: 0
+  _scaleCoroutineActive: 0
 --- !u!1 &1471821480
 GameObject:
   m_ObjectHideFlags: 0

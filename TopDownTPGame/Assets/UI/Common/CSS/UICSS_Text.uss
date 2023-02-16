@@ -1,7 +1,11 @@
 .default_font {
     -unity-font: url("project://database/Assets/Fonts/Satoshi/Satoshi-Medium.otf");
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+}
+
+.default_text_visibility {
+    text-shadow: 2px 2px 2px #050505;
 }
 
 .small_text {

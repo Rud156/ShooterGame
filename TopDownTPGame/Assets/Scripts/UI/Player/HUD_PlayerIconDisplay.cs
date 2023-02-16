@@ -1,11 +1,9 @@
 ﻿#region
 
-using System;
 using EditorCools;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Utils.Misc;
-using Random = UnityEngine.Random;
 
 #endregion
 
@@ -73,18 +71,6 @@ namespace UI.Player
         }
 
         #endregion Utils
-
-        #region Debug Icon Display
-
-        [Button]
-        public void SetRandomOverlayValue()
-        {
-            var timer = Random.Range(0.0f, 100.0f);
-            var percent = Random.value;
-            UpdateOverlay(percent, timer.ToString("0.0"));
-        }
-
-        #endregion Debug Icon Display
 
         #region Singleton
 

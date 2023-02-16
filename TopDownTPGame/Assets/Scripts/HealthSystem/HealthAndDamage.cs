@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using EditorCools;
+using UI.Player;
 using UnityEngine;
 
 #endregion
@@ -13,6 +14,7 @@ namespace HealthSystem
     {
         [Header("Health Data")]
         [SerializeField] private int _maxHealth;
+        [SerializeField] private bool _displayToHUD;
 
         [Header("Auto Heal Data")]
         [SerializeField] private AutoHealWhen _autoHealWhen;
@@ -29,7 +31,7 @@ namespace HealthSystem
         [SerializeField] private int _debugDecayAmount;
         [SerializeField] private float _debugDecayDuration;
 
-        [SerializeField] private int _currentHealth;
+        private int _currentHealth;
         private List<Tuple<string, HealModifier>> _healModifiers;
         private List<Tuple<string, DamageModifier>> _damageModifiers;
 
@@ -71,7 +73,7 @@ namespace HealthSystem
             _currentHealth = _maxHealth;
 
             SetAutoHealState(_autoHealWhen);
-            OnHealthChanged?.Invoke(_currentHealth, _currentHealth, _maxHealth);
+            NotifyHealthChangeAndHUD(_currentHealth);
         }
 
         private void FixedUpdate()
@@ -124,7 +126,7 @@ namespace HealthSystem
             SetDecayState(DecayState.DecayCountdown);
 
             OnHealthDecayed?.Invoke(_currentHealthPreDecay, _currentHealth, decayDuration);
-            OnHealthChanged?.Invoke(_currentHealthPreDecay, _currentHealth, _maxHealth);
+            NotifyHealthChangeAndHUD(_currentHealthPreDecay);
         }
 
         private void UpdateHealthDecay()
@@ -155,7 +157,7 @@ namespace HealthSystem
                             _currentHealth += healthGainedAmount;
                             _decayClearAmountCurrentFrame -= healthGainedAmount;
 
-                            OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
+                            NotifyHealthChangeAndHUD(startHealth);
                         }
                     }
                     else
@@ -231,7 +233,7 @@ namespace HealthSystem
             }
 
             OnDamageTaken?.Invoke(modifiedDamageAmount, startHealth, _currentHealth);
-            OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
+            NotifyHealthChangeAndHUD(startHealth);
         }
 
         public void TakeHeal(int healAmount)
@@ -245,8 +247,9 @@ namespace HealthSystem
 
             _currentHealth += modifiedHealAmount;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+
             OnHealed?.Invoke(modifiedHealAmount, startHealth, _currentHealth);
-            OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
+            NotifyHealthChangeAndHUD(startHealth);
         }
 
         public void AddHealModifier(HealModifier healModifier, string id)
@@ -286,6 +289,15 @@ namespace HealthSystem
         #endregion Damage And Heal
 
         #region Utils
+
+        private void NotifyHealthChangeAndHUD(int startHealth)
+        {
+            OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
+            if (_displayToHUD)
+            {
+                HUD_PlayerHealthDisplay.Instance.DisplayHealthChanged(_currentHealth, _maxHealth);
+            }
+        }
 
         private int GetHealModifierIndex(string id)
         {
