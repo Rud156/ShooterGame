@@ -102,7 +102,7 @@ namespace Player.Type_4
             }
         }
 
-        private void UpdateDashCountChanged() => HUD_PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentSatchelsLeft);
+        private void UpdateDashCountChanged() => HUD_PlayerAbilityDisplay.Instance.UpdateCounter(AbilityTrigger.Tertiary, $"{_currentSatchelsLeft}", true);
 
         #endregion Ability Updates
     }

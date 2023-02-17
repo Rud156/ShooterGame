@@ -1,13 +1,13 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Utils.Input;
 using Utils.Misc;
+using Debug = UnityEngine.Debug;
 
 #endregion
 
@@ -20,11 +20,8 @@ namespace UI.Player
         private const string TertiaryDisplayString = "TertiaryAbility";
         private const string UltimateDisplayString = "UltimateAbility";
 
-        [Header("Display")]
-        [SerializeField] private Color _overlayColor;
-        [SerializeField] [Range(0, 1)] private float _overlayMaxAlpha;
+        private const float AbilityIconOverlayHeight = 90;
 
-        private VisualElement _root;
         private AbilityDisplayItem _primaryDisplay;
         private AbilityDisplayItem _secondaryDisplay;
         private AbilityDisplayItem _tertiaryDisplay;
@@ -34,231 +31,85 @@ namespace UI.Player
 
         private void Initialize()
         {
-            _root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
+            var root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
 
-            var primaryAbility = _root.Q<VisualElement>(PrimaryDisplayString);
+            var primaryAbility = root.Q<VisualElement>(PrimaryDisplayString);
             _primaryDisplay = new AbilityDisplayItem()
             {
-                ItemRoot = primaryAbility,
-                AbilityBackground = primaryAbility.Q<VisualElement>("Backing"),
+                AbilityBackground = primaryAbility.Q<VisualElement>("BackgroundImage"),
                 AbilityIcon = primaryAbility.Q<VisualElement>("AbilityIcon"),
+                AbilityIconOverlayBacker = primaryAbility.Q<VisualElement>("AbilityIconOverlayBacker"),
                 AbilityIconOverlay = primaryAbility.Q<VisualElement>("AbilityIconOverlay"),
-                CooldownLabel = primaryAbility.Q<Label>("CooldownTimer"),
-                StackCountLabel = primaryAbility.Q<Label>("StackCount"),
-                AbilityTriggerLabel = primaryAbility.Q<Label>("AbilityTrigger")
+                AbilityTriggerLabel = primaryAbility.Q<Label>("TriggerName"),
+                TimerLabel = primaryAbility.Q<Label>("Timer"),
+                CounterLabel = primaryAbility.Q<Label>("Counter"),
             };
 
-            var secondaryAbility = _root.Q<VisualElement>(SecondaryDisplayString);
+            var secondaryAbility = root.Q<VisualElement>(SecondaryDisplayString);
             _secondaryDisplay = new AbilityDisplayItem()
             {
-                ItemRoot = secondaryAbility,
-                AbilityBackground = secondaryAbility.Q<VisualElement>("Backing"),
+                AbilityBackground = secondaryAbility.Q<VisualElement>("BackgroundImage"),
                 AbilityIcon = secondaryAbility.Q<VisualElement>("AbilityIcon"),
+                AbilityIconOverlayBacker = secondaryAbility.Q<VisualElement>("AbilityIconOverlayBacker"),
                 AbilityIconOverlay = secondaryAbility.Q<VisualElement>("AbilityIconOverlay"),
-                CooldownLabel = secondaryAbility.Q<Label>("CooldownTimer"),
-                StackCountLabel = secondaryAbility.Q<Label>("StackCount"),
-                AbilityTriggerLabel = secondaryAbility.Q<Label>("AbilityTrigger")
+                AbilityTriggerLabel = secondaryAbility.Q<Label>("TriggerName"),
+                TimerLabel = secondaryAbility.Q<Label>("Timer"),
+                CounterLabel = secondaryAbility.Q<Label>("Counter"),
             };
 
-            var tertiaryAbility = _root.Q<VisualElement>(TertiaryDisplayString);
+            var tertiaryAbility = root.Q<VisualElement>(TertiaryDisplayString);
             _tertiaryDisplay = new AbilityDisplayItem()
             {
-                ItemRoot = tertiaryAbility,
-                AbilityBackground = tertiaryAbility.Q<VisualElement>("Backing"),
+                AbilityBackground = tertiaryAbility.Q<VisualElement>("BackgroundImage"),
                 AbilityIcon = tertiaryAbility.Q<VisualElement>("AbilityIcon"),
+                AbilityIconOverlayBacker = tertiaryAbility.Q<VisualElement>("AbilityIconOverlayBacker"),
                 AbilityIconOverlay = tertiaryAbility.Q<VisualElement>("AbilityIconOverlay"),
-                CooldownLabel = tertiaryAbility.Q<Label>("CooldownTimer"),
-                StackCountLabel = tertiaryAbility.Q<Label>("StackCount"),
-                AbilityTriggerLabel = tertiaryAbility.Q<Label>("AbilityTrigger")
+                AbilityTriggerLabel = tertiaryAbility.Q<Label>("TriggerName"),
+                TimerLabel = tertiaryAbility.Q<Label>("Timer"),
+                CounterLabel = tertiaryAbility.Q<Label>("Counter"),
             };
 
-            var ultimateAbility = _root.Q<VisualElement>(UltimateDisplayString);
+            var ultimateAbility = root.Q<VisualElement>(UltimateDisplayString);
             _ultimateDisplay = new AbilityDisplayItem()
             {
-                ItemRoot = ultimateAbility,
-                AbilityBackground = ultimateAbility.Q<VisualElement>("Backing"),
+                AbilityBackground = ultimateAbility.Q<VisualElement>("BackgroundImage"),
                 AbilityIcon = ultimateAbility.Q<VisualElement>("AbilityIcon"),
+                AbilityIconOverlayBacker = ultimateAbility.Q<VisualElement>("AbilityIconOverlayBacker"),
                 AbilityIconOverlay = ultimateAbility.Q<VisualElement>("AbilityIconOverlay"),
-                CooldownLabel = ultimateAbility.Q<Label>("CooldownTimer"),
-                StackCountLabel = ultimateAbility.Q<Label>("StackCount"),
-                AbilityTriggerLabel = ultimateAbility.Q<Label>("AbilityTrigger")
+                AbilityTriggerLabel = ultimateAbility.Q<Label>("TriggerName"),
+                TimerLabel = ultimateAbility.Q<Label>("Timer"),
+                CounterLabel = ultimateAbility.Q<Label>("Counter"),
             };
         }
 
-        private void CheckAndApplyDisplayStyle(List<VisualElement> elements, bool show)
-        {
-            foreach (var element in elements)
-            {
-                element.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
-            }
-        }
-
-        private void DisplayCooldownLabelPercentAndOverlay(AbilityDisplayItem abilityDisplayItem, float percent, float maxPercent)
-        {
-            abilityDisplayItem.CooldownLabel.text = $"{percent:0.0} %";
-            abilityDisplayItem.AbilityIconOverlay.style.unityBackgroundImageTintColor = percent >= maxPercent
-                ? new Color(1, 1, 1, 0)
-                : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha);
-        }
-
-        private void DisplayCooldownLabelTimerAndOverlay(AbilityDisplayItem abilityDisplayItem, float timer, float percent)
-        {
-            abilityDisplayItem.CooldownLabel.text = timer.ToString("0.0");
-            abilityDisplayItem.AbilityIconOverlay.style.unityBackgroundImageTintColor = percent <= 0
-                ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0)
-                : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha);
-        }
-
-        #endregion Utils
-
-        #region External Functions
-
-        public void UpdateCooldownPercent(AbilityTrigger abilityTrigger, float percent, float maxPercent, bool show = true)
+        private void UpdateAbilityTrigger(AbilityTrigger abilityTrigger, string lastInputType)
         {
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
                 {
-                    var elements = new List<VisualElement>()
-                    {
-                        _primaryDisplay.CooldownLabel,
-                        _primaryDisplay.AbilityIconOverlay,
-                    };
-                    CheckAndApplyDisplayStyle(elements, show);
-                    DisplayCooldownLabelPercentAndOverlay(_primaryDisplay, percent, maxPercent);
-                }
-                    break;
-
-                case AbilityTrigger.Secondary:
-                {
-                    var elements = new List<VisualElement>()
-                    {
-                        _secondaryDisplay.CooldownLabel,
-                        _secondaryDisplay.AbilityIconOverlay,
-                    };
-                    CheckAndApplyDisplayStyle(elements, show);
-                    DisplayCooldownLabelPercentAndOverlay(_secondaryDisplay, percent, maxPercent);
-                }
-                    break;
-
-                case AbilityTrigger.Tertiary:
-                {
-                    var elements = new List<VisualElement>()
-                    {
-                        _tertiaryDisplay.CooldownLabel,
-                        _tertiaryDisplay.AbilityIconOverlay,
-                    };
-                    CheckAndApplyDisplayStyle(elements, show);
-                    DisplayCooldownLabelPercentAndOverlay(_tertiaryDisplay, percent, maxPercent);
-                }
-                    break;
-
-                case AbilityTrigger.Ultimate:
-                {
-                    var elements = new List<VisualElement>()
-                    {
-                        _ultimateDisplay.CooldownLabel,
-                        _ultimateDisplay.AbilityIconOverlay,
-                    };
-                    CheckAndApplyDisplayStyle(elements, show);
-                    DisplayCooldownLabelPercentAndOverlay(_ultimateDisplay, percent, maxPercent);
-                }
-                    break;
-
-                case AbilityTrigger.ExternalAddedAbility:
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
-            }
-        }
-
-        public void UpdateCooldownTimer(AbilityTrigger abilityTrigger, float timer, float percent)
-        {
-            var show = percent > 0;
-
-            switch (abilityTrigger)
-            {
-                case AbilityTrigger.Primary:
-                {
-                    var elements = new List<VisualElement>()
-                    {
-                        _primaryDisplay.CooldownLabel,
-                        _primaryDisplay.AbilityIconOverlay,
-                    };
-                    CheckAndApplyDisplayStyle(elements, show);
-                    DisplayCooldownLabelTimerAndOverlay(_primaryDisplay, timer, percent);
-                }
-                    break;
-
-                case AbilityTrigger.Secondary:
-                {
-                    var elements = new List<VisualElement>()
-                    {
-                        _secondaryDisplay.CooldownLabel,
-                        _secondaryDisplay.AbilityIconOverlay,
-                    };
-                    CheckAndApplyDisplayStyle(elements, show);
-                    DisplayCooldownLabelTimerAndOverlay(_secondaryDisplay, timer, percent);
-                }
-                    break;
-
-                case AbilityTrigger.Tertiary:
-                {
-                    var elements = new List<VisualElement>()
-                    {
-                        _tertiaryDisplay.CooldownLabel,
-                        _tertiaryDisplay.AbilityIconOverlay,
-                    };
-                    CheckAndApplyDisplayStyle(elements, show);
-                    DisplayCooldownLabelTimerAndOverlay(_tertiaryDisplay, timer, percent);
-                }
-                    break;
-
-                case AbilityTrigger.Ultimate:
-                {
-                    var elements = new List<VisualElement>()
-                    {
-                        _ultimateDisplay.CooldownLabel,
-                        _ultimateDisplay.AbilityIconOverlay,
-                    };
-                    CheckAndApplyDisplayStyle(elements, show);
-                    DisplayCooldownLabelTimerAndOverlay(_ultimateDisplay, timer, percent);
-                }
-                    break;
-
-                case AbilityTrigger.ExternalAddedAbility:
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
-            }
-        }
-
-        public void UpdateAbilityTrigger(AbilityTrigger abilityTrigger)
-        {
-            switch (abilityTrigger)
-            {
-                case AbilityTrigger.Primary:
-                {
-                    var displayString = InputManager.Instance.PlayerInput.AbilityPrimary.GetBindingDisplayString();
+                    var displayString = InputManager.Instance.PlayerInput.AbilityPrimary.GetBindingDisplayString(group: lastInputType);
                     _primaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Secondary:
                 {
-                    var displayString = InputManager.Instance.PlayerInput.AbilitySecondary.GetBindingDisplayString();
+                    var displayString = InputManager.Instance.PlayerInput.AbilitySecondary.GetBindingDisplayString(group: lastInputType);
                     _secondaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Tertiary:
                 {
-                    var displayString = InputManager.Instance.PlayerInput.AbilityTertiary.GetBindingDisplayString();
+                    var displayString = InputManager.Instance.PlayerInput.AbilityTertiary.GetBindingDisplayString(group: lastInputType);
                     _tertiaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Ultimate:
                 {
-                    var displayString = InputManager.Instance.PlayerInput.AbilityUltimate.GetBindingDisplayString();
+                    var displayString = InputManager.Instance.PlayerInput.AbilityUltimate.GetBindingDisplayString(group: lastInputType);
                     _ultimateDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
@@ -269,35 +120,120 @@ namespace UI.Player
             }
         }
 
-        public void UpdateStackCount(AbilityTrigger abilityTrigger, int stackCount, bool show = true)
+        #endregion Utils
+
+        #region External Functions
+        
+        public void UpdateAbilityTriggers(string lastInputType)
         {
+            Debug.Log($"Last Input Type: {lastInputType}");
+            UpdateAbilityTrigger(AbilityTrigger.Primary, lastInputType);
+            UpdateAbilityTrigger(AbilityTrigger.Secondary, lastInputType);
+            UpdateAbilityTrigger(AbilityTrigger.Tertiary, lastInputType);
+            UpdateAbilityTrigger(AbilityTrigger.Ultimate, lastInputType);
+        }
+
+        public void UpdateTimer(AbilityTrigger abilityTrigger, string timerString, bool showTimer)
+        {
+            var displayStyle = showTimer ? DisplayStyle.Flex : DisplayStyle.None;
+
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    _primaryDisplay.TimerLabel.text = timerString;
+                    _primaryDisplay.TimerLabel.style.display = displayStyle;
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    _secondaryDisplay.TimerLabel.text = timerString;
+                    _secondaryDisplay.TimerLabel.style.display = displayStyle;
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    _tertiaryDisplay.TimerLabel.text = timerString;
+                    _tertiaryDisplay.TimerLabel.style.display = displayStyle;
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    _ultimateDisplay.TimerLabel.text = timerString;
+                    _ultimateDisplay.TimerLabel.style.display = displayStyle;
+                    break;
+
+                case AbilityTrigger.ExternalAddedAbility:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
+        public void UpdateOverlay(AbilityTrigger abilityTrigger, float percent)
+        {
+            var show = percent > 0;
+            var displayStyle = show ? DisplayStyle.Flex : DisplayStyle.None;
+            var mappedHeight = ExtensionFunctions.Map(percent, 0, 1, 0, AbilityIconOverlayHeight);
+
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    _primaryDisplay.AbilityIconOverlay.style.display = displayStyle;
+                    _primaryDisplay.AbilityIconOverlayBacker.style.display = displayStyle;
+                    _primaryDisplay.AbilityIconOverlay.style.height = mappedHeight;
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    _secondaryDisplay.AbilityIconOverlay.style.display = displayStyle;
+                    _secondaryDisplay.AbilityIconOverlayBacker.style.display = displayStyle;
+                    _secondaryDisplay.AbilityIconOverlay.style.height = mappedHeight;
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    _tertiaryDisplay.AbilityIconOverlay.style.display = displayStyle;
+                    _tertiaryDisplay.AbilityIconOverlayBacker.style.display = displayStyle;
+                    _tertiaryDisplay.AbilityIconOverlay.style.height = mappedHeight;
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    _ultimateDisplay.AbilityIconOverlay.style.display = displayStyle;
+                    _ultimateDisplay.AbilityIconOverlayBacker.style.display = displayStyle;
+                    _ultimateDisplay.AbilityIconOverlay.style.height = mappedHeight;
+                    break;
+
+                case AbilityTrigger.ExternalAddedAbility:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
+        public void UpdateCounter(AbilityTrigger abilityTrigger, string counterData, bool show)
+        {
+            var displayStyle = show ? DisplayStyle.Flex : DisplayStyle.None;
+
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
                 {
-                    _primaryDisplay.StackCountLabel.text = stackCount.ToString();
-                    _primaryDisplay.StackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _primaryDisplay.CounterLabel.text = counterData;
+                    _primaryDisplay.CounterLabel.style.display = displayStyle;
                 }
                     break;
 
                 case AbilityTrigger.Secondary:
                 {
-                    _secondaryDisplay.StackCountLabel.text = stackCount.ToString();
-                    _secondaryDisplay.StackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _secondaryDisplay.CounterLabel.text = counterData;
+                    _secondaryDisplay.CounterLabel.style.display = displayStyle;
                 }
                     break;
 
                 case AbilityTrigger.Tertiary:
                 {
-                    _tertiaryDisplay.StackCountLabel.text = stackCount.ToString();
-                    _tertiaryDisplay.StackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _tertiaryDisplay.CounterLabel.text = counterData;
+                    _tertiaryDisplay.CounterLabel.style.display = displayStyle;
                 }
                     break;
 
                 case AbilityTrigger.Ultimate:
                 {
-                    _ultimateDisplay.StackCountLabel.text = stackCount.ToString();
-                    _ultimateDisplay.StackCountLabel.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+                    _ultimateDisplay.CounterLabel.text = counterData;
+                    _ultimateDisplay.CounterLabel.style.display = displayStyle;
                 }
                     break;
 
@@ -342,77 +278,19 @@ namespace UI.Player
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
-                {
                     _primaryDisplay.AbilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
-                    _primaryDisplay.AbilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
-                }
                     break;
 
                 case AbilityTrigger.Secondary:
-                {
                     _secondaryDisplay.AbilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
-                    _secondaryDisplay.AbilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
-                }
                     break;
 
                 case AbilityTrigger.Tertiary:
-                {
                     _tertiaryDisplay.AbilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
-                    _tertiaryDisplay.AbilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
-                }
                     break;
 
                 case AbilityTrigger.Ultimate:
-                {
                     _ultimateDisplay.AbilityIcon.style.backgroundImage = new StyleBackground(abilityIcon);
-                    _ultimateDisplay.AbilityIconOverlay.style.backgroundImage = new StyleBackground(abilityIcon);
-                }
-                    break;
-
-                case AbilityTrigger.ExternalAddedAbility:
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
-            }
-        }
-
-        public void UpdateOverlayStatus(AbilityTrigger abilityTrigger, bool show)
-        {
-            switch (abilityTrigger)
-            {
-                case AbilityTrigger.Primary:
-                {
-                    _primaryDisplay.AbilityIconOverlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
-                    _primaryDisplay.AbilityIconOverlay.style.unityBackgroundImageTintColor = show
-                        ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha)
-                        : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0);
-                }
-                    break;
-
-                case AbilityTrigger.Secondary:
-                {
-                    _secondaryDisplay.AbilityIconOverlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
-                    _secondaryDisplay.AbilityIconOverlay.style.unityBackgroundImageTintColor = show
-                        ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha)
-                        : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0);
-                }
-                    break;
-
-                case AbilityTrigger.Tertiary:
-                {
-                    _tertiaryDisplay.AbilityIconOverlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
-                    _tertiaryDisplay.AbilityIconOverlay.style.unityBackgroundImageTintColor = show
-                        ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha)
-                        : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0);
-                }
-                    break;
-
-                case AbilityTrigger.Ultimate:
-                {
-                    _ultimateDisplay.AbilityIconOverlay.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
-                    _ultimateDisplay.AbilityIconOverlay.style.unityBackgroundImageTintColor = show
-                        ? new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, _overlayMaxAlpha)
-                        : new Color(_overlayColor.r, _overlayColor.g, _overlayColor.b, 0);
-                }
                     break;
 
                 case AbilityTrigger.ExternalAddedAbility:
@@ -449,12 +327,12 @@ namespace UI.Player
 
         private struct AbilityDisplayItem
         {
-            public VisualElement ItemRoot;
-            public Label CooldownLabel;
-            public Label StackCountLabel;
+            public Label TimerLabel;
+            public Label CounterLabel;
             public VisualElement AbilityBackground;
             public VisualElement AbilityIcon;
             public VisualElement AbilityIconOverlay;
+            public VisualElement AbilityIconOverlayBacker;
             public Label AbilityTriggerLabel;
         }
 

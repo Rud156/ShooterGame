@@ -8,7 +8,7 @@ using Utils.Misc;
 
 #endregion
 
-namespace UI.Debug
+namespace UI.DebugDisplay
 {
     public class HUD_DebugDisplayController : MonoBehaviour
     {

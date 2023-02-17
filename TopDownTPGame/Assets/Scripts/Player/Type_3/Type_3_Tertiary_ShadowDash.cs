@@ -120,7 +120,7 @@ namespace Player.Type_3
             }
         }
 
-        private void UpdateDashCountChanged() => HUD_PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Tertiary, _currentDashesLeftCount);
+        private void UpdateDashCountChanged() => HUD_PlayerAbilityDisplay.Instance.UpdateCounter(AbilityTrigger.Tertiary, $"{_currentDashesLeftCount}", true);
 
         private void DisplayDashEffect(BasePlayerController playerController)
         {

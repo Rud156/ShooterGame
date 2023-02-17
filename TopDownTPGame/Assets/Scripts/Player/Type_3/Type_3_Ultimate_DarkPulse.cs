@@ -93,7 +93,13 @@ namespace Player.Type_3
 
         #region Utils
 
-        private void DisplayUltimateToHUD() => HUD_PlayerAbilityDisplay.Instance.UpdateCooldownPercent(AbilityTrigger.Ultimate, _currentUltimatePercent, StaticData.MaxUltimatePercent);
+        private void DisplayUltimateToHUD()
+        {
+            HUD_PlayerAbilityDisplay.Instance.UpdateTimer(AbilityTrigger.Ultimate, $"{_currentUltimatePercent:0.0} %", true);
+
+            var overlayPercent = _currentUltimatePercent >= StaticData.MaxUltimatePercent ? 0 : 1;
+            HUD_PlayerAbilityDisplay.Instance.UpdateOverlay(AbilityTrigger.Ultimate, overlayPercent);
+        }
 
         #endregion Utils
     }

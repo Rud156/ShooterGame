@@ -83,7 +83,6 @@ namespace Player.Common
         {
             if (_abilityTrigger != AbilityTrigger.ExternalAddedAbility)
             {
-                HUD_PlayerAbilityDisplay.Instance.UpdateAbilityTrigger(_abilityTrigger);
                 HUD_PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
                 HUD_PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
             }
@@ -104,7 +103,9 @@ namespace Player.Common
                     OnAbilityCooldownComplete?.Invoke();
                 }
 
-                HUD_PlayerAbilityDisplay.Instance.UpdateCooldownTimer(_abilityTrigger, _currentCooldownDuration, _currentCooldownDuration / _cooldownDuration);
+                var showTimer = _currentCooldownDuration > 0;
+                HUD_PlayerAbilityDisplay.Instance.UpdateTimer(_abilityTrigger, $"{_currentCooldownDuration:0.0}", showTimer);
+                HUD_PlayerAbilityDisplay.Instance.UpdateOverlay(_abilityTrigger, _currentCooldownDuration / _cooldownDuration);
             }
         }
 

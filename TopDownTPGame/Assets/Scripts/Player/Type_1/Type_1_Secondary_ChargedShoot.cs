@@ -31,7 +31,7 @@ namespace Player.Type_1
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentCooldownDuration <= 0;
+        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _type1Primary.GetCurrentChargeAmount() > 0;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -75,8 +75,11 @@ namespace Player.Type_1
             base.UnityUpdateDelegate(playerController);
 
             var chargeAmount = _type1Primary.GetCurrentChargeAmount();
-            HUD_PlayerAbilityDisplay.Instance.UpdateStackCount(AbilityTrigger.Secondary, chargeAmount);
-            HUD_PlayerAbilityDisplay.Instance.UpdateOverlayStatus(AbilityTrigger.Secondary, chargeAmount <= 0);
+            var maxChargeAmount = _type1Primary.GetMaxChargeAmount();
+            HUD_PlayerAbilityDisplay.Instance.UpdateCounter(AbilityTrigger.Secondary, $"{chargeAmount}", true);
+
+            var overlayPercent = chargeAmount > 0 ? 0 : 1;
+            HUD_PlayerAbilityDisplay.Instance.UpdateOverlay(AbilityTrigger.Secondary, overlayPercent);
         }
 
         #endregion Unity Functions

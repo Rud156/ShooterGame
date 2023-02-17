@@ -576,7 +576,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _windUptime: 0.3
-  _ultimateChargeRate: 50
+  _ultimateChargeRate: 0.1
 --- !u!114 &2669688019543946796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,7 +600,6 @@ MonoBehaviour:
   _debugHealAmount: 30
   _debugDecayAmount: 70
   _debugDecayDuration: 3
-  _currentHealth: 0
 --- !u!1 &3889310737047096468
 GameObject:
   m_ObjectHideFlags: 0
