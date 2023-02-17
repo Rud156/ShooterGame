@@ -28,6 +28,10 @@ namespace Utils.Input
             }
 
             KeyPressed = context.performed;
+
+            var path = context.action.activeControl.device.path;
+            var deviceName = context.action.activeControl.device.displayName;
+            CustomInputManager.Instance.UpdateLastUsedDeviceInput(deviceName, path);
         }
 
         public void ResetPerFrameInput()

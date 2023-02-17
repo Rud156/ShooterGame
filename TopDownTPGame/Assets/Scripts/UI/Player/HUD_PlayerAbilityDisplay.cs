@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Utils.Input;
 using Utils.Misc;
-using Debug = UnityEngine.Debug;
 
 #endregion
 
@@ -26,6 +25,18 @@ namespace UI.Player
         private AbilityDisplayItem _secondaryDisplay;
         private AbilityDisplayItem _tertiaryDisplay;
         private AbilityDisplayItem _ultimateDisplay;
+
+        #region Unity Functions
+
+        private void Start()
+        {
+            var deviceGroupName = CustomInputManager.Instance.LastUsedDeviceInputType;
+            UpdateAllAbilityTriggers(deviceGroupName);
+        }
+
+        private void OnDestroy() => CustomInputManager.Instance.OnLastUsedInputChanged -= UpdateAllAbilityTriggers;
+
+        #endregion Unity Functions
 
         #region Utils
 
@@ -80,6 +91,8 @@ namespace UI.Player
                 TimerLabel = ultimateAbility.Q<Label>("Timer"),
                 CounterLabel = ultimateAbility.Q<Label>("Counter"),
             };
+
+            CustomInputManager.Instance.OnLastUsedInputChanged += UpdateAllAbilityTriggers;
         }
 
         private void UpdateAbilityTrigger(AbilityTrigger abilityTrigger, string lastInputType)
@@ -88,28 +101,28 @@ namespace UI.Player
             {
                 case AbilityTrigger.Primary:
                 {
-                    var displayString = InputManager.Instance.PlayerInput.AbilityPrimary.GetBindingDisplayString(group: lastInputType);
+                    var displayString = CustomInputManager.Instance.PlayerInput.AbilityPrimary.GetBindingDisplayString(group: lastInputType);
                     _primaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Secondary:
                 {
-                    var displayString = InputManager.Instance.PlayerInput.AbilitySecondary.GetBindingDisplayString(group: lastInputType);
+                    var displayString = CustomInputManager.Instance.PlayerInput.AbilitySecondary.GetBindingDisplayString(group: lastInputType);
                     _secondaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Tertiary:
                 {
-                    var displayString = InputManager.Instance.PlayerInput.AbilityTertiary.GetBindingDisplayString(group: lastInputType);
+                    var displayString = CustomInputManager.Instance.PlayerInput.AbilityTertiary.GetBindingDisplayString(group: lastInputType);
                     _tertiaryDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
 
                 case AbilityTrigger.Ultimate:
                 {
-                    var displayString = InputManager.Instance.PlayerInput.AbilityUltimate.GetBindingDisplayString(group: lastInputType);
+                    var displayString = CustomInputManager.Instance.PlayerInput.AbilityUltimate.GetBindingDisplayString(group: lastInputType);
                     _ultimateDisplay.AbilityTriggerLabel.text = displayString;
                 }
                     break;
@@ -123,14 +136,13 @@ namespace UI.Player
         #endregion Utils
 
         #region External Functions
-        
-        public void UpdateAbilityTriggers(string lastInputType)
+
+        private void UpdateAllAbilityTriggers(string currentInputGroup)
         {
-            Debug.Log($"Last Input Type: {lastInputType}");
-            UpdateAbilityTrigger(AbilityTrigger.Primary, lastInputType);
-            UpdateAbilityTrigger(AbilityTrigger.Secondary, lastInputType);
-            UpdateAbilityTrigger(AbilityTrigger.Tertiary, lastInputType);
-            UpdateAbilityTrigger(AbilityTrigger.Ultimate, lastInputType);
+            UpdateAbilityTrigger(AbilityTrigger.Primary, currentInputGroup);
+            UpdateAbilityTrigger(AbilityTrigger.Secondary, currentInputGroup);
+            UpdateAbilityTrigger(AbilityTrigger.Tertiary, currentInputGroup);
+            UpdateAbilityTrigger(AbilityTrigger.Ultimate, currentInputGroup);
         }
 
         public void UpdateTimer(AbilityTrigger abilityTrigger, string timerString, bool showTimer)

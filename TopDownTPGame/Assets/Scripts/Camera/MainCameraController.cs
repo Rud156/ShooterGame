@@ -1,6 +1,7 @@
 #region
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utils.Input;
 using Utils.Misc;
 
@@ -26,9 +27,20 @@ namespace Camera
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            CustomInputManager.Instance.PlayerInput.Look.started += HandleMouseInput;
+            CustomInputManager.Instance.PlayerInput.Look.performed += HandleMouseInput;
+            CustomInputManager.Instance.PlayerInput.Look.canceled += HandleMouseInput;
         }
 
-        private void Update() => HandleMouseInput();
+        private void OnDestroy()
+        {
+            CustomInputManager.Instance.PlayerInput.Look.started -= HandleMouseInput;
+            CustomInputManager.Instance.PlayerInput.Look.performed -= HandleMouseInput;
+            CustomInputManager.Instance.PlayerInput.Look.canceled -= HandleMouseInput;
+        }
+
+        private void Update() => UpdateMouseInput();
 
         private void FixedUpdate() => UpdateCameraControl();
 
@@ -75,13 +87,20 @@ namespace Camera
 
         #region New Input System
 
-        private void HandleMouseInput()
+        private void UpdateMouseInput()
         {
-            _mouseInput = InputManager.Instance.PlayerInput.Look.ReadValue<Vector2>();
+            _mouseInput = CustomInputManager.Instance.PlayerInput.Look.ReadValue<Vector2>();
 
             // Cuz Unity is an idiot
             _mouseInput *= 0.5f;
             _mouseInput *= 0.1f;
+        }
+
+        private void HandleMouseInput(InputAction.CallbackContext context)
+        {
+            var path = context.action.activeControl.path;
+            var deviceName = context.action.activeControl.displayName;
+            CustomInputManager.Instance.UpdateLastUsedDeviceInput(deviceName, path);
         }
 
         public Vector2 GetMouseInput() => _mouseInput;

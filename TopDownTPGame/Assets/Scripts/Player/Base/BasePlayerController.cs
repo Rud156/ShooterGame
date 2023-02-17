@@ -128,7 +128,7 @@ namespace Player.Base
 
         private void Update()
         {
-            HandleKeyboardInput();
+            UpdateKeyboardInput();
             DelegateUpdateAbilities();
         }
 
@@ -669,9 +669,13 @@ namespace Player.Base
 
         private void InitializeInputEvents()
         {
-            InputManager.Instance.EnablePlayerControls();
+            CustomInputManager.Instance.EnablePlayerControls();
 
-            var playerInputMaster = InputManager.Instance.PlayerInput;
+            var playerInputMaster = CustomInputManager.Instance.PlayerInput;
+
+            playerInputMaster.Move.started += HandleKeyboardInput;
+            playerInputMaster.Move.performed += HandleKeyboardInput;
+            playerInputMaster.Move.canceled += HandleKeyboardInput;
 
             playerInputMaster.Jump.started += HandlePlayerPressJump;
             playerInputMaster.Jump.performed += HandlePlayerPressJump;
@@ -704,7 +708,11 @@ namespace Player.Base
 
         private void DeInitializeInputEvents()
         {
-            var playerInputMaster = InputManager.Instance.PlayerInput;
+            var playerInputMaster = CustomInputManager.Instance.PlayerInput;
+
+            playerInputMaster.Move.started -= HandleKeyboardInput;
+            playerInputMaster.Move.performed -= HandleKeyboardInput;
+            playerInputMaster.Move.canceled -= HandleKeyboardInput;
 
             playerInputMaster.Jump.started -= HandlePlayerPressJump;
             playerInputMaster.Jump.performed -= HandlePlayerPressJump;
@@ -734,11 +742,17 @@ namespace Player.Base
             playerInputMaster.AbilityUltimate.performed -= HandlePlayerPressAbilityUltimate;
             playerInputMaster.AbilityUltimate.canceled -= HandlePlayerPressAbilityUltimate;
 
-            InputManager.Instance.DisablePlayerControls();
+            CustomInputManager.Instance.DisablePlayerControls();
         }
 
-        private void HandleKeyboardInput() =>
-            _coreMoveInput = InputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+        private void HandleKeyboardInput(InputAction.CallbackContext context)
+        {
+            var path = context.action.activeControl.path;
+            var deviceName = context.action.activeControl.displayName;
+            CustomInputManager.Instance.UpdateLastUsedDeviceInput(deviceName, path);
+        }
+
+        private void UpdateKeyboardInput() => _coreMoveInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
 
         private void HandlePlayerPressJump(InputAction.CallbackContext context) => _jumpKey.UpdateInputData(context);
 
