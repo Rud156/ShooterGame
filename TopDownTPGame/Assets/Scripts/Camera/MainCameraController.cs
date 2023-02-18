@@ -7,7 +7,7 @@ using Utils.Misc;
 
 #endregion
 
-namespace Camera
+namespace CustomCamera
 {
     public class MainCameraController : MonoBehaviour
     {
