@@ -65,7 +65,11 @@ public class Type_4_Ultimate_Rocket : Ability
 
     public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
 
-    public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
+    public override void StartAbility(BasePlayerController playerController)
+    {
+        _abilityEnd = false;
+        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+    }
 
     #endregion Ability Functions
 

@@ -77,7 +77,9 @@ namespace Player.Type_3
         public override void StartAbility(BasePlayerController playerController)
         {
             _currentDashTimeLeft = _dashDuration;
+
             DisplayDashEffect(playerController);
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
         }
 
         #endregion Ability Functions

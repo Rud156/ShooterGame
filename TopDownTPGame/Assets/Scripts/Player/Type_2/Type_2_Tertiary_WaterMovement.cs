@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Utils.Misc;
@@ -113,6 +114,8 @@ namespace Player.Type_2
         public override void StartAbility(BasePlayerController playerController)
         {
             SetAbilityState(AbilityState.Tap);
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+
             _currentTimer = _holdTriggerDuration;
             _computedVelocity = Vector3.zero;
         }

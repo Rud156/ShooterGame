@@ -4,6 +4,7 @@ using Ability_Scripts.Projectiles;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 using Utils.Misc;
 
@@ -60,6 +61,8 @@ namespace Player.Type_1
 
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(ProjectileHitCollider);
+                
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
 
                 _currentOverheatTime += _fireRate;
             }

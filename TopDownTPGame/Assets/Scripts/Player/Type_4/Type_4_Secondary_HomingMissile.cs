@@ -3,6 +3,7 @@
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 
 #endregion
@@ -53,6 +54,7 @@ namespace Player.Type_4
 
                 _abilityEnd = true;
                 _currentCooldownDuration = _cooldownDuration;
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
             }
         }
 

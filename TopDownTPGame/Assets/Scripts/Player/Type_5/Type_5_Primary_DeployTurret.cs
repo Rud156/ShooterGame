@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Ability_Scripts.Spawns;
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 using Utils.Materials;
 
@@ -142,6 +143,7 @@ namespace Player.Type_5
                         _turretObject = null;
                         _currentCooldownDuration = _cooldownDuration;
                         SetTurretState(TurretState.Placed);
+                        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                     }
                 }
                 else

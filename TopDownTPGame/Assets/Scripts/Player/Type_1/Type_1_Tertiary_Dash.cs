@@ -3,6 +3,7 @@
 using System;
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Utils.Misc;
@@ -71,6 +72,7 @@ namespace Player.Type_1
             Assert.IsNull(_dashEffectObject, "Dash has to be NULL here...");
 
             _currentDashTimeLeft = _dashDuration;
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
 
             var coreInput = playerController.GetCoreMoveInput();
             // Basically when there is no input use forward only...

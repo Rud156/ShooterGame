@@ -66,6 +66,7 @@ namespace Player.Type_2
 
             _currentUltimatePercent = 0;
             _abilityEnd = true;
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
         }
 
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;

@@ -5,6 +5,7 @@ using System.Linq;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 using Utils.Misc;
 
@@ -60,6 +61,7 @@ namespace Player.Type_3
                     _abilityEnd = true;
                 }
 
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                 var totalHitColliders = Physics.OverlapBoxNonAlloc(_frontCollider.position, _frontCollider.localScale / 2, _hitColliders, _frontCollider.rotation, _attackMask);
                 for (var i = 0; i < totalHitColliders; i++)
                 {

@@ -4,6 +4,7 @@ using System;
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Splines;
@@ -78,6 +79,8 @@ namespace Player.Type_2
 
         public override void StartAbility(BasePlayerController playerController)
         {
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+
             var currentTime = Time.time;
             var difference = currentTime - _lastTriggeredTime;
             if (difference > _resetDuration)

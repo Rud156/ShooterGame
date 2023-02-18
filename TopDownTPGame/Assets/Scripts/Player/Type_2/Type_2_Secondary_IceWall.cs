@@ -2,6 +2,7 @@
 
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 
 #endregion
@@ -39,13 +40,15 @@ namespace Player.Type_2
             }
 
             var spawnPosition = _shootController.GetShootPosition();
-            var forward = transform.forward;
-            var right = transform.right;
+            var characterTransform = transform;
+            var forward = characterTransform.forward;
+            var right = characterTransform.right;
 
             spawnPosition += forward * _spawnOffset.z + right * _spawnOffset.x;
             spawnPosition.y += _spawnOffset.y;
 
-            Instantiate(_iceWallPrefab, spawnPosition, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0));
+            Instantiate(_iceWallPrefab, spawnPosition, Quaternion.Euler(0, characterTransform.rotation.eulerAngles.y, 0));
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
             _abilityEnd = true;
 
             _currentCooldownDuration = _cooldownDuration;

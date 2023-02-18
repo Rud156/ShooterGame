@@ -2,6 +2,7 @@
 
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Splines;
@@ -65,6 +66,8 @@ namespace Player.Type_3
 
         public override void StartAbility(BasePlayerController playerController)
         {
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+
             var totalSplines = _slash.Splines.Count;
             var randomIndex = Random.Range(0, totalSplines);
             Vector3 spawnPosition = _slash.EvaluatePosition(randomIndex, 0);

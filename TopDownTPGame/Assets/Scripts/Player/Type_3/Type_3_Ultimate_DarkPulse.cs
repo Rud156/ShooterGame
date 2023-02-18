@@ -55,6 +55,8 @@ namespace Player.Type_3
             _currentWindUpTime = _windUpTime;
             _currentUltimatePercent = 0;
             _abilityEnd = false;
+
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
         }
 
         public override void ClearAllAbilityData(BasePlayerController playerController)

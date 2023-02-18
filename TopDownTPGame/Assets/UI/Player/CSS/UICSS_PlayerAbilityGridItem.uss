@@ -12,6 +12,14 @@
     font-size: 30;
 }
 
+.flasher {
+    width: 100px;
+    height: 100px;
+    background-image: url("project://database/Assets/Textures/Misc/WhitePixel.png");
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.75);
+    display: none;
+}
+
 .container {
     width: 100px;
     height: 120px;

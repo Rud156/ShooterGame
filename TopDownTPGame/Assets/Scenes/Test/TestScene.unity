@@ -1220,6 +1220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56de68ac6fa44648d6b89d586625b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _flashCount: 1
+  _flashOnDuration: 0.1
+  _flashOffDuration: 0.05
 --- !u!114 &1441439931
 MonoBehaviour:
   m_ObjectHideFlags: 0

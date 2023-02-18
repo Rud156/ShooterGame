@@ -54,6 +54,7 @@ namespace Player.Type_1
                 simpleDamage.SetDamageAmount(mappedDamage);
 
                 _type1Primary.UseStoredCharge(chargeAmount);
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                 _abilityEnd = true;
             }
         }

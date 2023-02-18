@@ -39,6 +39,7 @@ namespace Player.Type_1
             {
                 var characterTransform = transform;
                 _kitsuneRushObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                 _abilityEnd = true;
             }
         }

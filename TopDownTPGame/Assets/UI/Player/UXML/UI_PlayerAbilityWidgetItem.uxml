@@ -10,4 +10,5 @@
     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="TriggerName" picking-mode="Ignore" class="default_font color_white center_text ability_trigger" style="height: 15px; position: relative; bottom: 0; width: 100px; left: 0; max-width: 100px; max-height: 15px; top: 3px;" />
     <ui:Label tabindex="-1" text="20.5" display-tooltip-when-elided="true" name="Timer" picking-mode="Ignore" class="default_font color_white small_text center_text cooldown_timer" style="position: absolute; top: 40px; left: 0; width: 100px; display: none;" />
     <ui:Label tabindex="-1" text="5" display-tooltip-when-elided="true" name="Counter" picking-mode="Ignore" class="default_font color_white stack_count" style="position: absolute; top: 0; left: 45px; rotate: -15deg; display: none; width: 50px;" />
+    <ui:VisualElement name="Flasher" class="flasher" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); position: absolute;" />
 </ui:UXML>

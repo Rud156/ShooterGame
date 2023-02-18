@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,10 +22,18 @@ namespace UI.Player
 
         private const float AbilityIconOverlayHeight = 90;
 
+        [Header("Ability Flasher")]
+        [SerializeField] private int _flashCount;
+        [SerializeField] private float _flashOnDuration;
+        [SerializeField] private float _flashOffDuration;
+
         private AbilityDisplayItem _primaryDisplay;
         private AbilityDisplayItem _secondaryDisplay;
         private AbilityDisplayItem _tertiaryDisplay;
         private AbilityDisplayItem _ultimateDisplay;
+
+        // Coroutine Data
+        private CoroutineData _flashCoroutineData;
 
         #region Unity Functions
 
@@ -40,6 +49,64 @@ namespace UI.Player
 
         #region Utils
 
+        private IEnumerator FlashCoroutine(VisualElement flasher, AbilityTrigger abilityTrigger)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    _flashCoroutineData.PrimaryActive = true;
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    _flashCoroutineData.SecondaryActive = true;
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    _flashCoroutineData.TertiaryActive = true;
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    _flashCoroutineData.UltimateActive = true;
+                    break;
+
+                case AbilityTrigger.ExternalAddedAbility:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+
+            for (var i = 0; i < _flashCount; i++)
+            {
+                flasher.style.display = DisplayStyle.Flex;
+                yield return new WaitForSeconds(_flashOnDuration);
+                flasher.style.display = DisplayStyle.None;
+                yield return new WaitForSeconds(_flashOffDuration);
+            }
+
+
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    _flashCoroutineData.PrimaryActive = false;
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    _flashCoroutineData.SecondaryActive = false;
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    _flashCoroutineData.TertiaryActive = false;
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    _flashCoroutineData.UltimateActive = false;
+                    break;
+
+                case AbilityTrigger.ExternalAddedAbility:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
         private void Initialize()
         {
             var root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
@@ -54,6 +121,7 @@ namespace UI.Player
                 AbilityTriggerLabel = primaryAbility.Q<Label>("TriggerName"),
                 TimerLabel = primaryAbility.Q<Label>("Timer"),
                 CounterLabel = primaryAbility.Q<Label>("Counter"),
+                Flasher = primaryAbility.Q<VisualElement>("Flasher"),
             };
 
             var secondaryAbility = root.Q<VisualElement>(SecondaryDisplayString);
@@ -66,6 +134,7 @@ namespace UI.Player
                 AbilityTriggerLabel = secondaryAbility.Q<Label>("TriggerName"),
                 TimerLabel = secondaryAbility.Q<Label>("Timer"),
                 CounterLabel = secondaryAbility.Q<Label>("Counter"),
+                Flasher = secondaryAbility.Q<VisualElement>("Flasher"),
             };
 
             var tertiaryAbility = root.Q<VisualElement>(TertiaryDisplayString);
@@ -78,6 +147,7 @@ namespace UI.Player
                 AbilityTriggerLabel = tertiaryAbility.Q<Label>("TriggerName"),
                 TimerLabel = tertiaryAbility.Q<Label>("Timer"),
                 CounterLabel = tertiaryAbility.Q<Label>("Counter"),
+                Flasher = tertiaryAbility.Q<VisualElement>("Flasher"),
             };
 
             var ultimateAbility = root.Q<VisualElement>(UltimateDisplayString);
@@ -90,6 +160,7 @@ namespace UI.Player
                 AbilityTriggerLabel = ultimateAbility.Q<Label>("TriggerName"),
                 TimerLabel = ultimateAbility.Q<Label>("Timer"),
                 CounterLabel = ultimateAbility.Q<Label>("Counter"),
+                Flasher = ultimateAbility.Q<VisualElement>("Flasher"),
             };
 
             CustomInputManager.Instance.OnLastUsedInputChanged += UpdateAllAbilityTriggers;
@@ -207,6 +278,52 @@ namespace UI.Player
                     _ultimateDisplay.AbilityIconOverlay.style.display = displayStyle;
                     _ultimateDisplay.AbilityIconOverlayBacker.style.display = displayStyle;
                     _ultimateDisplay.AbilityIconOverlay.style.height = mappedHeight;
+                    break;
+
+                case AbilityTrigger.ExternalAddedAbility:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
+        public void TriggerAbilityFlash(AbilityTrigger abilityTrigger)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                {
+                    if (!_flashCoroutineData.PrimaryActive)
+                    {
+                        StartCoroutine(FlashCoroutine(_primaryDisplay.Flasher, AbilityTrigger.Primary));
+                    }
+                }
+                    break;
+
+                case AbilityTrigger.Secondary:
+                {
+                    if (!_flashCoroutineData.SecondaryActive)
+                    {
+                        StartCoroutine(FlashCoroutine(_secondaryDisplay.Flasher, AbilityTrigger.Secondary));
+                    }
+                }
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                {
+                    if (!_flashCoroutineData.TertiaryActive)
+                    {
+                        StartCoroutine(FlashCoroutine(_tertiaryDisplay.Flasher, AbilityTrigger.Tertiary));
+                    }
+                }
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                {
+                    if (!_flashCoroutineData.UltimateActive)
+                    {
+                        StartCoroutine(FlashCoroutine(_ultimateDisplay.Flasher, AbilityTrigger.Ultimate));
+                    }
+                }
                     break;
 
                 case AbilityTrigger.ExternalAddedAbility:
@@ -346,6 +463,15 @@ namespace UI.Player
             public VisualElement AbilityIconOverlay;
             public VisualElement AbilityIconOverlayBacker;
             public Label AbilityTriggerLabel;
+            public VisualElement Flasher;
+        }
+
+        private struct CoroutineData
+        {
+            public bool PrimaryActive;
+            public bool SecondaryActive;
+            public bool TertiaryActive;
+            public bool UltimateActive;
         }
 
         #endregion Structs

@@ -3,6 +3,7 @@
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
+using UI.Player;
 using UnityEngine;
 
 #endregion
@@ -30,6 +31,7 @@ namespace Player.Type_5
             var stunGrenade = Instantiate(_stunGrenadePrefab, _shootController.GetShootPosition(), Quaternion.identity);
             var projectile = stunGrenade.GetComponent<StunGrenade>();
             projectile.LaunchProjectile(_shootController.GetShootLookDirection());
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
 
             _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;
