@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="UI_PlayerAbilityItem" src="project://database/Assets/UI/Player/UXML/UI_PlayerAbilityWidgetItem.uxml?fileID=9197481963319205126&amp;guid=3f41e694d59bb1d4dbafbc3bbea8e7a6&amp;type=3#UI_PlayerAbilityWidgetItem" />
     <Style src="project://database/Assets/UI/Player/CSS/UICSS_PlayerAbilityGridItem.uss?fileID=7433441132597879392&amp;guid=e66e5412a22d79040bdc40ad3098bd24&amp;type=3#UICSS_PlayerAbilityGridItem" />
-    <ui:Instance template="UI_PlayerAbilityItem" name="UltimateAbility" class="container" style="scale: 1.5 1.5; position: absolute; left: 348px; bottom: 33px;" />
-    <ui:Instance template="UI_PlayerAbilityItem" name="TertiaryAbility" class="container" style="left: 204px; bottom: 183px; position: absolute;" />
-    <ui:Instance template="UI_PlayerAbilityItem" name="SecondaryAbility" class="container" style="left: 341px; bottom: 216px; position: absolute;" />
-    <ui:Instance template="UI_PlayerAbilityItem" name="PrimaryAbility" class="container" style="position: absolute; bottom: 45px; left: 180px;" />
+    <ui:Instance template="UI_PlayerAbilityItem" name="UltimateAbility" class="container" style="scale: 1.5 1.5; position: absolute; left: 348px; bottom: 33px; rotate: -5deg;" />
+    <ui:Instance template="UI_PlayerAbilityItem" name="TertiaryAbility" class="container" style="left: 205px; bottom: 191px; position: absolute; rotate: 10deg;" />
+    <ui:Instance template="UI_PlayerAbilityItem" name="SecondaryAbility" class="container" style="left: 341px; bottom: 216px; position: absolute; rotate: 10deg;" />
+    <ui:Instance template="UI_PlayerAbilityItem" name="PrimaryAbility" class="container" style="position: absolute; bottom: 45px; left: 180px; rotate: -10deg;" />
 </ui:UXML>
