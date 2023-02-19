@@ -80,7 +80,7 @@ You are an important part of a team that is working to protect the world! These 
 4. Boom Boom - Ultimate
     1. Spawns a huge Rocket that goes in 1 direction
     2. It has a decently big AOE and should be able to 1 shot smaller enemies
-> Asset - Unity Chan [https://unity-chan.com/download/releaseNote.php?id=UnityChan&lang=en](https://unity-chan.com/download/releaseNote.php?id=UnityChan&lang=en)
+> Asset - Unity Chan [Unity Chan](https://unity-chan.com/download/releaseNote.php?id=UnityChan&lang=en)
 
 ### ✨ Spark:
 1. Auto Turret - Primary
