@@ -10,7 +10,7 @@ namespace Player.Base
     public class BaseShootController : MonoBehaviour
     {
         [Header("Shoot Data")]
-        [SerializeField] private float _maxShootDistance = 250;
+        [SerializeField] private float _maxShootDistance = 50;
         [SerializeField] private LayerMask _shootMask;
 
         [Header("Components")]

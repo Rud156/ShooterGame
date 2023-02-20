@@ -264,10 +264,11 @@ MonoBehaviour:
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
   _groundedCheckPoint: {fileID: 95916529477622696}
-  _groundedCheckDistance: 0.65
+  _groundedCheckRadius: 0.65
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
+  _groundedTriggerVelocityThreshold: 10
   _jumpVelocity: 35
   _constantSpeedFallEnabled: 0
   _constantSpeedFallMultiplier: 0

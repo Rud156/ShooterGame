@@ -26,8 +26,9 @@ namespace Player.Base
 
         [Header("Ground Check")]
         [SerializeField] private Transform _groundedCheckPoint;
-        [SerializeField] private float _groundedCheckDistance;
+        [SerializeField] private float _groundedCheckRadius;
         [SerializeField] private LayerMask _groundedCheckMask;
+        [SerializeField] private float _groundedTriggerVelocityThreshold;
 
         [Header("Jump")]
         [SerializeField] private float _jumpVelocity;
@@ -58,6 +59,10 @@ namespace Player.Base
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
 
+        // Jump Data
+        private bool _jumpReset;
+
+        // Grounded Data
         public float GravityMultiplier => _gravityMultiplier;
         public bool IsGrounded => _isGrounded;
         private bool _isGrounded;
@@ -459,21 +464,35 @@ namespace Player.Base
         private void ProcessJumpInput()
         {
             var isValidJumpPressed = _jumpKey.KeyPressedThisFrame;
-            if (!isValidJumpPressed || !_isGrounded)
+            if (!isValidJumpPressed || !_jumpReset)
             {
                 return;
             }
 
-            _characterVelocity.y += _jumpVelocity;
+            _characterVelocity.y = _jumpVelocity;
+            _jumpReset = false;
             OnPlayerJumped?.Invoke();
         }
 
         private void UpdateGroundedState()
         {
-            var isGrounded = Physics.Raycast(_groundedCheckPoint.position, Vector3.down, _groundedCheckDistance, _groundedCheckMask);
+            var isGrounded = Physics.CheckSphere(_groundedCheckPoint.position, _groundedCheckRadius, _groundedCheckMask);
             if (isGrounded)
             {
-                _characterVelocity.y = 0;
+                _jumpReset = true;
+            }
+
+            // Only call the event when the status changes and velocity is large enough
+            var yVelocity = Mathf.Abs(_characterVelocity.y);
+            if (isGrounded != _isGrounded && yVelocity >= _groundedTriggerVelocityThreshold)
+            {
+                OnPlayerGroundedChanged?.Invoke(_isGrounded, isGrounded);
+            }
+
+            // Set a default gravity when the player is on the ground...
+            if (!_isGrounded && isGrounded)
+            {
+                _characterVelocity.y = Physics.gravity.y * _gravityMultiplier;
             }
 
             if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling && _playerStateStack[^1] != PlayerState.CustomMovement)
@@ -481,7 +500,6 @@ namespace Player.Base
                 PushPlayerState(PlayerState.Falling);
             }
 
-            OnPlayerGroundedChanged?.Invoke(_isGrounded, isGrounded);
             _isGrounded = isGrounded;
         }
 
@@ -511,7 +529,11 @@ namespace Player.Base
             }
         }
 
-        private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
+        private void ApplyFinalMovement()
+        {
+            _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
+            // Debug.Log($"Y Velocity: {_characterVelocity}");
+        }
 
         public Vector3 GetCharacterVelocity() => _characterVelocity;
 
