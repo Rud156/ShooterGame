@@ -20,7 +20,7 @@ namespace Player.Type_3
         [SerializeField] private DashEffect _dashEffectRight;
 
         [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
+        [SerializeField] private Transform _cinemachineFollow;
 
         [Header("Dash Charges")]
         [SerializeField] private int _dashCharges;
@@ -54,8 +54,8 @@ namespace Player.Type_3
                 coreInput.y = 1;
             }
 
-            var forward = _cameraHolder.forward;
-            var right = _cameraHolder.right;
+            var forward = _cinemachineFollow.forward;
+            var right = _cinemachineFollow.right;
 
             _computedVelocity = forward * coreInput.y + right * coreInput.x;
             _computedVelocity = _dashVelocity * _computedVelocity.normalized;
@@ -170,7 +170,7 @@ namespace Player.Type_3
                 }
             }
 
-            _dashEffectObject = Instantiate(dashEffectPrefab, _cameraHolder.position, Quaternion.identity, _cameraHolder);
+            _dashEffectObject = Instantiate(dashEffectPrefab, transform.position, Quaternion.identity, transform);
             _dashEffectObject.transform.localPosition += dashEffectOffset;
             _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
         }

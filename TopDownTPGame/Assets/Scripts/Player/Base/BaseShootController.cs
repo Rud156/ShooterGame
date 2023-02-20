@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using UnityEngine;
 
 #endregion
@@ -14,9 +15,16 @@ namespace Player.Base
 
         [Header("Components")]
         [SerializeField] private Transform _shootPoint;
-        [SerializeField] private Transform _cameraMainPoint;
         [SerializeField] private Transform _closeShootClearPoint;
-        [SerializeField] private Transform _cameraHolder;
+        [SerializeField] private Transform _cinemachineFollowPoint;
+
+        private Transform _mainCamera;
+
+        #region Unity Functions
+
+        private void Start() => _mainCamera = Camera.main.transform;
+
+        #endregion Unity Functions
 
         #region External Functions
 
@@ -25,10 +33,10 @@ namespace Player.Base
             var closeHit = Physics.Linecast(_shootPoint.position, _closeShootClearPoint.position, _shootMask);
             if (closeHit)
             {
-                return _cameraHolder.forward.normalized;
+                return _cinemachineFollowPoint.forward.normalized;
             }
 
-            var hit = Physics.Raycast(_cameraMainPoint.position, _cameraMainPoint.forward, out var hitInfo, _maxShootDistance, _shootMask);
+            var hit = Physics.Raycast(_mainCamera.position, _mainCamera.forward, out var hitInfo, _maxShootDistance, _shootMask);
             if (hit)
             {
                 var direction = hitInfo.point - _shootPoint.position;
@@ -36,7 +44,7 @@ namespace Player.Base
             }
             else
             {
-                var distantPoint = _cameraMainPoint.position + _cameraMainPoint.forward.normalized * _maxShootDistance;
+                var distantPoint = _mainCamera.position + _mainCamera.forward.normalized * _maxShootDistance;
                 var direction = distantPoint - _shootPoint.position;
                 return direction.normalized;
             }

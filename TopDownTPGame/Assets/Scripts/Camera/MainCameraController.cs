@@ -13,21 +13,33 @@ namespace CustomCamera
     public class MainCameraController : MonoBehaviour
     {
         [Header("Components")]
-        [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
+        [SerializeField] private Transform _cinemachineFollowTarget;
 
         [Header("Camera Data")]
-        [SerializeField] private Transform _cameraHolder;
         [SerializeField] private float _cameraRotationSpeed;
         [SerializeField] private float _minCameraAngle;
         [SerializeField] private float _maxCameraAngle;
 
+        [Header("Shoulder Change")]
+        [SerializeField] private float _shoulderChangeLerpRate;
+        [SerializeField] private float _xOffsetAmount;
+
+        // Input
         private Vector2 _mouseInput;
+
+        // Shoulder Switch
+        private float _currentShoulderLerp;
+        private float _startShoulderValue;
+        private float _targetShoulderValue;
 
         #region Unity Functions
 
         private void Start()
         {
             _mouseInput = new Vector2();
+
+            _cinemachineFollowTarget.transform.localPosition = new Vector3(-_xOffsetAmount, 0, 0);
+            _currentShoulderLerp = 1;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -37,7 +49,7 @@ namespace CustomCamera
             CustomInputManager.Instance.PlayerInput.Look.canceled += HandleMouseInput;
 
             CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started += HandleCameraLeftShoulderSwap;
-            CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started += HandleCameraRightShouldSwap;
+            CustomInputManager.Instance.PlayerInput.CameraRightShoulder.started += HandleCameraRightShouldSwap;
         }
 
         private void OnDestroy()
@@ -47,10 +59,14 @@ namespace CustomCamera
             CustomInputManager.Instance.PlayerInput.Look.canceled -= HandleMouseInput;
 
             CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started -= HandleCameraLeftShoulderSwap;
-            CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started -= HandleCameraRightShouldSwap;
+            CustomInputManager.Instance.PlayerInput.CameraRightShoulder.started -= HandleCameraRightShouldSwap;
         }
 
-        private void Update() => UpdateMouseInput();
+        private void Update()
+        {
+            UpdateMouseInput();
+            UpdateCameraShoulderLerp();
+        }
 
         private void FixedUpdate() => UpdateCameraControl();
 
@@ -58,9 +74,26 @@ namespace CustomCamera
 
         #region Camera Control
 
+        private void UpdateCameraShoulderLerp()
+        {
+            if (_currentShoulderLerp >= 1)
+            {
+                return;
+            }
+
+            var mappedXPosition = Mathf.Lerp(_startShoulderValue, _targetShoulderValue, _currentShoulderLerp);
+            _cinemachineFollowTarget.transform.localPosition = new Vector3(mappedXPosition, 0, 0);
+            _currentShoulderLerp += _shoulderChangeLerpRate * Time.deltaTime;
+
+            if (_currentShoulderLerp >= 1)
+            {
+                _cinemachineFollowTarget.transform.localPosition = new Vector3(_targetShoulderValue, 0, 0);
+            }
+        }
+
         private void UpdateCameraControl()
         {
-            var cameraRotation = _cameraHolder.rotation.eulerAngles;
+            var cameraRotation = _cinemachineFollowTarget.rotation.eulerAngles;
             cameraRotation.y += _mouseInput.x * _cameraRotationSpeed * Time.fixedDeltaTime;
             cameraRotation.x += -_mouseInput.y * _cameraRotationSpeed * Time.fixedDeltaTime;
             cameraRotation.x = ExtensionFunctions.To360Angle(cameraRotation.x);
@@ -90,7 +123,7 @@ namespace CustomCamera
             }
 
             transform.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
-            _cameraHolder.localRotation = Quaternion.Euler(cameraRotation.x, 0, 0);
+            _cinemachineFollowTarget.localRotation = Quaternion.Euler(cameraRotation.x, 0, 0);
         }
 
         #endregion Camera Control
@@ -115,10 +148,26 @@ namespace CustomCamera
 
         private void HandleCameraLeftShoulderSwap(InputAction.CallbackContext context)
         {
+            if (!context.started)
+            {
+                return;
+            }
+
+            _startShoulderValue = _cinemachineFollowTarget.transform.localPosition.x;
+            _targetShoulderValue = _xOffsetAmount;
+            _currentShoulderLerp = 0;
         }
 
         private void HandleCameraRightShouldSwap(InputAction.CallbackContext context)
         {
+            if (!context.started)
+            {
+                return;
+            }
+
+            _startShoulderValue = _cinemachineFollowTarget.transform.localPosition.x;
+            _targetShoulderValue = -_xOffsetAmount;
+            _currentShoulderLerp = 0;
         }
 
         public Vector2 GetMouseInput() => _mouseInput;

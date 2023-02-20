@@ -20,9 +20,6 @@ namespace Player.Type_1
         [SerializeField] private DashEffect _dashEffectLeft;
         [SerializeField] private DashEffect _dashEffectRight;
 
-        [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
-
         [Header("Dash Data")]
         [SerializeField] private float _dashDuration;
         [SerializeField] private float _dashVelocity;
@@ -118,7 +115,7 @@ namespace Player.Type_1
                 }
             }
 
-            _dashEffectObject = Instantiate(dashEffectPrefab, _cameraHolder.position, Quaternion.identity, _cameraHolder);
+            _dashEffectObject = Instantiate(dashEffectPrefab, transform.position, Quaternion.identity, transform);
             _dashEffectObject.transform.localPosition += dashEffectOffset;
             _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
 
