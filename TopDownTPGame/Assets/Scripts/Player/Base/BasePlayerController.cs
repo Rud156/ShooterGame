@@ -529,11 +529,7 @@ namespace Player.Base
             }
         }
 
-        private void ApplyFinalMovement()
-        {
-            _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
-            // Debug.Log($"Y Velocity: {_characterVelocity}");
-        }
+        private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
 
         public Vector3 GetCharacterVelocity() => _characterVelocity;
 
