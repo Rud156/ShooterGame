@@ -1,5 +1,6 @@
 #region
 
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils.Input;
@@ -11,6 +12,9 @@ namespace CustomCamera
 {
     public class MainCameraController : MonoBehaviour
     {
+        [Header("Components")]
+        [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
+
         [Header("Camera Data")]
         [SerializeField] private Transform _cameraHolder;
         [SerializeField] private float _cameraRotationSpeed;
@@ -31,6 +35,9 @@ namespace CustomCamera
             CustomInputManager.Instance.PlayerInput.Look.started += HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.performed += HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.canceled += HandleMouseInput;
+
+            CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started += HandleCameraLeftShoulderSwap;
+            CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started += HandleCameraRightShouldSwap;
         }
 
         private void OnDestroy()
@@ -38,6 +45,9 @@ namespace CustomCamera
             CustomInputManager.Instance.PlayerInput.Look.started -= HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.performed -= HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.canceled -= HandleMouseInput;
+
+            CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started -= HandleCameraLeftShoulderSwap;
+            CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started -= HandleCameraRightShouldSwap;
         }
 
         private void Update() => UpdateMouseInput();
@@ -101,6 +111,14 @@ namespace CustomCamera
             var path = context.action.activeControl.path;
             var deviceName = context.action.activeControl.displayName;
             CustomInputManager.Instance.UpdateLastUsedDeviceInput(deviceName, path);
+        }
+
+        private void HandleCameraLeftShoulderSwap(InputAction.CallbackContext context)
+        {
+        }
+
+        private void HandleCameraRightShouldSwap(InputAction.CallbackContext context)
+        {
         }
 
         public Vector2 GetMouseInput() => _mouseInput;
