@@ -157,7 +157,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 2.5
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -195,8 +195,6 @@ MonoBehaviour:
   - {fileID: 95916530318942729}
   - {fileID: 95916530318943220}
   _playerInputModifierData: []
-  _playerStateStack: 
-  _currentStateVelocity: 0
 --- !u!114 &1948321099
 MonoBehaviour:
   m_ObjectHideFlags: 0
