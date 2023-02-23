@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - UIRoot
+  - PlayerCinemachine
   layers:
   - Default
   - TransparentFX

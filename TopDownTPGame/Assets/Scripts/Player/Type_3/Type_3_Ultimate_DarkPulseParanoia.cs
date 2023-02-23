@@ -33,7 +33,7 @@ namespace Player.Type_3
         public override void EndAbility(BasePlayerController playerController)
         {
             var playerTransform = playerController.transform;
-            var cameraTransform = playerTransform.Find(TagManager.Camera);
+            var cameraTransform = Camera.main.transform;
             _destroyParticleEffect.transform.SetParent(cameraTransform);
             _destroyParticleEffect.DestroyEffect();
             Destroy(gameObject);

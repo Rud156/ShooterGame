@@ -96,7 +96,7 @@ namespace Player.Type_3
                     var paranoia = Instantiate(_paranoiaPrefab, position, Quaternion.identity);
 
                     var targetTransform = targetController.transform;
-                    var cameraTransform = targetTransform.Find(TagManager.Camera);
+                    var cameraTransform = Camera.main.transform;
                     paranoia.transform.SetParent(cameraTransform);
                     paranoia.transform.localPosition = Vector3.zero;
 

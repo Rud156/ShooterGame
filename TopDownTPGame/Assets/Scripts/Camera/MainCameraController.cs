@@ -36,8 +36,12 @@ namespace CustomCamera
 
         private void Start()
         {
-            _mouseInput = new Vector2();
+            var cinemachineController = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController);
+            var cinemachineVirtualCamera = cinemachineController.GetComponent<CinemachineVirtualCamera>();
+            cinemachineVirtualCamera.Follow = _cinemachineFollowTarget;
+            cinemachineVirtualCamera.LookAt = _cinemachineFollowTarget;
 
+            _mouseInput = new Vector2();
             _cinemachineFollowTarget.transform.localPosition = new Vector3(-_xOffsetAmount, 0, 0);
             _currentShoulderLerp = 1;
 
@@ -154,7 +158,7 @@ namespace CustomCamera
             }
 
             _startShoulderValue = _cinemachineFollowTarget.transform.localPosition.x;
-            _targetShoulderValue = _xOffsetAmount;
+            _targetShoulderValue = -_xOffsetAmount;
             _currentShoulderLerp = 0;
         }
 
@@ -166,7 +170,7 @@ namespace CustomCamera
             }
 
             _startShoulderValue = _cinemachineFollowTarget.transform.localPosition.x;
-            _targetShoulderValue = -_xOffsetAmount;
+            _targetShoulderValue = _xOffsetAmount;
             _currentShoulderLerp = 0;
         }
 

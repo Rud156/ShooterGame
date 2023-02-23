@@ -681,6 +681,8 @@ namespace Player.Base
             OnPlayerStateChanged?.Invoke(_playerStateStack[^1]);
         }
 
+        public PlayerState GetTopPlayerState() => _playerStateStack[^1];
+
         #endregion Player State
 
         #region New Input System
@@ -788,9 +790,6 @@ namespace Player.Base
 
         private void MarkFrameInputsAsRead()
         {
-            _coreMoveInput.x = 0;
-            _coreMoveInput.y = 0;
-
             _jumpKey.ResetPerFrameInput();
             _runKey.ResetPerFrameInput();
             _abilityPrimaryKey.ResetPerFrameInput();
