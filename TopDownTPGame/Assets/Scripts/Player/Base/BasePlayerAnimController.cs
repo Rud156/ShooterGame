@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils.Misc;
+using Random = UnityEngine.Random;
 
 #endregion
 
@@ -10,8 +12,8 @@ namespace Player.Base
 {
     public class BasePlayerAnimController : MonoBehaviour
     {
-        private static readonly int FallJumpTrigger = Animator.StringToHash("FallingAndJumpTrigger");
-        private static readonly int IdleTrigger = Animator.StringToHash("Idle");
+        private static readonly int FallJumpTriggerParam = Animator.StringToHash("FallingAndJumpTrigger");
+        private static readonly int IdleTriggerParam = Animator.StringToHash("Idle");
         private static readonly int HorizontalParam = Animator.StringToHash("Horizontal");
         private static readonly int VerticalParam = Animator.StringToHash("Vertical");
 
@@ -23,16 +25,25 @@ namespace Player.Base
         [SerializeField] private BasePlayerController _playerController;
 
         [Header("Idle Animations")]
+        [SerializeField] private int _minAnimPlayCountTime;
+        [SerializeField] private int _maxAnimPlayCountTime;
         [SerializeField] private List<float> _idleAnimDurations;
 
+        // Animator Data
         private Vector2 _movementAnim;
-        private int _idleAnim;
+        private float _idleAnim;
         private int _fallJumpAnim;
+
+        // Idle Anim
+        private int _currentAnimIndex;
+        private float _currentIdleAnimTimer;
+        private int _currentIdleAnimPlayCountLeft;
 
         #region Unity Functions
 
         private void Start()
         {
+            _playerController.OnPlayerStateChanged += HandlePlayerStateChanged;
             _playerController.OnPlayerJumped += HandlePlayerJumped;
             _playerController.OnPlayerGroundedChanged += HandleGroundedChanged;
 
@@ -43,6 +54,7 @@ namespace Player.Base
 
         private void OnDestroy()
         {
+            _playerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
             _playerController.OnPlayerJumped -= HandlePlayerJumped;
             _playerController.OnPlayerGroundedChanged -= HandleGroundedChanged;
         }
@@ -50,6 +62,8 @@ namespace Player.Base
         private void Update()
         {
             HandleCoreMovement();
+            UpdateIdleAnim();
+
             UpdateAnimatorCoreStates();
         }
 
@@ -63,6 +77,7 @@ namespace Player.Base
         {
             _playerAnimator.SetFloat(HorizontalParam, _movementAnim.x);
             _playerAnimator.SetFloat(VerticalParam, _movementAnim.y);
+            _playerAnimator.SetFloat(IdleTriggerParam, _idleAnim);
         }
 
         #endregion Anim Updates
@@ -109,7 +124,66 @@ namespace Player.Base
             }
         }
 
+        private void HandlePlayerStateChanged(PlayerState currentState) => CheckAndStartNewIdleAnim();
+
         #endregion Core Movement
+
+        #region Idle Anim
+
+        private void UpdateIdleAnim()
+        {
+            if (_currentIdleAnimTimer <= 0 || _playerController.GetTopPlayerState() != PlayerState.Idle)
+            {
+                return;
+            }
+
+            _currentIdleAnimTimer -= Time.deltaTime;
+            if (_currentIdleAnimTimer <= 0)
+            {
+                _currentIdleAnimPlayCountLeft -= 1;
+                CheckAndStartNewIdleAnim();
+            }
+        }
+
+        private void CheckAndStartNewIdleAnim()
+        {
+            if (_currentIdleAnimTimer > 0)
+            {
+                return;
+            }
+
+            var currentState = _playerController.GetTopPlayerState();
+            if (currentState != PlayerState.Idle)
+            {
+                return;
+            }
+
+            if (_currentIdleAnimPlayCountLeft <= 0)
+            {
+                var randomIndex = GetRandomIdleAnimation();
+                var currentAnimDuration = _idleAnimDurations[randomIndex];
+
+                _currentAnimIndex = randomIndex;
+                _currentIdleAnimTimer = currentAnimDuration;
+                _currentIdleAnimPlayCountLeft = Random.Range(_minAnimPlayCountTime, _maxAnimPlayCountTime + 1);
+                _idleAnim = ExtensionFunctions.Map(randomIndex, 0, _idleAnimDurations.Count - 1, 0, 1);
+            }
+            else
+            {
+                var currentAnimDuration = _idleAnimDurations[_currentAnimIndex];
+                _currentIdleAnimTimer = currentAnimDuration;
+            }
+        }
+
+        private int GetRandomIdleAnimation()
+        {
+            var randomIndex = Random.Range(0, 100);
+            randomIndex %= _idleAnimDurations.Count;
+
+            return randomIndex;
+        }
+
+        #endregion Idle Anim
 
         #region Fall/Jump
 

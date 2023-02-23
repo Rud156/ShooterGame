@@ -229,6 +229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAnimator: {fileID: 1470349118}
   _playerController: {fileID: 95916530318942735}
+  _minAnimPlayCountTime: 3
+  _maxAnimPlayCountTime: 5
   _idleAnimDurations:
   - 10
   - 6
