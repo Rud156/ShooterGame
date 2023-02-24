@@ -285,6 +285,10 @@ namespace Player.Base
                 {
                     _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.JumpStandingLand);
                 }
+                else
+                {
+                    _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.None);
+                }
             }
         }
 
@@ -308,6 +312,7 @@ namespace Player.Base
 
         private enum FallJumpAnimEnums
         {
+            None = 0,
             Falling = 1,
             JumpStandingLaunch = 2,
             JumpStandingLand = 3,
