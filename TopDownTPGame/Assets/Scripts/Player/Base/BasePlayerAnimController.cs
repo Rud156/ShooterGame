@@ -158,6 +158,9 @@ namespace Player.Base
                     break;
 
                 case PlayerState.Falling:
+                {
+                    _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.Falling);
+                }
                     break;
 
                 case PlayerState.CustomMovement:
@@ -247,11 +250,42 @@ namespace Player.Base
 
         private void HandlePlayerJumped()
         {
-            var coreInput = _playerController.GetCoreMoveInput();
+            var playerState = _playerController.GetTopPlayerState();
+            switch (playerState)
+            {
+                case PlayerState.Idle:
+                case PlayerState.Walking:
+                case PlayerState.Falling:
+                {
+                    _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.JumpStandingLaunch);
+                }
+                    break;
+
+                case PlayerState.Running:
+                {
+                    var coreInput = _playerController.GetCoreMoveInput();
+                    _playerAnimator.SetInteger(FallJumpTriggerParam, coreInput.y > 0 ? (int)FallJumpAnimEnums.RunJumpForward : (int)FallJumpAnimEnums.RunJumpBackward);
+                }
+                    break;
+                case PlayerState.CustomMovement:
+                    // Don't do anything here...
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void HandleGroundedChanged(bool previousState, bool newState)
         {
+            if (newState)
+            {
+                var coreInput = _playerController.GetCoreMoveInput();
+                if (ExtensionFunctions.IsNearlyEqual(coreInput.y, 0) && ExtensionFunctions.IsNearlyEqual(coreInput.x, 0))
+                {
+                    _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.JumpStandingLand);
+                }
+            }
         }
 
         #endregion Fall/Jump
@@ -269,5 +303,18 @@ namespace Player.Base
         }
 
         #endregion Structs
+
+        #region Enums
+
+        private enum FallJumpAnimEnums
+        {
+            Falling = 1,
+            JumpStandingLaunch = 2,
+            JumpStandingLand = 3,
+            RunJumpBackward = 4,
+            RunJumpForward = 5,
+        }
+
+        #endregion Enums
     }
 }
