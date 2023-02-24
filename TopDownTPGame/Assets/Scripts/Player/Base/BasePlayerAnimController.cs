@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils.Misc;
@@ -16,6 +17,8 @@ namespace Player.Base
         private static readonly int IdleTriggerParam = Animator.StringToHash("Idle");
         private static readonly int HorizontalParam = Animator.StringToHash("Horizontal");
         private static readonly int VerticalParam = Animator.StringToHash("Vertical");
+        private static readonly int IsWalkingParam = Animator.StringToHash("IsWalking");
+        private static readonly int IsRunningParam = Animator.StringToHash("IsRunning");
 
         private const float MaxWalkingAnimValue = 0.5f;
         private const float MaxRunningAnimValue = 1;
@@ -25,13 +28,11 @@ namespace Player.Base
         [SerializeField] private BasePlayerController _playerController;
 
         [Header("Idle Animations")]
-        [SerializeField] private int _minAnimPlayCountTime;
-        [SerializeField] private int _maxAnimPlayCountTime;
-        [SerializeField] private List<float> _idleAnimDurations;
+        [SerializeField] private float _delayedIdleStartBuffer;
+        [SerializeField] private List<IdleAnimData> _idleAnimDurations;
 
         // Animator Data
         private Vector2 _movementAnim;
-        private float _idleAnim;
         private int _fallJumpAnim;
 
         // Idle Anim
@@ -48,7 +49,6 @@ namespace Player.Base
             _playerController.OnPlayerGroundedChanged += HandleGroundedChanged;
 
             _movementAnim = Vector2.zero;
-            _idleAnim = 0;
             _fallJumpAnim = 0;
         }
 
@@ -75,9 +75,18 @@ namespace Player.Base
 
         private void UpdateAnimatorCoreStates()
         {
+            if (_movementAnim.x != 0 || _movementAnim.y != 0)
+            {
+                _playerAnimator.SetInteger(IdleTriggerParam, 0);
+            }
+            else
+            {
+                _playerAnimator.SetBool(IsWalkingParam, false);
+                _playerAnimator.SetBool(IsRunningParam, false);
+            }
+
             _playerAnimator.SetFloat(HorizontalParam, _movementAnim.x);
             _playerAnimator.SetFloat(VerticalParam, _movementAnim.y);
-            _playerAnimator.SetFloat(IdleTriggerParam, _idleAnim);
         }
 
         #endregion Anim Updates
@@ -124,7 +133,40 @@ namespace Player.Base
             }
         }
 
-        private void HandlePlayerStateChanged(PlayerState currentState) => CheckAndStartNewIdleAnim();
+        private void HandlePlayerStateChanged(PlayerState currentState)
+        {
+            CheckAndStartNewIdleAnim();
+
+            var playerState = _playerController.GetTopPlayerState();
+            switch (playerState)
+            {
+                case PlayerState.Idle:
+                    break;
+
+                case PlayerState.Walking:
+                {
+                    _playerAnimator.SetBool(IsWalkingParam, true);
+                    _playerAnimator.SetBool(IsRunningParam, false);
+                }
+                    break;
+
+                case PlayerState.Running:
+                {
+                    _playerAnimator.SetBool(IsWalkingParam, false);
+                    _playerAnimator.SetBool(IsRunningParam, true);
+                }
+                    break;
+
+                case PlayerState.Falling:
+                    break;
+
+                case PlayerState.CustomMovement:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         #endregion Core Movement
 
@@ -160,19 +202,35 @@ namespace Player.Base
 
             if (_currentIdleAnimPlayCountLeft <= 0)
             {
-                var randomIndex = GetRandomIdleAnimation();
-                var currentAnimDuration = _idleAnimDurations[randomIndex];
+                _playerAnimator.SetInteger(IdleTriggerParam, 0);
 
-                _currentAnimIndex = randomIndex;
-                _currentIdleAnimTimer = currentAnimDuration;
-                _currentIdleAnimPlayCountLeft = Random.Range(_minAnimPlayCountTime, _maxAnimPlayCountTime + 1);
-                _idleAnim = ExtensionFunctions.Map(randomIndex, 0, _idleAnimDurations.Count - 1, 0, 1);
+                var randomIndex = GetRandomIdleAnimation();
+                StartCoroutine(StartDelayedRandomAnim(randomIndex));
             }
             else
             {
-                var currentAnimDuration = _idleAnimDurations[_currentAnimIndex];
-                _currentIdleAnimTimer = currentAnimDuration;
+                StartCoroutine(RestartDelayedCurrentAnim());
             }
+        }
+
+        private IEnumerator StartDelayedRandomAnim(int randomAnimIndex)
+        {
+            yield return new WaitForSeconds(_delayedIdleStartBuffer);
+
+            var currentAnimData = _idleAnimDurations[randomAnimIndex];
+            _currentAnimIndex = randomAnimIndex;
+            _currentIdleAnimTimer = currentAnimData.AnimDuration;
+            _currentIdleAnimPlayCountLeft = Random.Range(currentAnimData.MinPlayCount, currentAnimData.MaxPlayCount + 1);
+            _playerAnimator.SetInteger(IdleTriggerParam, randomAnimIndex + 1);
+        }
+
+        private IEnumerator RestartDelayedCurrentAnim()
+        {
+            yield return new WaitForSeconds(_delayedIdleStartBuffer);
+
+            var currentAnimData = _idleAnimDurations[_currentAnimIndex];
+            _currentIdleAnimTimer = currentAnimData.AnimDuration;
+            _playerAnimator.SetInteger(IdleTriggerParam, _currentAnimIndex + 1);
         }
 
         private int GetRandomIdleAnimation()
@@ -189,6 +247,7 @@ namespace Player.Base
 
         private void HandlePlayerJumped()
         {
+            var coreInput = _playerController.GetCoreMoveInput();
         }
 
         private void HandleGroundedChanged(bool previousState, bool newState)
@@ -198,5 +257,17 @@ namespace Player.Base
         #endregion Fall/Jump
 
         #endregion Utils
+
+        #region Structs
+
+        [Serializable]
+        private struct IdleAnimData
+        {
+            public float AnimDuration;
+            public int MinPlayCount;
+            public int MaxPlayCount;
+        }
+
+        #endregion Structs
     }
 }
