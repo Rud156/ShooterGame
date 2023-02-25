@@ -47,6 +47,13 @@ namespace Player.Base
 
         private void HandlePlayerGroundedChanged(bool previousState, bool newState)
         {
+            if (newState)
+            {
+                var landEffectObject = Instantiate(_landEffectPrefab.effectPrefab, transform.position, Quaternion.Euler(_landEffectPrefab.spawnRotation));
+                landEffectObject.transform.SetParent(transform);
+                landEffectObject.transform.localPosition += _landEffectPrefab.spawnOffset;
+                landEffectObject.transform.SetParent(null);
+            }
         }
 
         private void HandlePlayerStateChanged(PlayerState currentState)

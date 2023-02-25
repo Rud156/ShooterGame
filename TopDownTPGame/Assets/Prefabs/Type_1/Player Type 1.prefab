@@ -269,9 +269,10 @@ MonoBehaviour:
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
       type: 3}
   _landEffectPrefab:
-    spawnOffset: {x: 0, y: 0, z: 0}
-    spawnRotation: {x: 0, y: 0, z: 0}
-    effectPrefab: {fileID: 0}
+    spawnOffset: {x: 0, y: -0.9, z: 0}
+    spawnRotation: {x: -90, y: 0, z: 0}
+    effectPrefab: {fileID: 8586881294353101766, guid: 515389321b5ca5f45a65881b09160674,
+      type: 3}
   _playerController: {fileID: 95916530318942735}
 --- !u!114 &95916530318942728
 MonoBehaviour:
