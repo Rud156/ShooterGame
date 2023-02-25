@@ -258,19 +258,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345262e5f1c94398aea3044918997584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpEffect:
-    spawnOffset: {x: 0, y: -0.72, z: 0}
-    effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
-      type: 3}
-  _runEffect:
-    spawnOffset: {x: 0, y: 0, z: -1.5}
+  _jumpEffectPrefab:
+    spawnOffset: {x: 0, y: 0, z: 0}
+    effectPrefab: {fileID: 0}
+  _runEffectPrefab:
+    spawnOffset: {x: 0, y: -0.7, z: 0}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
       type: 3}
-  _landEffect:
-    spawnOffset: {x: 0, y: -0.72, z: 0}
-    effectPrefab: {fileID: 8586881294353101766, guid: 515389321b5ca5f45a65881b09160674,
-      type: 3}
-  _player: {fileID: 95916530318942733}
+  _landEffectPrefab:
+    spawnOffset: {x: 0, y: 0, z: 0}
+    effectPrefab: {fileID: 0}
   _playerController: {fileID: 95916530318942735}
 --- !u!114 &95916530318942728
 MonoBehaviour:

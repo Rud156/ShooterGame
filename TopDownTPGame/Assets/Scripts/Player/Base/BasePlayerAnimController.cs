@@ -295,7 +295,7 @@ namespace Player.Base
 
         private void HandleGroundedChanged(bool previousState, bool newState)
         {
-            if (newState)
+            if (!previousState && newState)
             {
                 _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.None);
             }
