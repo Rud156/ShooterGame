@@ -64,8 +64,9 @@ namespace Player.Base
 
         // Grounded Data
         public float GravityMultiplier => _gravityMultiplier;
-        public bool IsGrounded => _isGrounded;
-        private bool _isGrounded;
+        public bool IsGrounded { get; private set; }
+        public float GroundedVelocityThreshold => _groundedTriggerVelocityThreshold;
+        public Vector3 CharacterVelocity => _characterVelocity;
 
         // Movement Modifiers
         private List<PlayerInputModifiers> _playerInputsModifiers;
@@ -187,7 +188,7 @@ namespace Player.Base
                         _playerInputsModifiers[i] = movementModifier;
                     }
                 }
-                else if (_playerInputsModifiers[i].ModifierType == PlayerInputModifierType.ConstantSpeedFall && _isGrounded)
+                else if (_playerInputsModifiers[i].ModifierType == PlayerInputModifierType.ConstantSpeedFall && IsGrounded)
                 {
                     RemoveInputModifierEffects(_playerInputsModifiers[i]);
                     _playerInputsModifiers.RemoveAt(i);
@@ -237,7 +238,7 @@ namespace Player.Base
 
         public void PlayerConstantSpeedFallTimed(float duration, float multiplier)
         {
-            if (_isGrounded)
+            if (IsGrounded)
             {
                 return;
             }
@@ -285,7 +286,7 @@ namespace Player.Base
 
         private void ProcessConstantSpeedFall()
         {
-            if (!_constantSpeedFallEnabled || _isGrounded)
+            if (!_constantSpeedFallEnabled || IsGrounded)
             {
                 return;
             }
@@ -357,7 +358,7 @@ namespace Player.Base
         private void UpdateWalkingState()
         {
             _currentStateVelocity = _walkSpeed;
-            if (_runKey.KeyPressedThisFrame && _isGrounded && _coreMoveInput.y > 0)
+            if (_runKey.KeyPressedThisFrame && IsGrounded && _coreMoveInput.y > 0)
             {
                 PushPlayerState(PlayerState.Running);
             }
@@ -385,7 +386,7 @@ namespace Player.Base
                 _currentStateVelocity = _walkSpeed;
             }
 
-            if (_isGrounded)
+            if (IsGrounded)
             {
                 PopPlayerState();
             }
@@ -484,13 +485,13 @@ namespace Player.Base
 
             // Only call the event when the status changes and velocity is large enough
             var yVelocity = Mathf.Abs(_characterVelocity.y);
-            if (isGrounded != _isGrounded && yVelocity >= _groundedTriggerVelocityThreshold)
+            if (isGrounded != IsGrounded && yVelocity >= _groundedTriggerVelocityThreshold)
             {
-                OnPlayerGroundedChanged?.Invoke(_isGrounded, isGrounded);
+                OnPlayerGroundedChanged?.Invoke(IsGrounded, isGrounded);
             }
 
             // Set a default gravity when the player is on the ground...
-            if (!_isGrounded && isGrounded)
+            if (!IsGrounded && isGrounded)
             {
                 _characterVelocity.y = Physics.gravity.y * _gravityMultiplier;
             }
@@ -500,12 +501,12 @@ namespace Player.Base
                 PushPlayerState(PlayerState.Falling);
             }
 
-            _isGrounded = isGrounded;
+            IsGrounded = isGrounded;
         }
 
         private void ProcessGlobalGravity()
         {
-            if (!_isGrounded)
+            if (!IsGrounded)
             {
                 if (_characterVelocity.y < 0)
                 {
@@ -530,8 +531,6 @@ namespace Player.Base
         }
 
         private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
-
-        public Vector3 GetCharacterVelocity() => _characterVelocity;
 
         #endregion Core Movement
 

@@ -38,7 +38,7 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            var currentVelocity = playerController.GetCharacterVelocity();
+            var currentVelocity = playerController.CharacterVelocity;
             var coreInput = playerController.GetCoreMoveInput();
             _currentDashTimeLeft -= Time.fixedDeltaTime;
 

@@ -22,6 +22,7 @@ namespace Player.Base
 
         private const float MaxWalkingAnimValue = 0.5f;
         private const float MaxRunningAnimValue = 1;
+        private const float MaxHorizontalAnimValue = 1;
 
         [Header("Components")]
         [SerializeField] private Animator _playerAnimator;
@@ -33,7 +34,6 @@ namespace Player.Base
 
         // Animator Data
         private Vector2 _movementAnim;
-        private int _fallJumpAnim;
 
         // Idle Anim
         private int _currentAnimIndex;
@@ -49,7 +49,6 @@ namespace Player.Base
             _playerController.OnPlayerGroundedChanged += HandleGroundedChanged;
 
             _movementAnim = Vector2.zero;
-            _fallJumpAnim = 0;
         }
 
         private void OnDestroy()
@@ -95,9 +94,7 @@ namespace Player.Base
 
         private void HandleCoreMovement()
         {
-            var coreInput = _playerController.GetCoreMoveInput();
             var playerState = _playerController.GetTopPlayerState();
-
             switch (playerState)
             {
                 case PlayerState.Idle:
@@ -108,20 +105,15 @@ namespace Player.Base
                     break;
 
                 case PlayerState.Walking:
-                {
-                    _movementAnim.x = Mathf.Clamp(coreInput.x, -MaxWalkingAnimValue, MaxWalkingAnimValue);
-                    _movementAnim.y = Mathf.Clamp(coreInput.y, -MaxWalkingAnimValue, MaxWalkingAnimValue);
-                }
+                    SetGroundedAnimValue(MaxWalkingAnimValue);
                     break;
 
                 case PlayerState.Running:
-                {
-                    _movementAnim.x = Mathf.Clamp(coreInput.x, -MaxRunningAnimValue, MaxRunningAnimValue);
-                    _movementAnim.y = Mathf.Clamp(coreInput.y, -MaxRunningAnimValue, MaxRunningAnimValue);
-                }
+                    SetGroundedAnimValue(MaxRunningAnimValue);
                     break;
 
                 case PlayerState.Falling:
+                    SetFallingAnimValue();
                     break;
 
                 case PlayerState.CustomMovement:
@@ -158,9 +150,6 @@ namespace Player.Base
                     break;
 
                 case PlayerState.Falling:
-                {
-                    _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.Falling);
-                }
                     break;
 
                 case PlayerState.CustomMovement:
@@ -168,6 +157,39 @@ namespace Player.Base
 
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void SetGroundedAnimValue(float maxVerticalValue)
+        {
+            var coreInput = _playerController.GetCoreMoveInput();
+            if (ExtensionFunctions.IsNearlyEqual(coreInput.x, 0))
+            {
+                _movementAnim.x = 0;
+            }
+            else
+            {
+                _movementAnim.x = coreInput.x > 0 ? MaxHorizontalAnimValue : -MaxHorizontalAnimValue;
+            }
+
+            if (ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))
+            {
+                _movementAnim.y = 0;
+            }
+            else
+            {
+                _movementAnim.y = coreInput.y > 0 ? maxVerticalValue : -maxVerticalValue;
+            }
+        }
+
+        private void SetFallingAnimValue()
+        {
+            var currentValue = _playerAnimator.GetInteger(FallJumpTriggerParam);
+            var yVelocity = Mathf.Abs(_playerController.CharacterVelocity.y);
+
+            if ((FallJumpAnimEnums)currentValue == FallJumpAnimEnums.None && yVelocity > _playerController.GroundedVelocityThreshold)
+            {
+                _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.Falling);
             }
         }
 
@@ -256,16 +278,11 @@ namespace Player.Base
                 case PlayerState.Idle:
                 case PlayerState.Walking:
                 case PlayerState.Falling:
-                {
                     _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.JumpStandingLaunch);
-                }
                     break;
 
                 case PlayerState.Running:
-                {
-                    var coreInput = _playerController.GetCoreMoveInput();
-                    _playerAnimator.SetInteger(FallJumpTriggerParam, coreInput.y > 0 ? (int)FallJumpAnimEnums.RunJumpForward : (int)FallJumpAnimEnums.RunJumpBackward);
-                }
+                    _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.RunJumpForward);
                     break;
                 case PlayerState.CustomMovement:
                     // Don't do anything here...
@@ -280,15 +297,7 @@ namespace Player.Base
         {
             if (newState)
             {
-                var coreInput = _playerController.GetCoreMoveInput();
-                if (ExtensionFunctions.IsNearlyEqual(coreInput.y, 0) && ExtensionFunctions.IsNearlyEqual(coreInput.x, 0))
-                {
-                    _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.JumpStandingLand);
-                }
-                else
-                {
-                    _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.None);
-                }
+                _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.None);
             }
         }
 
@@ -315,9 +324,7 @@ namespace Player.Base
             None = 0,
             Falling = 1,
             JumpStandingLaunch = 2,
-            JumpStandingLand = 3,
-            RunJumpBackward = 4,
-            RunJumpForward = 5,
+            RunJumpForward = 3,
         }
 
         #endregion Enums
