@@ -244,8 +244,8 @@ namespace Player.Base
 
             var currentAnimData = _idleAnimDurations[randomAnimIndex];
             _currentAnimIndex = randomAnimIndex;
-            _currentIdleAnimTimer = currentAnimData.AnimDuration;
-            _currentIdleAnimPlayCountLeft = Random.Range(currentAnimData.MinPlayCount, currentAnimData.MaxPlayCount + 1);
+            _currentIdleAnimTimer = currentAnimData.animDuration;
+            _currentIdleAnimPlayCountLeft = Random.Range(currentAnimData.minPlayCount, currentAnimData.maxPlayCount + 1);
             _playerAnimator.SetInteger(IdleTriggerParam, randomAnimIndex + 1);
         }
 
@@ -254,7 +254,7 @@ namespace Player.Base
             yield return new WaitForSeconds(_delayedIdleStartBuffer);
 
             var currentAnimData = _idleAnimDurations[_currentAnimIndex];
-            _currentIdleAnimTimer = currentAnimData.AnimDuration;
+            _currentIdleAnimTimer = currentAnimData.animDuration;
             _playerAnimator.SetInteger(IdleTriggerParam, _currentAnimIndex + 1);
         }
 
@@ -310,9 +310,9 @@ namespace Player.Base
         [Serializable]
         private struct IdleAnimData
         {
-            public float AnimDuration;
-            public int MinPlayCount;
-            public int MaxPlayCount;
+            public float animDuration;
+            public int minPlayCount;
+            public int maxPlayCount;
         }
 
         #endregion Structs

@@ -27,7 +27,7 @@ namespace Player.Base
             _playerController.OnPlayerStateChanged += HandlePlayerStateChanged;
             _playerController.OnPlayerJumped += HandlePlayerJumped;
 
-            var runEffectObject = Instantiate(_runEffectPrefab.effectPrefab, transform.position, Quaternion.identity);
+            var runEffectObject = Instantiate(_runEffectPrefab.effectPrefab, transform.position, Quaternion.Euler(_runEffectPrefab.spawnRotation));
             runEffectObject.transform.SetParent(transform);
             runEffectObject.transform.localPosition += _runEffectPrefab.spawnOffset;
             _runEffect = runEffectObject.GetComponent<ParticleSystem>();
@@ -71,6 +71,15 @@ namespace Player.Base
 
         private void HandlePlayerJumped()
         {
+            if (!_playerController.IsGrounded)
+            {
+                return;
+            }
+
+            var jumpEffectObject = Instantiate(_jumpEffectPrefab.effectPrefab, transform.position, Quaternion.Euler(_jumpEffectPrefab.spawnRotation));
+            jumpEffectObject.transform.SetParent(transform);
+            jumpEffectObject.transform.localPosition += _jumpEffectPrefab.spawnOffset;
+            jumpEffectObject.transform.SetParent(null);
         }
 
         #endregion Utils
@@ -81,6 +90,7 @@ namespace Player.Base
         private struct EffectSpawnData
         {
             public Vector3 spawnOffset;
+            public Vector3 spawnRotation;
             public GameObject effectPrefab;
         }
 

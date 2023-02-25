@@ -137,7 +137,7 @@ Transform:
   - {fileID: 95916530296144473}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 71
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -231,21 +231,21 @@ MonoBehaviour:
   _playerController: {fileID: 95916530318942735}
   _delayedIdleStartBuffer: 0.5
   _idleAnimDurations:
-  - AnimDuration: 16.633
-    MinPlayCount: 1
-    MaxPlayCount: 1
-  - AnimDuration: 6
-    MinPlayCount: 2
-    MaxPlayCount: 3
-  - AnimDuration: 2
-    MinPlayCount: 3
-    MaxPlayCount: 5
-  - AnimDuration: 5.1
-    MinPlayCount: 1
-    MaxPlayCount: 1
-  - AnimDuration: 5
-    MinPlayCount: 1
-    MaxPlayCount: 3
+  - animDuration: 16.633
+    minPlayCount: 1
+    maxPlayCount: 1
+  - animDuration: 6
+    minPlayCount: 2
+    maxPlayCount: 3
+  - animDuration: 2
+    minPlayCount: 3
+    maxPlayCount: 5
+  - animDuration: 5.1
+    minPlayCount: 1
+    maxPlayCount: 1
+  - animDuration: 5
+    minPlayCount: 1
+    maxPlayCount: 3
 --- !u!114 &1948321108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,14 +259,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpEffectPrefab:
-    spawnOffset: {x: 0, y: 0, z: 0}
-    effectPrefab: {fileID: 0}
+    spawnOffset: {x: 0, y: -1.5, z: 0}
+    spawnRotation: {x: -90, y: 0, z: 0}
+    effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
+      type: 3}
   _runEffectPrefab:
     spawnOffset: {x: 0, y: -0.7, z: 0}
+    spawnRotation: {x: 0, y: 0, z: 0}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
       type: 3}
   _landEffectPrefab:
     spawnOffset: {x: 0, y: 0, z: 0}
+    spawnRotation: {x: 0, y: 0, z: 0}
     effectPrefab: {fileID: 0}
   _playerController: {fileID: 95916530318942735}
 --- !u!114 &95916530318942728
