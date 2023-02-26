@@ -137,7 +137,7 @@ Transform:
   - {fileID: 95916530296144473}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 71
+  m_RootOrder: 70
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpEffectPrefab:
-    spawnOffset: {x: 0, y: -1.5, z: 0}
+    spawnOffset: {x: 0, y: -1, z: 0}
     spawnRotation: {x: -90, y: 0, z: 0}
     effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
       type: 3}
