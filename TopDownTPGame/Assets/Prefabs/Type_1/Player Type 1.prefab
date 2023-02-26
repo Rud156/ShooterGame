@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpEffectPrefab:
-    spawnOffset: {x: 0, y: -1, z: 0}
+    spawnOffset: {x: 0, y: -0.9, z: 0}
     spawnRotation: {x: -90, y: 0, z: 0}
     effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
       type: 3}
