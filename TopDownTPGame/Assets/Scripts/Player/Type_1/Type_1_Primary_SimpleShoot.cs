@@ -21,6 +21,7 @@ namespace Player.Type_1
 
         [Header("Components")]
         [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private Animator _playerAnimator;
 
         [Header("Simple Shoot Data")]
         [SerializeField] private float _fireRate;
@@ -58,10 +59,11 @@ namespace Player.Type_1
                 var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 simpleProj.LaunchProjectile(direction);
+                _playerAnimator.SetTrigger(StaticData.Type_1UpperBodyTrigger);
 
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(ProjectileHitCollider);
-                
+
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
 
                 _currentOverheatTime += _fireRate;

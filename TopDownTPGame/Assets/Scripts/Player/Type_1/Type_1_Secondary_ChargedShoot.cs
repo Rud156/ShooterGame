@@ -20,6 +20,7 @@ namespace Player.Type_1
         [Header("Components")]
         [SerializeField] private BaseShootController _shootController;
         [SerializeField] private Type_1_Primary_SimpleShoot _type1Primary;
+        [SerializeField] private Animator _playerAnimator;
 
         [Header("Charged Shoot Data")]
         [SerializeField] private float _windUpTime;
@@ -46,6 +47,7 @@ namespace Player.Type_1
                 var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 simpleProj.LaunchProjectile(direction);
+                _playerAnimator.SetTrigger(StaticData.Type_1UpperBodyTrigger);
 
                 var chargeAmount = _type1Primary.GetCurrentChargeAmount();
                 var maxChargeAmount = _type1Primary.GetMaxChargeAmount();
