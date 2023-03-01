@@ -53,6 +53,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
     type: 3}
+  _playerAnimator: {fileID: 1470349118}
   _windUptime: 0.25
   _ultimateChargeRate: 0.1
 --- !u!1 &492630954
@@ -141,9 +142,11 @@ MonoBehaviour:
     type: 3}
   _shootController: {fileID: 1948321099}
   _type1Primary: {fileID: 1678420950}
+  _playerAnimator: {fileID: 0}
   _windUpTime: 0.5
   _minChargeDamage: 1
   _maxChargeDamage: 75
+  _attackAnimCount: 3
 --- !u!1 &851523228
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +218,7 @@ MonoBehaviour:
       type: 3}
     effectOffset: {x: -13.5, y: 5, z: 0}
     effectLocalRotation: {x: 0, y: 180, z: 180}
+  _playerAnimator: {fileID: 1470349118}
   _dashDuration: 0.25
   _dashVelocity: 80
 --- !u!1 &1233005978
@@ -314,6 +318,7 @@ MonoBehaviour:
   _chargeGainedForShootCharacters: 15
   _chargeDecayDelay: 5
   _chargeDecayRate: 1
+  _attackAnimCount: 3
 --- !u!1 &95916529477622703
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,12 +525,6 @@ MonoBehaviour:
   - animDuration: 2
     minPlayCount: 3
     maxPlayCount: 5
-  - animDuration: 5.1
-    minPlayCount: 1
-    maxPlayCount: 1
-  - animDuration: 5
-    minPlayCount: 1
-    maxPlayCount: 3
 --- !u!114 &1948321108
 MonoBehaviour:
   m_ObjectHideFlags: 0

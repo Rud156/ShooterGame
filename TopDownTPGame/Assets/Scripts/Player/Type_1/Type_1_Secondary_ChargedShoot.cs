@@ -27,6 +27,9 @@ namespace Player.Type_1
         [SerializeField] private float _minChargeDamage;
         [SerializeField] private float _maxChargeDamage;
 
+        [Header("Animations")]
+        [SerializeField] private int _attackAnimCount;
+
         private float _currentWindUpTime;
         private bool _abilityEnd;
 
@@ -47,7 +50,7 @@ namespace Player.Type_1
                 var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 simpleProj.LaunchProjectile(direction);
-                _playerAnimator.SetTrigger(StaticData.Type_1UpperBodyTrigger);
+                _playerAnimator.SetInteger(StaticData.Type_1_Secondary, Random.Range(0, 100) % _attackAnimCount + 1);
 
                 var chargeAmount = _type1Primary.GetCurrentChargeAmount();
                 var maxChargeAmount = _type1Primary.GetMaxChargeAmount();

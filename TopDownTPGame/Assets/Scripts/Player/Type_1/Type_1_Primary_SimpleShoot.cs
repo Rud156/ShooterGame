@@ -34,6 +34,9 @@ namespace Player.Type_1
         [SerializeField] private float _chargeDecayDelay;
         [SerializeField] private float _chargeDecayRate;
 
+        [Header("Animations")]
+        [SerializeField] private int _attackAnimCount;
+
         private float _nextShootTime;
         private bool _abilityEnd;
 
@@ -59,7 +62,7 @@ namespace Player.Type_1
                 var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 simpleProj.LaunchProjectile(direction);
-                _playerAnimator.SetTrigger(StaticData.Type_1UpperBodyTrigger);
+                _playerAnimator.SetInteger(StaticData.Type_1_Primary, Random.Range(0, 100) % _attackAnimCount + 1);
 
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(ProjectileHitCollider);

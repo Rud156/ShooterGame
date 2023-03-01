@@ -15,6 +15,9 @@ namespace Player.Type_1
         [Header("Prefabs")]
         [SerializeField] private GameObject _ultimatePulsePrefab;
 
+        [Header("Components")]
+        [SerializeField] private Animator _playerAnimator;
+
         [Header("Ultimate Data")]
         [SerializeField] private float _windUptime;
         [SerializeField] private float _ultimateChargeRate;
@@ -39,6 +42,7 @@ namespace Player.Type_1
             {
                 var characterTransform = transform;
                 _kitsuneRushObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
+                _playerAnimator.SetTrigger(StaticData.Type_1_Ultimate);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                 _abilityEnd = true;
             }
