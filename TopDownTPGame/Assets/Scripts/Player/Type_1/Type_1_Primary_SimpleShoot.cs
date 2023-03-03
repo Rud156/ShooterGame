@@ -62,12 +62,12 @@ namespace Player.Type_1
                 var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 simpleProj.LaunchProjectile(direction);
-                _playerAnimator.SetInteger(StaticData.Type_1_Primary, Random.Range(0, 100) % _attackAnimCount + 1);
 
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(ProjectileHitCollider);
 
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                _playerAnimator.SetInteger(StaticData.Type_1_Primary, Random.Range(1, _attackAnimCount + 1));
 
                 _currentOverheatTime += _fireRate;
             }

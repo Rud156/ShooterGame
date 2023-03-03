@@ -65,8 +65,8 @@ namespace Player.Type_1
         public override void EndAbility(BasePlayerController playerController)
         {
             Assert.IsNotNull(_dashEffectObject, "Dash effect cannot be NULL here..");
-            Destroy(_dashEffectObject);
             _playerAnimator.SetBool(StaticData.Type_1_Tertiary, false);
+            Destroy(_dashEffectObject);
         }
 
         public override void StartAbility(BasePlayerController playerController)
@@ -122,7 +122,8 @@ namespace Player.Type_1
                 }
             }
 
-            _dashEffectObject = Instantiate(dashEffectPrefab, transform.position, Quaternion.identity, transform);
+            var characterTransform = transform;
+            _dashEffectObject = Instantiate(dashEffectPrefab, characterTransform.position, Quaternion.identity, characterTransform);
             _dashEffectObject.transform.localPosition += dashEffectOffset;
             _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
 

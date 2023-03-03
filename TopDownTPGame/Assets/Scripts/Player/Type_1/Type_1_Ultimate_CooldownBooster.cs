@@ -43,8 +43,9 @@ namespace Player.Type_1
                 var characterTransform = transform;
                 _kitsuneRushObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
                 _playerAnimator.SetTrigger(StaticData.Type_1_Ultimate);
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                 _abilityEnd = true;
+
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
             }
         }
 

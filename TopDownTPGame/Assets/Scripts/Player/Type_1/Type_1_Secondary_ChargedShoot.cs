@@ -50,7 +50,6 @@ namespace Player.Type_1
                 var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 simpleProj.LaunchProjectile(direction);
-                _playerAnimator.SetInteger(StaticData.Type_1_Secondary, Random.Range(0, 100) % _attackAnimCount + 1);
 
                 var chargeAmount = _type1Primary.GetCurrentChargeAmount();
                 var maxChargeAmount = _type1Primary.GetMaxChargeAmount();
@@ -58,8 +57,9 @@ namespace Player.Type_1
                 var simpleDamage = projectile.GetComponent<SimpleDamageOverrideTrigger>();
                 simpleDamage.SetDamageAmount(mappedDamage);
 
-                _type1Primary.UseStoredCharge(chargeAmount);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                _playerAnimator.SetInteger(StaticData.Type_1_Secondary, Random.Range(1, _attackAnimCount + 1));
+                _type1Primary.UseStoredCharge(chargeAmount);
                 _abilityEnd = true;
             }
         }
