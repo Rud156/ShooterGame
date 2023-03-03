@@ -16,7 +16,7 @@
     width: 100px;
     height: 100px;
     background-image: url("project://database/Assets/Textures/Misc/WhitePixel.png");
-    -unity-background-image-tint-color: rgba(255, 255, 255, 0.75);
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.5);
     display: none;
 }
 
