@@ -138,7 +138,7 @@ MonoBehaviour:
   _abilityNameType: 1
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 5
-  _chargedObjectPrefab: {fileID: 9002442166465085074, guid: 8f41e4a6fa74be6488bfae50f32803e3,
+  _chargedObjectPrefab: {fileID: 9148642754012515157, guid: 957bdfe836ffab34a8c7248cc5163f40,
     type: 3}
   _shootController: {fileID: 1948321099}
   _type1Primary: {fileID: 1678420950}
@@ -307,7 +307,7 @@ MonoBehaviour:
   _abilityNameType: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
-  _projectilePrefab: {fileID: 9002442166465085074, guid: 97e634534d4e4c74880997ac9a63bf92,
+  _projectilePrefab: {fileID: 5093047753733651196, guid: 181ae5f998936ec4e9ac2303665f21da,
     type: 3}
   _shootController: {fileID: 1948321099}
   _playerAnimator: {fileID: 1470349118}
