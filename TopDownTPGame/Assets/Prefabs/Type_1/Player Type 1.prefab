@@ -142,7 +142,7 @@ MonoBehaviour:
     type: 3}
   _shootController: {fileID: 1948321099}
   _type1Primary: {fileID: 1678420950}
-  _playerAnimator: {fileID: 0}
+  _playerAnimator: {fileID: 1470349118}
   _windUpTime: 0.5
   _minChargeDamage: 1
   _maxChargeDamage: 75
@@ -2746,6 +2746,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3669911678351546832
 GameObject:
   m_ObjectHideFlags: 0

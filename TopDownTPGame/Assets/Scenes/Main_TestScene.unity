@@ -5787,8 +5787,41 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1205494302726118, guid: b4e219626d450cf42b4242a26dcff257,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 281278232}
   m_SourcePrefab: {fileID: 100100000, guid: b4e219626d450cf42b4242a26dcff257, type: 3}
+--- !u!1 &281278231 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1205494302726118, guid: b4e219626d450cf42b4242a26dcff257,
+    type: 3}
+  m_PrefabInstance: {fileID: 281278230}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &281278232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281278231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667fc62e00fb63c408ca9352122f1a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 10000
+  _displayToHUD: 0
+  _autoHealWhen: 0
+  _autoHealTickRate: 0
+  _autoHealPerTickAmount: 0
+  _minHealthDecayGuard: 0
+  _decayClearRate: 0
+  _debugDamageAmount: 0
+  _debugHealAmount: 0
+  _debugDecayAmount: 0
+  _debugDecayDuration: 0
 --- !u!1001 &285725970
 PrefabInstance:
   m_ObjectHideFlags: 0
