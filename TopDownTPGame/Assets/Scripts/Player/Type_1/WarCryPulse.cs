@@ -10,7 +10,7 @@ using Utils.Misc;
 
 namespace Player.Type_1
 {
-    public class KitsuneRushPulse : MonoBehaviour
+    public class WarCryPulse : MonoBehaviour
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _pulseEffectPrefab;
@@ -24,6 +24,9 @@ namespace Player.Type_1
 
         [Header("Cooldown Modifier")]
         [SerializeField] private float _cooldownMultiplier;
+
+        private Animator _targetAnimator;
+        private int _targetAnimTrigger;
 
         private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
 
@@ -65,6 +68,7 @@ namespace Player.Type_1
                 var position = abilityTransform.position;
                 _lastPulseEffectObject = Instantiate(_pulseEffectPrefab, position, Quaternion.identity, abilityTransform);
                 _lastBurstEffectObject = Instantiate(_pulseBurstEfectPrefab, position, Quaternion.identity, abilityTransform);
+                _targetAnimator.SetTrigger(_targetAnimTrigger);
 
                 _currentPulseCount -= 1;
                 _currentPulseWaitDuration = _pulseWaitDuration;
@@ -72,6 +76,16 @@ namespace Player.Type_1
         }
 
         #endregion Unity Functions
+
+        #region External Functions
+
+        public void SetTargetAnimatorData(Animator targetAnimator, int targetAnimTrigger)
+        {
+            _targetAnimator = targetAnimator;
+            _targetAnimTrigger = targetAnimTrigger;
+        }
+
+        #endregion External Functions
 
         #region Utils
 

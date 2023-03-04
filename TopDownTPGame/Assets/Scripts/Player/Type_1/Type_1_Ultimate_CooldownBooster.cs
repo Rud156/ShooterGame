@@ -23,7 +23,7 @@ namespace Player.Type_1
         [SerializeField] private float _ultimateChargeRate;
 
         private float _currentUltimatePercent;
-        private GameObject _kitsuneRushObject;
+        private GameObject _warCryObject;
 
         private float _currentWindUpTime;
         private bool _abilityEnd;
@@ -41,8 +41,8 @@ namespace Player.Type_1
             if (_currentWindUpTime <= 0)
             {
                 var characterTransform = transform;
-                _kitsuneRushObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
-                _playerAnimator.SetTrigger(StaticData.Type_1_Ultimate);
+                _warCryObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
+                _warCryObject.GetComponent<WarCryPulse>().SetTargetAnimatorData(_playerAnimator, StaticData.Type_1_Ultimate);
                 _abilityEnd = true;
 
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
@@ -60,10 +60,10 @@ namespace Player.Type_1
 
         public override void ClearAllAbilityData(BasePlayerController playerController)
         {
-            if (_kitsuneRushObject != null)
+            if (_warCryObject != null)
             {
-                Destroy(_kitsuneRushObject);
-                _kitsuneRushObject = null;
+                Destroy(_warCryObject);
+                _warCryObject = null;
             }
         }
 

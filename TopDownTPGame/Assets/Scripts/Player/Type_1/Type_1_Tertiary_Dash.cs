@@ -1,6 +1,5 @@
 #region
 
-using System;
 using Player.Base;
 using Player.Common;
 using UI.Player;
@@ -15,10 +14,7 @@ namespace Player.Type_1
     public class Type_1_Tertiary_Dash : Ability
     {
         [Header("Prefabs")]
-        [SerializeField] private DashEffect _dashEffectForward;
-        [SerializeField] private DashEffect _dashEffectBackward;
-        [SerializeField] private DashEffect _dashEffectLeft;
-        [SerializeField] private DashEffect _dashEffectRight;
+        [SerializeField] private GameObject _dashEffectPrefab;
 
         [Header("Components")]
         [SerializeField] private Animator _playerAnimator;
@@ -26,6 +22,13 @@ namespace Player.Type_1
         [Header("Dash Data")]
         [SerializeField] private float _dashDuration;
         [SerializeField] private float _dashVelocity;
+
+        [Header("Dash Effects Data")]
+        [SerializeField] private Vector3 _dashEffectOffset;
+        [SerializeField] private Vector3 _leftDashRotation;
+        [SerializeField] private Vector3 _rightDashRotation;
+        [SerializeField] private Vector3 _frontDashRotation;
+        [SerializeField] private Vector3 _backDashRotation;
 
         private float _currentDashTimeLeft;
         private Vector3 _computedVelocity;
@@ -42,8 +45,6 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            var currentVelocity = playerController.CharacterVelocity;
-
             _currentDashTimeLeft -= Time.fixedDeltaTime;
 
             // Basically when there is no input use forward only...
@@ -52,6 +53,7 @@ namespace Player.Type_1
                 _startCoreInput.y = 1;
             }
 
+            var currentVelocity = playerController.CharacterVelocity;
             var characterTransform = transform;
             var forward = characterTransform.forward;
             var right = characterTransform.right;
@@ -85,46 +87,16 @@ namespace Player.Type_1
                 coreInput.y = 1;
             }
 
-            GameObject dashEffectPrefab;
-            Vector3 dashEffectOffset;
-            Vector3 dashEffectRotation;
-
-            switch (coreInput.y)
+            var dashEffectRotation = coreInput.y switch
             {
-                case > 0:
-                    dashEffectPrefab = _dashEffectForward.effectPrefab;
-                    dashEffectOffset = _dashEffectForward.effectOffset;
-                    dashEffectRotation = _dashEffectForward.effectLocalRotation;
-                    break;
-
-                case < 0:
-                    dashEffectPrefab = _dashEffectBackward.effectPrefab;
-                    dashEffectOffset = _dashEffectBackward.effectOffset;
-                    dashEffectRotation = _dashEffectBackward.effectLocalRotation;
-                    break;
-
-                default:
-                {
-                    if (coreInput.x > 0)
-                    {
-                        dashEffectPrefab = _dashEffectLeft.effectPrefab;
-                        dashEffectOffset = _dashEffectLeft.effectOffset;
-                        dashEffectRotation = _dashEffectLeft.effectLocalRotation;
-                    }
-                    else
-                    {
-                        dashEffectPrefab = _dashEffectRight.effectPrefab;
-                        dashEffectOffset = _dashEffectRight.effectOffset;
-                        dashEffectRotation = _dashEffectRight.effectLocalRotation;
-                    }
-
-                    break;
-                }
-            }
+                > 0 => _frontDashRotation,
+                < 0 => _backDashRotation,
+                _ => coreInput.x > 0 ? _rightDashRotation : _leftDashRotation
+            };
 
             var characterTransform = transform;
-            _dashEffectObject = Instantiate(dashEffectPrefab, characterTransform.position, Quaternion.identity, characterTransform);
-            _dashEffectObject.transform.localPosition += dashEffectOffset;
+            _dashEffectObject = Instantiate(_dashEffectPrefab, characterTransform.position, Quaternion.identity, characterTransform);
+            _dashEffectObject.transform.localPosition += _dashEffectOffset;
             _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
 
             _playerAnimator.SetBool(StaticData.Type_1_Tertiary, true);
@@ -141,17 +113,5 @@ namespace Player.Type_1
         public override Vector3 GetMovementData() => _computedVelocity;
 
         #endregion Specific Data
-
-        #region Structs
-
-        [Serializable]
-        private struct DashEffect
-        {
-            public GameObject effectPrefab;
-            public Vector3 effectOffset;
-            public Vector3 effectLocalRotation;
-        }
-
-        #endregion Structs
     }
 }

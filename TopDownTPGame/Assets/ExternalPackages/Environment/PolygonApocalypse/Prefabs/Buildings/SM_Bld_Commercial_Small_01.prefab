@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4685269253330528
 Transform:
@@ -101,7 +101,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4516169405680696
 Transform:
@@ -206,7 +206,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4274938377518770
 Transform:
@@ -285,13 +285,13 @@ GameObject:
   - component: {fileID: 4794952211823098}
   - component: {fileID: 33017799343197200}
   - component: {fileID: 23629230414300160}
-  - component: {fileID: 64035778805587646}
+  - component: {fileID: 4722769845947114157}
   m_Layer: 0
   m_Name: SM_Bld_Commercial_Small_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4794952211823098
 Transform:
@@ -309,7 +309,7 @@ Transform:
   - {fileID: 4274938377518770}
   - {fileID: 4685269253330528}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33017799343197200
 MeshFilter:
@@ -361,8 +361,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64035778805587646
-MeshCollider:
+--- !u!65 &4722769845947114157
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -379,7 +379,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 100cc6aade8b77c478f32e4ad0d36738, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 18.533466, y: 8.035493, z: 14.705351}
+  m_Center: {x: 1.0192137, y: 3.7731895, z: 1.1868553}

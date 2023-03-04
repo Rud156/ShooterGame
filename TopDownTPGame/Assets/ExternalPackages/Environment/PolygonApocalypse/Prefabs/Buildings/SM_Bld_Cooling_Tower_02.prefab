@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 4654320080642862}
   - component: {fileID: 33563560104226058}
   - component: {fileID: 23567889716934368}
-  - component: {fileID: 64732964051264404}
+  - component: {fileID: 5229511043056346866}
   m_Layer: 0
   m_Name: SM_Bld_Cooling_Tower_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4654320080642862
 Transform:
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33563560104226058
 MeshFilter:
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64732964051264404
-MeshCollider:
+--- !u!65 &5229511043056346866
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,7 +102,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: ffe641bcfb456fc4abb93884210da6fa, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 34.319347, y: 48.766586, z: 34.319347}
+  m_Center: {x: 0, y: 21.921219, z: 0}
