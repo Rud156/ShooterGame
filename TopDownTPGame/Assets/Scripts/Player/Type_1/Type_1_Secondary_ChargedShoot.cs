@@ -1,6 +1,7 @@
 #region
 
 using Ability_Scripts.Projectiles;
+using CustomCamera;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
@@ -18,7 +19,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _chargedObjectPrefab;
 
         [Header("Components")]
-        [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_1_Primary_SimpleShoot _type1Primary;
         [SerializeField] private Animator _playerAnimator;
 
@@ -26,6 +27,9 @@ namespace Player.Type_1
         [SerializeField] private float _windUpTime;
         [SerializeField] private float _minChargeDamage;
         [SerializeField] private float _maxChargeDamage;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Animations")]
         [SerializeField] private int _attackAnimCount;
@@ -57,10 +61,12 @@ namespace Player.Type_1
                 var simpleDamage = projectile.GetComponent<SimpleDamageOverrideTrigger>();
                 simpleDamage.SetDamageAmount(mappedDamage);
 
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                 _playerAnimator.SetInteger(StaticData.Type_1_Secondary, Random.Range(1, _attackAnimCount + 1));
                 _type1Primary.UseStoredCharge(chargeAmount);
                 _abilityEnd = true;
+
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                CustomCameraController.Instance.StartShake(_cameraShaker);
             }
         }
 

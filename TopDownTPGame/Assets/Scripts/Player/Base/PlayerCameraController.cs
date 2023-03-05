@@ -8,9 +8,9 @@ using Utils.Misc;
 
 #endregion
 
-namespace CustomCamera
+namespace Player.Base
 {
-    public class MainCameraController : MonoBehaviour
+    public class PlayerCameraController : MonoBehaviour
     {
         [Header("Components")]
         [SerializeField] private Transform _cinemachineFollowTarget;

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Player.Base
 {
-    public class BaseShootController : MonoBehaviour
+    public class PlayerBaseShootController : MonoBehaviour
     {
         [Header("Shoot Data")]
         [SerializeField] private float _maxShootDistance = 50;

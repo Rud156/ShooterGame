@@ -15,7 +15,7 @@ public class Type_4_Ultimate_Rocket : Ability
     [SerializeField] private GameObject _rocketPrefab;
 
     [Header("Components")]
-    [SerializeField] private BaseShootController _baseShootController;
+    [SerializeField] private PlayerBaseShootController _shootController;
 
     [Header("Ultimate Data")]
     [SerializeField] private float _ultimateChargeRate;
@@ -36,8 +36,8 @@ public class Type_4_Ultimate_Rocket : Ability
     {
         if (_rocketObject == null)
         {
-            var shootPosition = _baseShootController.GetShootPosition();
-            var shootPoint = _baseShootController.GetShootPoint();
+            var shootPosition = _shootController.GetShootPosition();
+            var shootPoint = _shootController.GetShootPoint();
 
             var rocket = Instantiate(_rocketPrefab, shootPosition, Quaternion.LookRotation(shootPoint.forward));
             var rocketRb = rocket.GetComponent<Rigidbody>();
@@ -48,7 +48,7 @@ public class Type_4_Ultimate_Rocket : Ability
         }
         else
         {
-            var direction = _baseShootController.GetShootLookDirection();
+            var direction = _shootController.GetShootLookDirection();
             var rocket = _rocketObject.GetComponent<RocketProjectile>();
             var rocketRb = _rocketObject.GetComponent<Rigidbody>();
 

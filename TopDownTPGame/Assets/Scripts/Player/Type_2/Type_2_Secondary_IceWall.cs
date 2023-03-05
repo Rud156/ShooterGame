@@ -15,7 +15,7 @@ namespace Player.Type_2
         [SerializeField] private GameObject _iceWallPrefab;
 
         [Header("Component")]
-        [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private PlayerBaseShootController _shootController;
 
         [Header("Spawn Data")]
         [SerializeField] private float _windUpTime;

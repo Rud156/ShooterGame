@@ -16,7 +16,7 @@ namespace Player.Type_5
         [SerializeField] private GameObject _stunGrenadePrefab;
 
         [Header("Components")]
-        [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private PlayerBaseShootController _shootController;
 
         private bool _abilityEnd;
 

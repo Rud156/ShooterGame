@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8753566998753262363
 MonoBehaviour:
@@ -54,4 +54,5 @@ MonoBehaviour:
   _pulseMask:
     serializedVersion: 2
     m_Bits: 64
+  _cameraShaker: {fileID: 11400000, guid: 83437499a6c36574f826f5e03eb5592e, type: 2}
   _cooldownMultiplier: 3

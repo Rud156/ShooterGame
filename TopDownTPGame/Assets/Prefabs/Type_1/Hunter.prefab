@@ -146,6 +146,7 @@ MonoBehaviour:
   _windUpTime: 0.5
   _minChargeDamage: 1
   _maxChargeDamage: 75
+  _cameraShaker: {fileID: 11400000, guid: 011568fc49b9f0b46abfdeec26cf89cd, type: 2}
   _attackAnimCount: 3
 --- !u!1 &851523228
 GameObject:
@@ -301,6 +302,7 @@ MonoBehaviour:
   _fireRate: 0.75
   _overheatTime: 7
   _overheatCooldownMultiplier: 0.75
+  _cameraShaker: {fileID: 11400000, guid: 01953171841a4244caf0bb82c9a405a9, type: 2}
   _chargeGainedForShootStaticObject: 5
   _chargeGainedForShootCharacters: 15
   _chargeDecayDelay: 5

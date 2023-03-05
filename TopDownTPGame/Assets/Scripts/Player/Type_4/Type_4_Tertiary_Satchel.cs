@@ -18,7 +18,7 @@ namespace Player.Type_4
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
         [SerializeField] private Transform _cameraHolder;
-        [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private PlayerBaseShootController _shootController;
 
         [Header("Dash Charges")]
         [SerializeField] private int _satchelCount;

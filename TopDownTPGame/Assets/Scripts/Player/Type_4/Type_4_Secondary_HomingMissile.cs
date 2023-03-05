@@ -16,7 +16,7 @@ namespace Player.Type_4
         [SerializeField] private GameObject _homingMissilePrefab;
 
         [Header("Components")]
-        [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Transform _missileShootPoint;
 
         [Header("Spawn Data")]

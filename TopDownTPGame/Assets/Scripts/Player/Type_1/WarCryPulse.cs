@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
+using CustomCamera;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -21,6 +22,9 @@ namespace Player.Type_1
         [SerializeField] private float _pulseRadius;
         [SerializeField] private float _pulseWaitDuration;
         [SerializeField] private LayerMask _pulseMask;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Cooldown Modifier")]
         [SerializeField] private float _cooldownMultiplier;
@@ -68,10 +72,12 @@ namespace Player.Type_1
                 var position = abilityTransform.position;
                 _lastPulseEffectObject = Instantiate(_pulseEffectPrefab, position, Quaternion.identity, abilityTransform);
                 _lastBurstEffectObject = Instantiate(_pulseBurstEfectPrefab, position, Quaternion.identity, abilityTransform);
-                _targetAnimator.SetTrigger(_targetAnimTrigger);
 
                 _currentPulseCount -= 1;
                 _currentPulseWaitDuration = _pulseWaitDuration;
+
+                _targetAnimator.SetTrigger(_targetAnimTrigger);
+                CustomCameraController.Instance.StartShake(_cameraShaker);
             }
         }
 

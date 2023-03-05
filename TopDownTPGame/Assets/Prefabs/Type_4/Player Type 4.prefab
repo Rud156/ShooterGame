@@ -204,10 +204,11 @@ MonoBehaviour:
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
   _groundedCheckPoint: {fileID: 1504131108692597983}
-  _groundedCheckDistance: 0.65
+  _groundedCheckRadius: 0
   _groundedCheckMask:
     serializedVersion: 2
     m_Bits: 1
+  _groundedTriggerVelocityThreshold: 0
   _jumpVelocity: 35
   _constantSpeedFallEnabled: 0
   _constantSpeedFallMultiplier: 2.5
@@ -234,9 +235,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 449
   _shootPoint: {fileID: 1504131108382786862}
-  _cameraMainPoint: {fileID: 1504131108474634825}
   _closeShootClearPoint: {fileID: 7325897107652618601}
-  _cameraHolder: {fileID: 1504131108770834952}
+  _cinemachineFollowPoint: {fileID: 0}
 --- !u!114 &1568775567157980309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,19 +249,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345262e5f1c94398aea3044918997584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpEffect:
-    spawnOffset: {x: 0, y: -0.72, z: 0}
-    effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
-      type: 3}
-  _runEffect:
-    spawnOffset: {x: 0, y: 0, z: -1.5}
-    effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
-      type: 3}
-  _landEffect:
-    spawnOffset: {x: 0, y: -0.72, z: 0}
-    effectPrefab: {fileID: 8586881294353101766, guid: 515389321b5ca5f45a65881b09160674,
-      type: 3}
-  _player: {fileID: 1504131108388283770}
+  _jumpEffectPrefab:
+    spawnOffset: {x: 0, y: 0, z: 0}
+    spawnRotation: {x: 0, y: 0, z: 0}
+    effectPrefab: {fileID: 0}
+  _runEffectPrefab:
+    spawnOffset: {x: 0, y: 0, z: 0}
+    spawnRotation: {x: 0, y: 0, z: 0}
+    effectPrefab: {fileID: 0}
+  _landEffectPrefab:
+    spawnOffset: {x: 0, y: 0, z: 0}
+    spawnRotation: {x: 0, y: 0, z: 0}
+    effectPrefab: {fileID: 0}
   _playerController: {fileID: 1504131108388283768}
 --- !u!114 &1504131108388283775
 MonoBehaviour:
@@ -275,10 +274,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c03e50dd5cc524992dcb3283ad6e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraHolder: {fileID: 1504131108770834952}
+  _cinemachineFollowTarget: {fileID: 0}
   _cameraRotationSpeed: 100
   _minCameraAngle: -90
   _maxCameraAngle: 90
+  _shoulderChangeLerpRate: 0
+  _xOffsetAmount: 0
 --- !u!114 &253607354497569653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +399,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
-  _baseShootController: {fileID: 795477187898822337}
+  _shootController: {fileID: 795477187898822337}
   _ultimateChargeRate: 0.1
 --- !u!114 &5502045882867128996
 MonoBehaviour:

@@ -24,7 +24,7 @@ namespace Player.Type_2
 
         [Header("Components")]
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
-        [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private PlayerBaseShootController _shootController;
 
         [Header("Water Lines Data")]
         [SerializeField] private AnimationCurve _leftEaseCurve;

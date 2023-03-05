@@ -1,6 +1,7 @@
 #region
 
 using Ability_Scripts.Projectiles;
+using CustomCamera;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
@@ -20,13 +21,16 @@ namespace Player.Type_1
         [SerializeField] private GameObject _projectilePrefab;
 
         [Header("Components")]
-        [SerializeField] private BaseShootController _shootController;
+        [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Simple Shoot Data")]
         [SerializeField] private float _fireRate;
         [SerializeField] private float _overheatTime;
         [SerializeField] private float _overheatCooldownMultiplier;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Charge Data")]
         [SerializeField] private float _chargeGainedForShootStaticObject;
@@ -66,8 +70,9 @@ namespace Player.Type_1
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(ProjectileHitCollider);
 
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                 _playerAnimator.SetInteger(StaticData.Type_1_Primary, Random.Range(1, _attackAnimCount + 1));
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                CustomCameraController.Instance.StartShake(_cameraShaker);
 
                 _currentOverheatTime += _fireRate;
             }
