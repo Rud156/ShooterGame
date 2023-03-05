@@ -30,21 +30,26 @@ namespace Player.Base
         public Vector3 GetShootLookDirection()
         {
             var closeHit = Physics.Linecast(_shootPoint.position, _closeShootClearPoint.position, _shootMask);
+            Debug.DrawLine(_shootPoint.position, _closeShootClearPoint.position, Color.red, 10);
             if (closeHit)
             {
+                Debug.Log("Close Point Hit");
                 return _cinemachineFollowPoint.forward.normalized;
             }
 
             var hit = Physics.Raycast(_mainCamera.position, _mainCamera.forward, out var hitInfo, _maxShootDistance, _shootMask);
+            Debug.DrawRay(_mainCamera.position, _mainCamera.forward * _maxShootDistance, Color.red, 10);
             if (hit)
             {
                 var direction = hitInfo.point - _shootPoint.position;
+                Debug.Log("Hit Far Valid");
                 return direction.normalized;
             }
             else
             {
                 var distantPoint = _mainCamera.position + _mainCamera.forward.normalized * _maxShootDistance;
                 var direction = distantPoint - _shootPoint.position;
+                Debug.Log("Hit Far Invalid");
                 return direction.normalized;
             }
         }

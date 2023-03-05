@@ -59,6 +59,7 @@ namespace Ability_Scripts.Projectiles
                 Instantiate(_destroyEffect, _effectSpawnPoint.position, Quaternion.identity);
             }
 
+            DebugExtension.DebugWireSphere(transform.position, Color.red, 0.5f, 10);
             Destroy(gameObject);
         }
 

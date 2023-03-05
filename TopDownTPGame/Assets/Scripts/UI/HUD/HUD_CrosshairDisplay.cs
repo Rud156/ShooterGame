@@ -17,19 +17,17 @@ namespace UI.HUD
         private const string TopLineString = "Top";
         private const string BottomLineString = "Bottom";
 
-        private const float LeftLineInitialXPosition = 25;
-        private const float RightLineInitialXPosition = 45;
-        private const float LeftRightLineInitialYPosition = 35;
-        private const float LeftRightLineHeightOffsetPerPixel = 0.5f;
-        private const float LeftLineWidthOffsetPerPixel = 1;
-        private const float TopLineInitialYPosition = 25;
-        private const float BottomLineInitialYPosition = 45;
-        private const float TopBottomLineInitialXPosition = 35;
-        private const float TopBottomLineWidthOffsetPerPixel = 0.5f;
-        private const float TopLineHeightOffsetPerPixel = 1;
+        private const int DefaultLineWidth = 10;
+        private const int DefaultLineHeight = 5;
+        private const int CenterDotDefaultSize = 10;
 
-        private const float CenterDotInitialYPosition = 35;
-        private const float CenterDotOffsetPerPixel = 0.5f;
+        private const float LeftLineDefaultXOffset = -10;
+        private const float RightLineDefaultXOffset = 0;
+        private const float HorizontalLineDefaultYOffset = -2.5f;
+
+        private const float TopLineDefaultYOffset = -10;
+        private const float BottomLineDefaultYOffset = 0;
+        private const float VerticalLineDefaultXOffset = -2.5f;
 
         private VisualElement _centerDot;
         private VisualElement _leftLine;
@@ -38,12 +36,12 @@ namespace UI.HUD
         private VisualElement _bottomLine;
 
         [Header("Lines")]
-        [SerializeField] [Range(0, 100)] private float _horizontalLineOffset;
-        [SerializeField] [Range(0, 100)] private float _verticalLineOffset;
-        [SerializeField] [Range(0, 100)] private float _horizontalLineThickness;
-        [SerializeField] [Range(0, 100)] private float _verticalLineThickness;
-        [SerializeField] [Range(0, 100)] private float _horizontalLength;
-        [SerializeField] [Range(0, 100)] private float _verticalLength;
+        [SerializeField] [Range(0, 25)] private float _horizontalLineOffset;
+        [SerializeField] [Range(0, 25)] private float _verticalLineOffset;
+        [SerializeField] [Range(0, 25)] private float _horizontalLineThickness;
+        [SerializeField] [Range(0, 25)] private float _verticalLineThickness;
+        [SerializeField] [Range(0, 25)] private float _horizontalLineLength;
+        [SerializeField] [Range(0, 25)] private float _verticalLineLength;
         [SerializeField] [Range(0, 1)] private float _crosshairAlpha;
         [SerializeField] private Color _crosshairColor = Colors.Black;
         [SerializeField] [Range(0, 1)] private float _crosshairOutlineThickness;
@@ -51,7 +49,7 @@ namespace UI.HUD
         [SerializeField] private Color _crosshairOutlineColor = Colors.Black;
 
         [Header("Center Dot")]
-        [SerializeField] [Range(0, 100)] private float _centerDotThickness;
+        [SerializeField] [Range(0, 25)] private float _centerDotThickness;
         [SerializeField] [Range(0, 1)] private float _centerDotAlpha;
         [SerializeField] private Color _centerDotColor = Colors.Black;
         [SerializeField] [Range(0, 1)] private float _centerDotOutlineThickness;
@@ -139,56 +137,40 @@ namespace UI.HUD
 
         private void UpdateHorizontalLineLengthAndPosition()
         {
-            // Set Size for Left and Right Lines
-            _leftLine.style.width = _horizontalLength;
-            _leftLine.style.height = _horizontalLineThickness;
-            _rightLine.style.width = _horizontalLength;
-            _rightLine.style.height = _horizontalLineThickness;
+            // Set Scale for Left and Right Lines
+            _leftLine.style.scale = new Vector2(_horizontalLineLength, _horizontalLineThickness);
+            _rightLine.style.scale = new Vector2(_horizontalLineLength, _horizontalLineThickness);
 
-            // Update Y Position for Left and Right Lines
-            var mappedLeftRightYOffset = _horizontalLineThickness * LeftRightLineHeightOffsetPerPixel;
-            var finalLeftRightYOffset = LeftRightLineInitialYPosition - mappedLeftRightYOffset;
-            _leftLine.style.top = finalLeftRightYOffset;
-            _rightLine.style.top = finalLeftRightYOffset;
-
-            // Update X Position for Left and Right Line
-            var mappedLeftXOffset = _horizontalLength * LeftLineWidthOffsetPerPixel;
-            var finalLeftXOffset = LeftLineInitialXPosition - _horizontalLineOffset - mappedLeftXOffset;
-            _leftLine.style.left = finalLeftXOffset;
-            _rightLine.style.left = RightLineInitialXPosition + _horizontalLineOffset;
+            // Update X and Y Positions for Left and Right Line
+            _leftLine.style.translate = new StyleTranslate(new Translate(LeftLineDefaultXOffset - _horizontalLineOffset, HorizontalLineDefaultYOffset));
+            _rightLine.style.translate = new StyleTranslate(new Translate(RightLineDefaultXOffset + _horizontalLineOffset, HorizontalLineDefaultYOffset));
 
             // Set Outlines for Left and Right Lines
-            var mappedLeftRightOutlineLength = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, _horizontalLength / 2.0f);
-            var mappedLeftRightOutlineThickness = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, _horizontalLineThickness / 2.0f);
-            SetElementBorderThickness(_leftLine, mappedLeftRightOutlineThickness, mappedLeftRightOutlineLength);
-            SetElementBorderThickness(_rightLine, mappedLeftRightOutlineThickness, mappedLeftRightOutlineLength);
+            var mappedLeftRightOutlineLength = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, DefaultLineWidth / 2.0f);
+            var mappedLeftRightOutlineThickness = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, DefaultLineHeight / 2.0f);
+            var clampedOutlineLength = Mathf.CeilToInt(mappedLeftRightOutlineLength);
+            var clampedOutlineThickness = Mathf.CeilToInt(mappedLeftRightOutlineThickness);
+            SetElementBorderThickness(_leftLine, clampedOutlineThickness, clampedOutlineLength);
+            SetElementBorderThickness(_rightLine, clampedOutlineThickness, clampedOutlineLength);
         }
 
         private void UpdateVerticalLineLengthAndPosition()
         {
             // Set Size for Top and Bottom Lines
-            _topLine.style.width = _verticalLineThickness;
-            _topLine.style.height = _verticalLength;
-            _bottomLine.style.width = _verticalLineThickness;
-            _bottomLine.style.height = _verticalLength;
+            _topLine.style.scale = new Vector2(_verticalLineLength, _verticalLineThickness);
+            _bottomLine.style.scale = new Vector2(_verticalLineLength, _verticalLineThickness);
 
-            // Update X Position for Top and Bottom Lines
-            var mappedTopBottomXOffset = _verticalLineThickness * TopBottomLineWidthOffsetPerPixel;
-            var finalTopBottomXOffset = TopBottomLineInitialXPosition - mappedTopBottomXOffset;
-            _topLine.style.left = finalTopBottomXOffset;
-            _bottomLine.style.left = finalTopBottomXOffset;
-
-            // Update Y Position for Top and Bottom Line
-            var mappedTopYOffset = _verticalLength * TopLineHeightOffsetPerPixel;
-            var finalTopYOffset = TopLineInitialYPosition - _verticalLineOffset - mappedTopYOffset;
-            _topLine.style.top = finalTopYOffset;
-            _bottomLine.style.top = BottomLineInitialYPosition + _verticalLineOffset;
+            // Update X and Y Positions for Top and Bottom Lines
+            _topLine.style.translate = new StyleTranslate(new Translate(VerticalLineDefaultXOffset, TopLineDefaultYOffset - _verticalLineOffset));
+            _bottomLine.style.translate = new StyleTranslate(new Translate(VerticalLineDefaultXOffset, BottomLineDefaultYOffset + _verticalLineOffset));
 
             // Set Outlines for Top and Bottom Lines
-            var mappedTopBottomOutlineLength = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, _verticalLength / 2.0f);
-            var mappedTopBottomOutlineThickness = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, _verticalLineThickness / 2.0f);
-            SetElementBorderThickness(_topLine, mappedTopBottomOutlineLength, mappedTopBottomOutlineThickness);
-            SetElementBorderThickness(_bottomLine, mappedTopBottomOutlineLength, mappedTopBottomOutlineThickness);
+            var mappedTopBottomOutlineLength = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, DefaultLineHeight / 2.0f);
+            var mappedTopBottomOutlineThickness = ExtensionFunctions.Map(_crosshairOutlineThickness, 0, 1, 0, DefaultLineWidth / 2.0f);
+            var clampedOutlineLength = Mathf.CeilToInt(mappedTopBottomOutlineLength);
+            var clampedOutlineThickness = Mathf.CeilToInt(mappedTopBottomOutlineThickness);
+            SetElementBorderThickness(_topLine, clampedOutlineLength, clampedOutlineThickness);
+            SetElementBorderThickness(_bottomLine, clampedOutlineLength, clampedOutlineThickness);
         }
 
         #endregion Lines
@@ -197,16 +179,11 @@ namespace UI.HUD
 
         private void UpdateCenterDot()
         {
-            _centerDot.style.width = _centerDotThickness;
-            _centerDot.style.height = _centerDotThickness;
+            _centerDot.style.scale = Vector2.one * _centerDotThickness;
 
-            var mappedOffset = _centerDotThickness * CenterDotOffsetPerPixel;
-            var finalOffset = CenterDotInitialYPosition - mappedOffset;
-            _centerDot.style.left = finalOffset;
-            _centerDot.style.top = finalOffset;
-
-            var mappedCenterDotOutlineThickness = ExtensionFunctions.Map(_centerDotOutlineThickness, 0, 1, 0, _centerDotThickness / 2.0f);
-            SetElementBorderThickness(_centerDot, mappedCenterDotOutlineThickness, mappedCenterDotOutlineThickness);
+            var mappedThickness = ExtensionFunctions.Map(_centerDotOutlineThickness, 0, 1, 0, CenterDotDefaultSize / 2.0f);
+            var clampedThickness = Mathf.CeilToInt(mappedThickness);
+            SetElementBorderThickness(_centerDot, clampedThickness, clampedThickness);
 
             var centerDotColor = new Color(_centerDotColor.r, _centerDotColor.g, _centerDotColor.b, _centerDotAlpha);
             _centerDot.style.unityBackgroundImageTintColor = centerDotColor;

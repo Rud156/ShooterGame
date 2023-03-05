@@ -15003,18 +15003,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7224091d847947147a1b84c9c4c2dc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _horizontalLineOffset: 0
-  _verticalLineOffset: 0
-  _horizontalLineThickness: 5
-  _verticalLineThickness: 5
-  _horizontalLength: 10
-  _verticalLength: 10
+  _horizontalLineOffset: 10
+  _verticalLineOffset: 10
+  _horizontalLineThickness: 1
+  _verticalLineThickness: 1
+  _horizontalLineLength: 2.5
+  _verticalLineLength: 1
   _crosshairAlpha: 1
   _crosshairColor: {r: 0, g: 0, b: 1, a: 0}
-  _crosshairOutlineThickness: 0.5
+  _crosshairOutlineThickness: 0
   _crosshairOutlineAlpha: 1
   _crosshairOutlineColor: {r: 0, g: 0, b: 0, a: 0}
-  _centerDotThickness: 5
+  _centerDotThickness: 1
   _centerDotAlpha: 1
   _centerDotColor: {r: 0.47058824, g: 0, b: 1, a: 0}
   _centerDotOutlineThickness: 0.5
