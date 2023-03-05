@@ -11,7 +11,7 @@ namespace UI.Player
     public class HUD_PlayerIconDisplay : MonoBehaviour
     {
         private const string PlayerIconParentString = "UI_PlayerIconWidget";
-        private const string PlayerIconString = "PlayerIcone";
+        private const string PlayerIconString = "PlayerIcon";
         private const string PlayerIconBackgroundString = "PlayerIconBackground";
 
         private const string PlayerOverlayBackerString = "PlayerIconOverlayBacker";

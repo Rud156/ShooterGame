@@ -36,8 +36,8 @@ namespace UI.HUD
         private VisualElement _bottomLine;
 
         [Header("Lines")]
-        [SerializeField] [Range(0, 25)] private float _horizontalLineOffset;
-        [SerializeField] [Range(0, 25)] private float _verticalLineOffset;
+        [SerializeField] [Range(0, 200)] private float _horizontalLineOffset;
+        [SerializeField] [Range(0, 200)] private float _verticalLineOffset;
         [SerializeField] [Range(0, 25)] private float _horizontalLineThickness;
         [SerializeField] [Range(0, 25)] private float _verticalLineThickness;
         [SerializeField] [Range(0, 25)] private float _horizontalLineLength;

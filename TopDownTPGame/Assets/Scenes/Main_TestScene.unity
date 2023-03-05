@@ -15003,8 +15003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7224091d847947147a1b84c9c4c2dc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _horizontalLineOffset: 10
-  _verticalLineOffset: 10
+  _horizontalLineOffset: 5
+  _verticalLineOffset: 5
   _horizontalLineThickness: 1
   _verticalLineThickness: 1
   _horizontalLineLength: 2.5
@@ -24618,7 +24618,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1441439928}
   - component: {fileID: 1441439929}
-  - component: {fileID: 1441439931}
   - component: {fileID: 1441439932}
   m_Layer: 0
   m_Name: Player Display Controllers
@@ -24657,18 +24656,6 @@ MonoBehaviour:
   _flashCount: 1
   _flashOnDuration: 0.1
   _flashOffDuration: 0.05
---- !u!114 &1441439931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441439927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aa0b88f6bcc47d098e416eebdc445e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1441439932
 MonoBehaviour:
   m_ObjectHideFlags: 0
