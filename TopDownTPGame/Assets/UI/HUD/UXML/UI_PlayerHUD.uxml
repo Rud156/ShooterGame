@@ -5,7 +5,7 @@
     <ui:Template name="UI_PlayerIconWidget" src="project://database/Assets/UI/Player/UXML/UI_PlayerIconWidget.uxml?fileID=9197481963319205126&amp;guid=bd3ceac0fa319624e9c340b02abfe619&amp;type=3#UI_PlayerIconWidget" />
     <ui:Template name="UI_PlayerHealth" src="project://database/Assets/UI/Player/UXML/UI_PlayerHealthWidget.uxml?fileID=9197481963319205126&amp;guid=0b6f91f0da987f2499d54451e9af81b1&amp;type=3#UI_PlayerHealthWidget" />
     <ui:Instance template="UI_PlayerAbilityGrid" name="UI_PlayerAbilityGridWidget" style="width: 506px; height: 362px; position: absolute; bottom: 21px; right: 7px;" />
-    <ui:Instance template="UI_Crosshair" name="UI_Crosshair" style="left: 50%; top: 50%; position: absolute; width: 50px; height: 50px; translate: -35px -35px; display: flex;" />
+    <ui:Instance template="UI_Crosshair" name="UI_Crosshair" style="left: 50%; top: 50%; position: absolute; width: 50px; height: 50px; translate: -25px -25px; display: flex;" />
     <ui:Instance template="DebugSettings" name="UI_DebugSettings" style="position: absolute; left: 0; top: 0;" />
     <ui:Instance template="UI_PlayerIconWidget" name="UI_PlayerIconWidget" style="position: absolute; bottom: 14px; left: 21px; rotate: -14deg;" />
     <ui:Instance template="UI_PlayerHealth" name="UI_PlayerHealthWidget" style="height: 100px; width: 450px; min-width: 450px; min-height: 100px; bottom: 21px; position: absolute; left: 21px;" />

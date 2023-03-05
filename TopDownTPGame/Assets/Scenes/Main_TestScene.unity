@@ -15014,11 +15014,11 @@ MonoBehaviour:
   _crosshairOutlineThickness: 0
   _crosshairOutlineAlpha: 1
   _crosshairOutlineColor: {r: 0, g: 0, b: 0, a: 0}
-  _centerDotThickness: 1
-  _centerDotAlpha: 1
+  _centerDotThickness: 0
+  _centerDotAlpha: 0
   _centerDotColor: {r: 0.47058824, g: 0, b: 1, a: 0}
-  _centerDotOutlineThickness: 0.5
-  _centerDotOutlineAlpha: 1
+  _centerDotOutlineThickness: 0
+  _centerDotOutlineAlpha: 0
   _centerDotOutlineColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &864060275
 Transform:
