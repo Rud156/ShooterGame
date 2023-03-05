@@ -24,6 +24,10 @@ namespace Player.Base
         [SerializeField] private float _shoulderChangeLerpRate;
         [SerializeField] private float _xOffsetAmount;
 
+        [Header("Input Sensitivity Multiplier")]
+        [SerializeField] private float _kbmSensitivity;
+        [SerializeField] private float _gamepadSensitivity;
+
         // Input
         private Vector2 _mouseInput;
 
@@ -97,9 +101,12 @@ namespace Player.Base
 
         private void UpdateCameraControl()
         {
+            var sensitivity = CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.GamepadGroupString ? _gamepadSensitivity : _kbmSensitivity;
+            var rotationSpeed = sensitivity * _cameraRotationSpeed;
+
             var cameraRotation = _cinemachineFollowTarget.rotation.eulerAngles;
-            cameraRotation.y += _mouseInput.x * _cameraRotationSpeed * Time.fixedDeltaTime;
-            cameraRotation.x += -_mouseInput.y * _cameraRotationSpeed * Time.fixedDeltaTime;
+            cameraRotation.y += _mouseInput.x * rotationSpeed * Time.fixedDeltaTime;
+            cameraRotation.x += -_mouseInput.y * rotationSpeed * Time.fixedDeltaTime;
             cameraRotation.x = ExtensionFunctions.To360Angle(cameraRotation.x);
 
             switch (cameraRotation.x)

@@ -12,8 +12,8 @@ namespace Utils.Input
         private const string KeyboardDisplayName = "Keyboard";
         private const string MouseDisplayName = "Mouse";
 
-        private const string GamepadGroupString = "Gamepad";
-        private const string KeyboardMouseGroupString = "Keyboard&Mouse";
+        public const string GamepadGroupString = "Gamepad";
+        public const string KeyboardMouseGroupString = "Keyboard&Mouse";
 
         public delegate void LastUsedInputChanged(string currentInputGroup);
         public event LastUsedInputChanged OnLastUsedInputChanged;

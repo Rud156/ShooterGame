@@ -8,6 +8,10 @@
     text-shadow: 2px 2px 2px #050505;
 }
 
+.very_small_text {
+    font-size: 10px;
+}
+
 .small_text {
     font-size: 20;
 }

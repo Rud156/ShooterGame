@@ -169,7 +169,7 @@ namespace Player.Base
             }
             else
             {
-                _movementAnim.x = coreInput.x > 0 ? MaxHorizontalAnimValue : -MaxHorizontalAnimValue;
+                _movementAnim.x = coreInput.x;
             }
 
             if (ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))

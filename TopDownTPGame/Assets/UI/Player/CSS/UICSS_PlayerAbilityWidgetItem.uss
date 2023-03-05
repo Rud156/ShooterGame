@@ -24,3 +24,8 @@
     width: 100px;
     height: 120px;
 }
+
+.trigger_name_backer {
+    background-image: url("project://database/Assets/Textures/Misc/Smoke26.png");
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0.9);
+}

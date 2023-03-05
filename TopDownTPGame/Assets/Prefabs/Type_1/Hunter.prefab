@@ -560,6 +560,8 @@ MonoBehaviour:
   _maxCameraAngle: 60
   _shoulderChangeLerpRate: 14
   _xOffsetAmount: 1.75
+  _kbmSensitivity: 0.7
+  _gamepadSensitivity: 25
 --- !u!114 &8572434850116300471
 MonoBehaviour:
   m_ObjectHideFlags: 0
