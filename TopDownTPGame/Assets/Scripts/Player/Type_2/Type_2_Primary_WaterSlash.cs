@@ -23,6 +23,7 @@ namespace Player.Type_2
         [SerializeField] private GameObject _shootFrontPrefab;
 
         [Header("Components")]
+        [SerializeField] private Transform parent;
         [SerializeField] private AbilityPrefabInitializer _prefabInit;
         [SerializeField] private PlayerBaseShootController _shootController;
 
@@ -129,8 +130,8 @@ namespace Player.Type_2
             base.UnityStartDelegate(playerController);
 
             _prefabInit.AbilityPrefabInit();
-            _leftSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();
-            _rightSlash = transform.Find("Type_2_Prefab(Clone)/SlashPaths/RightSlash").GetComponent<SplineContainer>();
+            _leftSlash = parent.Find("Type_2_Prefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();
+            _rightSlash = parent.Find("Type_2_Prefab(Clone)/SlashPaths/RightSlash").GetComponent<SplineContainer>();
 
             SetState(WaterControlState.LeftSlash);
         }
