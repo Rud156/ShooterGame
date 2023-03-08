@@ -994,7 +994,6 @@ GameObject:
   - component: {fileID: 5905943182045767463}
   - component: {fileID: 2637092012038209774}
   - component: {fileID: 3408678438235963055}
-  - component: {fileID: 3703342411328765957}
   m_Layer: 6
   m_Name: Aqua
   m_TagString: Player
@@ -1020,7 +1019,7 @@ Transform:
   - {fileID: 2368701884863666857}
   - {fileID: 1362992553}
   m_Father: {fileID: 0}
-  m_RootOrder: 71
+  m_RootOrder: 70
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2637092012038209768
 CharacterController:
@@ -1194,27 +1193,6 @@ MonoBehaviour:
   _debugHealAmount: 30
   _debugDecayAmount: 0
   _debugDecayDuration: 0
---- !u!114 &3703342411328765957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2637092012038209767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fdc3a56bf5bc4545a9d88d4b04df1b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _abilityPrefab: {fileID: 1502905930425212743, guid: 204d146b2b5e8a64c98f571965281a2b,
-    type: 3}
-  _abilityCameraParentPrefab: {fileID: 0}
-  _abilityCameraHolderPrefab: {fileID: 0}
-  _cameraHolder: {fileID: 0}
-  _camera: {fileID: 0}
-  _defaultOffset: {x: 0, y: 0, z: 0}
-  _cameraParentOffset: {x: 0, y: 0, z: 0}
-  _cameraHolderOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &2637092012946061641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,7 +1381,7 @@ MonoBehaviour:
   _shootFrontPrefab: {fileID: 1151988907945508128, guid: 6481fd2296d78e74e9315a48641f1306,
     type: 3}
   parent: {fileID: 2637092012038209771}
-  _prefabInit: {fileID: 3703342411328765957}
+  _prefabInit: {fileID: 0}
   _shootController: {fileID: 3268835866765903229}
   _leftEaseCurve:
     serializedVersion: 2
