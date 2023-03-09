@@ -7,6 +7,7 @@ using Player.Common;
 using UI.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using UnityEngine.Splines;
 using Random = UnityEngine.Random;
 
@@ -23,7 +24,7 @@ namespace Player.Type_2
         [SerializeField] private GameObject _shootFrontPrefab;
 
         [Header("Components")]
-        [SerializeField] private Transform parent;
+        [SerializeField] private Transform _rightHandSword;
         [SerializeField] private PlayerBaseShootController _shootController;
 
         [Header("Water Lines Data")]
@@ -37,14 +38,9 @@ namespace Player.Type_2
         [SerializeField] private float _overheatAmountPerShot;
         [SerializeField] private float _overheatCooldownMultiplier;
 
-        [Header("Post Start Filled")]
-        [SerializeField] private SplineContainer _leftSlash;
-        [SerializeField] private SplineContainer _rightSlash;
-
         private WaterControlState _waterControlState;
         private bool _abilityEnd;
 
-        private GameObject _sideSlashObject;
         private float _currentOverheatTime;
 
         private int _randomSlashIndex;
@@ -107,7 +103,6 @@ namespace Player.Type_2
             {
                 case WaterControlState.LeftSlash:
                 case WaterControlState.RightSlash:
-                    _sideSlashObject = CreateSlashPrefabAndUpdateRandomIndex(_waterControlState);
                     _currentTime = 0;
                     break;
 
@@ -127,10 +122,6 @@ namespace Player.Type_2
         public override void UnityStartDelegate(BasePlayerController playerController)
         {
             base.UnityStartDelegate(playerController);
-
-            _leftSlash = parent.Find("Type_2_Prefab(Clone)/SlashPaths/LeftSlash").GetComponent<SplineContainer>();
-            _rightSlash = parent.Find("Type_2_Prefab(Clone)/SlashPaths/RightSlash").GetComponent<SplineContainer>();
-
             SetState(WaterControlState.LeftSlash);
         }
 
@@ -148,44 +139,6 @@ namespace Player.Type_2
 
         #region Ability Updates
 
-        private GameObject CreateSlashPrefabAndUpdateRandomIndex(WaterControlState waterControlState)
-        {
-            Vector3 spawnPosition;
-            GameObject prefab;
-
-            switch (waterControlState)
-            {
-                case WaterControlState.LeftSlash:
-                {
-                    var totalSplines = _leftSlash.Splines.Count;
-                    var randomIndex = Random.Range(0, totalSplines);
-                    spawnPosition = _leftSlash.EvaluatePosition(randomIndex, 0);
-                    prefab = _slashLeftPrefab;
-                    _randomSlashIndex = randomIndex;
-                }
-                    break;
-
-                case WaterControlState.RightSlash:
-                {
-                    var totalSplines = _leftSlash.Splines.Count;
-                    var randomIndex = Random.Range(0, totalSplines);
-                    spawnPosition = _rightSlash.EvaluatePosition(randomIndex, 0);
-                    prefab = _slashRightPrefab;
-                    _randomSlashIndex = randomIndex;
-                }
-                    break;
-
-                case WaterControlState.ShootFront:
-                    throw new Exception("Invalid State for this GameObject");
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(waterControlState), waterControlState, null);
-            }
-
-            var projectile = Instantiate(prefab, spawnPosition, Quaternion.identity);
-            return projectile;
-        }
-
         private GameObject CreateFrontBullet()
         {
             var spawnPosition = _shootController.GetShootPosition();
@@ -195,8 +148,6 @@ namespace Player.Type_2
 
         private void UpdateSlash(WaterControlState waterControlState)
         {
-            Assert.IsNotNull(_sideSlashObject);
-
             var percent = _currentTime / _slashDuration;
             Vector3 position;
             Vector3 rotation;
@@ -206,16 +157,12 @@ namespace Player.Type_2
                 case WaterControlState.LeftSlash:
                 {
                     var mappedPercent = _leftEaseCurve.Evaluate(percent);
-                    position = _leftSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
-                    rotation = _leftSlash.EvaluateTangent(_randomSlashIndex, mappedPercent);
                 }
                     break;
 
                 case WaterControlState.RightSlash:
                 {
                     var mappedPercent = _rightEaseCurve.Evaluate(percent);
-                    position = _rightSlash.EvaluatePosition(_randomSlashIndex, mappedPercent);
-                    rotation = _rightSlash.EvaluateTangent(_randomSlashIndex, mappedPercent);
                 }
                     break;
 
@@ -226,13 +173,9 @@ namespace Player.Type_2
                     throw new ArgumentOutOfRangeException(nameof(waterControlState), waterControlState, null);
             }
 
-            _sideSlashObject.transform.position = position;
-            _sideSlashObject.transform.rotation = Quaternion.LookRotation(rotation);
-
             _currentTime += Time.fixedDeltaTime;
             if (_currentTime >= _slashDuration)
             {
-                Destroy(_sideSlashObject);
                 IncrementCurrentState();
 
                 _lastTriggeredTime = Time.time;
