@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
@@ -9,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 using UnityEngine.Splines;
+using Utils.Misc;
 using Random = UnityEngine.Random;
 
 #endregion
@@ -19,19 +21,21 @@ namespace Player.Type_2
     public class Type_2_Primary_WaterSlash : Ability
     {
         [Header("Prefabs")]
-        [SerializeField] private GameObject _slashLeftPrefab;
-        [SerializeField] private GameObject _slashRightPrefab;
         [SerializeField] private GameObject _shootFrontPrefab;
 
         [Header("Components")]
-        [SerializeField] private Transform _rightHandSword;
+        [SerializeField] private GameObject _rightHandSword;
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Animator _playerAnimator;
 
-        [Header("Water Lines Data")]
-        [SerializeField] private AnimationCurve _leftEaseCurve;
-        [SerializeField] private AnimationCurve _rightEaseCurve;
-        [SerializeField] private float _slashDuration;
+        [Header("Anim Data")]
+        [SerializeField] private int _animMinIndex;
+        [SerializeField] private int _animMaxIndex;
+        [SerializeField] private List<SwordPositionRotation> _swordPositionRotations;
+
+        [Header("Slash Data")]
         [SerializeField] private float _resetDuration;
+        [SerializeField] private float _slashDuration;
 
         [Header("General Data")]
         [SerializeField] private float _overheatTime;
@@ -43,13 +47,10 @@ namespace Player.Type_2
 
         private float _currentOverheatTime;
 
-        private int _randomSlashIndex;
         private float _currentTime;
         private float _lastTriggeredTime;
 
         #region Ability Functions
-
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController);
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -59,11 +60,11 @@ namespace Player.Type_2
             {
                 case WaterControlState.LeftSlash:
                 case WaterControlState.RightSlash:
-                    UpdateSlash(_waterControlState);
+                    UpdateSlash();
                     break;
 
                 case WaterControlState.ShootFront:
-                    UpdateFrontSlash();
+                    LaunchFrontProjectile();
                     break;
 
                 default:
@@ -71,12 +72,15 @@ namespace Player.Type_2
             }
         }
 
-        public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
+        public override void EndAbility(BasePlayerController playerController)
+        {
+            _abilityEnd = true;
+            _playerAnimator.SetInteger(StaticData.Type_2_Primary, 0);
+            _rightHandSword.SetActive(false);
+        }
 
         public override void StartAbility(BasePlayerController playerController)
         {
-            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
-
             var currentTime = Time.time;
             var difference = currentTime - _lastTriggeredTime;
             if (difference > _resetDuration)
@@ -99,20 +103,8 @@ namespace Player.Type_2
                 }
             }
 
-            switch (_waterControlState)
-            {
-                case WaterControlState.LeftSlash:
-                case WaterControlState.RightSlash:
-                    _currentTime = 0;
-                    break;
-
-                case WaterControlState.ShootFront:
-                    // Don't do anything here...
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            TriggerAttackAnim();
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
         }
 
         #endregion Ability Functions
@@ -139,53 +131,39 @@ namespace Player.Type_2
 
         #region Ability Updates
 
-        private GameObject CreateFrontBullet()
+        private void TriggerAttackAnim()
+        {
+            var animIndex = Random.Range(_animMinIndex, _animMaxIndex + 1);
+            _playerAnimator.SetInteger(StaticData.Type_2_Primary, animIndex);
+
+            _rightHandSword.SetActive(true);
+            _rightHandSword.transform.localPosition = _swordPositionRotations[animIndex - 1].Position;
+            _rightHandSword.transform.localRotation = Quaternion.Euler(_swordPositionRotations[animIndex - 1].Rotation);
+
+            _currentTime = 0;
+        }
+
+        private void UpdateSlash()
+        {
+            _currentTime += Time.fixedDeltaTime;
+            if (_currentTime >= _slashDuration)
+            {
+                IncrementCurrentState();
+                _lastTriggeredTime = Time.time;
+                _abilityEnd = true;
+            }
+        }
+
+        private GameObject CreateFrontProjectile()
         {
             var spawnPosition = _shootController.GetShootPosition();
             var projectile = Instantiate(_shootFrontPrefab, spawnPosition, Quaternion.identity);
             return projectile;
         }
 
-        private void UpdateSlash(WaterControlState waterControlState)
+        private void LaunchFrontProjectile()
         {
-            var percent = _currentTime / _slashDuration;
-            Vector3 position;
-            Vector3 rotation;
-
-            switch (waterControlState)
-            {
-                case WaterControlState.LeftSlash:
-                {
-                    var mappedPercent = _leftEaseCurve.Evaluate(percent);
-                }
-                    break;
-
-                case WaterControlState.RightSlash:
-                {
-                    var mappedPercent = _rightEaseCurve.Evaluate(percent);
-                }
-                    break;
-
-                case WaterControlState.ShootFront:
-                    throw new Exception("Invalid State for this GameObject");
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(waterControlState), waterControlState, null);
-            }
-
-            _currentTime += Time.fixedDeltaTime;
-            if (_currentTime >= _slashDuration)
-            {
-                IncrementCurrentState();
-
-                _lastTriggeredTime = Time.time;
-                _abilityEnd = true;
-            }
-        }
-
-        private void UpdateFrontSlash()
-        {
-            var frontSlashObject = CreateFrontBullet();
+            var frontSlashObject = CreateFrontProjectile();
             var direction = _shootController.GetShootLookDirection();
             var simpleProj = frontSlashObject.GetComponent<SimpleProjectile>();
             simpleProj.LaunchProjectile(direction);
@@ -223,6 +201,17 @@ namespace Player.Type_2
         }
 
         #endregion State Control
+
+        #region Structs
+
+        [Serializable]
+        private struct SwordPositionRotation
+        {
+            public Vector3 Position;
+            public Vector3 Rotation;
+        }
+
+        #endregion Structs
 
         #region Enums
 

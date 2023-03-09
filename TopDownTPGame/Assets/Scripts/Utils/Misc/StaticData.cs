@@ -19,5 +19,11 @@ namespace Utils.Misc
         public static readonly int Type_1_TertiaryHorizontal = Animator.StringToHash("Type_1FullBodyTertiaryHorizontal");
         public static readonly int Type_1_TertiaryVertical = Animator.StringToHash("Type_1FullBodyTertiaryVertical");
         public static readonly int Type_1_Ultimate = Animator.StringToHash("Type_1UpperBodyUltimate");
+
+        // Type 2
+        public static readonly int Type_2_Primary = Animator.StringToHash("Type_2UpperBodyAttack");
+        public static readonly int Type_2_Secondary = Animator.StringToHash("Type_2UpperBodySecondary");
+        public static readonly int Type_2_Tertiary = Animator.StringToHash("Type_2FullBodyTertiary");
+        public static readonly int Type_2_Ultimate = Animator.StringToHash("Type_2UpperBodyUltimate");
     }
 }

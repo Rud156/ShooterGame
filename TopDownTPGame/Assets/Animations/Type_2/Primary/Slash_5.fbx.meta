@@ -65,7 +65,7 @@ ModelImporter:
       name: Slash_5_1
       takeName: mixamo.com
       internalID: 4061839508520268033
-      firstFrame: 0
+      firstFrame: 18
       lastFrame: 31
       wrapMode: 0
       orientationOffsetY: 0
@@ -78,7 +78,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -94,7 +94,7 @@ ModelImporter:
       name: Slash_5_2
       takeName: mixamo.com
       internalID: -2061910772549006292
-      firstFrame: 25
+      firstFrame: 40
       lastFrame: 61
       wrapMode: 0
       orientationOffsetY: 0
@@ -107,7 +107,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
