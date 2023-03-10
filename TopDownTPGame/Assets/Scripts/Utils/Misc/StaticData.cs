@@ -22,6 +22,7 @@ namespace Utils.Misc
 
         // Type 2
         public static readonly int Type_2_Primary = Animator.StringToHash("Type_2UpperBodyAttack");
+        public static readonly int Type_2_PrimaryFront = Animator.StringToHash("Type_2UpperBodyFrontAttack");
         public static readonly int Type_2_Secondary = Animator.StringToHash("Type_2UpperBodySecondary");
         public static readonly int Type_2_Tertiary = Animator.StringToHash("Type_2FullBodyTertiary");
         public static readonly int Type_2_Ultimate = Animator.StringToHash("Type_2UpperBodyUltimate");

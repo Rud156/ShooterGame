@@ -60,7 +60,7 @@ namespace Player.Type_2
             {
                 case WaterControlState.LeftSlash:
                 case WaterControlState.RightSlash:
-                    UpdateSlash();
+                    UpdateSlashTimer();
                     break;
 
                 case WaterControlState.ShootFront:
@@ -103,7 +103,15 @@ namespace Player.Type_2
                 }
             }
 
-            TriggerAttackAnim();
+            if (_waterControlState != WaterControlState.ShootFront)
+            {
+                TriggerSwordAttackAnim();
+            }
+            else
+            {
+                _playerAnimator.SetTrigger(StaticData.Type_2_PrimaryFront);
+            }
+
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
         }
 
@@ -120,7 +128,6 @@ namespace Player.Type_2
         public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityFixedUpdateDelegate(playerController);
-
             if (_currentOverheatTime > 0 && _abilityEnd)
             {
                 _currentOverheatTime -= Time.fixedDeltaTime * _overheatCooldownMultiplier;
@@ -131,7 +138,7 @@ namespace Player.Type_2
 
         #region Ability Updates
 
-        private void TriggerAttackAnim()
+        private void TriggerSwordAttackAnim()
         {
             var animIndex = Random.Range(_animMinIndex, _animMaxIndex + 1);
             _playerAnimator.SetInteger(StaticData.Type_2_Primary, animIndex);
@@ -143,7 +150,7 @@ namespace Player.Type_2
             _currentTime = 0;
         }
 
-        private void UpdateSlash()
+        private void UpdateSlashTimer()
         {
             _currentTime += Time.fixedDeltaTime;
             if (_currentTime >= _slashDuration)
