@@ -30,12 +30,12 @@ Transform:
   m_GameObject: {fileID: 8855951514977000263}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 2.5, z: 1}
+  m_LocalScale: {x: 21, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5745308992601588344}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 71
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8855951514977000251
 MeshFilter:
@@ -123,7 +123,7 @@ MonoBehaviour:
   _destroyEffectPrefab: {fileID: 7200138652353697447, guid: 7e128b18b82cb774a993029ca39998c3,
     type: 3}
   _healthAndDamage: {fileID: 6678552366994652362}
-  _moveYDistance: 2.25
+  _moveYDistance: 9.17
   _spawnDuration: 0.25
   _spawnEasing:
     serializedVersion: 2
@@ -174,12 +174,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 350
+  _displayToHUD: 0
   _autoHealWhen: 0
   _autoHealTickRate: 0
   _autoHealPerTickAmount: 0
+  _minHealthDecayGuard: 0
+  _decayClearRate: 0
   _debugDamageAmount: 0
   _debugHealAmount: 0
-  _currentHealth: 0
+  _debugDecayAmount: 0
+  _debugDecayDuration: 0
 --- !u!1001 &5549856369288046091
 PrefabInstance:
   m_ObjectHideFlags: 0

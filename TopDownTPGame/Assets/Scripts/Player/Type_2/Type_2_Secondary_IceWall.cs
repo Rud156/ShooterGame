@@ -4,6 +4,7 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -16,6 +17,7 @@ namespace Player.Type_2
 
         [Header("Component")]
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Animator _playerAnimator;
 
         [Header("Spawn Data")]
         [SerializeField] private float _windUpTime;
@@ -49,8 +51,9 @@ namespace Player.Type_2
 
             Instantiate(_iceWallPrefab, spawnPosition, Quaternion.Euler(0, characterTransform.rotation.eulerAngles.y, 0));
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
-            _abilityEnd = true;
 
+            _playerAnimator.SetTrigger(StaticData.Type_2_Secondary);
+            _abilityEnd = true;
             _currentCooldownDuration = _cooldownDuration;
         }
 

@@ -1485,8 +1485,9 @@ MonoBehaviour:
   _iceWallPrefab: {fileID: 8855951514977000263, guid: 54b25c9551d650942a2936e1e39b341c,
     type: 3}
   _shootController: {fileID: 3268835866765903229}
+  _playerAnimator: {fileID: 7451471454665554315}
   _windUpTime: 0.25
-  _spawnOffset: {x: 0, y: -2.21, z: 0.75}
+  _spawnOffset: {x: 0, y: -7, z: 0.75}
 --- !u!1 &3709178519223676668
 GameObject:
   m_ObjectHideFlags: 0
