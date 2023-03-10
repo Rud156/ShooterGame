@@ -94,7 +94,7 @@ namespace Ability_Scripts.Spawns
 
         private void DestroyWall()
         {
-            Instantiate(_destroyEffectPrefab, transform.position, Quaternion.identity);
+            Instantiate(_destroyEffectPrefab, transform.position, transform.rotation);
             Destroy(gameObject);
         }
 
