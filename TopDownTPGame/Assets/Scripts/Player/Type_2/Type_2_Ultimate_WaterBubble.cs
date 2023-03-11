@@ -1,5 +1,6 @@
 #region
 
+using CustomCamera;
 using Player.Base;
 using Player.Common;
 using UI.Player;
@@ -13,10 +14,15 @@ namespace Player.Type_2
     public class Type_2_Ultimate_WaterBubble : Ability
     {
         [Header("Prefabs")]
+        [SerializeField] private GameObject _ultimateBurstEffectPrefab;
         [SerializeField] private GameObject _waterBubblePrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parentGameObject;
         [SerializeField] private Animator _playerAnimator;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Bubble Data")]
         [SerializeField] private float _abilityCastRadius;
@@ -52,7 +58,7 @@ namespace Player.Type_2
             for (var i = 0; i < totalHitColliders; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == _parentGameObject.GetInstanceID())
                 {
                     continue;
                 }
@@ -71,7 +77,9 @@ namespace Player.Type_2
             _abilityEnd = true;
 
             _playerAnimator.SetTrigger(StaticData.Type_2_Ultimate);
+            Instantiate(_ultimateBurstEffectPrefab, transform.position, Quaternion.identity);
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+            CustomCameraController.Instance.StartShake(_cameraShaker);
         }
 
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;

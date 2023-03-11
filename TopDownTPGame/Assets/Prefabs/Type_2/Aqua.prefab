@@ -215,9 +215,13 @@ MonoBehaviour:
   _abilityNameType: 7
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
+  _ultimateBurstEffectPrefab: {fileID: 4011931484811914565, guid: 7ba3775ee062bf24e890543d4af9c81f,
+    type: 3}
   _waterBubblePrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
     type: 3}
+  _parentGameObject: {fileID: 2637092012038209767}
   _playerAnimator: {fileID: 7451471454665554315}
+  _cameraShaker: {fileID: 11400000, guid: 4dd3fa128d3f96449a98d2ea633f8b79, type: 2}
   _abilityCastRadius: 10
   _abilityMask:
     serializedVersion: 2
