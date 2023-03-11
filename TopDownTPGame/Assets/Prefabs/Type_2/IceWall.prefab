@@ -158,6 +158,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _cameraShaker: {fileID: 11400000, guid: 59d42859e450cfe468c838e5c796466f, type: 2}
   _fullHealthColor: {r: 0, g: 1, b: 1, a: 0}
   _minHealthColor: {r: 0, g: 0, b: 0, a: 1}
   _destroyDuration: 21

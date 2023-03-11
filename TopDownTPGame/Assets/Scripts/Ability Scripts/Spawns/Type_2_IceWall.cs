@@ -1,5 +1,6 @@
 #region
 
+using CustomCamera;
 using HealthSystem;
 using UnityEngine;
 
@@ -19,6 +20,9 @@ namespace Ability_Scripts.Spawns
         [SerializeField] private float _moveYDistance;
         [SerializeField] private float _spawnDuration;
         [SerializeField] private AnimationCurve _spawnEasing;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShakerInRange _cameraShaker;
 
         [Header("Destroy Data")]
         [SerializeField] private Color _fullHealthColor;
@@ -48,6 +52,7 @@ namespace Ability_Scripts.Spawns
 
             _spawnActive = true;
             _destroyTimeLeft = _destroyDuration;
+            CustomCameraController.Instance.StartShake(_cameraShaker, transform.position);
         }
 
         private void OnDestroy() => _healthAndDamage.OnHealthChanged -= HandleHealthAndDamage;

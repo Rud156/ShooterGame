@@ -7,9 +7,6 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.Serialization;
-using UnityEngine.Splines;
 using Utils.Misc;
 using Random = UnityEngine.Random;
 

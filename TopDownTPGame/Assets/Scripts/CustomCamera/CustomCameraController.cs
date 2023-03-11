@@ -10,6 +10,9 @@ namespace CustomCamera
     [RequireComponent(typeof(CinemachineVirtualCamera))]
     public class CustomCameraController : MonoBehaviour
     {
+        [Header("Camera Data")]
+        [SerializeField] private GameObject _cameraShakeInRangePrefab;
+
         private CinemachineVirtualCamera _cinemachine;
         private CinemachineBasicMultiChannelPerlin _cinemachineNoise;
 
@@ -57,6 +60,19 @@ namespace CustomCamera
             _shakeTimeLeft = cameraShaker.duration;
             _isShaking = true;
         }
+
+        public void StartShake(CameraShakerInRange cameraShakerInRange, Vector3 spawnPosition)
+        {
+            _shakeTimeLeft = cameraShakerInRange.duration;
+            _isShaking = true;
+
+            var cameraShakerInRangeObject = Instantiate(_cameraShakeInRangePrefab, spawnPosition, Quaternion.identity);
+            cameraShakerInRangeObject.GetComponent<CameraShakeInRangeController>().StartShake(cameraShakerInRange);
+        }
+
+        public void UpdateAmplitude(float changedAmplitude) => _amplitude = changedAmplitude;
+
+        public void UpdateFrequency(float changedFrequency) => _frequency = changedFrequency;
 
         #endregion External Functions
 
