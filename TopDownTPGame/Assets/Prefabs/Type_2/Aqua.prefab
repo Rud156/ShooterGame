@@ -217,6 +217,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _waterBubblePrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
     type: 3}
+  _playerAnimator: {fileID: 7451471454665554315}
   _abilityCastRadius: 10
   _abilityMask:
     serializedVersion: 2

@@ -1869,7 +1869,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WaterFrozen
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6906033285599480918}
@@ -1882,7 +1882,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: d5e6e8f26df066b46a53be56791f863f,
+  m_Motion: {fileID: 4061839508520268033, guid: d5e6e8f26df066b46a53be56791f863f,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

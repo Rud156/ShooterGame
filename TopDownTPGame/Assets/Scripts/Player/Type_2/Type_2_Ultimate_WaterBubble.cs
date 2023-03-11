@@ -15,6 +15,9 @@ namespace Player.Type_2
         [Header("Prefabs")]
         [SerializeField] private GameObject _waterBubblePrefab;
 
+        [Header("Components")]
+        [SerializeField] private Animator _playerAnimator;
+
         [Header("Bubble Data")]
         [SerializeField] private float _abilityCastRadius;
         [SerializeField] private LayerMask _abilityMask;
@@ -66,6 +69,8 @@ namespace Player.Type_2
 
             _currentUltimatePercent = 0;
             _abilityEnd = true;
+
+            _playerAnimator.SetTrigger(StaticData.Type_2_Ultimate);
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
         }
 
