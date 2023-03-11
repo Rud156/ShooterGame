@@ -1698,20 +1698,39 @@ MonoBehaviour:
   _abilityType: 0
   _abilityNameType: 6
   _allowedActiveAbilities: 1500000018000000
-  _cooldownDuration: 7
+  _cooldownDuration: 1
   _markerEffectPrefab: {fileID: 8160184973231911241, guid: 199b7c15692db1947aa70ad0e5a62301,
     type: 3}
-  _damageBurstEffectPrefab: {fileID: 168058103202751482, guid: 730386caebd4dc846850e53629da47e1,
+  _burstDamageEffectPrefab: {fileID: 168058103202751482, guid: 730386caebd4dc846850e53629da47e1,
     type: 3}
   _dashTrailEffectPrefab: {fileID: 4581791113312155467, guid: ed3fa45c44aceef479ace8b50e33ea83,
     type: 3}
   _holdRunTrailEffectPrefab: {fileID: 4581791113312155467, guid: ed3fa45c44aceef479ace8b50e33ea83,
     type: 3}
-  _playerRenderers:
-  - {fileID: 0}
-  - {fileID: 0}
-  _defaultMaterial: {fileID: 2100000, guid: 918dc81966c65de4b922bfe5eeaa194a, type: 2}
-  _abilityMaterial: {fileID: 2100000, guid: 8180121e3ddd8244e912617ce06e35de, type: 2}
+  _playerAnimator: {fileID: 7451471454665554315}
+  _tertiaryMaterial: {fileID: 2100000, guid: 8180121e3ddd8244e912617ce06e35de, type: 2}
+  _tertiaryMaterialDatas:
+  - renderer: {fileID: 401362319392372518}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: 584185f725cc8ec4f816013ff6b5e2cc, type: 2}
+  - renderer: {fileID: 4474844357150967010}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: 99a79f6de2825ec4bb471ef12eee8b52, type: 2}
+  - renderer: {fileID: 8172158850490275671}
+    materialCount: 10
+    materialList:
+    - {fileID: 2100000, guid: 6591b6a58c1933643bb87bf9fbef044c, type: 2}
+    - {fileID: 2100000, guid: 02b619845fcb6e741b4be7e71e36c491, type: 2}
+    - {fileID: 2100000, guid: b8022f4bfe3976845b403285a16c5320, type: 2}
+    - {fileID: 2100000, guid: 29c9dd3707158b2448cc0bdf81c33ce8, type: 2}
+    - {fileID: 2100000, guid: aa86a0f3e62852142bfc3a5d4cd7a828, type: 2}
+    - {fileID: 2100000, guid: b97b55ed446d8ed48acc18d42edf2de0, type: 2}
+    - {fileID: 2100000, guid: 023452b84affa6f43a8feea0e1c55499, type: 2}
+    - {fileID: 2100000, guid: 45f47006298912f4dbec4062603b460f, type: 2}
+    - {fileID: 2100000, guid: 8e526af249278a0498ce8273e07fcc49, type: 2}
+    - {fileID: 2100000, guid: 903deec0895457d43a093ac8ee3e1d97, type: 2}
   _holdRunEffectOffset: {x: 0, y: 0, z: 1}
   _holdTriggerDuration: 0.2
   _holdRunVelocity: 40

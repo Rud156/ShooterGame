@@ -18,14 +18,16 @@ namespace Player.Type_2
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _markerEffectPrefab;
-        [SerializeField] private GameObject _damageBurstEffectPrefab;
+        [SerializeField] private GameObject _burstDamageEffectPrefab;
         [SerializeField] private GameObject _dashTrailEffectPrefab;
         [SerializeField] private GameObject _holdRunTrailEffectPrefab;
 
+        [Header("Components")]
+        [SerializeField] private Animator _playerAnimator;
+
         [Header("Render Data")]
-        [SerializeField] private List<Renderer> _playerRenderers;
-        [SerializeField] private Material _defaultMaterial;
-        [SerializeField] private Material _abilityMaterial;
+        [SerializeField] private Material _tertiaryMaterial;
+        [SerializeField] private List<TertiaryMaterialData> _tertiaryMaterialDatas;
 
         [Header("Hold Type Data")]
         [SerializeField] private Vector3 _holdRunEffectOffset;
@@ -87,6 +89,7 @@ namespace Player.Type_2
 
         public override void EndAbility(BasePlayerController playerController)
         {
+            // Clear all the Burst Damage Markers
             foreach (var burstDamageData in _burstDamageMarkers)
             {
                 burstDamageData.BurstDamageMarker.SetDamageAmount(_damageAmount);
@@ -95,20 +98,18 @@ namespace Player.Type_2
                 Destroy(burstDamageData.BurstDamageMarker);
 
                 var position = burstDamageData.BurstDamageMarker.transform.position;
-                Instantiate(_damageBurstEffectPrefab, position, Quaternion.identity);
+                Instantiate(_burstDamageEffectPrefab, position, Quaternion.identity);
             }
 
             _burstDamageMarkers.Clear();
 
-            foreach (var playerRenderer in _playerRenderers)
-            {
-                playerRenderer.material = _defaultMaterial;
-            }
-
-            _currentCooldownDuration = _cooldownDuration;
+            // Reset all the materials
+            ClearTertiaryMaterials();
 
             Destroy(_abilityStateEffectObject);
             _abilityStateEffectObject = null;
+            _currentCooldownDuration = _cooldownDuration;
+            _playerAnimator.SetBool(StaticData.Type_2_Tertiary, false);
         }
 
         public override void StartAbility(BasePlayerController playerController)
@@ -140,6 +141,8 @@ namespace Player.Type_2
 
         #region Utils
 
+        #region State Updates
+
         private void UpdateTriggerTypeSelect(BasePlayerController playerController)
         {
             _currentTimer -= Time.fixedDeltaTime;
@@ -167,16 +170,13 @@ namespace Player.Type_2
 
         private void SetupDashMovement()
         {
-            foreach (var playerRenderer in _playerRenderers)
-            {
-                playerRenderer.material = _abilityMaterial;
-            }
-
             Assert.IsNull(_abilityStateEffectObject, "Effect should be NULL here");
+            ApplyTertiaryMaterials();
 
             var playerTransform = transform;
             _abilityStateEffectObject = Instantiate(_holdRunTrailEffectPrefab, playerTransform.position, Quaternion.identity, playerTransform);
             _abilityStateEffectObject.transform.localPosition = _dashEffectOffset;
+            _playerAnimator.SetBool(StaticData.Type_2_Tertiary, true);
         }
 
         private void UpdateDashMovement()
@@ -199,17 +199,14 @@ namespace Player.Type_2
 
         private void SetupHoldRunMovement()
         {
-            foreach (var playerRenderer in _playerRenderers)
-            {
-                playerRenderer.material = _abilityMaterial;
-            }
-
             Assert.IsNull(_abilityStateEffectObject, "Effect should be NULL here");
+            ApplyTertiaryMaterials();
 
             var playerTransform = transform;
             _abilityStateEffectObject = Instantiate(_dashTrailEffectPrefab, playerTransform.position, Quaternion.identity, playerTransform);
             _abilityStateEffectObject.transform.localPosition = _holdRunEffectOffset;
             _computedVelocity = Vector3.zero;
+            _playerAnimator.SetBool(StaticData.Type_2_Tertiary, true);
         }
 
         private void UpdateHoldRunMovement(BasePlayerController playerController)
@@ -276,6 +273,40 @@ namespace Player.Type_2
             }
         }
 
+        #endregion State Updates
+
+        #region Material Utils
+
+        private void ApplyTertiaryMaterials()
+        {
+            foreach (var data in _tertiaryMaterialDatas)
+            {
+                var materials = new List<Material>();
+                for (var j = 0; j < data.materialCount; j++)
+                {
+                    materials.Add(_tertiaryMaterial);
+                }
+
+                data.renderer.materials = materials.ToArray();
+            }
+        }
+
+        private void ClearTertiaryMaterials()
+        {
+            foreach (var data in _tertiaryMaterialDatas)
+            {
+                var materials = new List<Material>();
+                for (var j = 0; j < data.materialCount; j++)
+                {
+                    materials.Add(data.materialList[j]);
+                }
+
+                data.renderer.materials = materials.ToArray();
+            }
+        }
+
+        #endregion Material Utils
+
         private void SetAbilityState(AbilityState abilityState) => _abilityState = abilityState;
 
         #endregion Utils
@@ -286,6 +317,14 @@ namespace Player.Type_2
         {
             public BurstDamageMarker BurstDamageMarker;
             public GameObject MarkedEffectObject;
+        }
+
+        [Serializable]
+        private struct TertiaryMaterialData
+        {
+            public Renderer renderer;
+            public int materialCount;
+            public List<Material> materialList;
         }
 
         #endregion Structs
