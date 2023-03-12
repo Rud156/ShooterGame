@@ -1703,7 +1703,7 @@ MonoBehaviour:
   _abilityType: 0
   _abilityNameType: 6
   _allowedActiveAbilities: 1500000018000000
-  _cooldownDuration: 1
+  _cooldownDuration: 5
   _markerEffectPrefab: {fileID: 8160184973231911241, guid: 199b7c15692db1947aa70ad0e5a62301,
     type: 3}
   _burstDamageEffectPrefab: {fileID: 168058103202751482, guid: 730386caebd4dc846850e53629da47e1,
