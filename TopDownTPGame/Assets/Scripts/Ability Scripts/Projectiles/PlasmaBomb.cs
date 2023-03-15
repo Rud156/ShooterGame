@@ -1,6 +1,7 @@
 #region
 
 using HealthSystem;
+using Player.Common;
 using UnityEngine;
 using Utils.Misc;
 
@@ -20,7 +21,7 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private int _damageAmount;
         [SerializeField] private LayerMask _bombMask;
 
-        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
         private float _destroyTimeLeft;
 

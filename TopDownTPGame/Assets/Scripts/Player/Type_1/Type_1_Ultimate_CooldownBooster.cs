@@ -31,7 +31,7 @@ namespace Player.Type_1
         #region Ability Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) =>
-            base.AbilityCanStart(playerController) && _currentUltimatePercent >= StaticData.MaxUltimatePercent;
+            base.AbilityCanStart(playerController) && _currentUltimatePercent >= PlayerStaticData.MaxUltimatePercent;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -42,7 +42,7 @@ namespace Player.Type_1
             {
                 var characterTransform = transform;
                 _warCryObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
-                _warCryObject.GetComponent<WarCryPulse>().SetTargetAnimatorData(_playerAnimator, StaticData.Type_1_Ultimate);
+                _warCryObject.GetComponent<WarCryPulse>().SetTargetAnimatorData(_playerAnimator, PlayerStaticData.Type_1_Ultimate);
                 _abilityEnd = true;
 
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
@@ -81,12 +81,12 @@ namespace Player.Type_1
         {
             base.UnityFixedUpdateDelegate(playerController);
 
-            if (_currentUltimatePercent < StaticData.MaxUltimatePercent)
+            if (_currentUltimatePercent < PlayerStaticData.MaxUltimatePercent)
             {
                 _currentUltimatePercent += Time.fixedDeltaTime * _ultimateChargeRate;
-                if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
+                if (_currentUltimatePercent > PlayerStaticData.MaxUltimatePercent)
                 {
-                    _currentUltimatePercent = StaticData.MaxUltimatePercent;
+                    _currentUltimatePercent = PlayerStaticData.MaxUltimatePercent;
                 }
             }
         }
@@ -98,9 +98,9 @@ namespace Player.Type_1
         public void AddUltimateCharge(int amount)
         {
             _currentUltimatePercent += amount;
-            if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
+            if (_currentUltimatePercent > PlayerStaticData.MaxUltimatePercent)
             {
-                _currentUltimatePercent = StaticData.MaxUltimatePercent;
+                _currentUltimatePercent = PlayerStaticData.MaxUltimatePercent;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Player.Type_1
         {
             HUD_PlayerAbilityDisplay.Instance.UpdateTimer(AbilityTrigger.Ultimate, $"{_currentUltimatePercent:0.0} %", true);
 
-            var overlayPercent = _currentUltimatePercent >= StaticData.MaxUltimatePercent ? 0 : 1;
+            var overlayPercent = _currentUltimatePercent >= PlayerStaticData.MaxUltimatePercent ? 0 : 1;
             HUD_PlayerAbilityDisplay.Instance.UpdateOverlay(AbilityTrigger.Ultimate, overlayPercent);
         }
 

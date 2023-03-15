@@ -4,9 +4,9 @@ using UnityEngine;
 
 #endregion
 
-namespace Utils.Misc
+namespace Player.Common
 {
-    public static class StaticData
+    public static class PlayerStaticData
     {
         public const int MaxCollidersCheck = 20;
         public const int MaxUltimatePercent = 100;
@@ -26,5 +26,13 @@ namespace Utils.Misc
         public static readonly int Type_2_Secondary = Animator.StringToHash("Type_2UpperBodySecondary");
         public static readonly int Type_2_Tertiary = Animator.StringToHash("Type_2FullBodyTertiary");
         public static readonly int Type_2_Ultimate = Animator.StringToHash("Type_2UpperBodyUltimate");
+
+        //Type 3
+        public static readonly int Type_3_Primary = Animator.StringToHash("Type_3UpperBodyPrimary");
+        public static readonly int Type_3_Secondary = Animator.StringToHash("Type_3UpperBodySecondary");
+        public static readonly int Type_3_Tertiary = Animator.StringToHash("Type_3FullBodyTertiary");
+        public static readonly int Type_3_TertiaryHorizontal = Animator.StringToHash("Type_3FullBodyTertiaryHorizontal");
+        public static readonly int Type_3_TertiaryVertical = Animator.StringToHash("Type_3FullBodyTertiaryVertical");
+        public static readonly int Type_3_Ultimate = Animator.StringToHash("Type_3UpperBodyUltimate");
     }
 }

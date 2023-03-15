@@ -17,11 +17,13 @@ namespace Player.Type_3
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _damageEffectPrefab;
+        [SerializeField] private GameObject _raycastPointsPrefab;
 
         [Header("Components")]
-        [SerializeField] private AbilityPrefabInitializer _abilityPrefabInitializer;
+        [SerializeField] private Animator _playerAnimator;
 
         [Header("Shoot Data")]
+        [SerializeField] private int _shootAnimCount;
         [SerializeField] private float _fireRate;
         [SerializeField] private LayerMask _attackMask;
         [SerializeField] private int _damageAmount;
@@ -31,10 +33,8 @@ namespace Player.Type_3
         [SerializeField] private float _overheatTime;
         [SerializeField] private float _overheatCooldownMultiplier;
 
-        [Header("Post Start Filled")]
-        [SerializeField] private List<Transform> _raycastPoints;
-
         private Transform _playerCinemachine;
+        private List<Transform> _raycastPoints;
 
         private float _nextShootTime;
         private float _currentOverheatTime;
@@ -74,6 +74,7 @@ namespace Player.Type_3
                     }
                 }
 
+                _playerAnimator.SetInteger(PlayerStaticData.Type_3_Primary, Random.Range(1, _shootAnimCount + 1));
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
             }
 
@@ -96,9 +97,8 @@ namespace Player.Type_3
         {
             base.UnityStartDelegate(playerController);
 
-            _abilityPrefabInitializer.AbilityPrefabInit();
             _playerCinemachine = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController).transform;
-            var raycastParent = _playerCinemachine.Find("Type_3_CameraPrefab(Clone)/RaycastPoints");
+            var raycastParent = Instantiate(_raycastPointsPrefab, _playerCinemachine.position, Quaternion.identity);
             _raycastPoints = raycastParent.GetComponentsInChildren<Transform>().ToList();
         }
 

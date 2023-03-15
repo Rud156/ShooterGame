@@ -2,6 +2,7 @@
 
 using HealthSystem;
 using Player.Base;
+using Player.Common;
 using Player.Type_5;
 using UnityEngine;
 using Utils.Misc;
@@ -32,7 +33,7 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private float _stunEffectRadius;
         [SerializeField] private LayerMask _stunMask;
 
-        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
         private Rigidbody _rb;
         private bool _isInitialized;

@@ -45,7 +45,7 @@ namespace Player.Type_2
         [SerializeField] private float _damageCheckRadius;
         [SerializeField] private int _damageAmount;
 
-        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
         private GameObject _abilityStateEffectObject;
         private List<BurstDamageData> _burstDamageMarkers;
@@ -109,7 +109,7 @@ namespace Player.Type_2
             Destroy(_abilityStateEffectObject);
             _abilityStateEffectObject = null;
             _currentCooldownDuration = _cooldownDuration;
-            _playerAnimator.SetBool(StaticData.Type_2_Tertiary, false);
+            _playerAnimator.SetBool(PlayerStaticData.Type_2_Tertiary, false);
         }
 
         public override void StartAbility(BasePlayerController playerController)
@@ -176,7 +176,7 @@ namespace Player.Type_2
             var playerTransform = transform;
             _abilityStateEffectObject = Instantiate(_holdRunTrailEffectPrefab, playerTransform.position, Quaternion.identity, playerTransform);
             _abilityStateEffectObject.transform.localPosition = _dashEffectOffset;
-            _playerAnimator.SetBool(StaticData.Type_2_Tertiary, true);
+            _playerAnimator.SetBool(PlayerStaticData.Type_2_Tertiary, true);
         }
 
         private void UpdateDashMovement()
@@ -206,7 +206,7 @@ namespace Player.Type_2
             _abilityStateEffectObject = Instantiate(_dashTrailEffectPrefab, playerTransform.position, Quaternion.identity, playerTransform);
             _abilityStateEffectObject.transform.localPosition = _holdRunEffectOffset;
             _computedVelocity = Vector3.zero;
-            _playerAnimator.SetBool(StaticData.Type_2_Tertiary, true);
+            _playerAnimator.SetBool(PlayerStaticData.Type_2_Tertiary, true);
         }
 
         private void UpdateHoldRunMovement(BasePlayerController playerController)

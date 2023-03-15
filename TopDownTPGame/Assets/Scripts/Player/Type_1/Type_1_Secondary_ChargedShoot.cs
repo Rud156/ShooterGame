@@ -61,7 +61,7 @@ namespace Player.Type_1
                 var simpleDamage = projectile.GetComponent<SimpleDamageOverrideTrigger>();
                 simpleDamage.SetDamageAmount(mappedDamage);
 
-                _playerAnimator.SetInteger(StaticData.Type_1_Secondary, Random.Range(1, _attackAnimCount + 1));
+                _playerAnimator.SetInteger(PlayerStaticData.Type_1_Secondary, Random.Range(1, _attackAnimCount + 1));
                 _type1Primary.UseStoredCharge(chargeAmount);
                 _abilityEnd = true;
 

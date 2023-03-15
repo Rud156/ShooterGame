@@ -28,7 +28,7 @@ public class Type_4_Ultimate_Rocket : Ability
     #region Ability Functions
 
     public override bool AbilityCanStart(BasePlayerController playerController) =>
-        base.AbilityCanStart(playerController) && _currentUltimatePercent >= StaticData.MaxUltimatePercent;
+        base.AbilityCanStart(playerController) && _currentUltimatePercent >= PlayerStaticData.MaxUltimatePercent;
 
     public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -85,12 +85,12 @@ public class Type_4_Ultimate_Rocket : Ability
     {
         base.UnityFixedUpdateDelegate(playerController);
 
-        if (_currentUltimatePercent < StaticData.MaxUltimatePercent)
+        if (_currentUltimatePercent < PlayerStaticData.MaxUltimatePercent)
         {
             _currentUltimatePercent += Time.fixedDeltaTime * _ultimateChargeRate;
-            if (_currentUltimatePercent > StaticData.MaxUltimatePercent)
+            if (_currentUltimatePercent > PlayerStaticData.MaxUltimatePercent)
             {
-                _currentUltimatePercent = StaticData.MaxUltimatePercent;
+                _currentUltimatePercent = PlayerStaticData.MaxUltimatePercent;
             }
         }
     }
@@ -103,7 +103,7 @@ public class Type_4_Ultimate_Rocket : Ability
     {
         HUD_PlayerAbilityDisplay.Instance.UpdateTimer(AbilityTrigger.Ultimate, $"{_currentUltimatePercent:0.0} %", true);
 
-        var overlayPercent = _currentUltimatePercent >= StaticData.MaxUltimatePercent ? 0 : 1;
+        var overlayPercent = _currentUltimatePercent >= PlayerStaticData.MaxUltimatePercent ? 0 : 1;
         HUD_PlayerAbilityDisplay.Instance.UpdateOverlay(AbilityTrigger.Ultimate, overlayPercent);
     }
 

@@ -52,7 +52,7 @@ namespace Player.Type_2
             Instantiate(_iceWallPrefab, spawnPosition, Quaternion.Euler(0, characterTransform.rotation.eulerAngles.y, 0));
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
 
-            _playerAnimator.SetTrigger(StaticData.Type_2_Secondary);
+            _playerAnimator.SetTrigger(PlayerStaticData.Type_2_Secondary);
             _abilityEnd = true;
             _currentCooldownDuration = _cooldownDuration;
         }

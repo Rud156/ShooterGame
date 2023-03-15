@@ -72,7 +72,7 @@ namespace Player.Type_2
         public override void EndAbility(BasePlayerController playerController)
         {
             _abilityEnd = true;
-            _playerAnimator.SetInteger(StaticData.Type_2_Primary, 0);
+            _playerAnimator.SetInteger(PlayerStaticData.Type_2_Primary, 0);
             _rightHandSword.SetActive(false);
         }
 
@@ -106,7 +106,7 @@ namespace Player.Type_2
             }
             else
             {
-                _playerAnimator.SetTrigger(StaticData.Type_2_PrimaryFront);
+                _playerAnimator.SetTrigger(PlayerStaticData.Type_2_PrimaryFront);
             }
 
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
@@ -138,7 +138,7 @@ namespace Player.Type_2
         private void TriggerSwordAttackAnim()
         {
             var animIndex = Random.Range(_animMinIndex, _animMaxIndex + 1);
-            _playerAnimator.SetInteger(StaticData.Type_2_Primary, animIndex);
+            _playerAnimator.SetInteger(PlayerStaticData.Type_2_Primary, animIndex);
 
             _rightHandSword.SetActive(true);
             _rightHandSword.transform.localPosition = _swordPositionRotations[animIndex - 1].Position;

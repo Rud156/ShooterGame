@@ -67,7 +67,7 @@ namespace Player.Type_1
         public override void EndAbility(BasePlayerController playerController)
         {
             Assert.IsNotNull(_dashEffectObject, "Dash effect cannot be NULL here..");
-            _playerAnimator.SetBool(StaticData.Type_1_Tertiary, false);
+            _playerAnimator.SetBool(PlayerStaticData.Type_1_Tertiary, false);
             Destroy(_dashEffectObject);
         }
 
@@ -99,9 +99,9 @@ namespace Player.Type_1
             _dashEffectObject.transform.localPosition += _dashEffectOffset;
             _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
 
-            _playerAnimator.SetBool(StaticData.Type_1_Tertiary, true);
-            _playerAnimator.SetFloat(StaticData.Type_1_TertiaryHorizontal, _startCoreInput.x);
-            _playerAnimator.SetFloat(StaticData.Type_1_TertiaryVertical, _startCoreInput.y);
+            _playerAnimator.SetBool(PlayerStaticData.Type_1_Tertiary, true);
+            _playerAnimator.SetFloat(PlayerStaticData.Type_1_TertiaryHorizontal, _startCoreInput.x);
+            _playerAnimator.SetFloat(PlayerStaticData.Type_1_TertiaryVertical, _startCoreInput.y);
 
             _currentCooldownDuration = _cooldownDuration;
         }

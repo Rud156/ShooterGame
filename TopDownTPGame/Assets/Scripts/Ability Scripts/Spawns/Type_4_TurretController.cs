@@ -2,6 +2,7 @@
 
 using System;
 using HealthSystem;
+using Player.Common;
 using UnityEngine;
 using Utils.Misc;
 using Random = UnityEngine.Random;
@@ -26,7 +27,7 @@ namespace Ability_Scripts.Spawns
         [SerializeField] private float _warmUpTime;
         [SerializeField] private int _damagePerSec;
 
-        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
         private TurretState _turretState;
         private TurretTargetingState _turretTargetingState;

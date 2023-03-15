@@ -2,6 +2,7 @@
 
 using HealthSystem;
 using Player.Base;
+using Player.Common;
 using UnityEngine;
 using Utils.Misc;
 
@@ -26,7 +27,7 @@ namespace Player.Type_3
         [SerializeField] private int _healthDecayAmount;
         [SerializeField] private float _healthDecayDuration;
 
-        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
         private int _currentPulseCount;
         private float _currentPulseWaitDuration;

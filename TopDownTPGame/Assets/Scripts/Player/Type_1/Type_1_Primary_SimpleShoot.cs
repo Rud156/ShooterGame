@@ -70,7 +70,7 @@ namespace Player.Type_1
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(ProjectileHitCollider);
 
-                _playerAnimator.SetInteger(StaticData.Type_1_Primary, Random.Range(1, _attackAnimCount + 1));
+                _playerAnimator.SetInteger(PlayerStaticData.Type_1_Primary, Random.Range(1, _attackAnimCount + 1));
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
                 CustomCameraController.Instance.StartShake(_cameraShaker);
 

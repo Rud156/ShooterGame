@@ -32,7 +32,7 @@ namespace Player.Type_1
         private Animator _targetAnimator;
         private int _targetAnimTrigger;
 
-        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
+        private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
         private int _currentPulseCount;
         private float _currentPulseWaitDuration;

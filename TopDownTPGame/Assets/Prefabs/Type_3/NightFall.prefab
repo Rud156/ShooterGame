@@ -580,7 +580,7 @@ Animator:
   m_GameObject: {fileID: 670950745032483695}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
-  m_Controller: {fileID: 9100000, guid: da67194bef21ed44cafdeec262a2256e, type: 2}
+  m_Controller: {fileID: 9100000, guid: c8ac9bfe91c93514fb418f525e4faefd, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1370,7 +1370,6 @@ GameObject:
   - component: {fileID: 4825851869419891803}
   - component: {fileID: 6682472334063619326}
   - component: {fileID: 1683011238459484373}
-  - component: {fileID: 8171381291776676171}
   - component: {fileID: 7031137311574653001}
   m_Layer: 6
   m_Name: NightFall
@@ -1548,24 +1547,6 @@ MonoBehaviour:
   _xOffsetAmount: 1.75
   _kbmSensitivity: 0.7
   _gamepadSensitivity: 25
---- !u!114 &8171381291776676171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683011238459484380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fdc3a56bf5bc4545a9d88d4b04df1b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _abilityPrefab: {fileID: 7651119961102127592, guid: 3dc473ef4eab01949841ab100c21bda7,
-    type: 3}
-  _abilityCameraParentPrefab: {fileID: 7651119961102127592, guid: fd483c2c56f27f74ca5d710e24e97e67,
-    type: 3}
-  _defaultOffset: {x: 0, y: 0, z: 0}
-  _cameraParentOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &7031137311574653001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1813,7 +1794,10 @@ MonoBehaviour:
   _cooldownDuration: 3
   _damageEffectPrefab: {fileID: 7891259392760164114, guid: 38149fd665e688b469d853178bf64142,
     type: 3}
-  _abilityPrefabInitializer: {fileID: 8171381291776676171}
+  _raycastPointsPrefab: {fileID: 7820997016974016892, guid: 5a5843dcc06f83f48a78d4f7905660e0,
+    type: 3}
+  _playerAnimator: {fileID: 2003848228306025429}
+  _shootAnimCount: 3
   _fireRate: 0.75
   _attackMask:
     serializedVersion: 2
@@ -1822,7 +1806,6 @@ MonoBehaviour:
   _raycastDistance: 20
   _overheatTime: 7
   _overheatCooldownMultiplier: 0.75
-  _raycastPoints: []
 --- !u!1 &2168690003061204118
 GameObject:
   m_ObjectHideFlags: 0
