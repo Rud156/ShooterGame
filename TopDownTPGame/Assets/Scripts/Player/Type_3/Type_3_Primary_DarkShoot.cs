@@ -18,6 +18,9 @@ namespace Player.Type_3
         [Header("Prefabs")]
         [SerializeField] private GameObject _damageEffectPrefab;
 
+        [Header("Components")]
+        [SerializeField] private AbilityPrefabInitializer _abilityPrefabInitializer;
+
         [Header("Shoot Data")]
         [SerializeField] private float _fireRate;
         [SerializeField] private LayerMask _attackMask;
@@ -29,10 +32,9 @@ namespace Player.Type_3
         [SerializeField] private float _overheatCooldownMultiplier;
 
         [Header("Post Start Filled")]
-        [SerializeField] private Transform _frontCollider;
         [SerializeField] private List<Transform> _raycastPoints;
 
-        private Collider[] _hitColliders = new Collider[StaticData.MaxCollidersCheck];
+        private Transform _playerCinemachine;
 
         private float _nextShootTime;
         private float _currentOverheatTime;
@@ -58,39 +60,21 @@ namespace Player.Type_3
                     _abilityEnd = true;
                 }
 
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
-                var totalHitColliders = Physics.OverlapBoxNonAlloc(_frontCollider.position, _frontCollider.localScale / 2, _hitColliders, _frontCollider.rotation, _attackMask);
-                for (var i = 0; i < totalHitColliders; i++)
+                foreach (var raycastPoint in _raycastPoints)
                 {
-                    // Do not target itself
-                    if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                    var hit = Physics.Raycast(raycastPoint.position, _playerCinemachine.forward, out var hitInfo, _raycastDistance, _attackMask);
+                    if (hit)
                     {
-                        continue;
-                    }
-
-                    if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
-                    {
-                        var targetHit = false;
-                        var targetInstanceId = _hitColliders[i].gameObject.GetInstanceID();
-
-                        foreach (var raycastTarget in _raycastPoints)
+                        if (hitInfo.transform.TryGetComponent(out HealthAndDamage healthAndDamage))
                         {
-                            var hit = Physics.Raycast(raycastTarget.position, _frontCollider.forward, out var hitInfo, _raycastDistance, _attackMask);
-                            if (hit && hitInfo.transform.gameObject.GetInstanceID() == targetInstanceId)
-                            {
-                                targetHit = true;
-                                healthAndDamage.TakeDamage(_damageAmount);
-                                Instantiate(_damageEffectPrefab, hitInfo.point, Quaternion.identity);
-                                break;
-                            }
-                        }
-
-                        if (targetHit)
-                        {
+                            healthAndDamage.TakeDamage(_damageAmount);
+                            Instantiate(_damageEffectPrefab, hitInfo.point, Quaternion.identity);
                             break;
                         }
                     }
                 }
+
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
             }
 
             var inputKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
@@ -112,8 +96,9 @@ namespace Player.Type_3
         {
             base.UnityStartDelegate(playerController);
 
-            _frontCollider = transform.Find("CameraHolder/Main Camera/Type_3_CameraPrefab(Clone)/FrontColliderDetector");
-            var raycastParent = transform.Find("CameraHolder/Main Camera/Type_3_CameraPrefab(Clone)/RaycastPoints");
+            _abilityPrefabInitializer.AbilityPrefabInit();
+            _playerCinemachine = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController).transform;
+            var raycastParent = _playerCinemachine.Find("Type_3_CameraPrefab(Clone)/RaycastPoints");
             _raycastPoints = raycastParent.GetComponentsInChildren<Transform>().ToList();
         }
 

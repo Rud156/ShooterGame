@@ -1,6 +1,7 @@
 #region
 
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -11,22 +12,33 @@ namespace Player.Common
         [Header("Prefabs")]
         [SerializeField] private GameObject _abilityPrefab;
         [SerializeField] private GameObject _abilityCameraParentPrefab;
-        [SerializeField] private GameObject _abilityCameraHolderPrefab;
-
-        [Header("Components")]
-        [SerializeField] private Transform _cameraHolder;
-        [SerializeField] private Transform _camera;
 
         [Header("Offsets")]
         [SerializeField] private Vector3 _defaultOffset;
         [SerializeField] private Vector3 _cameraParentOffset;
-        [SerializeField] private Vector3 _cameraHolderOffset;
+
+        private Transform _playerCinemachine;
+        private GameObject _cameraPrefabInstance;
+        private GameObject _defaultPrefabInstance;
 
         private bool _isInitialized;
 
         #region Unity Functions
 
         private void Start() => AbilityPrefabInit();
+
+        private void OnDestroy()
+        {
+            if (_defaultPrefabInstance != null)
+            {
+                Destroy(_defaultPrefabInstance);
+            }
+
+            if (_cameraPrefabInstance != null)
+            {
+                Destroy(_cameraPrefabInstance);
+            }
+        }
 
         #endregion Unity Functions
 
@@ -40,22 +52,18 @@ namespace Player.Common
             }
 
             _isInitialized = true;
+            _playerCinemachine = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController).transform;
+
             if (_abilityPrefab != null)
             {
-                var instance = Instantiate(_abilityPrefab, transform);
-                instance.transform.localPosition += _defaultOffset;
+                _defaultPrefabInstance = Instantiate(_abilityPrefab, transform);
+                _defaultPrefabInstance.transform.localPosition += _defaultOffset;
             }
 
             if (_abilityCameraParentPrefab != null)
             {
-                var instance = Instantiate(_abilityCameraParentPrefab, _camera);
-                instance.transform.localPosition += _cameraParentOffset;
-            }
-
-            if (_abilityCameraHolderPrefab != null)
-            {
-                var instance = Instantiate(_abilityCameraHolderPrefab, _cameraHolder);
-                instance.transform.localPosition += _cameraHolderOffset;
+                _cameraPrefabInstance = Instantiate(_abilityCameraParentPrefab, _playerCinemachine);
+                _cameraPrefabInstance.transform.localPosition += _cameraParentOffset;
             }
         }
 

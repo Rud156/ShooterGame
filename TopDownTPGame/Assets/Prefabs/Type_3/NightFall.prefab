@@ -583,7 +583,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: da67194bef21ed44cafdeec262a2256e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1370,6 +1370,7 @@ GameObject:
   - component: {fileID: 4825851869419891803}
   - component: {fileID: 6682472334063619326}
   - component: {fileID: 1683011238459484373}
+  - component: {fileID: 8171381291776676171}
   - component: {fileID: 7031137311574653001}
   m_Layer: 6
   m_Name: NightFall
@@ -1547,6 +1548,24 @@ MonoBehaviour:
   _xOffsetAmount: 1.75
   _kbmSensitivity: 0.7
   _gamepadSensitivity: 25
+--- !u!114 &8171381291776676171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683011238459484380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdc3a56bf5bc4545a9d88d4b04df1b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityPrefab: {fileID: 7651119961102127592, guid: 3dc473ef4eab01949841ab100c21bda7,
+    type: 3}
+  _abilityCameraParentPrefab: {fileID: 7651119961102127592, guid: fd483c2c56f27f74ca5d710e24e97e67,
+    type: 3}
+  _defaultOffset: {x: 0, y: 0, z: 0}
+  _cameraParentOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &7031137311574653001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1560,7 +1579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  _displayToHUD: 0
+  _displayToHUD: 1
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
@@ -1641,7 +1660,7 @@ MonoBehaviour:
       type: 3}
     effectOffset: {x: -13.5, y: 5, z: 0}
     effectLocalRotation: {x: 0, y: 180, z: 180}
-  _cinemachineFollow: {fileID: 0}
+  _cinemachineFollow: {fileID: 1220763394379991932}
   _dashCharges: 3
   _dashDuration: 0.25
   _dashVelocity: 80
@@ -1794,16 +1813,15 @@ MonoBehaviour:
   _cooldownDuration: 3
   _damageEffectPrefab: {fileID: 7891259392760164114, guid: 38149fd665e688b469d853178bf64142,
     type: 3}
-  _prefabInit: {fileID: 0}
+  _abilityPrefabInitializer: {fileID: 8171381291776676171}
   _fireRate: 0.75
   _attackMask:
     serializedVersion: 2
-    m_Bits: 193
+    m_Bits: 321
   _damageAmount: 30
-  _raycastDistance: 15.5
+  _raycastDistance: 20
   _overheatTime: 7
   _overheatCooldownMultiplier: 0.75
-  _frontCollider: {fileID: 0}
   _raycastPoints: []
 --- !u!1 &2168690003061204118
 GameObject:
@@ -6093,35 +6111,8 @@ MonoBehaviour:
   _abilityNameType: 9
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
-  _slashPrefab: {fileID: 1406682108228364387, guid: b3b4ac41d4dd6a04bbe65f8ac17cc596,
-    type: 3}
-  _prefabInit: {fileID: 0}
-  _slashEaseCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  _slashSword: {fileID: 0}
   _slashDuration: 0.25
-  _slash: {fileID: 0}
 --- !u!1 &8931156106442044601
 GameObject:
   m_ObjectHideFlags: 0
