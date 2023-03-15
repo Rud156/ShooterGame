@@ -18,9 +18,6 @@ namespace Player.Type_3
         [Header("Prefabs")]
         [SerializeField] private GameObject _damageEffectPrefab;
 
-        [Header("Components")]
-        [SerializeField] private AbilityPrefabInitializer _prefabInit;
-
         [Header("Shoot Data")]
         [SerializeField] private float _fireRate;
         [SerializeField] private LayerMask _attackMask;
@@ -115,7 +112,6 @@ namespace Player.Type_3
         {
             base.UnityStartDelegate(playerController);
 
-            _prefabInit.AbilityPrefabInit();
             _frontCollider = transform.Find("CameraHolder/Main Camera/Type_3_CameraPrefab(Clone)/FrontColliderDetector");
             var raycastParent = transform.Find("CameraHolder/Main Camera/Type_3_CameraPrefab(Clone)/RaycastPoints");
             _raycastPoints = raycastParent.GetComponentsInChildren<Transform>().ToList();
