@@ -8,7 +8,6 @@ using Player.Common;
 using UI.Player;
 using UnityEngine;
 using Utils.Misc;
-using Random = UnityEngine.Random;
 
 #endregion
 
