@@ -29,6 +29,10 @@ namespace Player.Type_1
         [Header("Cooldown Modifier")]
         [SerializeField] private float _cooldownMultiplier;
 
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
+
         private Animator _targetAnimator;
         private int _targetAnimTrigger;
 
@@ -106,6 +110,11 @@ namespace Player.Type_1
         private void ApplyCooldownPulse()
         {
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, _hitColliders, _pulseMask);
+            if (_debugIsActive)
+            {
+                DebugExtension.DebugWireSphere(transform.position, Color.red, _pulseRadius, _debugDisplayDuration);
+            }
+
             for (var i = 0; i < targetsHit; i++)
             {
                 if (_hitColliders[i] == null)

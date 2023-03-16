@@ -8,6 +8,7 @@ using Player.Common;
 using UI.Player;
 using UnityEngine;
 using Utils.Misc;
+using Random = UnityEngine.Random;
 
 #endregion
 
@@ -33,7 +34,12 @@ namespace Player.Type_3
         [SerializeField] private float _overheatTime;
         [SerializeField] private float _overheatCooldownMultiplier;
 
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
+
         private Transform _playerCinemachine;
+        private GameObject _raycastParent;
         private List<Transform> _raycastPoints;
 
         private float _nextShootTime;
@@ -63,6 +69,11 @@ namespace Player.Type_3
                 foreach (var raycastPoint in _raycastPoints)
                 {
                     var hit = Physics.Raycast(raycastPoint.position, _playerCinemachine.forward, out var hitInfo, _raycastDistance, _attackMask);
+                    if (_debugIsActive)
+                    {
+                        Debug.DrawRay(raycastPoint.position, _playerCinemachine.forward * _raycastDistance, Color.red, _debugDisplayDuration);
+                    }
+
                     if (hit)
                     {
                         if (hitInfo.transform.TryGetComponent(out HealthAndDamage healthAndDamage))
@@ -98,8 +109,8 @@ namespace Player.Type_3
             base.UnityStartDelegate(playerController);
 
             _playerCinemachine = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController).transform;
-            var raycastParent = Instantiate(_raycastPointsPrefab, _playerCinemachine.position, Quaternion.identity);
-            _raycastPoints = raycastParent.GetComponentsInChildren<Transform>().ToList();
+            _raycastParent = Instantiate(_raycastPointsPrefab, _playerCinemachine.position, Quaternion.identity, _playerCinemachine);
+            _raycastPoints = _raycastParent.GetComponentsInChildren<Transform>().ToList();
         }
 
         public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
@@ -111,6 +122,8 @@ namespace Player.Type_3
                 _currentOverheatTime -= Time.fixedDeltaTime * _overheatCooldownMultiplier;
             }
         }
+
+        private void OnDestroy() => Destroy(_raycastParent);
 
         #endregion Unity Functions
     }

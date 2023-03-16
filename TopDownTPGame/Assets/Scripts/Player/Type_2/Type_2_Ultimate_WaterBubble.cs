@@ -32,6 +32,10 @@ namespace Player.Type_2
         [SerializeField] private float _windUpTime;
         [SerializeField] private float _ultimateChargeRate;
 
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
+
         private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
         private float _currentWindUpTime;
@@ -55,6 +59,11 @@ namespace Player.Type_2
 
             var castPosition = transform.position;
             var totalHitColliders = Physics.OverlapSphereNonAlloc(castPosition, _abilityCastRadius, _hitColliders, _abilityMask);
+            if (_debugIsActive)
+            {
+                DebugExtension.DebugWireSphere(transform.position, Color.red, _abilityCastRadius, _debugDisplayDuration);
+            }
+
             for (var i = 0; i < totalHitColliders; i++)
             {
                 // Do not target itself
