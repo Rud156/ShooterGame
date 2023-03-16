@@ -24,7 +24,8 @@ namespace Player.Type_3
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Shoot Data")]
-        [SerializeField] private int _shootAnimCount;
+        [SerializeField] private int _animMinIndex;
+        [SerializeField] private int _animMaxIndex;
         [SerializeField] private float _fireRate;
         [SerializeField] private LayerMask _attackMask;
         [SerializeField] private int _damageAmount;
@@ -85,7 +86,7 @@ namespace Player.Type_3
                     }
                 }
 
-                _playerAnimator.SetInteger(PlayerStaticData.Type_3_Primary, Random.Range(1, _shootAnimCount + 1));
+                _playerAnimator.SetInteger(PlayerStaticData.Type_3_Primary, Random.Range(_animMinIndex, _animMaxIndex + 1));
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
             }
 

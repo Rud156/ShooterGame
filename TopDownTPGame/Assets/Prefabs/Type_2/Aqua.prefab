@@ -228,6 +228,8 @@ MonoBehaviour:
     m_Bits: 64
   _windUpTime: 0.15
   _ultimateChargeRate: 0.1
+  _debugIsActive: 0
+  _debugDisplayDuration: 0
 --- !u!1 &121732952388288876
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1026,7 @@ Transform:
   - {fileID: 2368701884863666857}
   - {fileID: 1362992553}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2637092012038209768
 CharacterController:
@@ -2907,21 +2909,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5086268201243115593, guid: 0237a9152d1898b4e9381a9425783132,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.0066666696
-      objectReference: {fileID: 0}
-    - target: {fileID: 5086268201243115593, guid: 0237a9152d1898b4e9381a9425783132,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.0066666696
-      objectReference: {fileID: 0}
-    - target: {fileID: 5086268201243115593, guid: 0237a9152d1898b4e9381a9425783132,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.0066666696
-      objectReference: {fileID: 0}
-    - target: {fileID: 5086268201243115593, guid: 0237a9152d1898b4e9381a9425783132,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2975,18 +2962,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterSword
       objectReference: {fileID: 0}
-    - target: {fileID: 5610884078883986163, guid: 0237a9152d1898b4e9381a9425783132,
+    - target: {fileID: 5627563236313251588, guid: 0237a9152d1898b4e9381a9425783132,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: _parent
+      value: 
+      objectReference: {fileID: 2637092012038209767}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5086268201243115593, guid: 0237a9152d1898b4e9381a9425783132,
-        type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 9039480723648422722}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0237a9152d1898b4e9381a9425783132, type: 3}
 --- !u!4 &353492748365580151 stripped
@@ -3000,83 +2983,4 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5610884078883986163, guid: 0237a9152d1898b4e9381a9425783132,
     type: 3}
   m_PrefabInstance: {fileID: 4787843394317043518}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &7542981332824699178
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 353492748365580151}
-    m_Modifications:
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.50000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.50000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1575312493837095529, guid: d85c69562be7a624d9f38f800415bfd7,
-        type: 3}
-      propertyPath: m_Name
-      value: SwordTrailEffect
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d85c69562be7a624d9f38f800415bfd7, type: 3}
---- !u!4 &9039480723648422722 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
-    type: 3}
-  m_PrefabInstance: {fileID: 7542981332824699178}
   m_PrefabAsset: {fileID: 0}

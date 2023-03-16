@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1170306760153209848}
   - component: {fileID: 3910481973072478719}
   - component: {fileID: 6548987820827372035}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5172066148224451217}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -95,13 +95,13 @@ GameObject:
   - component: {fileID: 7501563697143181364}
   - component: {fileID: 5477425651976656384}
   - component: {fileID: 5627563236313251588}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: WaterSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5086268201243115593
 Transform:
   m_ObjectHideFlags: 0
@@ -111,12 +111,13 @@ Transform:
   m_GameObject: {fileID: 5610884078883986163}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.0066666696, y: 0.0066666696, z: 0.0066666696}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4540606852726645884}
   - {fileID: 1170306760153209848}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7501563697143181364
 Rigidbody:
@@ -165,7 +166,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.25, y: 1, z: 0.25}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5627563236313251588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,4 +179,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d4a0c7605393644dae5f26a4128a7f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parent: {fileID: 0}
   _damageAmount: 30
+--- !u!1001 &3089429478424507924
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5086268201243115593}
+    m_Modifications:
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.50000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.50000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575312493837095529, guid: d85c69562be7a624d9f38f800415bfd7,
+        type: 3}
+      propertyPath: m_Name
+      value: SwordTrailEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d85c69562be7a624d9f38f800415bfd7, type: 3}
+--- !u!4 &4540606852726645884 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3089429478424507924}
+  m_PrefabAsset: {fileID: 0}

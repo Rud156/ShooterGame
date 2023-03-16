@@ -600,7 +600,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2061910772549006292, guid: 5019a0617efe7404cb1f22e32ddca81c,
+  m_Motion: {fileID: -2061910772549006292, guid: f0c15bcb29aed0543aff94bf178a2a92,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -757,7 +757,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4061839508520268033, guid: 05775ac8422d60242b55ff3c5aa42ebf,
+  m_Motion: {fileID: 4061839508520268033, guid: 2e64ce721031d9e448d550ee8942df1b,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -846,7 +846,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Type_ 2 Upper Body Arms Layer
+  m_Name: Type_ 3 Upper Body Arms Layer
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1668184701407453558}
@@ -1422,7 +1422,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: Type_ 2 Upper Body Arms Layer
+    m_Name: Type_ 3 Upper Body Arms Layer
     m_StateMachine: {fileID: -3270951526196823097}
     m_Mask: {fileID: 31900000, guid: c4d1cfd4821df9d45a81a6a161a452e0, type: 2}
     m_Motions: []
@@ -1434,7 +1434,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: Type_ 2 Upper Body Arms and Head Layer
+    m_Name: Type_ 3 Upper Body Arms and Head Layer
     m_StateMachine: {fileID: 6151703758888548339}
     m_Mask: {fileID: 31900000, guid: eb8cd46eb9772c944aecd0a0767cebb3, type: 2}
     m_Motions: []
@@ -1446,7 +1446,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: Type_ 2 Full Body Layer
+    m_Name: Type_ 3 Full Body Layer
     m_StateMachine: {fileID: 7548098968945262646}
     m_Mask: {fileID: 31900000, guid: 85ea42bb2d4076a4a9484e7092922e10, type: 2}
     m_Motions: []
@@ -1683,7 +1683,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4061839508520268033, guid: e50701ddc996e6a44b3a00760708e3d8,
+  m_Motion: {fileID: 4061839508520268033, guid: a80275d857ce6af4baf970fc4fda8e66,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -1832,7 +1832,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4061839508520268033, guid: d08b0d01ed78be6468db09cf3dcb6301,
+  m_Motion: {fileID: 4061839508520268033, guid: a09441299743a564ab422e2a9cfdaa4a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -2158,7 +2158,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Type_ 2 Upper Body Arms and Head Layer
+  m_Name: Type_ 3 Upper Body Arms and Head Layer
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 8023425239581625241}
@@ -2439,7 +2439,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Type_ 2 Full Body Layer
+  m_Name: Type_ 3 Full Body Layer
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6573725081237106509}
@@ -2616,7 +2616,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4061839508520268033, guid: f1d01cdc851ba0147b950885cbeed240,
+  m_Motion: {fileID: 4061839508520268033, guid: 4b3e7ebde4e6b8843a11a276bc6258cc,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

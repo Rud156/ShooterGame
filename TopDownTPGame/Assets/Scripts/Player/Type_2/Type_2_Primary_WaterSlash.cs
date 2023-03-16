@@ -8,6 +8,7 @@ using Player.Common;
 using UI.Player;
 using UnityEngine;
 using Utils.Misc;
+using Utils.Structs;
 using Random = UnityEngine.Random;
 
 #endregion
@@ -15,7 +16,7 @@ using Random = UnityEngine.Random;
 namespace Player.Type_2
 {
     // This attack is comprised of 1 Right Slash, 1 Left Slash and then a Shoot front attack
-    public class Type_2_Primary_WaterSlash : Ability
+    public partial class Type_2_Primary_WaterSlash : Ability
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _shootFrontPrefab;
@@ -205,17 +206,6 @@ namespace Player.Type_2
         }
 
         #endregion State Control
-
-        #region Structs
-
-        [Serializable]
-        private struct SwordPositionRotation
-        {
-            public Vector3 Position;
-            public Vector3 Rotation;
-        }
-
-        #endregion Structs
 
         #region Enums
 

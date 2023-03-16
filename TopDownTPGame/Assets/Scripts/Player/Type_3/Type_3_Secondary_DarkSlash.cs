@@ -1,9 +1,11 @@
 #region
 
+using System.Collections.Generic;
 using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
+using Utils.Structs;
 
 #endregion
 
@@ -13,6 +15,12 @@ namespace Player.Type_3
     {
         [Header("Components")]
         [SerializeField] private GameObject _slashSword;
+        [SerializeField] private Animator _playerAnimator;
+
+        [Header("Anim Data")]
+        [SerializeField] private int _animMinIndex;
+        [SerializeField] private int _animMaxIndex;
+        [SerializeField] private List<SwordPositionRotation> _swordPositionRotations;
 
         [Header("Slash Data")]
         [SerializeField] private float _slashDuration;
@@ -31,9 +39,11 @@ namespace Player.Type_3
             _currentTime += Time.fixedDeltaTime;
             if (_currentTime >= _slashDuration)
             {
-                _slashSword.SetActive(false);
                 _abilityEnd = true;
                 _currentCooldownDuration = _cooldownDuration;
+
+                _slashSword.SetActive(false);
+                _playerAnimator.SetInteger(PlayerStaticData.Type_3_Secondary, 0);
             }
         }
 
@@ -45,7 +55,13 @@ namespace Player.Type_3
 
         public override void StartAbility(BasePlayerController playerController)
         {
+            var animIndex = Random.Range(_animMinIndex, _animMaxIndex + 1);
+            _playerAnimator.SetInteger(PlayerStaticData.Type_3_Secondary, animIndex);
+
             _slashSword.SetActive(true);
+            _slashSword.transform.localPosition = _swordPositionRotations[animIndex - 1].Position;
+            _slashSword.transform.localRotation = Quaternion.Euler(_swordPositionRotations[animIndex - 1].Rotation);
+
             _currentTime = 0;
             _abilityEnd = false;
 
