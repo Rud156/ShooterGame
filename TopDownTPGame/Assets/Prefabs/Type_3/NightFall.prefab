@@ -1808,7 +1808,7 @@ MonoBehaviour:
   _raycastDistance: 20
   _overheatTime: 7
   _overheatCooldownMultiplier: 0.75
-  _debugIsActive: 1
+  _debugIsActive: 0
   _debugDisplayDuration: 10
 --- !u!1 &2168690003061204118
 GameObject:
