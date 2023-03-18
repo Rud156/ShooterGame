@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Player.Type_2
 {
-    public class Type_2_Ultimate_WaterBubble : Ability
+    public class Type_2_Ultimate_WaterBubbleFrozenAbility : Ability
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _ultimateBurstEffectPrefab;

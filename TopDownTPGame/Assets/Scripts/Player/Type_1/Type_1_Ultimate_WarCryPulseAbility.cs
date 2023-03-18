@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Player.Type_1
 {
-    public class Type_1_Ultimate_CooldownBooster : Ability
+    public class Type_1_Ultimate_WarCryPulseAbility : Ability
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _ultimatePulsePrefab;
@@ -41,7 +41,7 @@ namespace Player.Type_1
             {
                 var characterTransform = transform;
                 _warCryObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
-                _warCryObject.GetComponent<WarCryPulse>().SetTargetAnimatorData(_playerAnimator, PlayerStaticData.Type_1_Ultimate);
+                _warCryObject.GetComponent<Type_1_Ultimate_WarCryPulse>().SetTargetAnimatorData(_playerAnimator, PlayerStaticData.Type_1_Ultimate);
                 _abilityEnd = true;
 
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);

@@ -49,6 +49,7 @@ MonoBehaviour:
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 3
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
@@ -136,6 +137,7 @@ MonoBehaviour:
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 1
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 5
   _chargedObjectPrefab: {fileID: 9148642754012515157, guid: 957bdfe836ffab34a8c7248cc5163f40,
@@ -197,6 +199,7 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 0
   _abilityNameType: 2
+  _abilityPositioning: 0
   _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 7
   _dashEffectPrefab: {fileID: 8019111275251628808, guid: e28f8f87ba85988489ec4a5ff805ef93,
@@ -293,6 +296,7 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 0
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
   _projectilePrefab: {fileID: 5093047753733651196, guid: 181ae5f998936ec4e9ac2303665f21da,
@@ -411,7 +415,7 @@ Transform:
   - {fileID: 1233005979}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -451,11 +455,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerIcon: {fileID: 21300000, guid: b29ae78b2e7fdbd488e891d33daffc7f, type: 3}
   _runSpeed: 25
   _walkSpeed: 7
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
+  _headTransform: {fileID: 3666561203976839012}
+  _bodyTransform: {fileID: 3666965052014978398}
+  _legsTransform: {fileID: 3666514463919626348}
   _groundedCheckPoint: {fileID: 95916529477622696}
   _groundedCheckRadius: 0.65
   _groundedCheckMask:

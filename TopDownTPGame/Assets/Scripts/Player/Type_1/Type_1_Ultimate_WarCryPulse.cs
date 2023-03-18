@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Player.Type_1
 {
-    public class WarCryPulse : MonoBehaviour
+    public class Type_1_Ultimate_WarCryPulse : MonoBehaviour
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _pulseEffectPrefab;

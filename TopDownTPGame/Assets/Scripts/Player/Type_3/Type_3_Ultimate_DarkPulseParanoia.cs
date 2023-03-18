@@ -1,6 +1,6 @@
-﻿#region
+#region
 
-using Effects;
+using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
@@ -9,35 +9,112 @@ using UnityEngine;
 
 namespace Player.Type_3
 {
-    public class Type_3_Ultimate_DarkPulseParanoia : Ability
+    public class Type_3_Ultimate_DarkPulseParanoia : MonoBehaviour
     {
-        [Header("Components")]
-        [SerializeField] private DestroyParticleEffectSlowlyEmission _destroyParticleEffect;
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _paranoiaPrefab;
+        [SerializeField] private GameObject _pulseEffectPrefab;
+        [SerializeField] private GameObject _pulseBurstEffectPrefab;
 
-        [Header("Paranoia Data")]
-        [SerializeField] private float _paranoiaDuration;
+        [Header("Pulse Data")]
+        [SerializeField] private int _pulseCount;
+        [SerializeField] private float _pulseDuration;
+        [SerializeField] private float _pulseRadius;
+        [SerializeField] private LayerMask _pulseMask;
 
-        private float _currentTimeLeft;
+        [Header("Affect Data")]
+        [SerializeField] private int _healthDecayAmount;
+        [SerializeField] private float _healthDecayDuration;
 
-        #region Ability Functions
+        private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => true;
+        private int _currentPulseCount;
+        private float _currentPulseWaitDuration;
 
-        public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _currentTimeLeft <= 0;
+        private GameObject _lastBurstEffectObject;
+        private GameObject _lastPulseEffectObject;
 
-        public override void StartAbility(BasePlayerController playerController) => _currentTimeLeft = _paranoiaDuration;
+        private Animator _targetAnimator;
+        private int _targetAnimTrigger;
+        private int _ownerId;
 
-        public override void AbilityUpdate(BasePlayerController playerController) => _currentTimeLeft -= Time.fixedDeltaTime;
+        #region Unity Functions
 
-        public override void EndAbility(BasePlayerController playerController)
+        private void Start()
         {
-            var playerTransform = playerController.transform;
-            var cameraTransform = Camera.main.transform;
-            _destroyParticleEffect.transform.SetParent(cameraTransform);
-            _destroyParticleEffect.DestroyEffect();
-            Destroy(gameObject);
+            _currentPulseCount = _pulseCount;
+            _currentPulseWaitDuration = 0;
         }
 
-        #endregion Ability Functions
+        private void FixedUpdate()
+        {
+            if (_currentPulseCount <= 0)
+            {
+                _lastBurstEffectObject.transform.SetParent(null);
+                _lastPulseEffectObject.transform.SetParent(null);
+
+                Destroy(gameObject);
+                return;
+            }
+
+            _currentPulseWaitDuration -= Time.fixedDeltaTime;
+            if (_currentPulseWaitDuration <= 0)
+            {
+                _currentPulseCount -= 1;
+                _currentPulseWaitDuration = _pulseDuration;
+                _targetAnimator.SetTrigger(_targetAnimTrigger);
+
+                var abilityTransform = transform;
+                var position = abilityTransform.position;
+                _lastPulseEffectObject = Instantiate(_pulseEffectPrefab, position, Quaternion.identity, abilityTransform);
+                _lastBurstEffectObject = Instantiate(_pulseBurstEffectPrefab, position, Quaternion.identity, abilityTransform);
+
+                ApplyParanoiaPulse();
+            }
+        }
+
+        #endregion Unity Functions
+
+        #region External Functions
+
+        public void SetOwnerInstanceId(int ownerId, Animator targetAnimator, int targetAnimTrigger)
+        {
+            _ownerId = ownerId;
+            _targetAnimator = targetAnimator;
+            _targetAnimTrigger = targetAnimTrigger;
+        }
+
+        #endregion External Functions
+
+        #region Utils
+
+        private void ApplyParanoiaPulse()
+        {
+            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, _hitColliders, _pulseMask);
+            for (var i = 0; i < targetsHit; i++)
+            {
+                // Do not target itself
+                if (_hitColliders[i] == null /*|| _hitColliders[i].gameObject.GetInstanceID() == _ownerId*/)
+                {
+                    continue;
+                }
+
+                if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
+                {
+                    var position = targetController.transform.position;
+                    var paranoia = Instantiate(_paranoiaPrefab, position, Quaternion.identity);
+
+                    var paranoiaEffect = paranoia.GetComponent<Type_3_Ultimate_DarkPulseParanoiaEffect>();
+                    targetController.CheckAndAddExternalAbility(paranoiaEffect);
+                }
+
+                if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
+                {
+                    healthAndDamage.ApplyHealthDecay(_healthDecayAmount, _healthDecayDuration);
+                }
+            }
+        }
+
+        #endregion Utils
     }
 }

@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using Player.Base;
 using UI.Player;
@@ -22,6 +23,7 @@ namespace Player.Common
         [SerializeField] protected AbilityTrigger _abilityTrigger;
         [SerializeField] protected AbilityType _abilityType;
         [SerializeField] protected AbilityNameType _abilityNameType;
+        [SerializeField] protected AbilityPositioning _abilityPositioning;
         [SerializeField] protected List<AbilityNameType> _allowedActiveAbilities;
 
         [Header("Cooldown")]
@@ -147,6 +149,8 @@ namespace Player.Common
         public AbilityTrigger GetAbilityTrigger() => _abilityTrigger;
 
         public AbilityNameType GetAbilityNameType() => _abilityNameType;
+
+        public AbilityPositioning GetAbilityPositioning() => _abilityPositioning;
 
         #endregion Getters
 

@@ -1441,6 +1441,9 @@ MonoBehaviour:
   _walkSpeed: 7
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
+  _headTransform: {fileID: 1232245839320925077}
+  _bodyTransform: {fileID: 1726318311942653970}
+  _legsTransform: {fileID: 8220200554012599036}
   _groundedCheckPoint: {fileID: 1683011238159421813}
   _groundedCheckRadius: 0.65
   _groundedCheckMask:
@@ -1620,6 +1623,7 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 0
   _abilityNameType: 10
+  _abilityPositioning: 0
   _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 5
   _dashEffectForward:
@@ -1791,6 +1795,7 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 8
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
   _damageEffectPrefab: {fileID: 7891259392760164114, guid: 38149fd665e688b469d853178bf64142,
@@ -5626,12 +5631,15 @@ MonoBehaviour:
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 11
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
   _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
     type: 3}
+  _playerAnimator: {fileID: 2003848228306025429}
+  _parent: {fileID: 1683011238459484380}
   _windUpTime: 0.25
-  _ultimateChargeRate: 0.1
+  _ultimateChargeRate: 100
 --- !u!1 &8015724341772771277
 GameObject:
   m_ObjectHideFlags: 0
@@ -6096,6 +6104,7 @@ MonoBehaviour:
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 9
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0.5
   _slashSword: {fileID: 3231960826966510338}

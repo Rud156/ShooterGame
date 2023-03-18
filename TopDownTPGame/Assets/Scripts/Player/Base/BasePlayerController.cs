@@ -24,6 +24,11 @@ namespace Player.Base
         [SerializeField] private float _airControlMultiplier;
         [SerializeField] private float _gravityMultiplier;
 
+        [Header("Character Position Points")]
+        [SerializeField] private Transform _headTransform;
+        [SerializeField] private Transform _bodyTransform;
+        [SerializeField] private Transform _legsTransform;
+
         [Header("Ground Check")]
         [SerializeField] private Transform _groundedCheckPoint;
         [SerializeField] private float _groundedCheckRadius;
@@ -75,6 +80,9 @@ namespace Player.Base
         private List<Ability> _currentActiveAbilities;
         private List<Ability> _abilitiesToAddNextFrame;
 
+        // Camera
+        private Transform _cinemachineControllerTransform;
+
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
         public delegate void PlayerStateChanged(PlayerState currentState);
@@ -113,6 +121,7 @@ namespace Player.Base
             _constantSpeedFallKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
 
             _currentStateVelocity = 0;
+            _cinemachineControllerTransform = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController).transform;
 
             foreach (var ability in _playerAbilities)
             {
@@ -558,6 +567,7 @@ namespace Player.Base
                     }
 
                     ability.StartAbility(this);
+                    RepositionAbilities(ability.transform, ability.GetAbilityPositioning());
                     OnPlayerAbilityStarted?.Invoke(ability);
                     _currentActiveAbilities.Add(ability);
 
@@ -623,12 +633,63 @@ namespace Player.Base
                     }
 
                     ability.StartAbility(this);
+                    RepositionAbilities(ability.transform, ability.GetAbilityPositioning());
                     OnPlayerAbilityStarted?.Invoke(ability);
                     _currentActiveAbilities.Add(ability);
                 }
             }
 
             _abilitiesToAddNextFrame.Clear();
+        }
+
+        private void RepositionAbilities(Transform abilityGameObject, AbilityPositioning abilityPositioning)
+        {
+            switch (abilityPositioning)
+            {
+                case AbilityPositioning.None:
+                    break;
+
+                case AbilityPositioning.Head:
+                {
+                    abilityGameObject.SetParent(_headTransform);
+                    abilityGameObject.localPosition = Vector3.zero;
+                }
+                    break;
+
+                case AbilityPositioning.Camera:
+                {
+                    abilityGameObject.SetParent(_cinemachineControllerTransform);
+                    abilityGameObject.localPosition = Vector3.zero;
+                }
+                    break;
+
+                case AbilityPositioning.HeadOrCamera:
+                {
+                    /*
+                     * if LocalPlayer then use _cinemachineControllerTransform else use _headTransform
+                     */
+                    abilityGameObject.SetParent(_cinemachineControllerTransform);
+                    abilityGameObject.localPosition = Vector3.zero;
+                }
+                    break;
+
+                case AbilityPositioning.Body:
+                {
+                    abilityGameObject.SetParent(_bodyTransform);
+                    abilityGameObject.localPosition = Vector3.zero;
+                }
+                    break;
+
+                case AbilityPositioning.Legs:
+                {
+                    abilityGameObject.SetParent(_legsTransform);
+                    abilityGameObject.localPosition = Vector3.zero;
+                }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityPositioning), abilityPositioning, null);
+            }
         }
 
         private void RemoveExistingMovementAbility()

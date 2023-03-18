@@ -213,6 +213,7 @@ MonoBehaviour:
   _abilityTrigger: 3
   _abilityType: 1
   _abilityNameType: 7
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0
   _ultimateBurstEffectPrefab: {fileID: 4011931484811914565, guid: 7ba3775ee062bf24e890543d4af9c81f,
@@ -1070,6 +1071,9 @@ MonoBehaviour:
   _walkSpeed: 7
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
+  _headTransform: {fileID: 4193972179462556998}
+  _bodyTransform: {fileID: 1931861583005108140}
+  _legsTransform: {fileID: 7677642630880245804}
   _groundedCheckPoint: {fileID: 2637092012946061646}
   _groundedCheckRadius: 0.65
   _groundedCheckMask:
@@ -1379,6 +1383,7 @@ MonoBehaviour:
   _abilityTrigger: 0
   _abilityType: 1
   _abilityNameType: 4
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 3
   _shootFrontPrefab: {fileID: 1151988907945508128, guid: 6481fd2296d78e74e9315a48641f1306,
@@ -1487,6 +1492,7 @@ MonoBehaviour:
   _abilityTrigger: 1
   _abilityType: 1
   _abilityNameType: 5
+  _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 14
   _iceWallPrefab: {fileID: 8855951514977000263, guid: 54b25c9551d650942a2936e1e39b341c,
@@ -1704,6 +1710,7 @@ MonoBehaviour:
   _abilityTrigger: 2
   _abilityType: 0
   _abilityNameType: 6
+  _abilityPositioning: 0
   _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 5
   _markerEffectPrefab: {fileID: 8160184973231911241, guid: 199b7c15692db1947aa70ad0e5a62301,

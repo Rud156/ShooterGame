@@ -9,10 +9,14 @@ using UnityEngine;
 
 namespace Player.Type_3
 {
-    public class Type_3_Ultimate_DarkPulse : Ability
+    public class Type_3_Ultimate_DarkPulseParanoiaAbility : Ability
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _darkPulsePrefab;
+
+        [Header("Components")]
+        [SerializeField] private Animator _playerAnimator;
+        [SerializeField] private GameObject _parent;
 
         [Header("Ultimate Data")]
         [SerializeField] private float _windUpTime;
@@ -39,8 +43,8 @@ namespace Player.Type_3
                 var characterTransform = transform;
                 var darkPulse = Instantiate(_darkPulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
 
-                var darkObject = darkPulse.GetComponent<DarkPulse>();
-                darkObject.SetOwnerInstanceId(gameObject.GetInstanceID());
+                var darkObject = darkPulse.GetComponent<Type_3_Ultimate_DarkPulseParanoia>();
+                darkObject.SetOwnerInstanceId(_parent.GetInstanceID(), _playerAnimator, PlayerStaticData.Type_3_Ultimate);
 
                 _darkPulseObject = darkPulse;
                 _abilityEnd = true;
