@@ -32,7 +32,8 @@ namespace Player.Type_3
         public override void EndAbility(BasePlayerController playerController)
         {
             _destroyParticleEffect.DestroyEffect();
-            Destroy(gameObject);
+            _destroyParticleEffect.SetParent(gameObject);
+            Destroy(this);
         }
 
         #endregion Ability Functions

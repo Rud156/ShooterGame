@@ -11,6 +11,8 @@ namespace Effects
     {
         [Header("Destroy Data")]
         [SerializeField] private float _destroyAfterTime;
+        [SerializeField] private bool _destroyParent;
+        [SerializeField] private GameObject _parent;
 
         [Header("Particle Value")]
         [SerializeField] private float _emissionChangeRate;
@@ -55,7 +57,7 @@ namespace Effects
                     _floatValue -= Time.fixedDeltaTime;
                     if (_floatValue <= 0)
                     {
-                        Destroy(gameObject);
+                        Destroy(_destroyParent ? _parent : gameObject);
                     }
                 }
                     break;
@@ -76,6 +78,8 @@ namespace Effects
             _destroyState = DestroyState.EmissionState;
             _floatValue = 0;
         }
+
+        public void SetParent(GameObject parent) => _parent = parent;
 
         #endregion External Functions
 
