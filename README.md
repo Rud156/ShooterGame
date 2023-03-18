@@ -46,7 +46,7 @@ You are an important part of a team that is working to protect the world! These 
     1. Freezes all enemies in range for a short duration
     2. In this state the enemies are not able to use any ability or do anything
     3. They can still take damage
-> Asset - Jelly Fish Girl [Character Model Jelly Fish GIrl](https://assetstore.unity.com/packages/3d/characters/character-model-jelly-fish-girl-47735)
+> Asset - Casual Anime Girl [Casual Anime Girl](https://assetstore.unity.com/packages/3d/characters/humanoids/casual-1-anime-girl-characters-185076)
 
 ### 😈 Nightfall:
 **Passive: Has a passive of floating in air to break fall**
