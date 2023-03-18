@@ -1809,7 +1809,7 @@ MonoBehaviour:
   _overheatTime: 7
   _overheatCooldownMultiplier: 0.75
   _debugIsActive: 0
-  _debugDisplayDuration: 10
+  _debugDisplayDuration: 0.1
 --- !u!1 &2168690003061204118
 GameObject:
   m_ObjectHideFlags: 0

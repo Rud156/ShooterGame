@@ -42,13 +42,17 @@ namespace Player.Type_3
         private GameObject _raycastParent;
         private List<Transform> _raycastPoints;
 
+        private HealthAndDamage _validHitTarget;
+        private Vector3 _hitPoint;
+
         private float _nextShootTime;
         private float _currentOverheatTime;
         private bool _abilityEnd;
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentCooldownDuration <= 0;
+        public override bool AbilityCanStart(BasePlayerController playerController) =>
+            base.AbilityCanStart(playerController) && _currentCooldownDuration <= 0 && _validHitTarget != null;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -66,24 +70,8 @@ namespace Player.Type_3
                     _abilityEnd = true;
                 }
 
-                foreach (var raycastPoint in _raycastPoints)
-                {
-                    var hit = Physics.Raycast(raycastPoint.position, _playerCinemachine.forward, out var hitInfo, _raycastDistance, _attackMask);
-                    if (_debugIsActive)
-                    {
-                        Debug.DrawRay(raycastPoint.position, _playerCinemachine.forward * _raycastDistance, Color.red, _debugDisplayDuration);
-                    }
-
-                    if (hit)
-                    {
-                        if (hitInfo.transform.TryGetComponent(out HealthAndDamage healthAndDamage))
-                        {
-                            healthAndDamage.TakeDamage(_damageAmount);
-                            Instantiate(_damageEffectPrefab, hitInfo.point, Quaternion.identity);
-                            break;
-                        }
-                    }
-                }
+                _validHitTarget.TakeDamage(_damageAmount);
+                Instantiate(_damageEffectPrefab, _hitPoint, Quaternion.identity);
 
                 _playerAnimator.SetInteger(PlayerStaticData.Type_3_Primary, Random.Range(_animMinIndex, _animMaxIndex + 1));
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
@@ -116,15 +104,54 @@ namespace Player.Type_3
         public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityFixedUpdateDelegate(playerController);
-
             if (_currentOverheatTime > 0 && _abilityEnd)
             {
                 _currentOverheatTime -= Time.fixedDeltaTime * _overheatCooldownMultiplier;
             }
         }
 
+        public override void UnityUpdateDelegate(BasePlayerController playerController)
+        {
+            base.UnityUpdateDelegate(playerController);
+            UpdateValidHitTarget();
+        }
+
         private void OnDestroy() => Destroy(_raycastParent);
 
         #endregion Unity Functions
+
+        #region Utils
+
+        private void UpdateValidHitTarget()
+        {
+            _validHitTarget = null;
+            _hitPoint = Vector3.zero;
+
+            foreach (var raycastPoint in _raycastPoints)
+            {
+                var hit = Physics.Raycast(raycastPoint.position, _playerCinemachine.forward, out var hitInfo, _raycastDistance, _attackMask);
+                if (_debugIsActive)
+                {
+                    Debug.DrawRay(raycastPoint.position, _playerCinemachine.forward * _raycastDistance, Color.red, _debugDisplayDuration);
+                }
+
+                if (hit)
+                {
+                    if (hitInfo.transform.TryGetComponent(out HealthAndDamage healthAndDamage))
+                    {
+                        _validHitTarget = healthAndDamage;
+                        _hitPoint = hitInfo.point;
+                        break;
+                    }
+                }
+            }
+
+            if (_currentCooldownDuration <= 0)
+            {
+                HUD_PlayerAbilityDisplay.Instance.UpdateOverlay(_abilityTrigger, _validHitTarget == null ? 1 : 0);
+            }
+        }
+
+        #endregion Utils
     }
 }
