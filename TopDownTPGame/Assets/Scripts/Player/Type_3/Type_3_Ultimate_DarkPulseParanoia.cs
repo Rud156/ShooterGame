@@ -1,5 +1,6 @@
 #region
 
+using CustomCamera;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
@@ -21,6 +22,9 @@ namespace Player.Type_3
         [SerializeField] private float _pulseDuration;
         [SerializeField] private float _pulseRadius;
         [SerializeField] private LayerMask _pulseMask;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Affect Data")]
         [SerializeField] private int _healthDecayAmount;
@@ -70,6 +74,7 @@ namespace Player.Type_3
                 _lastBurstEffectObject = Instantiate(_pulseBurstEffectPrefab, position, Quaternion.identity, abilityTransform);
 
                 ApplyParanoiaPulse();
+                CustomCameraController.Instance.StartShake(_cameraShaker);
             }
         }
 
@@ -94,7 +99,7 @@ namespace Player.Type_3
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i] == null /*|| _hitColliders[i].gameObject.GetInstanceID() == _ownerId*/)
+                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == _ownerId)
                 {
                     continue;
                 }

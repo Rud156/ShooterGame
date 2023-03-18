@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb14dab82a464b9db7b6634edc52ed76, type: 3}
-  m_Name: Secondary Camera Shake
+  m_Name: Type 3 Ultimate Camera Shake
   m_EditorClassIdentifier: 
   frequency: 1
-  amplitude: 4
+  amplitude: 7
   duration: 0.1

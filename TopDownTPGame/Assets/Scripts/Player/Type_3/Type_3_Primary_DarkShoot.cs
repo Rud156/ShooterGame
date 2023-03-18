@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using CustomCamera;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
@@ -33,6 +34,9 @@ namespace Player.Type_3
         [Header("Overheat")]
         [SerializeField] private float _overheatTime;
         [SerializeField] private float _overheatCooldownMultiplier;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -74,6 +78,7 @@ namespace Player.Type_3
                 Instantiate(_damageEffectPrefab, _hitPoint, Quaternion.identity);
 
                 _playerAnimator.SetInteger(PlayerStaticData.Type_3_Primary, Random.Range(_animMinIndex, _animMaxIndex + 1));
+                CustomCameraController.Instance.StartShake(_cameraShaker);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
             }
 

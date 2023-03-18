@@ -1805,6 +1805,7 @@ MonoBehaviour:
   _raycastDistance: 20
   _overheatTime: 7
   _overheatCooldownMultiplier: 0.75
+  _cameraShaker: {fileID: 11400000, guid: 04d5a09676b620343b5c11a5fcc51aec, type: 2}
   _debugIsActive: 0
   _debugDisplayDuration: 0.1
 --- !u!1 &2168690003061204118
@@ -5631,7 +5632,7 @@ MonoBehaviour:
   _playerAnimator: {fileID: 2003848228306025429}
   _parent: {fileID: 1683011238459484380}
   _windUpTime: 0.25
-  _ultimateChargeRate: 100
+  _ultimateChargeRate: 0.1
 --- !u!1 &8015724341772771277
 GameObject:
   m_ObjectHideFlags: 0
