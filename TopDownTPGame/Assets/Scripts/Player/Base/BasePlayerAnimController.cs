@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player.Common;
 using UnityEngine;
 using Utils.Misc;
 using Random = UnityEngine.Random;
@@ -186,8 +187,9 @@ namespace Player.Base
         {
             var currentValue = _playerAnimator.GetInteger(FallJumpTriggerParam);
             var yVelocity = Mathf.Abs(_playerController.CharacterVelocity.y);
+            var constantSpeedFallActive = _playerController.HasActiveInputModifierType(PlayerInputModifierType.ConstantSpeedFall);
 
-            if ((FallJumpAnimEnums)currentValue == FallJumpAnimEnums.None && yVelocity > _playerController.GroundedVelocityThreshold)
+            if ((FallJumpAnimEnums)currentValue == FallJumpAnimEnums.None && (yVelocity > _playerController.GroundedVelocityThreshold) || constantSpeedFallActive != -1)
             {
                 _playerAnimator.SetInteger(FallJumpTriggerParam, (int)FallJumpAnimEnums.Falling);
             }

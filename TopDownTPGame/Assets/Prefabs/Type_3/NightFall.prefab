@@ -1451,14 +1451,19 @@ MonoBehaviour:
     m_Bits: 1
   _groundedTriggerVelocityThreshold: 10
   _jumpVelocity: 35
-  _constantSpeedFallEnabled: 1
-  _constantSpeedFallMultiplier: 2.5
   _playerAbilities:
   - {fileID: 9162466541275175190}
   - {fileID: 5144502320237617051}
   - {fileID: 5255281719436157802}
   - {fileID: 4947250994315406716}
-  _playerInputModifierData: []
+  _playerInputModifierData:
+  - effectPrefab: {fileID: 3854524423807827139, guid: 8e1c467b6c0a4aa4fb8a2ecb386ee7ca,
+      type: 3}
+    effectSpawnOffset: {x: 0, y: 0, z: 0}
+    effectParent: {fileID: 1683011238459484368}
+    modifierType: 0
+    inputModifierAmount: 2.5
+  _playerStateStack: 
 --- !u!114 &8602320672462730023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1626,32 +1631,19 @@ MonoBehaviour:
   _abilityPositioning: 0
   _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 5
-  _dashEffectForward:
-    effectPrefab: {fileID: 5267843241776696678, guid: ed2368563d002b6479ea7d316bd71b59,
-      type: 3}
-    effectOffset: {x: 0, y: 2.25, z: 0}
-    effectLocalRotation: {x: 0, y: 180, z: 180}
-  _dashEffectBackward:
-    effectPrefab: {fileID: 1014844992124265296, guid: 389f5ccb016164d489241bb05d279ba4,
-      type: 3}
-    effectOffset: {x: 0, y: 2.25, z: 0}
-    effectLocalRotation: {x: 0, y: 180, z: 180}
-  _dashEffectLeft:
-    effectPrefab: {fileID: 859636762055700504, guid: d225805883ab28c41b40e65a8c701938,
-      type: 3}
-    effectOffset: {x: 13.5, y: 5, z: 0}
-    effectLocalRotation: {x: 0, y: 180, z: 180}
-  _dashEffectRight:
-    effectPrefab: {fileID: 760224239409828698, guid: 7258658e0edd5b2489085d06cbdbc24c,
-      type: 3}
-    effectOffset: {x: -13.5, y: 5, z: 0}
-    effectLocalRotation: {x: 0, y: 180, z: 180}
+  _dashEffectPrefab: {fileID: 8019111275251628808, guid: 376c98ef561f9364e89d6504090fbe44,
+    type: 3}
+  _playerAnimator: {fileID: 2003848228306025429}
   _cinemachineFollow: {fileID: 1220763394379991932}
   _dashCharges: 3
   _dashDuration: 0.25
   _dashVelocity: 80
   _dashEndFloatDuration: 0.25
-  _dashEndFloatFallMultiplier: 2.5
+  _dashEffectOffset: {x: 0, y: 0, z: 0}
+  _leftDashRotation: {x: 0, y: 0, z: 0}
+  _rightDashRotation: {x: 0, y: 0, z: 0}
+  _frontDashRotation: {x: 0, y: 0, z: 0}
+  _backDashRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &1707194390208491511
 GameObject:
   m_ObjectHideFlags: 0

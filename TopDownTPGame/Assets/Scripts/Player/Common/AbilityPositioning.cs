@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Player.Common
+﻿namespace Player.Common
 {
     public enum AbilityPositioning
     {

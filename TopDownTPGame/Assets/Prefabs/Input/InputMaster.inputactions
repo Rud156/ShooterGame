@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Movement Hold",
+                    "name": "Constant Speed Fall",
                     "type": "Button",
                     "id": "7c2797b7-7fe3-4b7b-9f6b-8d1267ffe491",
                     "expectedControlType": "Button",
@@ -388,7 +388,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Movement Hold",
+                    "action": "Constant Speed Fall",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -399,7 +399,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Movement Hold",
+                    "action": "Constant Speed Fall",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

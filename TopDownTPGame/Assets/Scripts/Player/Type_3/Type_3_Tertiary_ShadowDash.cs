@@ -1,6 +1,5 @@
 #region
 
-using System;
 using Player.Base;
 using Player.Common;
 using UI.Player;
@@ -14,12 +13,10 @@ namespace Player.Type_3
     public class Type_3_Tertiary_ShadowDash : Ability
     {
         [Header("Prefabs")]
-        [SerializeField] private DashEffect _dashEffectForward;
-        [SerializeField] private DashEffect _dashEffectBackward;
-        [SerializeField] private DashEffect _dashEffectLeft;
-        [SerializeField] private DashEffect _dashEffectRight;
+        [SerializeField] private GameObject _dashEffectPrefab;
 
         [Header("Components")]
+        [SerializeField] private Animator _playerAnimator;
         [SerializeField] private Transform _cinemachineFollow;
 
         [Header("Dash Charges")]
@@ -29,13 +26,20 @@ namespace Player.Type_3
 
         [Header("Dash Float")]
         [SerializeField] private float _dashEndFloatDuration;
-        [SerializeField] private float _dashEndFloatFallMultiplier;
+
+        [Header("Dash Effects Data")]
+        [SerializeField] private Vector3 _dashEffectOffset;
+        [SerializeField] private Vector3 _leftDashRotation;
+        [SerializeField] private Vector3 _rightDashRotation;
+        [SerializeField] private Vector3 _frontDashRotation;
+        [SerializeField] private Vector3 _backDashRotation;
 
         private GameObject _dashEffectObject;
 
         private int _currentDashesLeftCount;
         private float _currentDashTimeLeft;
         private Vector3 _computedVelocity;
+        private Vector2 _startCoreInput;
 
         #region Ability Functions
 
@@ -45,25 +49,18 @@ namespace Player.Type_3
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            var coreInput = playerController.GetCoreMoveInput();
             _currentDashTimeLeft -= Time.fixedDeltaTime;
-
-            // Basically when there is no input use forward only...
-            if (ExtensionFunctions.IsNearlyEqual(coreInput.x, 0) && ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))
-            {
-                coreInput.y = 1;
-            }
 
             var forward = _cinemachineFollow.forward;
             var right = _cinemachineFollow.right;
 
-            _computedVelocity = forward * coreInput.y + right * coreInput.x;
+            _computedVelocity = forward * _startCoreInput.y + right * _startCoreInput.x;
             _computedVelocity = _dashVelocity * _computedVelocity.normalized;
         }
 
         public override void EndAbility(BasePlayerController playerController)
         {
-            playerController.PlayerConstantSpeedFallTimed(_dashEndFloatDuration, _dashEndFloatFallMultiplier);
+            playerController.PlayerConstantSpeedFallTimed(_dashEndFloatDuration);
 
             _currentDashesLeftCount -= 1;
             if (_currentDashesLeftCount <= 0)
@@ -71,6 +68,7 @@ namespace Player.Type_3
                 _currentCooldownDuration = _cooldownDuration;
             }
 
+            _playerAnimator.SetBool(PlayerStaticData.Type_3_Tertiary, false);
             Destroy(_dashEffectObject);
         }
 
@@ -78,7 +76,30 @@ namespace Player.Type_3
         {
             _currentDashTimeLeft = _dashDuration;
 
-            DisplayDashEffect(playerController);
+            var coreInput = playerController.GetCoreMoveInput();
+            // Basically when there is no input use forward only...
+            if (ExtensionFunctions.IsNearlyEqual(coreInput.x, 0) && ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))
+            {
+                coreInput.y = 1;
+            }
+
+            _startCoreInput = coreInput;
+            var dashEffectRotation = coreInput.y switch
+            {
+                > 0 => _frontDashRotation,
+                < 0 => _backDashRotation,
+                _ => coreInput.x > 0 ? _rightDashRotation : _leftDashRotation
+            };
+
+            var characterTransform = transform;
+            _dashEffectObject = Instantiate(_dashEffectPrefab, characterTransform.position, Quaternion.identity, characterTransform);
+            _dashEffectObject.transform.localPosition += _dashEffectOffset;
+            _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
+
+            _playerAnimator.SetBool(PlayerStaticData.Type_3_Tertiary, true);
+            _playerAnimator.SetFloat(PlayerStaticData.Type_3_TertiaryHorizontal, _startCoreInput.x);
+            _playerAnimator.SetFloat(PlayerStaticData.Type_3_TertiaryVertical, _startCoreInput.y);
+
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
         }
 
@@ -89,9 +110,7 @@ namespace Player.Type_3
         public override void UnityStartDelegate(BasePlayerController playerController)
         {
             OnAbilityCooldownComplete += HandleCooldownComplete;
-
             base.UnityStartDelegate(playerController);
-
             _currentDashesLeftCount = _dashCharges;
         }
 
@@ -124,69 +143,6 @@ namespace Player.Type_3
 
         private void UpdateDashCountChanged() => HUD_PlayerAbilityDisplay.Instance.UpdateCounter(AbilityTrigger.Tertiary, $"{_currentDashesLeftCount}", true);
 
-        private void DisplayDashEffect(BasePlayerController playerController)
-        {
-            var coreInput = playerController.GetCoreMoveInput();
-            // Basically when there is no input use forward only...
-            if (ExtensionFunctions.IsNearlyEqual(coreInput.x, 0) && ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))
-            {
-                coreInput.y = 1;
-            }
-
-            GameObject dashEffectPrefab;
-            Vector3 dashEffectOffset;
-            Vector3 dashEffectRotation;
-
-            switch (coreInput.y)
-            {
-                case > 0:
-                    dashEffectPrefab = _dashEffectForward.effectPrefab;
-                    dashEffectOffset = _dashEffectForward.effectOffset;
-                    dashEffectRotation = _dashEffectForward.effectLocalRotation;
-                    break;
-
-                case < 0:
-                    dashEffectPrefab = _dashEffectBackward.effectPrefab;
-                    dashEffectOffset = _dashEffectBackward.effectOffset;
-                    dashEffectRotation = _dashEffectBackward.effectLocalRotation;
-                    break;
-
-                default:
-                {
-                    if (coreInput.x > 0)
-                    {
-                        dashEffectPrefab = _dashEffectLeft.effectPrefab;
-                        dashEffectOffset = _dashEffectLeft.effectOffset;
-                        dashEffectRotation = _dashEffectLeft.effectLocalRotation;
-                    }
-                    else
-                    {
-                        dashEffectPrefab = _dashEffectRight.effectPrefab;
-                        dashEffectOffset = _dashEffectRight.effectOffset;
-                        dashEffectRotation = _dashEffectRight.effectLocalRotation;
-                    }
-
-                    break;
-                }
-            }
-
-            _dashEffectObject = Instantiate(dashEffectPrefab, transform.position, Quaternion.identity, transform);
-            _dashEffectObject.transform.localPosition += dashEffectOffset;
-            _dashEffectObject.transform.localRotation = Quaternion.Euler(dashEffectRotation);
-        }
-
         #endregion Utils
-
-        #region Structs
-
-        [Serializable]
-        private struct DashEffect
-        {
-            public GameObject effectPrefab;
-            public Vector3 effectOffset;
-            public Vector3 effectLocalRotation;
-        }
-
-        #endregion Structs
     }
 }

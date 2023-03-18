@@ -64,7 +64,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Movement Hold"",
+                    ""name"": ""Constant Speed Fall"",
                     ""type"": ""Button"",
                     ""id"": ""7c2797b7-7fe3-4b7b-9f6b-8d1267ffe491"",
                     ""expectedControlType"": ""Button"",
@@ -410,7 +410,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Movement Hold"",
+                    ""action"": ""Constant Speed Fall"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -421,7 +421,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Movement Hold"",
+                    ""action"": ""Constant Speed Fall"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -541,7 +541,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
-        m_Player_MovementHold = m_Player.FindAction("Movement Hold", throwIfNotFound: true);
+        m_Player_ConstantSpeedFall = m_Player.FindAction("Constant Speed Fall", throwIfNotFound: true);
         m_Player_AbilityPrimary = m_Player.FindAction("Ability Primary", throwIfNotFound: true);
         m_Player_AbilitySecondary = m_Player.FindAction("Ability Secondary", throwIfNotFound: true);
         m_Player_AbilityTertiary = m_Player.FindAction("Ability Tertiary", throwIfNotFound: true);
@@ -613,7 +613,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Run;
-    private readonly InputAction m_Player_MovementHold;
+    private readonly InputAction m_Player_ConstantSpeedFall;
     private readonly InputAction m_Player_AbilityPrimary;
     private readonly InputAction m_Player_AbilitySecondary;
     private readonly InputAction m_Player_AbilityTertiary;
@@ -628,7 +628,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Run => m_Wrapper.m_Player_Run;
-        public InputAction @MovementHold => m_Wrapper.m_Player_MovementHold;
+        public InputAction @ConstantSpeedFall => m_Wrapper.m_Player_ConstantSpeedFall;
         public InputAction @AbilityPrimary => m_Wrapper.m_Player_AbilityPrimary;
         public InputAction @AbilitySecondary => m_Wrapper.m_Player_AbilitySecondary;
         public InputAction @AbilityTertiary => m_Wrapper.m_Player_AbilityTertiary;
@@ -656,9 +656,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
-            @MovementHold.started += instance.OnMovementHold;
-            @MovementHold.performed += instance.OnMovementHold;
-            @MovementHold.canceled += instance.OnMovementHold;
+            @ConstantSpeedFall.started += instance.OnConstantSpeedFall;
+            @ConstantSpeedFall.performed += instance.OnConstantSpeedFall;
+            @ConstantSpeedFall.canceled += instance.OnConstantSpeedFall;
             @AbilityPrimary.started += instance.OnAbilityPrimary;
             @AbilityPrimary.performed += instance.OnAbilityPrimary;
             @AbilityPrimary.canceled += instance.OnAbilityPrimary;
@@ -693,9 +693,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
-            @MovementHold.started -= instance.OnMovementHold;
-            @MovementHold.performed -= instance.OnMovementHold;
-            @MovementHold.canceled -= instance.OnMovementHold;
+            @ConstantSpeedFall.started -= instance.OnConstantSpeedFall;
+            @ConstantSpeedFall.performed -= instance.OnConstantSpeedFall;
+            @ConstantSpeedFall.canceled -= instance.OnConstantSpeedFall;
             @AbilityPrimary.started -= instance.OnAbilityPrimary;
             @AbilityPrimary.performed -= instance.OnAbilityPrimary;
             @AbilityPrimary.canceled -= instance.OnAbilityPrimary;
@@ -782,7 +782,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
-        void OnMovementHold(InputAction.CallbackContext context);
+        void OnConstantSpeedFall(InputAction.CallbackContext context);
         void OnAbilityPrimary(InputAction.CallbackContext context);
         void OnAbilitySecondary(InputAction.CallbackContext context);
         void OnAbilityTertiary(InputAction.CallbackContext context);

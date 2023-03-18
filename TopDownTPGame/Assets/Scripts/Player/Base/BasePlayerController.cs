@@ -16,7 +16,7 @@ namespace Player.Base
     [RequireComponent(typeof(CharacterController))]
     public class BasePlayerController : MonoBehaviour
     {
-        private const string MovementHoldIdentifier = "MovementHold";
+        private const string ConstantSpeedFallHoldIdentifier = "ConstantSpeedFallHold";
 
         [Header("Basic Move")]
         [SerializeField] private float _runSpeed;
@@ -38,10 +38,6 @@ namespace Player.Base
         [Header("Jump")]
         [SerializeField] private float _jumpVelocity;
 
-        [Header("Movement Modifiers")]
-        [SerializeField] private bool _constantSpeedFallEnabled;
-        [SerializeField] private float _constantSpeedFallMultiplier;
-
         [Header("Abilities")]
         [SerializeField] private List<Ability> _playerAbilities;
 
@@ -60,7 +56,7 @@ namespace Player.Base
 
         // Movement/Controller
         private CharacterController _characterController;
-        private List<PlayerState> _playerStateStack;
+        [SerializeField] private List<PlayerState> _playerStateStack;
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
 
@@ -74,7 +70,7 @@ namespace Player.Base
         public Vector3 CharacterVelocity => _characterVelocity;
 
         // Movement Modifiers
-        private List<PlayerInputModifiers> _playerInputsModifiers;
+        private List<PlayerInputModifiers> _playerActiveInputsModifiers;
 
         // Custom Ability
         private List<Ability> _currentActiveAbilities;
@@ -107,7 +103,7 @@ namespace Player.Base
 
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
-            _playerInputsModifiers = new List<PlayerInputModifiers>();
+            _playerActiveInputsModifiers = new List<PlayerInputModifiers>();
             _currentActiveAbilities = new List<Ability>();
             _abilitiesToAddNextFrame = new List<Ability>();
 
@@ -181,38 +177,38 @@ namespace Player.Base
 
         private void UpdatePlayerInputModifiers()
         {
-            for (var i = _playerInputsModifiers.Count - 1; i >= 0; i--)
+            for (var i = _playerActiveInputsModifiers.Count - 1; i >= 0; i--)
             {
-                var movementModifier = _playerInputsModifiers[i];
+                var movementModifier = _playerActiveInputsModifiers[i];
                 if (movementModifier.IsTimed)
                 {
                     movementModifier.CurrentDuration -= Time.fixedDeltaTime;
                     if (movementModifier.CurrentDuration <= 0)
                     {
-                        RemoveInputModifierEffects(_playerInputsModifiers[i]);
-                        _playerInputsModifiers.RemoveAt(i);
+                        RemoveInputModifierEffects(_playerActiveInputsModifiers[i]);
+                        _playerActiveInputsModifiers.RemoveAt(i);
                     }
                     else
                     {
-                        _playerInputsModifiers[i] = movementModifier;
+                        _playerActiveInputsModifiers[i] = movementModifier;
                     }
                 }
-                else if (_playerInputsModifiers[i].ModifierType == PlayerInputModifierType.ConstantSpeedFall && IsGrounded)
+                else if (_playerActiveInputsModifiers[i].ModifierType == PlayerInputModifierType.ConstantSpeedFall && IsGrounded)
                 {
-                    RemoveInputModifierEffects(_playerInputsModifiers[i]);
-                    _playerInputsModifiers.RemoveAt(i);
+                    RemoveInputModifierEffects(_playerActiveInputsModifiers[i]);
+                    _playerActiveInputsModifiers.RemoveAt(i);
                 }
             }
         }
 
         private void CheckAndRemovePlayerAndInputsModifier(string identifier)
         {
-            for (var i = 0; i < _playerInputsModifiers.Count; i++)
+            for (var i = 0; i < _playerActiveInputsModifiers.Count; i++)
             {
-                if (string.Equals(_playerInputsModifiers[i].ModifierIdentifier, identifier))
+                if (string.Equals(_playerActiveInputsModifiers[i].ModifierIdentifier, identifier))
                 {
-                    RemoveInputModifierEffects(_playerInputsModifiers[i]);
-                    _playerInputsModifiers.RemoveAt(i);
+                    RemoveInputModifierEffects(_playerActiveInputsModifiers[i]);
+                    _playerActiveInputsModifiers.RemoveAt(i);
                 }
             }
         }
@@ -232,11 +228,11 @@ namespace Player.Base
             }
         }
 
-        private int HasInputModifierType(PlayerInputModifierType modifierType)
+        public int HasActiveInputModifierType(PlayerInputModifierType modifierType)
         {
-            for (var i = 0; i < _playerInputsModifiers.Count; i++)
+            for (var i = 0; i < _playerActiveInputsModifiers.Count; i++)
             {
-                if (_playerInputsModifiers[i].ModifierType == modifierType)
+                if (_playerActiveInputsModifiers[i].ModifierType == modifierType)
                 {
                     return i;
                 }
@@ -245,19 +241,34 @@ namespace Player.Base
             return -1;
         }
 
-        public void PlayerConstantSpeedFallTimed(float duration, float multiplier)
+        private int HasInputModifierType(PlayerInputModifierType modifierType)
         {
-            if (IsGrounded)
+            for (var i = 0; i < _playerInputModifierData.Count; i++)
+            {
+                if (_playerInputModifierData[i].modifierType == modifierType)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public void PlayerConstantSpeedFallTimed(float duration)
+        {
+            var constantSpeedFallIndex = HasInputModifierType(PlayerInputModifierType.ConstantSpeedFall);
+            if (constantSpeedFallIndex == -1 || IsGrounded)
             {
                 return;
             }
 
-            _playerInputsModifiers.Add(
+            var constantSpeedFallData = _playerInputModifierData[constantSpeedFallIndex];
+            _playerActiveInputsModifiers.Add(
                 new PlayerInputModifiers()
                 {
                     CurrentDuration = duration,
                     IsTimed = true,
-                    FloatModifierAmount = multiplier,
+                    FloatModifierAmount = constantSpeedFallData.inputModifierAmount,
                     ModifierType = PlayerInputModifierType.ConstantSpeedFall,
                     ModifierIdentifier = string.Empty,
                 }
@@ -295,26 +306,31 @@ namespace Player.Base
 
         private void ProcessConstantSpeedFall()
         {
-            if (!_constantSpeedFallEnabled || IsGrounded)
+            var constantSpeedFallIndex = HasInputModifierType(PlayerInputModifierType.ConstantSpeedFall);
+            if (constantSpeedFallIndex == -1 || IsGrounded)
             {
                 return;
             }
 
             if (_constantSpeedFallKey.KeyPressedThisFrame)
             {
-                _playerInputsModifiers.Add(
+                var constantSpeedFallData = _playerInputModifierData[constantSpeedFallIndex];
+                var effect = SpawnGenericInputEffectPrefab(PlayerInputModifierType.ConstantSpeedFall);
+
+                _playerActiveInputsModifiers.Add(
                     new PlayerInputModifiers()
                     {
+                        Effect = effect,
                         IsTimed = false,
                         ModifierType = PlayerInputModifierType.ConstantSpeedFall,
-                        ModifierIdentifier = MovementHoldIdentifier,
-                        FloatModifierAmount = _constantSpeedFallMultiplier,
+                        ModifierIdentifier = ConstantSpeedFallHoldIdentifier,
+                        FloatModifierAmount = constantSpeedFallData.inputModifierAmount,
                     }
                 );
             }
             else if (_constantSpeedFallKey.KeyReleasedThisFrame || !_constantSpeedFallKey.KeyPressed)
             {
-                CheckAndRemovePlayerAndInputsModifier(MovementHoldIdentifier);
+                CheckAndRemovePlayerAndInputsModifier(ConstantSpeedFallHoldIdentifier);
             }
         }
 
@@ -519,8 +535,8 @@ namespace Player.Base
             {
                 if (_characterVelocity.y < 0)
                 {
-                    var constantSpeedFallIndex = HasInputModifierType(PlayerInputModifierType.ConstantSpeedFall);
-                    var constantSpeedFall = constantSpeedFallIndex != -1 ? _playerInputsModifiers[constantSpeedFallIndex].FloatModifierAmount : 0;
+                    var constantSpeedFallIndex = HasActiveInputModifierType(PlayerInputModifierType.ConstantSpeedFall);
+                    var constantSpeedFall = constantSpeedFallIndex != -1 ? _playerActiveInputsModifiers[constantSpeedFallIndex].FloatModifierAmount : 0;
 
                     if (constantSpeedFallIndex != -1)
                     {
@@ -765,9 +781,9 @@ namespace Player.Base
             playerInputMaster.Run.performed += HandlePlayerPressRun;
             playerInputMaster.Run.canceled += HandlePlayerPressRun;
 
-            playerInputMaster.MovementHold.started += HandlePlayerPressConstantSpeedFall;
-            playerInputMaster.MovementHold.performed += HandlePlayerPressConstantSpeedFall;
-            playerInputMaster.MovementHold.canceled += HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.ConstantSpeedFall.started += HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.ConstantSpeedFall.performed += HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.ConstantSpeedFall.canceled += HandlePlayerPressConstantSpeedFall;
 
             playerInputMaster.AbilityPrimary.started += HandlePlayerPressAbilityPrimary;
             playerInputMaster.AbilityPrimary.performed += HandlePlayerPressAbilityPrimary;
@@ -802,9 +818,9 @@ namespace Player.Base
             playerInputMaster.Run.performed -= HandlePlayerPressRun;
             playerInputMaster.Run.canceled -= HandlePlayerPressRun;
 
-            playerInputMaster.MovementHold.started -= HandlePlayerPressConstantSpeedFall;
-            playerInputMaster.MovementHold.performed -= HandlePlayerPressConstantSpeedFall;
-            playerInputMaster.MovementHold.canceled -= HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.ConstantSpeedFall.started -= HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.ConstantSpeedFall.performed -= HandlePlayerPressConstantSpeedFall;
+            playerInputMaster.ConstantSpeedFall.canceled -= HandlePlayerPressConstantSpeedFall;
 
             playerInputMaster.AbilityPrimary.started -= HandlePlayerPressAbilityPrimary;
             playerInputMaster.AbilityPrimary.performed -= HandlePlayerPressAbilityPrimary;
@@ -897,17 +913,9 @@ namespace Player.Base
             public Vector3 effectSpawnOffset;
             public Transform effectParent;
             public PlayerInputModifierType modifierType;
+            public float inputModifierAmount;
         }
 
         #endregion Structs
-
-        #region Enums
-
-        private enum PlayerInputModifierType
-        {
-            ConstantSpeedFall,
-        }
-
-        #endregion Enums
     }
 }

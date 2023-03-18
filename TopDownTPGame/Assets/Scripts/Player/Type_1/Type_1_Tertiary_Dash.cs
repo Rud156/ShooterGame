@@ -47,12 +47,6 @@ namespace Player.Type_1
         {
             _currentDashTimeLeft -= Time.fixedDeltaTime;
 
-            // Basically when there is no input use forward only...
-            if (ExtensionFunctions.IsNearlyEqual(_startCoreInput.x, 0) && ExtensionFunctions.IsNearlyEqual(_startCoreInput.y, 0))
-            {
-                _startCoreInput.y = 1;
-            }
-
             var currentVelocity = playerController.CharacterVelocity;
             var characterTransform = transform;
             var forward = characterTransform.forward;
@@ -79,14 +73,13 @@ namespace Player.Type_1
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
 
             var coreInput = playerController.GetCoreMoveInput();
-            _startCoreInput = coreInput;
-
             // Basically when there is no input use forward only...
             if (ExtensionFunctions.IsNearlyEqual(coreInput.x, 0) && ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))
             {
                 coreInput.y = 1;
             }
 
+            _startCoreInput = coreInput;
             var dashEffectRotation = coreInput.y switch
             {
                 > 0 => _frontDashRotation,
