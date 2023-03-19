@@ -114,7 +114,7 @@ namespace Player.Type_2
         public override void StartAbility(BasePlayerController playerController)
         {
             SetAbilityState(AbilityState.Tap);
-            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
 
             _currentTimer = _holdTriggerDuration;
             _computedVelocity = Vector3.zero;

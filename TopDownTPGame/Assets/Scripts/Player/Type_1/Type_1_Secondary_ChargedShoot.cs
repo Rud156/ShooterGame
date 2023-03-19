@@ -65,7 +65,7 @@ namespace Player.Type_1
                 _type1Primary.UseStoredCharge(chargeAmount);
                 _abilityEnd = true;
 
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
                 CustomCameraController.Instance.StartShake(_cameraShaker);
             }
         }

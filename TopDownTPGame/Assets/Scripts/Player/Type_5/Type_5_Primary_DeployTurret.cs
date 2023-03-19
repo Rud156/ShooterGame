@@ -143,7 +143,7 @@ namespace Player.Type_5
                         _turretObject = null;
                         _currentCooldownDuration = _cooldownDuration;
                         SetTurretState(TurretState.Placed);
-                        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
                     }
                 }
                 else

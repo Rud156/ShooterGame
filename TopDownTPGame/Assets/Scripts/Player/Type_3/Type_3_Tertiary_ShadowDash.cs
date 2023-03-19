@@ -100,7 +100,7 @@ namespace Player.Type_3
             _playerAnimator.SetFloat(PlayerStaticData.Type_3_TertiaryHorizontal, _startCoreInput.x);
             _playerAnimator.SetFloat(PlayerStaticData.Type_3_TertiaryVertical, _startCoreInput.y);
 
-            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
         }
 
         #endregion Ability Functions

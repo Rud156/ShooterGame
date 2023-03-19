@@ -79,7 +79,7 @@ namespace Player.Type_3
 
                 _playerAnimator.SetInteger(PlayerStaticData.Type_3_Primary, Random.Range(_animMinIndex, _animMaxIndex + 1));
                 CustomCameraController.Instance.StartShake(_cameraShaker);
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
 
             var inputKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);

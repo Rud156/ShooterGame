@@ -67,7 +67,7 @@ public class Type_4_Ultimate_Rocket : Ability
     public override void StartAbility(BasePlayerController playerController)
     {
         _abilityEnd = false;
-        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
     }
 
     #endregion Ability Functions

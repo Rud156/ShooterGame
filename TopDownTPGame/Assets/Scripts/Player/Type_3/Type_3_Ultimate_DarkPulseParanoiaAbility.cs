@@ -59,7 +59,7 @@ namespace Player.Type_3
             _currentUltimatePercent = 0;
             _abilityEnd = false;
 
-            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
         }
 
         public override void ClearAllAbilityData(BasePlayerController playerController)

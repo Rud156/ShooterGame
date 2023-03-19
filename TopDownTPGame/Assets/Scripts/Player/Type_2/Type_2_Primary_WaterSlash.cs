@@ -109,7 +109,7 @@ namespace Player.Type_2
                 _playerAnimator.SetTrigger(PlayerStaticData.Type_2_PrimaryFront);
             }
 
-            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
         }
 
         #endregion Ability Functions

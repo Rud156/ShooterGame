@@ -71,7 +71,7 @@ namespace Player.Type_1
                 simpleDamage.SetCollisionCallback(ProjectileHitCollider);
 
                 _playerAnimator.SetInteger(PlayerStaticData.Type_1_Primary, Random.Range(1, _attackAnimCount + 1));
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
                 CustomCameraController.Instance.StartShake(_cameraShaker);
 
                 _currentOverheatTime += _fireRate;

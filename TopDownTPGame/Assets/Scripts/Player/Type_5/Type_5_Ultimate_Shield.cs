@@ -62,7 +62,7 @@ public class Type_5_Ultimate_Shield : Ability
         _currentWindUpTime = _windUptime;
         _currentUltimatePercent = 0;
         _abilityEnd = false;
-        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
     }
 
     #endregion Ability Functions

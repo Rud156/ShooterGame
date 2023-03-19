@@ -42,7 +42,7 @@ namespace Player.Type_4
                 var projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
                 var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
                 plasmaBomb.LaunchProjectile(direction);
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
 
             var inputKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);

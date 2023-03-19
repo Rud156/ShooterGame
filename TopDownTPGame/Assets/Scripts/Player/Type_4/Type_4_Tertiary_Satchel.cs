@@ -75,7 +75,7 @@ namespace Player.Type_4
                 var satchel = Instantiate(_satchelPrefab, shootPoint, Quaternion.identity);
                 var satchelNade = satchel.GetComponent<SatchelNade>();
                 satchelNade.LaunchProjectile(direction);
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
 
                 _satchelObject = satchelNade;
                 _abilityEnd = true;

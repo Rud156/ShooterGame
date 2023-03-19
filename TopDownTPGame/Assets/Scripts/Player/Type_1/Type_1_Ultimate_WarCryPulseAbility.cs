@@ -44,7 +44,7 @@ namespace Player.Type_1
                 _warCryObject.GetComponent<Type_1_Ultimate_WarCryPulse>().SetTargetAnimatorData(_playerAnimator, PlayerStaticData.Type_1_Ultimate);
                 _abilityEnd = true;
 
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
         }
 

@@ -86,7 +86,7 @@ namespace Player.Type_2
 
             _playerAnimator.SetTrigger(PlayerStaticData.Type_2_Ultimate);
             Instantiate(_ultimateBurstEffectPrefab, transform.position, Quaternion.identity);
-            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlash(_abilityTrigger);
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             CustomCameraController.Instance.StartShake(_cameraShaker);
         }
 

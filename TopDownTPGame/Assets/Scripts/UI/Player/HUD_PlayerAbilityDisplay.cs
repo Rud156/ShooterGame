@@ -27,6 +27,12 @@ namespace UI.Player
         [SerializeField] private float _flashOnDuration;
         [SerializeField] private float _flashOffDuration;
 
+        [Header("Ability Scaler")]
+        [SerializeField] private int _scaleCount;
+        [SerializeField] private float _defaultScale;
+        [SerializeField] private float _biggerScale;
+        [SerializeField] private float _scaleChangeDuration;
+
         private AbilityDisplayItem _primaryDisplay;
         private AbilityDisplayItem _secondaryDisplay;
         private AbilityDisplayItem _tertiaryDisplay;
@@ -34,6 +40,7 @@ namespace UI.Player
 
         // Coroutine Data
         private CoroutineData _flashCoroutineData;
+        private CoroutineData _scaleCoroutineData;
 
         #region Unity Functions
 
@@ -107,6 +114,64 @@ namespace UI.Player
             }
         }
 
+        private IEnumerator ScaleCoroutine(VisualElement scaler, AbilityTrigger abilityTrigger)
+        {
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    _scaleCoroutineData.PrimaryActive = true;
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    _scaleCoroutineData.SecondaryActive = true;
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    _scaleCoroutineData.TertiaryActive = true;
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    _scaleCoroutineData.UltimateActive = true;
+                    break;
+
+                case AbilityTrigger.ExternalAddedAbility:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+
+            for (var i = 0; i < _scaleCount; i++)
+            {
+                scaler.style.scale = Vector2.one * _biggerScale;
+                yield return new WaitForSeconds(_scaleChangeDuration);
+                scaler.style.scale = Vector2.one * _defaultScale;
+                yield return new WaitForSeconds(_scaleChangeDuration);
+            }
+
+
+            switch (abilityTrigger)
+            {
+                case AbilityTrigger.Primary:
+                    _scaleCoroutineData.PrimaryActive = false;
+                    break;
+
+                case AbilityTrigger.Secondary:
+                    _scaleCoroutineData.SecondaryActive = false;
+                    break;
+
+                case AbilityTrigger.Tertiary:
+                    _scaleCoroutineData.TertiaryActive = false;
+                    break;
+
+                case AbilityTrigger.Ultimate:
+                    _scaleCoroutineData.UltimateActive = false;
+                    break;
+
+                case AbilityTrigger.ExternalAddedAbility:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(abilityTrigger), abilityTrigger, null);
+            }
+        }
+
         private void Initialize()
         {
             var root = GameObject.FindWithTag(TagManager.UIRoot).GetComponent<UIDocument>().rootVisualElement;
@@ -114,6 +179,7 @@ namespace UI.Player
             var primaryAbility = root.Q<VisualElement>(PrimaryDisplayString);
             _primaryDisplay = new AbilityDisplayItem()
             {
+                ItemRoot = primaryAbility,
                 AbilityBackground = primaryAbility.Q<VisualElement>("BackgroundImage"),
                 AbilityIcon = primaryAbility.Q<VisualElement>("AbilityIcon"),
                 AbilityIconOverlayBacker = primaryAbility.Q<VisualElement>("AbilityIconOverlayBacker"),
@@ -127,6 +193,7 @@ namespace UI.Player
             var secondaryAbility = root.Q<VisualElement>(SecondaryDisplayString);
             _secondaryDisplay = new AbilityDisplayItem()
             {
+                ItemRoot = secondaryAbility,
                 AbilityBackground = secondaryAbility.Q<VisualElement>("BackgroundImage"),
                 AbilityIcon = secondaryAbility.Q<VisualElement>("AbilityIcon"),
                 AbilityIconOverlayBacker = secondaryAbility.Q<VisualElement>("AbilityIconOverlayBacker"),
@@ -140,6 +207,7 @@ namespace UI.Player
             var tertiaryAbility = root.Q<VisualElement>(TertiaryDisplayString);
             _tertiaryDisplay = new AbilityDisplayItem()
             {
+                ItemRoot = tertiaryAbility,
                 AbilityBackground = tertiaryAbility.Q<VisualElement>("BackgroundImage"),
                 AbilityIcon = tertiaryAbility.Q<VisualElement>("AbilityIcon"),
                 AbilityIconOverlayBacker = tertiaryAbility.Q<VisualElement>("AbilityIconOverlayBacker"),
@@ -153,6 +221,7 @@ namespace UI.Player
             var ultimateAbility = root.Q<VisualElement>(UltimateDisplayString);
             _ultimateDisplay = new AbilityDisplayItem()
             {
+                ItemRoot = ultimateAbility,
                 AbilityBackground = ultimateAbility.Q<VisualElement>("BackgroundImage"),
                 AbilityIcon = ultimateAbility.Q<VisualElement>("AbilityIcon"),
                 AbilityIconOverlayBacker = ultimateAbility.Q<VisualElement>("AbilityIconOverlayBacker"),
@@ -286,7 +355,7 @@ namespace UI.Player
             }
         }
 
-        public void TriggerAbilityFlash(AbilityTrigger abilityTrigger)
+        public void TriggerAbilityFlashAndScale(AbilityTrigger abilityTrigger)
         {
             switch (abilityTrigger)
             {
@@ -295,6 +364,11 @@ namespace UI.Player
                     if (!_flashCoroutineData.PrimaryActive)
                     {
                         StartCoroutine(FlashCoroutine(_primaryDisplay.Flasher, AbilityTrigger.Primary));
+                    }
+
+                    if (!_scaleCoroutineData.PrimaryActive)
+                    {
+                        StartCoroutine(ScaleCoroutine(_primaryDisplay.ItemRoot, AbilityTrigger.Primary));
                     }
                 }
                     break;
@@ -305,6 +379,11 @@ namespace UI.Player
                     {
                         StartCoroutine(FlashCoroutine(_secondaryDisplay.Flasher, AbilityTrigger.Secondary));
                     }
+
+                    if (!_scaleCoroutineData.PrimaryActive)
+                    {
+                        StartCoroutine(ScaleCoroutine(_secondaryDisplay.ItemRoot, AbilityTrigger.Secondary));
+                    }
                 }
                     break;
 
@@ -314,6 +393,11 @@ namespace UI.Player
                     {
                         StartCoroutine(FlashCoroutine(_tertiaryDisplay.Flasher, AbilityTrigger.Tertiary));
                     }
+
+                    if (!_scaleCoroutineData.PrimaryActive)
+                    {
+                        StartCoroutine(ScaleCoroutine(_tertiaryDisplay.ItemRoot, AbilityTrigger.Tertiary));
+                    }
                 }
                     break;
 
@@ -322,6 +406,11 @@ namespace UI.Player
                     if (!_flashCoroutineData.UltimateActive)
                     {
                         StartCoroutine(FlashCoroutine(_ultimateDisplay.Flasher, AbilityTrigger.Ultimate));
+                    }
+
+                    if (!_scaleCoroutineData.PrimaryActive)
+                    {
+                        StartCoroutine(ScaleCoroutine(_ultimateDisplay.ItemRoot, AbilityTrigger.Ultimate));
                     }
                 }
                     break;
@@ -456,6 +545,7 @@ namespace UI.Player
 
         private struct AbilityDisplayItem
         {
+            public VisualElement ItemRoot;
             public Label TimerLabel;
             public Label CounterLabel;
             public VisualElement AbilityBackground;
