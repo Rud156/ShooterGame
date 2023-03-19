@@ -56,7 +56,7 @@ namespace Player.Base
 
         // Movement/Controller
         private CharacterController _characterController;
-        [SerializeField] private List<PlayerState> _playerStateStack;
+        private List<PlayerState> _playerStateStack;
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
 
