@@ -54,6 +54,7 @@ namespace Player.Type_4
 
                 _abilityEnd = true;
                 _currentCooldownDuration = _cooldownDuration;
+
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
         }

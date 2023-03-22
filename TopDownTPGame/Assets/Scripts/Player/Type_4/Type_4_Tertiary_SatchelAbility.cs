@@ -10,14 +10,12 @@ using UnityEngine;
 
 namespace Player.Type_4
 {
-    public class Type_4_Tertiary_Satchel : Ability
+    public class Type_4_Tertiary_SatchelAbility : Ability
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _satchelPrefab;
 
         [Header("Components")]
-        [SerializeField] private AbilityPrefabInitializer _prefabInit;
-        [SerializeField] private Transform _cameraHolder;
         [SerializeField] private PlayerBaseShootController _shootController;
 
         [Header("Dash Charges")]
@@ -49,7 +47,6 @@ namespace Player.Type_4
             OnAbilityCooldownComplete += HandleCooldownComplete;
             base.UnityStartDelegate(playerController);
 
-            _prefabInit.AbilityPrefabInit();
             _currentSatchelsLeft = _satchelCount;
         }
 

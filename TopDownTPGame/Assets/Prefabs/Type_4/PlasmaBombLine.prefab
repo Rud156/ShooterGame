@@ -34,7 +34,7 @@ Transform:
   - {fileID: 6552805674668648021}
   - {fileID: 4978121400099670479}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &4947489715981850302
 SphereCollider:
@@ -100,10 +100,10 @@ MonoBehaviour:
     type: 3}
   _plasmaPulsePrefab: {fileID: 7004124681472689935, guid: db700e63146674244b2af5bd8cd60918,
     type: 3}
-  _projectileLaunchVelocity: 21
-  _projectileDestroyTime: 3
-  _pulseDropRate: 0.5
-  _damageAmount: 10
+  _projectileLaunchVelocity: 75
+  _projectileDestroyTime: 1.5
+  _pulseDropRate: 0.1
+  _damageAmount: 15
 --- !u!1 &6552805674668648026
 GameObject:
   m_ObjectHideFlags: 0

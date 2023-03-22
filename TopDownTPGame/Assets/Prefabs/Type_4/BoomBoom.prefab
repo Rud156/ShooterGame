@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8057118086033337048}
   - component: {fileID: 8057118086033337049}
   m_Layer: 7
-  m_Name: RocketProjectile
+  m_Name: BoomBoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

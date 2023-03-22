@@ -16969,15 +16969,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocket
       objectReference: {fileID: 0}
-    - target: {fileID: 1504131108388283768, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _playerAbilities.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1504131108388283770, guid: ce49abd0f496d0f4d8f50837531735ee,
         type: 3}
       propertyPath: m_RootOrder
-      value: 70
+      value: 69
       objectReference: {fileID: 0}
     - target: {fileID: 1504131108388283770, guid: ce49abd0f496d0f4d8f50837531735ee,
         type: 3}
@@ -17028,51 +17023,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[0].animDuration
-      value: 8.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[0].maxPlayCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[0].minPlayCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[1].animDuration
-      value: 5.167
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[1].maxPlayCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[1].minPlayCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[2].animDuration
-      value: 5.167
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[2].maxPlayCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637335354347192007, guid: ce49abd0f496d0f4d8f50837531735ee,
-        type: 3}
-      propertyPath: _idleAnimDurations.Array.data[2].minPlayCount
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32314,7 +32264,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 69
+  m_RootOrder: 70
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1965495055
 PrefabInstance:

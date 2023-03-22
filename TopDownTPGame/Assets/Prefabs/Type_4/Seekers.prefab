@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2076649741587126072}
   - component: {fileID: -4108857055161420574}
   m_Layer: 7
-  m_Name: HomingMissile
+  m_Name: Seekers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

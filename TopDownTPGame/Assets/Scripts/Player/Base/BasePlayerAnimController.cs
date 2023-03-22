@@ -23,7 +23,6 @@ namespace Player.Base
 
         private const float MaxWalkingAnimValue = 0.5f;
         private const float MaxRunningAnimValue = 1;
-        private const float MaxHorizontalAnimValue = 1;
 
         [Header("Components")]
         [SerializeField] private Animator _playerAnimator;

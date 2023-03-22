@@ -1353,7 +1353,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504131108388283766}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 169.59, y: 1.03, z: 51.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1364,7 +1364,7 @@ Transform:
   - {fileID: 348866458821068714}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 69
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -1418,7 +1418,11 @@ MonoBehaviour:
     m_Bits: 1
   _groundedTriggerVelocityThreshold: 10
   _jumpVelocity: 35
-  _playerAbilities: []
+  _playerAbilities:
+  - {fileID: 941114133602535540}
+  - {fileID: 6103119629194642842}
+  - {fileID: 1384930608354434781}
+  - {fileID: 1625475324297445380}
   _playerInputModifierData: []
 --- !u!114 &795477187898822337
 MonoBehaviour:
@@ -3790,7 +3794,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4643633886582174544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.215, z: 0}
+  m_LocalPosition: {x: 0, y: -1.37, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -4275,8 +4279,6 @@ MonoBehaviour:
   _cooldownDuration: 7
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
-  _prefabInit: {fileID: 0}
-  _cameraHolder: {fileID: 0}
   _shootController: {fileID: 795477187898822337}
   _satchelCount: 2000
 --- !u!1 &5091967983230462842
@@ -5798,7 +5800,7 @@ MonoBehaviour:
   _plasmaBombPrefab: {fileID: 4947489715981850301, guid: e967618039d656546ac03453bac3afef,
     type: 3}
   _shootController: {fileID: 795477187898822337}
-  _fireRate: 1
+  _fireRate: 1.2
 --- !u!1 &7242278250285245593
 GameObject:
   m_ObjectHideFlags: 0

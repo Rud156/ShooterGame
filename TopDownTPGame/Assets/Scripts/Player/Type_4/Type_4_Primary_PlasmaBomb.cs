@@ -26,8 +26,6 @@ namespace Player.Type_4
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController);
-
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
         public override void AbilityUpdate(BasePlayerController playerController)
@@ -42,6 +40,7 @@ namespace Player.Type_4
                 var projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
                 var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
                 plasmaBomb.LaunchProjectile(direction);
+
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
 

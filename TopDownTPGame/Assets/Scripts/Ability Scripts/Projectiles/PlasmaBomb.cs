@@ -14,6 +14,12 @@ namespace Ability_Scripts.Projectiles
         [Header("Prefabs")]
         [SerializeField] private GameObject _destroyEffectPrefab;
 
+        [Header("Components")]
+        [SerializeField] private Rigidbody _projectileRb;
+
+        [Header("Bomb Movement")]
+        [SerializeField] private float _downwardsLaunchVelocity;
+
         [Header("Bomb Data")]
         [SerializeField] private float _destroyTime;
         [SerializeField] private float _bombDamageRadius;
@@ -26,7 +32,11 @@ namespace Ability_Scripts.Projectiles
 
         #region Unity Functions
 
-        private void Start() => _destroyTimeLeft = _destroyTime;
+        private void Start()
+        {
+            _destroyTimeLeft = _destroyTime;
+            _projectileRb.velocity = _downwardsLaunchVelocity * Vector3.down;
+        }
 
         private void FixedUpdate()
         {
