@@ -1081,8 +1081,6 @@ MonoBehaviour:
     m_Bits: 1
   _groundedTriggerVelocityThreshold: 10
   _jumpVelocity: 35
-  _constantSpeedFallEnabled: 0
-  _constantSpeedFallMultiplier: 0
   _playerAbilities:
   - {fileID: 3752182973143601400}
   - {fileID: 1686835078062620147}
@@ -1388,6 +1386,7 @@ MonoBehaviour:
   _cooldownDuration: 3
   _shootFrontPrefab: {fileID: 1151988907945508128, guid: 6481fd2296d78e74e9315a48641f1306,
     type: 3}
+  _parent: {fileID: 2637092012038209767}
   _rightHandSword: {fileID: 1129290133836766669}
   _shootController: {fileID: 3268835866765903229}
   _playerAnimator: {fileID: 7451471454665554315}

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Ability_Scripts.Projectiles;
+using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UI.Player;
@@ -21,6 +22,7 @@ namespace Player.Type_2
         [SerializeField] private GameObject _shootFrontPrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parent;
         [SerializeField] private GameObject _rightHandSword;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
@@ -170,7 +172,10 @@ namespace Player.Type_2
             var frontSlashObject = CreateFrontProjectile();
             var direction = _shootController.GetShootLookDirection();
             var simpleProj = frontSlashObject.GetComponent<SimpleProjectile>();
+            var simpleDamageTrigger = frontSlashObject.GetComponent<SimpleDamageTrigger>();
+
             simpleProj.LaunchProjectile(direction);
+            simpleDamageTrigger.SetParent(_parent);
 
             IncrementCurrentState();
             _lastTriggeredTime = Time.time;

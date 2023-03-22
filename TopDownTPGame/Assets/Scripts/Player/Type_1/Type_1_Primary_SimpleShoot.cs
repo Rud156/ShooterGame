@@ -21,6 +21,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _projectilePrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
 
@@ -65,7 +66,10 @@ namespace Player.Type_1
 
                 var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
+                var simpleDamageTrigger = projectile.GetComponent<SimpleDamageTrigger>();
+
                 simpleProj.LaunchProjectile(direction);
+                simpleDamageTrigger.SetParent(_parent);
 
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(ProjectileHitCollider);

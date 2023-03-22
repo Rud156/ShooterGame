@@ -1364,7 +1364,7 @@ Transform:
   - {fileID: 348866458821068714}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 69
+  m_RootOrder: 71
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -7276,16 +7276,18 @@ MonoBehaviour:
   _abilityNameType: 13
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 7
+  _cooldownDuration: 5
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
+  _parent: {fileID: 1504131108388283766}
   _shootController: {fileID: 795477187898822337}
-  _missileShootPoint: {fileID: 0}
   _windUpTime: 0.25
-  _targetDistance: 250
+  _targetDistance: 35
   _targetMask:
     serializedVersion: 2
-    m_Bits: 193
+    m_Bits: 321
+  _debugIsActive: 0
+  _debugDisplayDuration: 0.1
 --- !u!1 &8781802533368366014
 GameObject:
   m_ObjectHideFlags: 0
