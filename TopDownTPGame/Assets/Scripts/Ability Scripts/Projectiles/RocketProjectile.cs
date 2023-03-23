@@ -22,6 +22,10 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private int _damageAmount;
         [SerializeField] private LayerMask _rocketMask;
 
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
+
         private Rigidbody _rb;
         private bool _isInitialized;
         private bool _isLaunched;
@@ -32,15 +36,7 @@ namespace Ability_Scripts.Projectiles
 
         private void Start() => Init();
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (!_isLaunched)
-            {
-                return;
-            }
-
-            ProjectileDestroy();
-        }
+        private void OnTriggerEnter(Collider other) => ProjectileHit(other);
 
         private void FixedUpdate()
         {
@@ -74,6 +70,12 @@ namespace Ability_Scripts.Projectiles
 
         public void ProjectileHit(Collider other)
         {
+            if (!_isLaunched)
+            {
+                return;
+            }
+
+            ProjectileDestroy();
         }
 
         #region Utils
@@ -81,9 +83,14 @@ namespace Ability_Scripts.Projectiles
         private void ApplyDamageForRocket()
         {
             var targetsHit = Physics.OverlapSphere(transform.position, _damageRadius, _rocketMask);
-            for (var i = 0; i < targetsHit.Length; i++)
+            if (_debugIsActive)
             {
-                if (targetsHit[i].TryGetComponent(out HealthAndDamage healthAndDamage))
+                DebugExtension.DebugWireSphere(transform.position, Color.red, _damageRadius, _debugDisplayDuration);
+            }
+
+            foreach (var target in targetsHit)
+            {
+                if (target.TryGetComponent(out HealthAndDamage healthAndDamage))
                 {
                     healthAndDamage.TakeDamage(_damageAmount);
                 }

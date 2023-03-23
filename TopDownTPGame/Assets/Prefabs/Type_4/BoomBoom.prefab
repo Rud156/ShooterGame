@@ -107,13 +107,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyEffect: {fileID: 6862442894405721568, guid: c1beaa7e2e14ffe49b11558c5e73a845,
     type: 3}
-  _projectileLaunchVelocity: 75
-  _projectileDestroyTime: 7
-  _damageRadius: 15
+  _projectileLaunchVelocity: 105
+  _projectileDestroyTime: 5
+  _damageRadius: 10
   _damageAmount: 75
   _rocketMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 321
+  _debugIsActive: 1
+  _debugDisplayDuration: 10
 --- !u!1 &8413304897716341622
 GameObject:
   m_ObjectHideFlags: 0

@@ -1364,7 +1364,7 @@ Transform:
   - {fileID: 348866458821068714}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 71
+  m_RootOrder: 70
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -7224,7 +7224,7 @@ MonoBehaviour:
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
   _shootController: {fileID: 795477187898822337}
-  _ultimateChargeRate: 0.1
+  _ultimateChargeRate: 100
 --- !u!1 &8647265151096213555
 GameObject:
   m_ObjectHideFlags: 0
