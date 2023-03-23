@@ -18,8 +18,9 @@ public class Type_4_Ultimate_Rocket : Ability
 
     [Header("Ultimate Data")]
     [SerializeField] private float _ultimateChargeRate;
+    [SerializeField] private float _windUpTime;
 
-    private GameObject _rocketObject;
+    private float _currentWindUpTime;
     private bool _abilityEnd;
 
     private float _currentUltimatePercent;
@@ -33,33 +34,22 @@ public class Type_4_Ultimate_Rocket : Ability
 
     public override void AbilityUpdate(BasePlayerController playerController)
     {
-        if (_rocketObject == null)
+        _currentWindUpTime -= Time.fixedDeltaTime;
+        if (_currentWindUpTime <= 0)
         {
             var shootPosition = _shootController.GetShootPosition();
-            var shootPoint = _shootController.GetShootPoint();
-
-            var rocket = Instantiate(_rocketPrefab, shootPosition, Quaternion.LookRotation(shootPoint.forward));
-            var rocketRb = rocket.GetComponent<Rigidbody>();
-
-            rocket.transform.SetParent(shootPoint);
-            rocketRb.isKinematic = true;
-            _rocketObject = rocket;
-        }
-        else
-        {
             var direction = _shootController.GetShootLookDirection();
-            var rocket = _rocketObject.GetComponent<RocketProjectile>();
-            var rocketRb = _rocketObject.GetComponent<Rigidbody>();
 
-            _rocketObject.transform.SetParent(null);
-            _rocketObject.transform.rotation = Quaternion.LookRotation(direction);
-            rocketRb.isKinematic = false;
-            rocket.LaunchProjectile(direction);
-            _rocketObject = null;
+            var rocket = Instantiate(_rocketPrefab, shootPosition, Quaternion.LookRotation(direction));
+            var rocketProjectile = rocket.GetComponent<RocketProjectile>();
+
+            rocketProjectile.LaunchProjectile(direction);
+
             _currentUltimatePercent = 0;
-        }
+            _abilityEnd = true;
 
-        _abilityEnd = true;
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
+        }
     }
 
     public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;
@@ -67,7 +57,7 @@ public class Type_4_Ultimate_Rocket : Ability
     public override void StartAbility(BasePlayerController playerController)
     {
         _abilityEnd = false;
-        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
+        _currentWindUpTime = _windUpTime;
     }
 
     #endregion Ability Functions

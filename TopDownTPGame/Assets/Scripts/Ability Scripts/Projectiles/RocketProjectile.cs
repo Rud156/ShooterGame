@@ -56,6 +56,8 @@ namespace Ability_Scripts.Projectiles
 
         public void LaunchProjectile(Vector3 direction)
         {
+            Init();
+
             _isLaunched = true;
             _rb.velocity = direction * _projectileLaunchVelocity;
             _destroyTimeLeft = _projectileDestroyTime;

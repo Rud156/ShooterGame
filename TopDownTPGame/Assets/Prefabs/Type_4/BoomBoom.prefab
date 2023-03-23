@@ -114,7 +114,7 @@ MonoBehaviour:
   _rocketMask:
     serializedVersion: 2
     m_Bits: 321
-  _debugIsActive: 1
+  _debugIsActive: 0
   _debugDisplayDuration: 10
 --- !u!1 &8413304897716341622
 GameObject:

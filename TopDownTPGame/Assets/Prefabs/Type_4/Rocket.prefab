@@ -7224,7 +7224,8 @@ MonoBehaviour:
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
   _shootController: {fileID: 795477187898822337}
-  _ultimateChargeRate: 100
+  _ultimateChargeRate: 0.1
+  _windUpTime: 0.25
 --- !u!1 &8647265151096213555
 GameObject:
   m_ObjectHideFlags: 0
