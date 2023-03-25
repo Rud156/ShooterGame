@@ -17,6 +17,7 @@ namespace Player.Type_4
 
         [Header("Components")]
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Type_4_DroneController _droneController;
 
         [Header("Plasma Shoot Data")]
         [SerializeField] private float _fireRate;
@@ -41,6 +42,7 @@ namespace Player.Type_4
                 var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
                 plasmaBomb.LaunchProjectile(direction);
 
+                _droneController.KnockbackDrone(PlayerStaticData.Type_4_PrimaryDroneKnockbackMultiplier);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
 

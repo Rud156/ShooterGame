@@ -3,6 +3,7 @@
 using Ability_Scripts.Projectiles;
 using Player.Base;
 using Player.Common;
+using Player.Type_4;
 using UI.Player;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class Type_4_Ultimate_Rocket : Ability
 
     [Header("Components")]
     [SerializeField] private PlayerBaseShootController _shootController;
+    [SerializeField] private Type_4_DroneController _droneController;
 
     [Header("Ultimate Data")]
     [SerializeField] private float _ultimateChargeRate;
@@ -48,6 +50,7 @@ public class Type_4_Ultimate_Rocket : Ability
             _currentUltimatePercent = 0;
             _abilityEnd = true;
 
+            _droneController.KnockbackDrone(PlayerStaticData.Type_4_UltimateDroneKnockbackMultiplier);
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
         }
     }

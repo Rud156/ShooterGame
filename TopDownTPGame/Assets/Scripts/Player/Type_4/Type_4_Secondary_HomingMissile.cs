@@ -19,6 +19,7 @@ namespace Player.Type_4
         [Header("Components")]
         [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Type_4_DroneController _droneController;
 
         [Header("Spawn Data")]
         [SerializeField] private float _windUpTime;
@@ -59,6 +60,7 @@ namespace Player.Type_4
                 _abilityEnd = true;
                 _currentCooldownDuration = _cooldownDuration;
 
+                _droneController.KnockbackDrone(PlayerStaticData.Type_4_SecondaryDroneKnockbackMultiplier);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
         }
