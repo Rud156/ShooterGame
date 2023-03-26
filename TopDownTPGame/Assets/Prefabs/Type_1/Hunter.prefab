@@ -85,7 +85,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8453877318832894241}
+  m_Father: {fileID: 95916530318942733}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &770455127
@@ -410,6 +410,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 492630955}
   - {fileID: 8453877318832894241}
   - {fileID: 95916529477622696}
   - {fileID: 95916530296144473}
@@ -495,6 +496,8 @@ MonoBehaviour:
   _shootPoint: {fileID: 95916530296144473}
   _closeShootClearPoint: {fileID: 492630955}
   _cinemachineFollowPoint: {fileID: 8453877318832894241}
+  _debugIsActive: 0
+  _debugDisplayDuration: 0
 --- !u!114 &2017837002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2962,8 +2965,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 492630955}
+  m_Children: []
   m_Father: {fileID: 95916530318942733}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

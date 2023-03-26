@@ -17,9 +17,14 @@ namespace Player.Type_4
 
         [Header("Components")]
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Type_4_DroneController _droneController;
 
         [Header("Dash Charges")]
         [SerializeField] private int _satchelCount;
+
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
 
         private SatchelNade _satchelObject;
         private bool _abilityEnd;
@@ -68,10 +73,16 @@ namespace Player.Type_4
             {
                 var direction = _shootController.GetShootLookDirection();
                 var shootPoint = _shootController.GetShootPosition();
+                if (_debugIsActive)
+                {
+                    Debug.DrawRay(shootPoint, direction * 50, Color.red, _debugDisplayDuration);
+                }
 
                 var satchel = Instantiate(_satchelPrefab, shootPoint, Quaternion.identity);
                 var satchelNade = satchel.GetComponent<SatchelNade>();
+
                 satchelNade.LaunchProjectile(direction);
+                _droneController.KnockbackDrone(PlayerStaticData.Type_4_TertiaryDroneKnockbackMultiplier);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
 
                 _satchelObject = satchelNade;

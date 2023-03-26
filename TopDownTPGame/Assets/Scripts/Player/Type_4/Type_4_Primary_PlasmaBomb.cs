@@ -22,6 +22,10 @@ namespace Player.Type_4
         [Header("Plasma Shoot Data")]
         [SerializeField] private float _fireRate;
 
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
+
         private float _nextShootTime;
         private bool _abilityEnd;
 
@@ -37,6 +41,10 @@ namespace Player.Type_4
 
                 var spawnPosition = _shootController.GetShootPosition();
                 var direction = _shootController.GetShootLookDirection();
+                if (_debugIsActive)
+                {
+                    Debug.DrawRay(spawnPosition, direction * 50, Color.red, _debugDisplayDuration);
+                }
 
                 var projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
                 var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();

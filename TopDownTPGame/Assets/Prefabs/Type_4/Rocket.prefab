@@ -414,11 +414,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 349758497464257716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.4, z: 4.5}
+  m_LocalPosition: {x: 0, y: 3.4000003, z: 4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7692622918951593744}
+  m_Father: {fileID: 1504131108388283770}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &357728516431524394
@@ -1358,12 +1358,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8201149803464995974}
   - {fileID: 7692622918951593744}
   - {fileID: 1504131108692597983}
   - {fileID: 348866458821068714}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -1442,6 +1443,8 @@ MonoBehaviour:
   _shootPoint: {fileID: 1504131108382786862}
   _closeShootClearPoint: {fileID: 8201149803464995974}
   _cinemachineFollowPoint: {fileID: 7692622918951593744}
+  _debugIsActive: 0
+  _debugDisplayDuration: 0.1
 --- !u!114 &7637335354347192007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4280,7 +4283,10 @@ MonoBehaviour:
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
   _shootController: {fileID: 795477187898822337}
+  _droneController: {fileID: 7442812568484971631}
   _satchelCount: 2000
+  _debugIsActive: 1
+  _debugDisplayDuration: 10
 --- !u!1 &5091967983230462842
 GameObject:
   m_ObjectHideFlags: 0
@@ -4933,8 +4939,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8201149803464995974}
+  m_Children: []
   m_Father: {fileID: 1504131108388283770}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5802,6 +5807,8 @@ MonoBehaviour:
   _shootController: {fileID: 795477187898822337}
   _droneController: {fileID: 7442812568484971631}
   _fireRate: 1.2
+  _debugIsActive: 0
+  _debugDisplayDuration: 10
 --- !u!1 &7242278250285245593
 GameObject:
   m_ObjectHideFlags: 0

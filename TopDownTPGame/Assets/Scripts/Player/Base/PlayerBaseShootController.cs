@@ -17,6 +17,10 @@ namespace Player.Base
         [SerializeField] private Transform _closeShootClearPoint;
         [SerializeField] private Transform _cinemachineFollowPoint;
 
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
+
         private Transform _mainCamera;
 
         #region Unity Functions
@@ -29,13 +33,25 @@ namespace Player.Base
 
         public Vector3 GetShootLookDirection()
         {
-            var closeHit = Physics.Linecast(_shootPoint.position, _closeShootClearPoint.position, _shootMask);
+            var closeHit = Physics.Linecast(_shootPoint.position, _closeShootClearPoint.position, out var closeHitInfo, _shootMask);
+            if (_debugIsActive)
+            {
+                var direction = _closeShootClearPoint.position - _shootPoint.position;
+                var distance = Vector3.Distance(_shootPoint.position, _closeShootClearPoint.position);
+                Debug.DrawRay(_shootPoint.position, direction * distance, Color.red, _debugDisplayDuration);
+            }
+
             if (closeHit)
             {
                 return _cinemachineFollowPoint.forward.normalized;
             }
 
             var hit = Physics.Raycast(_mainCamera.position, _mainCamera.forward, out var hitInfo, _maxShootDistance, _shootMask);
+            if (_debugIsActive)
+            {
+                Debug.DrawRay(_mainCamera.position, _mainCamera.forward * _maxShootDistance, Color.red, _debugDisplayDuration);
+            }
+
             if (hit)
             {
                 var direction = hitInfo.point - _shootPoint.position;

@@ -1021,6 +1021,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4207640246935570126}
   - {fileID: 4317024363540812747}
   - {fileID: 2637092012946061646}
   - {fileID: 2637092012017492159}
@@ -1106,6 +1107,8 @@ MonoBehaviour:
   _shootPoint: {fileID: 2637092012017492159}
   _closeShootClearPoint: {fileID: 4207640246935570126}
   _cinemachineFollowPoint: {fileID: 4317024363540812747}
+  _debugIsActive: 0
+  _debugDisplayDuration: 0
 --- !u!114 &8076725673007897618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2315,11 +2318,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7442507163526312492}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.4, z: 4.5}
+  m_LocalPosition: {x: 0, y: 3.4000003, z: 4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4317024363540812747}
+  m_Father: {fileID: 2637092012038209771}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7514192250333987431
@@ -2864,8 +2867,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4207640246935570126}
+  m_Children: []
   m_Father: {fileID: 2637092012038209771}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

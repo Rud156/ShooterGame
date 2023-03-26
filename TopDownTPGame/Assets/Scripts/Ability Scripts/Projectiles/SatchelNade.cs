@@ -10,6 +10,7 @@ using Utils.Misc;
 namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Collider))]
     public class SatchelNade : MonoBehaviour, IProjectile
     {
         [Header("Prefabs")]
@@ -34,6 +35,7 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private LayerMask _affectMask;
 
         private Rigidbody _rb;
+        private BoxCollider _boxCollider;
         private bool _isInitialized;
 
         private Vector3 _currentVelocity;
@@ -101,6 +103,7 @@ namespace Ability_Scripts.Projectiles
             }
 
             _rb = GetComponent<Rigidbody>();
+            _boxCollider = GetComponent<BoxCollider>();
 
             _isInitialized = true;
             _destroyTimeLeft = _destroyDuration;
@@ -178,13 +181,14 @@ namespace Ability_Scripts.Projectiles
                 var hit = Physics.Raycast(transform.position, direction, out var hitInfo, _raycastDistance, _raycastMask);
                 if (hit)
                 {
+                    DisableSatchelMovement();
+
                     var normal = hitInfo.normal;
                     var rotation = Quaternion.LookRotation(normal);
                     transform.rotation = rotation;
                     transform.position = hitInfo.point;
                     _isStuck = true;
 
-                    DisableSatchelMovement();
                     break;
                 }
             }
@@ -194,6 +198,7 @@ namespace Ability_Scripts.Projectiles
         {
             _rb.velocity = Vector3.zero;
             _rb.isKinematic = true;
+            _boxCollider.enabled = false;
         }
 
         private Vector3 GetDirectionFromIndex(int index)
