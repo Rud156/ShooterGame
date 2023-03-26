@@ -1,6 +1,7 @@
 #region
 
 using Ability_Scripts.Projectiles;
+using CustomCamera;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
@@ -25,6 +26,9 @@ namespace Player.Type_4
         [SerializeField] private float _windUpTime;
         [SerializeField] private float _targetDistance;
         [SerializeField] private LayerMask _targetMask;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -61,6 +65,7 @@ namespace Player.Type_4
                 _currentCooldownDuration = _cooldownDuration;
 
                 _droneController.KnockbackDrone(PlayerStaticData.Type_4_SecondaryDroneKnockbackMultiplier);
+                CustomCameraController.Instance.StartShake(_cameraShaker);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
         }

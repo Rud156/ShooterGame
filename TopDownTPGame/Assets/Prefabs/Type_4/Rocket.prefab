@@ -1361,7 +1361,6 @@ Transform:
   - {fileID: 8201149803464995974}
   - {fileID: 7692622918951593744}
   - {fileID: 1504131108692597983}
-  - {fileID: 7367926576758482070}
   - {fileID: 348866458821068714}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
@@ -5565,37 +5564,6 @@ Transform:
   m_Father: {fileID: 4770274744117880807}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6651762572057041475
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7367926576758482070}
-  m_Layer: 6
-  m_Name: Secondary Shoot Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7367926576758482070
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6651762572057041475}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1504131108388283770}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6722765815838546540
 GameObject:
   m_ObjectHideFlags: 0
@@ -5845,6 +5813,7 @@ MonoBehaviour:
   _shootController: {fileID: 795477187898822337}
   _droneController: {fileID: 7442812568484971631}
   _fireRate: 1.2
+  _cameraShaker: {fileID: 11400000, guid: 114ffb048905cf84cb812d26688a68d3, type: 2}
   _debugIsActive: 0
   _debugDisplayDuration: 10
 --- !u!1 &7242278250285245593
@@ -7273,6 +7242,7 @@ MonoBehaviour:
   _droneController: {fileID: 7442812568484971631}
   _ultimateChargeRate: 0.1
   _windUpTime: 0.25
+  _cameraShaker: {fileID: 11400000, guid: 9ebcfd96b51492e4f844c9a79f4879c0, type: 2}
 --- !u!1 &8647265151096213555
 GameObject:
   m_ObjectHideFlags: 0
@@ -7335,6 +7305,7 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 321
+  _cameraShaker: {fileID: 11400000, guid: fcf1215967a7c9a448c55981ddfa2697, type: 2}
   _debugIsActive: 0
   _debugDisplayDuration: 0.1
 --- !u!1 &8781802533368366014

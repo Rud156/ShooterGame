@@ -1,6 +1,7 @@
 #region
 
 using Ability_Scripts.Projectiles;
+using CustomCamera;
 using Player.Base;
 using Player.Common;
 using Player.Type_4;
@@ -21,6 +22,9 @@ public class Type_4_Ultimate_Rocket : Ability
     [Header("Ultimate Data")]
     [SerializeField] private float _ultimateChargeRate;
     [SerializeField] private float _windUpTime;
+
+    [Header("Camera Data")]
+    [SerializeField] private CameraShaker _cameraShaker;
 
     private float _currentWindUpTime;
     private bool _abilityEnd;
@@ -51,6 +55,7 @@ public class Type_4_Ultimate_Rocket : Ability
             _abilityEnd = true;
 
             _droneController.KnockbackDrone(PlayerStaticData.Type_4_UltimateDroneKnockbackMultiplier);
+            CustomCameraController.Instance.StartShake(_cameraShaker);
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
         }
     }

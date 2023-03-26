@@ -1,6 +1,7 @@
 #region
 
 using Ability_Scripts.Projectiles;
+using CustomCamera;
 using Player.Base;
 using Player.Common;
 using UI.Player;
@@ -21,6 +22,9 @@ namespace Player.Type_4
 
         [Header("Plasma Shoot Data")]
         [SerializeField] private float _fireRate;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -51,6 +55,7 @@ namespace Player.Type_4
                 plasmaBomb.LaunchProjectile(direction);
 
                 _droneController.KnockbackDrone(PlayerStaticData.Type_4_PrimaryDroneKnockbackMultiplier);
+                CustomCameraController.Instance.StartShake(_cameraShaker);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
             }
 
