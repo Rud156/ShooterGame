@@ -14,10 +14,14 @@ namespace Player.Type_4
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _satchelPrefab;
+        [SerializeField] private GameObject _rotatingShootPrefab;
+        [SerializeField] private GameObject _staticShootPrefab;
 
         [Header("Components")]
+        [SerializeField] private Transform _parent;
+        [SerializeField] private Transform _cinemachineFollowTarget;
         [SerializeField] private PlayerBaseShootController _shootController;
-        [SerializeField] private Type_4_DroneController _droneController;
+        [SerializeField] private Animator _playerAnimator;
 
         [Header("Dash Charges")]
         [SerializeField] private int _satchelCount;
@@ -26,14 +30,20 @@ namespace Player.Type_4
         [SerializeField] private bool _debugIsActive;
         [SerializeField] private float _debugDisplayDuration;
 
-        private SatchelNade _satchelObject;
+        private GameObject _staticShootPointHolder;
+        private GameObject _rotatingShootPointHolder;
+        private Transform _staticShootPoint;
+        private Transform _rotatingShootPoint;
+
         private bool _abilityEnd;
 
+        private SatchelNade _satchelObject;
         private int _currentSatchelsLeft;
 
         #region Ability Functions
 
-        public override bool AbilityCanStart(BasePlayerController playerController) => base.AbilityCanStart(playerController) && _currentSatchelsLeft > 0;
+        public override bool AbilityCanStart(BasePlayerController playerController) =>
+            base.AbilityCanStart(playerController) && (_satchelObject != null || _currentSatchelsLeft > 0);
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -52,15 +62,28 @@ namespace Player.Type_4
             OnAbilityCooldownComplete += HandleCooldownComplete;
             base.UnityStartDelegate(playerController);
 
+            var spawnPosition = _parent.position;
+            _rotatingShootPointHolder = Instantiate(_rotatingShootPrefab, spawnPosition, Quaternion.identity, _parent);
+            _staticShootPointHolder = Instantiate(_staticShootPrefab, spawnPosition, Quaternion.identity, _parent);
+
+            _rotatingShootPoint = _rotatingShootPointHolder.transform.Find("RotatingShootPoint");
+            _staticShootPoint = _staticShootPointHolder.transform.Find("StaticShootPoint");
             _currentSatchelsLeft = _satchelCount;
         }
 
-        private void OnDestroy() => OnAbilityCooldownComplete -= HandleCooldownComplete;
+        private void OnDestroy()
+        {
+            Destroy(_rotatingShootPointHolder);
+            Destroy(_staticShootPointHolder);
+            OnAbilityCooldownComplete -= HandleCooldownComplete;
+        }
 
         public override void UnityUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityUpdateDelegate(playerController);
             UpdateDashCountChanged();
+
+            _rotatingShootPointHolder.transform.localRotation = _cinemachineFollowTarget.localRotation;
         }
 
         #endregion Unity Functions
@@ -69,10 +92,11 @@ namespace Player.Type_4
 
         private void InitialSatchelActivation(BasePlayerController playerController)
         {
-            if (_satchelObject == null)
+            if (_satchelObject == null && _currentSatchelsLeft > 0)
             {
-                var direction = _shootController.GetShootLookDirection();
-                var shootPoint = _shootController.GetShootPosition();
+                var shootPointTransform = playerController.IsGrounded ? _staticShootPoint : _rotatingShootPoint;
+                var shootPoint = shootPointTransform.position;
+                var direction = _shootController.GetShootLookDirection(true, true, shootPointTransform);
                 if (_debugIsActive)
                 {
                     Debug.DrawRay(shootPoint, direction * 50, Color.red, _debugDisplayDuration);
@@ -82,7 +106,7 @@ namespace Player.Type_4
                 var satchelNade = satchel.GetComponent<SatchelNade>();
 
                 satchelNade.LaunchProjectile(direction);
-                _droneController.KnockbackDrone(PlayerStaticData.Type_4_TertiaryDroneKnockbackMultiplier);
+                _playerAnimator.SetTrigger(PlayerStaticData.Type_4_Tertiary);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
 
                 _satchelObject = satchelNade;
@@ -94,7 +118,7 @@ namespace Player.Type_4
                     _currentCooldownDuration = _cooldownDuration;
                 }
             }
-            else
+            else if (_satchelObject != null)
             {
                 _satchelObject.ProjectileDestroy();
                 _satchelObject = null;

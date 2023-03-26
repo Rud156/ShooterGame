@@ -38,7 +38,7 @@ namespace Player.Common
         // Type 4
         public const float Type_4_PrimaryDroneKnockbackMultiplier = 1;
         public const float Type_4_SecondaryDroneKnockbackMultiplier = 1.75f;
-        public const float Type_4_TertiaryDroneKnockbackMultiplier = 1;
+        public static readonly int Type_4_Tertiary = Animator.StringToHash("Type_4UpperBodyTertiary");
         public const float Type_4_UltimateDroneKnockbackMultiplier = 2f;
     }
 }

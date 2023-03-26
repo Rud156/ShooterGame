@@ -1,6 +1,7 @@
 ﻿#region
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 #endregion
 
@@ -31,19 +32,27 @@ namespace Player.Base
 
         #region External Functions
 
-        public Vector3 GetShootLookDirection()
+        public Vector3 GetShootLookDirection(bool skipCloseCheck = false, bool useCustomShootPoint = false, Transform customShootPoint = null)
         {
-            var closeHit = Physics.Linecast(_shootPoint.position, _closeShootClearPoint.position, out var closeHitInfo, _shootMask);
-            if (_debugIsActive)
-            {
-                var direction = _closeShootClearPoint.position - _shootPoint.position;
-                var distance = Vector3.Distance(_shootPoint.position, _closeShootClearPoint.position);
-                Debug.DrawRay(_shootPoint.position, direction * distance, Color.red, _debugDisplayDuration);
-            }
+            var shootPoint = useCustomShootPoint ? customShootPoint : _shootPoint;
+            Assert.IsNotNull(shootPoint, nameof(shootPoint) + " != null");
+            var shootPointPosition = shootPoint.position;
 
-            if (closeHit)
+            if (skipCloseCheck)
             {
-                return _cinemachineFollowPoint.forward.normalized;
+                var closeHit = Physics.Linecast(shootPointPosition, _closeShootClearPoint.position, out _, _shootMask);
+                if (_debugIsActive)
+                {
+                    var clearShootPointPosition = _closeShootClearPoint.position;
+                    var direction = clearShootPointPosition - shootPointPosition;
+                    var distance = Vector3.Distance(shootPointPosition, clearShootPointPosition);
+                    Debug.DrawRay(shootPointPosition, direction * distance, Color.red, _debugDisplayDuration);
+                }
+
+                if (closeHit)
+                {
+                    return _cinemachineFollowPoint.forward.normalized;
+                }
             }
 
             var hit = Physics.Raycast(_mainCamera.position, _mainCamera.forward, out var hitInfo, _maxShootDistance, _shootMask);
@@ -54,13 +63,13 @@ namespace Player.Base
 
             if (hit)
             {
-                var direction = hitInfo.point - _shootPoint.position;
+                var direction = hitInfo.point - shootPointPosition;
                 return direction.normalized;
             }
             else
             {
                 var distantPoint = _mainCamera.position + _mainCamera.forward.normalized * _maxShootDistance;
-                var direction = distantPoint - _shootPoint.position;
+                var direction = distantPoint - shootPointPosition;
                 return direction.normalized;
             }
         }
