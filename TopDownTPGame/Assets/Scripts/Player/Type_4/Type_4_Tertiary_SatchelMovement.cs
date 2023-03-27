@@ -18,8 +18,8 @@ namespace Player.Type_4
         [SerializeField] private float _velocityDecreaseRate;
         [SerializeField] private float _satchelAffectTime;
 
-        [SerializeField] private SatchelVelocityState _velocityState;
-        [SerializeField] private float _currentTimer;
+        private SatchelVelocityState _velocityState;
+        private float _currentTimer;
 
         private float _maxStartVelocity;
         private Vector3 _computedVelocity;

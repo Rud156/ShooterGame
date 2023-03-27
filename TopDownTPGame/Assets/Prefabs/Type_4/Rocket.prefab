@@ -4279,7 +4279,7 @@ MonoBehaviour:
   _abilityNameType: 14
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001800000016000000
-  _cooldownDuration: 7
+  _cooldownDuration: 5
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
   _rotatingShootPrefab: {fileID: 1050605402142570255, guid: 08a6998b1c9239d43a7e6d7a04da1988,
@@ -4290,8 +4290,8 @@ MonoBehaviour:
   _cinemachineFollowTarget: {fileID: 7692622918951593744}
   _shootController: {fileID: 795477187898822337}
   _playerAnimator: {fileID: 2081323094457028716}
-  _satchelCount: 2000
-  _debugIsActive: 1
+  _satchelCount: 3
+  _debugIsActive: 0
   _debugDisplayDuration: 10
 --- !u!1 &5091967983230462842
 GameObject:
@@ -7294,7 +7294,7 @@ MonoBehaviour:
   _abilityNameType: 13
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 5
+  _cooldownDuration: 7
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
   _parent: {fileID: 1504131108388283766}

@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: 56fc8373f0a45e44884567f6f7a4a1d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -116,7 +116,7 @@ Transform:
   m_Children:
   - {fileID: 1872775645322770994}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 70
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &981255966402603157
 BoxCollider:
@@ -183,13 +183,13 @@ MonoBehaviour:
   _satchelExplodePrefab: {fileID: 214870349094958026, guid: 128d5f3379131804496d7460e2e16870,
     type: 3}
   _additionalGravity: 0.15
-  _satchelLaunchVelocity: 50
+  _satchelLaunchVelocity: 25
   _velocityDecreaseRate: 10
   _destroyDuration: 10
   _raycastDistance: 0.5
   _raycastMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 257
   _maxRadiusForAffect: 15
   _minRadiusForMaxAffect: 5
   _minVelocity: 5
@@ -197,3 +197,5 @@ MonoBehaviour:
   _affectMask:
     serializedVersion: 2
     m_Bits: 64
+  _debugIsActive: 0
+  _debugDisplayDuration: 10

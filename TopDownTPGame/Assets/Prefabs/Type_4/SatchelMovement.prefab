@@ -49,6 +49,7 @@ MonoBehaviour:
   _abilityTrigger: 4
   _abilityType: 0
   _abilityNameType: 22
+  _abilityPositioning: 0
   _allowedActiveAbilities: 
   _cooldownDuration: 0
   _gravityMultiplier: 0.15
@@ -56,5 +57,3 @@ MonoBehaviour:
   _velocityDecreaseRateDelay: 0.25
   _velocityDecreaseRate: 3
   _satchelAffectTime: 2.5
-  _velocityState: 0
-  _currentTimer: 0

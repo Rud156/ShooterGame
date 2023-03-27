@@ -34,6 +34,10 @@ namespace Ability_Scripts.Projectiles
         [SerializeField] private float _maxVelocity;
         [SerializeField] private LayerMask _affectMask;
 
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
+
         private Rigidbody _rb;
         private BoxCollider _boxCollider;
         private bool _isInitialized;
@@ -113,6 +117,12 @@ namespace Ability_Scripts.Projectiles
         private void LaunchPlayersWithSatchel()
         {
             var colliders = Physics.OverlapSphere(transform.position, _maxRadiusForAffect, _affectMask);
+            if (_debugIsActive)
+            {
+                DebugExtension.DebugWireSphere(transform.position, Color.red, _maxRadiusForAffect, _debugDisplayDuration);
+                DebugExtension.DebugWireSphere(transform.position, Color.blue, 1, _debugDisplayDuration);
+            }
+
             foreach (var targetCollider in colliders)
             {
                 if (targetCollider.TryGetComponent(out BasePlayerController targetController))
