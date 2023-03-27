@@ -183,17 +183,17 @@ MonoBehaviour:
   _satchelExplodePrefab: {fileID: 214870349094958026, guid: 128d5f3379131804496d7460e2e16870,
     type: 3}
   _additionalGravity: 0.15
-  _satchelLaunchVelocity: 25
-  _velocityDecreaseRate: 10
-  _destroyDuration: 10
+  _satchelLaunchVelocity: 20
+  _velocityDecreaseRate: 7
+  _destroyDuration: 5
   _raycastDistance: 0.5
   _raycastMask:
     serializedVersion: 2
     m_Bits: 257
-  _maxRadiusForAffect: 15
+  _maxRadiusForAffect: 20
   _minRadiusForMaxAffect: 5
   _minVelocity: 5
-  _maxVelocity: 45
+  _maxVelocity: 40
   _affectMask:
     serializedVersion: 2
     m_Bits: 64
