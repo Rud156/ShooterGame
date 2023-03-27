@@ -1311,9 +1311,9 @@ MonoBehaviour:
   _walkSpeed: 7
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
-  _headTransform: {fileID: 0}
-  _bodyTransform: {fileID: 0}
-  _legsTransform: {fileID: 0}
+  _headTransform: {fileID: 5704354926256409912}
+  _bodyTransform: {fileID: 9070472464592238885}
+  _legsTransform: {fileID: 3953132557191276434}
   _groundedCheckPoint: {fileID: 1252368708560691525}
   _groundedCheckRadius: 0.65
   _groundedCheckMask:
