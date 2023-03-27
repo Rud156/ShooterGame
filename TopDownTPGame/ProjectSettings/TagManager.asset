@@ -19,7 +19,7 @@ TagManager:
   - ProjectileDetector
   - DefaultOnly
   - PostProcessing
-  - 
+  - NotDetectableLayer
   - 
   - 
   - 

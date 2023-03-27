@@ -1365,8 +1365,8 @@ MonoBehaviour:
   _delayedIdleStartBuffer: 0.5
   _idleAnimDurations:
   - animDuration: 8.3
-    minPlayCount: 2
-    maxPlayCount: 3
+    minPlayCount: 1
+    maxPlayCount: 1
   - animDuration: 5.167
     minPlayCount: 1
     maxPlayCount: 1
@@ -6296,14 +6296,18 @@ MonoBehaviour:
   _cooldownDuration: 3
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
-  _camera: {fileID: 0}
-  _spawnMaxDistance: 15
+  _shootController: {fileID: 5021002024800133882}
+  _spawnMaxDistance: 20
   _maxTurretsCanSpawn: 2
   _minYNormalThreshold: 0.7
   _spawnOffset: {x: 0, y: 0, z: 0}
-  _turretMask:
+  _turretDeployCheckMask:
     serializedVersion: 2
     m_Bits: 1
+  _turretGameObjectLayerMask: Destroyable
+  _turretNotDetectedGameObjectLayerMask: NotDetectableLayer
+  _debugIsActive: 0
+  _debugDisplayDuration: 0.1
 --- !u!1 &5859682739866585888
 GameObject:
   m_ObjectHideFlags: 0

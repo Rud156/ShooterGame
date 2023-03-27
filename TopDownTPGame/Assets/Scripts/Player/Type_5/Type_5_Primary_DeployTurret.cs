@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils.Materials;
 
 #endregion
@@ -19,14 +20,20 @@ namespace Player.Type_5
         [SerializeField] private GameObject _turretPrefab;
 
         [Header("Components")]
-        [SerializeField] private Transform _camera;
+        [SerializeField] private PlayerBaseShootController _shootController;
 
         [Header("Spawn Data")]
         [SerializeField] private float _spawnMaxDistance;
         [SerializeField] private int _maxTurretsCanSpawn;
         [SerializeField] private float _minYNormalThreshold;
         [SerializeField] private Vector3 _spawnOffset;
-        [SerializeField] private LayerMask _turretMask;
+        [SerializeField] private LayerMask _turretDeployCheckMask;
+        [SerializeField] private string _turretGameObjectLayerMask;
+        [SerializeField] private string _turretNotDetectedGameObjectLayerMask;
+
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
 
         private BaseMaterialSwitcher _turretMaterialSwitcher;
         private GameObject _turretObject;
@@ -108,6 +115,7 @@ namespace Player.Type_5
             }
 
             _turretObject = Instantiate(_turretPrefab, transform.position, Quaternion.identity);
+            _turretObject.layer = LayerMask.NameToLayer(_turretNotDetectedGameObjectLayerMask);
             _turretMaterialSwitcher = _turretObject.GetComponent<BaseMaterialSwitcher>();
 
             SetTurretState(TurretState.Placement);
@@ -115,9 +123,13 @@ namespace Player.Type_5
 
         private void UpdateTurretPlacement(BasePlayerController playerController)
         {
-            var cameraPosition = _camera.position;
-            var direction = _camera.forward;
-            var hit = Physics.Raycast(cameraPosition, direction, out var hitInfo, _spawnMaxDistance, _turretMask);
+            var shootPosition = _shootController.GetShootPosition();
+            var direction = _shootController.GetShootLookDirection();
+            var hit = Physics.Raycast(shootPosition, direction, out var hitInfo, _spawnMaxDistance, _turretDeployCheckMask);
+            if (_debugIsActive)
+            {
+                Debug.DrawRay(shootPosition, direction * _spawnMaxDistance, Color.red, _debugDisplayDuration);
+            }
 
             if (hit)
             {
@@ -133,6 +145,8 @@ namespace Player.Type_5
                     if (primaryKey.KeyPressedThisFrame)
                     {
                         _turretObject.transform.SetParent(hitInfo.transform);
+                        _turretObject.layer = LayerMask.NameToLayer(_turretGameObjectLayerMask);
+
                         var turretController = _turretObject.GetComponent<Type_4_TurretController>();
                         turretController.SetTurretActiveState(true);
                         turretController.SetOwnerInstanceId(gameObject.GetInstanceID());
@@ -154,7 +168,7 @@ namespace Player.Type_5
             else
             {
                 var endPosition = direction * _spawnMaxDistance;
-                _turretObject.transform.position = cameraPosition + endPosition;
+                _turretObject.transform.position = shootPosition + endPosition;
                 UpdateTurretMaterial(3);
             }
 
