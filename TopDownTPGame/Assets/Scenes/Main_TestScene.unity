@@ -5224,7 +5224,7 @@ GameObject:
   - component: {fileID: 254855387}
   - component: {fileID: 254855386}
   - component: {fileID: 254855385}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Test Small Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}

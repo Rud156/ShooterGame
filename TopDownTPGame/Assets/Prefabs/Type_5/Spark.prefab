@@ -6304,8 +6304,6 @@ MonoBehaviour:
   _turretDeployCheckMask:
     serializedVersion: 2
     m_Bits: 1
-  _turretGameObjectLayerMask: Destroyable
-  _turretNotDetectedGameObjectLayerMask: NotDetectableLayer
   _debugIsActive: 0
   _debugDisplayDuration: 0.1
 --- !u!1 &5859682739866585888
