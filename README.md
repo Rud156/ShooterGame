@@ -1,6 +1,7 @@
 # Temporal Odyssey
 
 [Current Project State](https://github.com/users/Rud156/projects/1/views/2?query=is%3Aopen+sort%3Aupdated-desc)
+[Project Idea Board](https://hushed-play-344.notion.site/Temporal-Odessy-d6407eec2c1f4f2f84090cc1de146be8)
 
 ## Gameplay Description:
 1. The world should be a small but linear experience, similar to the levels of Dishonored 2. Events that transpire in one timeline can have far-reaching impacts in the newly established timeline, potentially altering the course of events as a result.
