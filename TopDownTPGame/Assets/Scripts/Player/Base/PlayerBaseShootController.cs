@@ -32,7 +32,10 @@ namespace Player.Base
 
         #region External Functions
 
-        public Vector3 GetShootLookDirection(bool skipCloseCheck = false, bool useCustomShootPoint = false, Transform customShootPoint = null)
+        public Vector3 GetShootLookDirection(bool skipCloseCheck = false, bool useCustomShootPoint = false, Transform customShootPoint = null) =>
+            GetShootLookDirection(_shootMask, skipCloseCheck, useCustomShootPoint, customShootPoint);
+
+        public Vector3 GetShootLookDirection(LayerMask customLayerMask, bool skipCloseCheck = false, bool useCustomShootPoint = false, Transform customShootPoint = null)
         {
             var shootPoint = useCustomShootPoint ? customShootPoint : _shootPoint;
             Assert.IsNotNull(shootPoint, nameof(shootPoint) + " != null");
@@ -40,7 +43,7 @@ namespace Player.Base
 
             if (skipCloseCheck)
             {
-                var closeHit = Physics.Linecast(shootPointPosition, _closeShootClearPoint.position, out _, _shootMask);
+                var closeHit = Physics.Linecast(shootPointPosition, _closeShootClearPoint.position, out _, customLayerMask);
                 if (_debugIsActive)
                 {
                     var clearShootPointPosition = _closeShootClearPoint.position;
@@ -55,7 +58,7 @@ namespace Player.Base
                 }
             }
 
-            var hit = Physics.Raycast(_mainCamera.position, _mainCamera.forward, out var hitInfo, _maxShootDistance, _shootMask);
+            var hit = Physics.Raycast(_mainCamera.position, _mainCamera.forward, out var hitInfo, _maxShootDistance, customLayerMask);
             if (_debugIsActive)
             {
                 Debug.DrawRay(_mainCamera.position, _mainCamera.forward * _maxShootDistance, Color.red, _debugDisplayDuration);

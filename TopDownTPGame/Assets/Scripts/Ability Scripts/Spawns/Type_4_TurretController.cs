@@ -15,6 +15,7 @@ namespace Ability_Scripts.Spawns
         [Header("Components")]
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private Transform _turretTop;
+        [SerializeField] private GameObject _turretRingParticle;
 
         [Header("Turret Targeting Data")]
         [SerializeField] private float _targetingRadius;
@@ -274,7 +275,11 @@ namespace Ability_Scripts.Spawns
 
         #region State Changes
 
-        public void SetTurretActiveState(bool isActive) => SetTurretState(isActive ? TurretState.Idle : TurretState.InActive);
+        public void SetTurretActiveState(bool isActive)
+        {
+            SetTurretState(isActive ? TurretState.Idle : TurretState.InActive);
+            _turretRingParticle.SetActive(isActive);
+        }
 
         private void SetTurretState(TurretState turretState) => _turretState = turretState;
 

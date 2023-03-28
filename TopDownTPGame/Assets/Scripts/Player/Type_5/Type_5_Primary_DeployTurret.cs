@@ -28,8 +28,6 @@ namespace Player.Type_5
         [SerializeField] private float _minYNormalThreshold;
         [SerializeField] private Vector3 _spawnOffset;
         [SerializeField] private LayerMask _turretDeployCheckMask;
-        [SerializeField] private string _turretGameObjectLayerMask;
-        [SerializeField] private string _turretNotDetectedGameObjectLayerMask;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -115,7 +113,6 @@ namespace Player.Type_5
             }
 
             _turretObject = Instantiate(_turretPrefab, transform.position, Quaternion.identity);
-            _turretObject.layer = LayerMask.NameToLayer(_turretNotDetectedGameObjectLayerMask);
             _turretMaterialSwitcher = _turretObject.GetComponent<BaseMaterialSwitcher>();
 
             SetTurretState(TurretState.Placement);
@@ -124,7 +121,7 @@ namespace Player.Type_5
         private void UpdateTurretPlacement(BasePlayerController playerController)
         {
             var shootPosition = _shootController.GetShootPosition();
-            var direction = _shootController.GetShootLookDirection();
+            var direction = _shootController.GetShootLookDirection(_turretDeployCheckMask);
             var hit = Physics.Raycast(shootPosition, direction, out var hitInfo, _spawnMaxDistance, _turretDeployCheckMask);
             if (_debugIsActive)
             {
@@ -145,7 +142,6 @@ namespace Player.Type_5
                     if (primaryKey.KeyPressedThisFrame)
                     {
                         _turretObject.transform.SetParent(hitInfo.transform);
-                        _turretObject.layer = LayerMask.NameToLayer(_turretGameObjectLayerMask);
 
                         var turretController = _turretObject.GetComponent<Type_4_TurretController>();
                         turretController.SetTurretActiveState(true);
