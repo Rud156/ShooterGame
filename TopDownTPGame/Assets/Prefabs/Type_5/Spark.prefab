@@ -6298,7 +6298,7 @@ MonoBehaviour:
     type: 3}
   _shootController: {fileID: 5021002024800133882}
   _spawnMaxDistance: 20
-  _maxTurretsCanSpawn: 2
+  _maxTurretsCanSpawn: 3
   _minYNormalThreshold: 0.7
   _spawnOffset: {x: 0, y: 0, z: 0}
   _turretDeployCheckMask:

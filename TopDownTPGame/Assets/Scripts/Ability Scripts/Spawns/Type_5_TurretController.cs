@@ -10,12 +10,18 @@ using Random = UnityEngine.Random;
 
 namespace Ability_Scripts.Spawns
 {
-    public class Type_4_TurretController : MonoBehaviour
+    public class Type_5_TurretController : MonoBehaviour
     {
         [Header("Components")]
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private Transform _turretTop;
         [SerializeField] private GameObject _turretRingParticle;
+
+        [Header("Laser")]
+        [SerializeField] private GameObject _turretLaser;
+        [SerializeField] private Transform _laserEnd_1;
+        [SerializeField] private Transform _laserEnd_2;
+        [SerializeField] private LineRenderer _laserLine;
 
         [Header("Turret Targeting Data")]
         [SerializeField] private float _targetingRadius;
@@ -179,8 +185,12 @@ namespace Ability_Scripts.Spawns
                     var shootPosition = _shootPoint.position;
                     var direction = targetPosition - shootPosition;
                     var lookRotation = Quaternion.LookRotation(direction);
+
                     _turretTop.rotation = lookRotation;
-                    Debug.DrawLine(shootPosition, targetPosition, Color.red);
+                    _laserEnd_1.position = shootPosition;
+                    _laserEnd_2.position = targetPosition;
+                    _laserLine.SetPosition(0, shootPosition);
+                    _laserLine.SetPosition(1, targetPosition);
 
                     var distance = Vector3.Distance(targetPosition, shootPosition);
                     if (distance > _targetingRadius)
@@ -281,9 +291,20 @@ namespace Ability_Scripts.Spawns
             _turretRingParticle.SetActive(isActive);
         }
 
-        private void SetTurretState(TurretState turretState) => _turretState = turretState;
+        private void SetTurretState(TurretState turretState)
+        {
+            _turretState = turretState;
+            if (turretState != TurretState.Targeting)
+            {
+                _turretLaser.SetActive(false);
+            }
+        }
 
-        private void SetTurretTargetingState(TurretTargetingState turretTargetingState) => _turretTargetingState = turretTargetingState;
+        private void SetTurretTargetingState(TurretTargetingState turretTargetingState)
+        {
+            _turretTargetingState = turretTargetingState;
+            _turretLaser.SetActive(turretTargetingState == TurretTargetingState.TrackAndDamageTarget);
+        }
 
         #endregion State Changes
 

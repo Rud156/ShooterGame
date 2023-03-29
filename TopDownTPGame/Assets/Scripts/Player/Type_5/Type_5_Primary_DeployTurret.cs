@@ -105,13 +105,6 @@ namespace Player.Type_5
 
         private void UpdateTurretShouldSpawn()
         {
-            if (_spawnedTurrets.Count >= _maxTurretsCanSpawn)
-            {
-                var turret = _spawnedTurrets[0];
-                Destroy(turret);
-                _spawnedTurrets.RemoveAt(0);
-            }
-
             _turretObject = Instantiate(_turretPrefab, transform.position, Quaternion.identity);
             _turretMaterialSwitcher = _turretObject.GetComponent<BaseMaterialSwitcher>();
 
@@ -143,11 +136,19 @@ namespace Player.Type_5
                     {
                         _turretObject.transform.SetParent(hitInfo.transform);
 
-                        var turretController = _turretObject.GetComponent<Type_4_TurretController>();
+                        var turretController = _turretObject.GetComponent<Type_5_TurretController>();
                         turretController.SetTurretActiveState(true);
                         turretController.SetOwnerInstanceId(gameObject.GetInstanceID());
 
                         UpdateTurretMaterial(1);
+
+                        // Delete Last Spawned Turret...
+                        if (_spawnedTurrets.Count >= _maxTurretsCanSpawn)
+                        {
+                            var turret = _spawnedTurrets[0];
+                            Destroy(turret);
+                            _spawnedTurrets.RemoveAt(0);
+                        }
 
                         _spawnedTurrets.Add(_turretObject);
                         _turretObject = null;
