@@ -324,8 +324,8 @@ MonoBehaviour:
   _turretTop: {fileID: 2752422006056786181}
   _turretRingParticle: {fileID: 7173792127108487490}
   _turretLaser: {fileID: 1277019763417612637}
-  _laserEnd_1: {fileID: 1541609577278265617}
-  _laserEnd_2: {fileID: 1809049910157600530}
+  _laserStartEnd: {fileID: 1541609577278265617}
+  _laserTargetEnd: {fileID: 1809049910157600530}
   _laserLine: {fileID: 7873473982044652123}
   _targetingRadius: 15
   _targetingMask:

@@ -19,8 +19,8 @@ namespace Ability_Scripts.Spawns
 
         [Header("Laser")]
         [SerializeField] private GameObject _turretLaser;
-        [SerializeField] private Transform _laserEnd_1;
-        [SerializeField] private Transform _laserEnd_2;
+        [SerializeField] private Transform _laserStartEnd;
+        [SerializeField] private Transform _laserTargetEnd;
         [SerializeField] private LineRenderer _laserLine;
 
         [Header("Turret Targeting Data")]
@@ -187,8 +187,8 @@ namespace Ability_Scripts.Spawns
                     var lookRotation = Quaternion.LookRotation(direction);
 
                     _turretTop.rotation = lookRotation;
-                    _laserEnd_1.position = shootPosition;
-                    _laserEnd_2.position = targetPosition;
+                    _laserStartEnd.position = shootPosition;
+                    _laserTargetEnd.position = targetPosition;
                     _laserLine.SetPosition(0, shootPosition);
                     _laserLine.SetPosition(1, targetPosition);
 
@@ -238,7 +238,7 @@ namespace Ability_Scripts.Spawns
                     }
 
                     var distance = Vector3.Distance(_hitColliders[i].transform.position, _shootPoint.position);
-                    if (distance < closestDistance)
+                    if (distance < closestDistance && distance < _targetingRadius)
                     {
                         closestHealthAndDamage = healthAndDamage;
                         closestDistance = distance;
@@ -270,7 +270,8 @@ namespace Ability_Scripts.Spawns
                     }
 
                     var health = healthAndDamage.CurrentHealth;
-                    if (health < lowestDamage)
+                    var distance = Vector3.Distance(_hitColliders[i].transform.position, _shootPoint.position);
+                    if (health < lowestDamage && distance < _targetingRadius)
                     {
                         lowestDamage = health;
                         lowestHealthAndDamage = healthAndDamage;
