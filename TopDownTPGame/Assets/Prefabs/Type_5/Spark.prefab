@@ -6296,6 +6296,7 @@ MonoBehaviour:
   _cooldownDuration: 3
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
+  _parent: {fileID: 1252368709468985580}
   _shootController: {fileID: 5021002024800133882}
   _spawnMaxDistance: 20
   _maxTurretsCanSpawn: 3

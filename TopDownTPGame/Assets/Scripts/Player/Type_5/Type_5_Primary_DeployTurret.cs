@@ -7,7 +7,6 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utils.Materials;
 
 #endregion
@@ -20,6 +19,7 @@ namespace Player.Type_5
         [SerializeField] private GameObject _turretPrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
 
         [Header("Spawn Data")]
@@ -35,7 +35,7 @@ namespace Player.Type_5
 
         private BaseMaterialSwitcher _turretMaterialSwitcher;
         private GameObject _turretObject;
-        private List<GameObject> _spawnedTurrets;
+        private List<Type_5_TurretController> _spawnedTurretControllers;
 
         private TurretState _turretState;
 
@@ -79,12 +79,12 @@ namespace Player.Type_5
 
         public override void ClearAllAbilityData(BasePlayerController playerController)
         {
-            foreach (var turret in _spawnedTurrets)
+            foreach (var turretController in _spawnedTurretControllers)
             {
-                Destroy(turret);
+                turretController.DestroyTurret();
             }
 
-            _spawnedTurrets.Clear();
+            _spawnedTurretControllers.Clear();
         }
 
         #endregion Ability Functions
@@ -94,7 +94,7 @@ namespace Player.Type_5
         public override void UnityStartDelegate(BasePlayerController playerController)
         {
             base.UnityStartDelegate(playerController);
-            _spawnedTurrets = new List<GameObject>();
+            _spawnedTurretControllers = new List<Type_5_TurretController>();
         }
 
         #endregion Unity Functions
@@ -134,25 +134,23 @@ namespace Player.Type_5
                     var primaryKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
                     if (primaryKey.KeyPressedThisFrame)
                     {
-                        _turretObject.transform.SetParent(hitInfo.transform);
-
-                        var turretController = _turretObject.GetComponent<Type_5_TurretController>();
-                        turretController.SetTurretActiveState(true);
-                        turretController.SetOwnerInstanceId(gameObject.GetInstanceID());
-
-                        UpdateTurretMaterial(1);
-
                         // Delete Last Spawned Turret...
-                        if (_spawnedTurrets.Count >= _maxTurretsCanSpawn)
+                        if (_spawnedTurretControllers.Count >= _maxTurretsCanSpawn)
                         {
-                            var turret = _spawnedTurrets[0];
-                            Destroy(turret);
-                            _spawnedTurrets.RemoveAt(0);
+                            _spawnedTurretControllers[0].DestroyTurret();
+                            _spawnedTurretControllers.RemoveAt(0);
                         }
 
-                        _spawnedTurrets.Add(_turretObject);
+                        UpdateTurretMaterial(1); // Update the Material first since ActivateTurret uses the turret Material
+                        var turretController = _turretObject.GetComponent<Type_5_TurretController>();
+                        turretController.ActivateTurret();
+                        turretController.SetOwnerInstanceId(_parent.GetInstanceID());
+
+                        _turretObject.transform.SetParent(hitInfo.transform);
+                        _spawnedTurretControllers.Add(turretController);
                         _turretObject = null;
                         _currentCooldownDuration = _cooldownDuration;
+
                         SetTurretState(TurretState.Placed);
                         HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
                     }
