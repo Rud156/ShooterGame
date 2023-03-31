@@ -7842,7 +7842,7 @@ MonoBehaviour:
   _abilityNameType: 17
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 10
+  _cooldownDuration: 1
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
   _shootController: {fileID: 5021002024800133882}

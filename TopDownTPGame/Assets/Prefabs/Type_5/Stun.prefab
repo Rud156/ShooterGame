@@ -50,9 +50,10 @@ MonoBehaviour:
   _abilityTrigger: 4
   _abilityType: 0
   _abilityNameType: 23
+  _abilityPositioning: 0
   _allowedActiveAbilities: 
   _cooldownDuration: 0
-  _stunDuration: 1.5
+  _stunDuration: 3
 --- !u!1001 &5910419669084840387
 PrefabInstance:
   m_ObjectHideFlags: 0

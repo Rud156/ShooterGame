@@ -14,30 +14,32 @@ namespace Ability_Scripts.Projectiles
     public class StunGrenade : MonoBehaviour, IProjectile
     {
         [Header("Prefabs")]
-        [SerializeField] private GameObject _miniGrenadePrefab;
         [SerializeField] private GameObject _stunPrefab;
         [SerializeField] private GameObject _destroyEffect;
 
-        [Header("Grenade Data")]
+        [Header("General Grenade Data")]
         [SerializeField] private float _additionalGravity;
-        [SerializeField] private int _secondaryGrenadeCount;
         [SerializeField] private float _launchVelocity;
         [SerializeField] private float _projectileDestroyTime;
         [SerializeField] private int _damageAmount;
 
         [Header("Secondary Grenades")]
-        [SerializeField] private float _secondaryLaunchVelocity;
+        [SerializeField] private bool _hasSecondaryGrenades;
+        [SerializeField] private int _secondaryGrenadeCount;
+        [SerializeField] private GameObject _secondaryGrenadePrefab;
 
         [Header("Stun Data")]
         [SerializeField] private float _stunEffectRadius;
         [SerializeField] private LayerMask _stunMask;
 
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+        [SerializeField] private float _debugDisplayDuration;
+
         private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
         private Rigidbody _rb;
         private bool _isInitialized;
-
-        private bool _isSecondary;
         private float _destroyTimeLeft;
 
         #region Unity Functions
@@ -62,13 +64,18 @@ namespace Ability_Scripts.Projectiles
         public void LaunchProjectile(Vector3 direction)
         {
             Init();
-            _rb.velocity = direction * (_isSecondary ? _secondaryLaunchVelocity : _launchVelocity);
+            _rb.velocity = direction * _launchVelocity;
             _destroyTimeLeft = _projectileDestroyTime;
         }
 
         public void ProjectileDestroy()
         {
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, _hitColliders, _stunMask);
+            if (_debugIsActive)
+            {
+                DebugExtension.DebugWireSphere(transform.position, Color.red, _stunEffectRadius, _debugDisplayDuration);
+            }
+
             for (var i = 0; i < targetsHit; i++)
             {
                 if (_hitColliders[i].TryGetComponent(out BasePlayerController targetController))
@@ -86,20 +93,18 @@ namespace Ability_Scripts.Projectiles
                 }
             }
 
-            if (!_isSecondary)
+            if (_hasSecondaryGrenades)
             {
                 var angleDifference = 360.0f / _secondaryGrenadeCount;
                 float startAngle = 0;
 
                 for (var i = 0; i < _secondaryGrenadeCount; i++)
                 {
-                    var secondaryProjectile = Instantiate(_miniGrenadePrefab, transform.position, Quaternion.Euler(0, startAngle, 0));
+                    var secondaryProjectile = Instantiate(_secondaryGrenadePrefab, transform.position, Quaternion.Euler(0, startAngle, 0));
+                    var stunGrenade = secondaryProjectile.GetComponent<StunGrenade>();
                     var forward = secondaryProjectile.transform.forward;
 
-                    var stunGrenade = secondaryProjectile.GetComponent<StunGrenade>();
                     stunGrenade.LaunchProjectile(forward);
-                    stunGrenade.SetSecondary(true);
-
                     startAngle += angleDifference;
                 }
             }
@@ -111,8 +116,6 @@ namespace Ability_Scripts.Projectiles
         public void ProjectileHit(Collider other)
         {
         }
-
-        public void SetSecondary(bool isSecondary) => _isSecondary = isSecondary;
 
         #endregion External Functions
 

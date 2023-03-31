@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 619d13eb3efa6a34e9aab9d27c410f27, type: 2}
+  - {fileID: 2100000, guid: b35785902d5e3ae458a937615b7fde83, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -145,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 619d13eb3efa6a34e9aab9d27c410f27, type: 2}
+  - {fileID: 2100000, guid: b35785902d5e3ae458a937615b7fde83, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,11 +176,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7548192263693597655}
-  - component: {fileID: 8769402461998157669}
   - component: {fileID: 7548192263693597652}
   - component: {fileID: -7433943695938108305}
+  - component: {fileID: 8769402461998157669}
   m_Layer: 7
-  m_Name: StunGrenade
+  m_Name: StunGrenadeSecondary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,31 +200,8 @@ Transform:
   m_Children:
   - {fileID: 1414490414957195193}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &8769402461998157669
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.11458695
-  m_Height: 0.4430556
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.08, z: 0}
 --- !u!54 &7548192263693597652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -266,19 +243,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stunPrefab: {fileID: 7981294947940924098, guid: e9dec2636deade34eb238a204a19bd2a,
     type: 3}
-  _destroyEffect: {fileID: 6862442894405721568, guid: 1c693fb54d8489148a7330560ce8ac49,
+  _destroyEffect: {fileID: 6862442894405721568, guid: 91675b7586e362f4c857640275080e07,
     type: 3}
   _additionalGravity: 25
-  _launchVelocity: 20
-  _projectileDestroyTime: 2
+  _launchVelocity: 15
+  _projectileDestroyTime: 0.75
   _damageAmount: 25
-  _hasSecondaryGrenades: 1
-  _secondaryGrenadeCount: 4
-  _secondaryGrenadePrefab: {fileID: 7548192263693597651, guid: cc35ecfd7a217ba44bdea8376ebeca4a,
-    type: 3}
-  _stunEffectRadius: 10
+  _hasSecondaryGrenades: 0
+  _secondaryGrenadeCount: 0
+  _secondaryGrenadePrefab: {fileID: 0}
+  _stunEffectRadius: 5
   _stunMask:
     serializedVersion: 2
     m_Bits: 64
   _debugIsActive: 1
   _debugDisplayDuration: 10
+--- !u!136 &8769402461998157669
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548192263693597651}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.11458695
+  m_Height: 0.4430556
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.08, z: 0}
