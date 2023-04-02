@@ -40,5 +40,10 @@ namespace Player.Common
         public const float Type_4_SecondaryDroneKnockbackMultiplier = 1.75f;
         public static readonly int Type_4_Tertiary = Animator.StringToHash("Type_4UpperBodyTertiary");
         public const float Type_4_UltimateDroneKnockbackMultiplier = 2f;
+
+        // Type 5
+        public static readonly int Type_5_Secondary = Animator.StringToHash("Type5_UpperBodySecondaryTertiary");
+        public static readonly int Type_5_Tertiary = Animator.StringToHash("Type5_UpperBodySecondaryTertiary");
+        public static readonly int Type_5_Ultimate = Animator.StringToHash("Type5_UpperBodyUltimate");
     }
 }

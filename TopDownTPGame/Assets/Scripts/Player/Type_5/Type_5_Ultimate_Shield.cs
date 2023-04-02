@@ -1,5 +1,6 @@
 #region
 
+using CustomCamera;
 using Player.Base;
 using Player.Common;
 using Player.Type_5;
@@ -12,6 +13,10 @@ public class Type_5_Ultimate_Shield : Ability
 {
     [Header("Prefabs")]
     [SerializeField] private GameObject _shieldPrefab;
+    [SerializeField] private GameObject _shieldBurstEffectPrefab;
+
+    [Header("Components")]
+    [SerializeField] private Animator _playerAnimator;
 
     [Header("Shield Data")]
     [SerializeField] private float _shieldDeployRadius;
@@ -20,6 +25,9 @@ public class Type_5_Ultimate_Shield : Ability
     [Header("Ultimate Data")]
     [SerializeField] private float _windUptime;
     [SerializeField] private float _ultimateChargeRate;
+
+    [Header("Camera Data")]
+    [SerializeField] private CameraShaker _cameraShaker;
 
     private float _currentUltimatePercent;
     private float _currentWindUpTime;
@@ -52,6 +60,9 @@ public class Type_5_Ultimate_Shield : Ability
             }
 
             _abilityEnd = true;
+
+            Instantiate(_shieldBurstEffectPrefab, transform.position, Quaternion.identity);
+            CustomCameraController.Instance.StartShake(_cameraShaker);
         }
     }
 
@@ -62,6 +73,9 @@ public class Type_5_Ultimate_Shield : Ability
         _currentWindUpTime = _windUptime;
         _currentUltimatePercent = 0;
         _abilityEnd = false;
+        _playerAnimator.SetTrigger(PlayerStaticData.Type_5_Ultimate);
+
+        CustomCameraController.Instance.StartShake(_cameraShaker);
         HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
     }
 

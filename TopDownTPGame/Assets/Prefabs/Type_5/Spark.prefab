@@ -796,12 +796,16 @@ MonoBehaviour:
   _cooldownDuration: 0
   _shieldPrefab: {fileID: 4882258394201929679, guid: 8d1942f8f8e92da49a7e34727af1c49c,
     type: 3}
+  _shieldBurstEffectPrefab: {fileID: 2948905001364291157, guid: 965a0644c0cc676499190694086852d1,
+    type: 3}
+  _playerAnimator: {fileID: 9109486599992866581}
   _shieldDeployRadius: 25
   _shieldDeployMask:
     serializedVersion: 2
     m_Bits: 64
   _windUptime: 0.3
-  _ultimateChargeRate: 100
+  _ultimateChargeRate: 0.1
+  _cameraShaker: {fileID: 11400000, guid: 325db4dcf003ddf41a78fa4afd488d17, type: 2}
 --- !u!1 &913904669468239344
 GameObject:
   m_ObjectHideFlags: 0
@@ -7844,10 +7848,12 @@ MonoBehaviour:
   _abilityNameType: 17
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 1
+  _cooldownDuration: 7
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
   _shootController: {fileID: 5021002024800133882}
+  _playerAnimator: {fileID: 9109486599992866581}
+  _cameraShaker: {fileID: 11400000, guid: f2cbeae7a4294524689dfa57836ddd2f, type: 2}
 --- !u!1 &6945665330080807566
 GameObject:
   m_ObjectHideFlags: 0
@@ -8885,10 +8891,12 @@ MonoBehaviour:
   _abilityNameType: 18
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 1
+  _cooldownDuration: 20
   _shieldPrefab: {fileID: 7981294947940924098, guid: 1ea4fde9248da5041a535aa2d7ba7f1d,
     type: 3}
   _shootController: {fileID: 5021002024800133882}
+  _playerAnimator: {fileID: 9109486599992866581}
+  _cameraShaker: {fileID: 11400000, guid: 3a1ed4cf624963a4e91772610fc86c7c, type: 2}
 --- !u!1 &7917121747203665801
 GameObject:
   m_ObjectHideFlags: 0

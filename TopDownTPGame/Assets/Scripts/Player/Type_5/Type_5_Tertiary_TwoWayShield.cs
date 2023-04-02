@@ -1,6 +1,7 @@
 #region
 
 using Ability_Scripts.Projectiles;
+using CustomCamera;
 using Player.Base;
 using Player.Common;
 using UI.Player;
@@ -17,6 +18,10 @@ namespace Player.Type_5
 
         [Header("Components")]
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Animator _playerAnimator;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _cameraShaker;
 
         private bool _abilityEnd;
 
@@ -31,10 +36,13 @@ namespace Player.Type_5
             var shieldObject = Instantiate(_shieldPrefab, _shootController.GetShootPosition(), Quaternion.identity);
             var shieldDeploy = shieldObject.GetComponent<ShieldDeployProjectile>();
             shieldDeploy.LaunchProjectile(_shootController.GetShootLookDirection());
-            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
 
             _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;
+            _playerAnimator.SetTrigger(PlayerStaticData.Type_5_Tertiary);
+
+            CustomCameraController.Instance.StartShake(_cameraShaker);
+            HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
         }
 
         public override void EndAbility(BasePlayerController playerController) => _abilityEnd = true;

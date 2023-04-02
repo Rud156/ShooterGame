@@ -1,5 +1,6 @@
 #region
 
+using CustomCamera;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
@@ -31,6 +32,9 @@ namespace Ability_Scripts.Projectiles
         [Header("Stun Data")]
         [SerializeField] private float _stunEffectRadius;
         [SerializeField] private LayerMask _stunMask;
+
+        [Header("Camera Data")]
+        [SerializeField] private CameraShakerInRange _cameraShaker;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -110,6 +114,7 @@ namespace Ability_Scripts.Projectiles
             }
 
             Instantiate(_destroyEffect, transform.position, Quaternion.identity);
+            CustomCameraController.Instance.StartShake(_cameraShaker, transform.position);
             Destroy(gameObject);
         }
 
