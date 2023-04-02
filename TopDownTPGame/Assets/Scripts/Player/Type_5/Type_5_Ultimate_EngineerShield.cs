@@ -13,19 +13,12 @@ namespace Player.Type_5
         [Header("Shield Data")]
         [SerializeField] private float _shieldDuration;
 
+        [Header("Shield Collision")]
+        [SerializeField] private float _shieldColliderRadius;
+        [SerializeField] private LayerMask _shieldColliderMask;
+
+        private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
         private float _currentTimeLeft;
-
-        #region Unity Functions
-
-        private void OnTriggerEnter(Collider other)
-        {
-            // TODO: Handle this using OwnerID.
-            // Every Object in the game should know who shot/created it so use OwnerId
-            // Then when objects pass through filter using OwnerId and don't destroy the required GameObjects
-            Destroy(other.gameObject);
-        }
-
-        #endregion Unity Functions
 
         #region Ability Functions
 
@@ -35,7 +28,22 @@ namespace Player.Type_5
 
         public override void StartAbility(BasePlayerController playerController) => _currentTimeLeft = _shieldDuration;
 
-        public override void AbilityUpdate(BasePlayerController playerController) => _currentTimeLeft -= Time.fixedDeltaTime;
+        public override void AbilityUpdate(BasePlayerController playerController)
+        {
+            _currentTimeLeft -= Time.fixedDeltaTime;
+
+            var hitColliderCount = Physics.OverlapSphereNonAlloc(transform.position, _shieldColliderRadius, _hitColliders, _shieldColliderMask);
+            for (var i = 0; i < hitColliderCount; i++)
+            {
+                if (_hitColliders[i] == null)
+                {
+                    continue;
+                }
+
+                // TODO: Need to make a common OwnerID script from which to get OwnerID...
+                Destroy(_hitColliders[i].gameObject);
+            }
+        }
 
         public override void EndAbility(BasePlayerController playerController) => Destroy(gameObject);
 

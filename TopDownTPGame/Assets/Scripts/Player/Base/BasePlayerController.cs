@@ -73,8 +73,8 @@ namespace Player.Base
         private List<PlayerInputModifiers> _playerActiveInputsModifiers;
 
         // Custom Ability
-        private List<Ability> _currentActiveAbilities;
-        private List<Ability> _abilitiesToAddNextFrame;
+        [SerializeField] private List<Ability> _currentActiveAbilities;
+        [SerializeField] private List<Ability> _abilitiesToAddNextFrame;
 
         // Camera
         private Transform _cinemachineControllerTransform;

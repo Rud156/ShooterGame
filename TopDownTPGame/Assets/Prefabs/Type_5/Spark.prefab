@@ -801,7 +801,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _windUptime: 0.3
-  _ultimateChargeRate: 0.1
+  _ultimateChargeRate: 100
 --- !u!1 &913904669468239344
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,6 +1327,8 @@ MonoBehaviour:
   - {fileID: 4247393837429394251}
   - {fileID: 5302275595620308645}
   _playerInputModifierData: []
+  _currentActiveAbilities: []
+  _abilitiesToAddNextFrame: []
 --- !u!114 &5021002024800133882
 MonoBehaviour:
   m_ObjectHideFlags: 0
