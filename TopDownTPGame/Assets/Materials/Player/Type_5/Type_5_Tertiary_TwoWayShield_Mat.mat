@@ -46,7 +46,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Type_5_Ultimate_EngineerShield_Mat
+  m_Name: Type_5_Tertiary_TwoWayShield_Mat
   m_Shader: {fileID: -6465566751694194690, guid: c90f1fee82481774f9c7d6d5e26f4aa3,
     type: 3}
   m_Parent: {fileID: 0}

@@ -271,7 +271,7 @@ MonoBehaviour:
   _additionalGravity: 25
   _launchVelocity: 20
   _projectileDestroyTime: 2
-  _damageAmount: 25
+  _damageAmount: 40
   _hasSecondaryGrenades: 1
   _secondaryGrenadeCount: 4
   _secondaryGrenadePrefab: {fileID: 7548192263693597651, guid: cc35ecfd7a217ba44bdea8376ebeca4a,

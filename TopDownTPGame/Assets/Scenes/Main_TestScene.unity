@@ -5224,7 +5224,7 @@ GameObject:
   - component: {fileID: 254855387}
   - component: {fileID: 254855386}
   - component: {fileID: 254855385}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Test Small Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5333,7 +5333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254855384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 179.42, y: 2.69, z: 51.56}
+  m_LocalPosition: {x: 179.42, y: 2.69, z: 59.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

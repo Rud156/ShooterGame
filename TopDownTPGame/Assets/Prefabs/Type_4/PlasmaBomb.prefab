@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 161531733}
   - component: {fileID: 161531732}
   - component: {fileID: 161531731}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 8892710731700031663}
   - component: {fileID: -8407849478509963863}
   - component: {fileID: 7004124681472690160}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlasmaBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}

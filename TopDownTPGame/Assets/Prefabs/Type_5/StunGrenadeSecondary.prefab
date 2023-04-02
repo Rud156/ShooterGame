@@ -176,9 +176,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7548192263693597655}
+  - component: {fileID: 8769402461998157669}
   - component: {fileID: 7548192263693597652}
   - component: {fileID: -7433943695938108305}
-  - component: {fileID: 8769402461998157669}
   m_Layer: 7
   m_Name: StunGrenadeSecondary
   m_TagString: Untagged
@@ -202,6 +202,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &8769402461998157669
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548192263693597651}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.11458695
+  m_Height: 0.4430556
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.08, z: 0}
 --- !u!54 &7548192263693597652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -248,7 +271,7 @@ MonoBehaviour:
   _additionalGravity: 25
   _launchVelocity: 15
   _projectileDestroyTime: 0.75
-  _damageAmount: 25
+  _damageAmount: 20
   _hasSecondaryGrenades: 0
   _secondaryGrenadeCount: 0
   _secondaryGrenadePrefab: {fileID: 0}
@@ -258,26 +281,3 @@ MonoBehaviour:
     m_Bits: 64
   _debugIsActive: 1
   _debugDisplayDuration: 10
---- !u!136 &8769402461998157669
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548192263693597651}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.11458695
-  m_Height: 0.4430556
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.08, z: 0}

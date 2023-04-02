@@ -8883,7 +8883,7 @@ MonoBehaviour:
   _abilityNameType: 18
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 25
+  _cooldownDuration: 1
   _shieldPrefab: {fileID: 7981294947940924098, guid: 1ea4fde9248da5041a535aa2d7ba7f1d,
     type: 3}
   _shootController: {fileID: 5021002024800133882}
