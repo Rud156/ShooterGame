@@ -34,9 +34,9 @@ namespace Ability_Scripts.Projectiles
 
         private void OnTriggerEnter(Collider other) => ProjectileHit(other);
 
-        private void FixedUpdate()
+        private void Update()
         {
-            _destroyTimeLeft -= Time.fixedDeltaTime;
+            _destroyTimeLeft -= Time.deltaTime;
             if (_destroyTimeLeft < 0)
             {
                 ProjectileDestroy();

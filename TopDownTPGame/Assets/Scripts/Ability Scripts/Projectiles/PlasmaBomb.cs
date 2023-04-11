@@ -38,9 +38,9 @@ namespace Ability_Scripts.Projectiles
             _projectileRb.velocity = _downwardsLaunchVelocity * Vector3.down;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            _destroyTimeLeft -= Time.fixedDeltaTime;
+            _destroyTimeLeft -= Time.deltaTime;
             if (_destroyTimeLeft <= 0)
             {
                 DestroyProjectile();

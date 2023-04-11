@@ -1,5 +1,6 @@
 #region
 
+using System;
 using CustomCamera;
 using HealthSystem;
 using Player.Base;
@@ -50,16 +51,16 @@ namespace Ability_Scripts.Projectiles
 
         private void Start() => Init();
 
-        private void FixedUpdate()
+        private void Update()
         {
-            _destroyTimeLeft -= Time.fixedDeltaTime;
+            _destroyTimeLeft -= Time.deltaTime;
             if (_destroyTimeLeft <= 0)
             {
                 ProjectileDestroy();
             }
-
-            _rb.AddForce(Vector3.down * _additionalGravity, ForceMode.Force);
         }
+
+        private void FixedUpdate() => _rb.AddForce(Vector3.down * _additionalGravity, ForceMode.Force);
 
         #endregion Unity Functions
 

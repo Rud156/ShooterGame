@@ -46,20 +46,20 @@ namespace Ability_Scripts.Spawns
             _material = GetComponent<MeshRenderer>().material;
 
             _currentSpawnDuration = 0;
-            var position = transform.position;
-            _startPosition = position;
-            _endPosition = position + Vector3.up * _moveYDistance;
+            var wallPosition = transform.position;
+            _startPosition = wallPosition;
+            _endPosition = wallPosition + Vector3.up * _moveYDistance;
 
             _spawnActive = true;
             _destroyTimeLeft = _destroyDuration;
-            CustomCameraController.Instance.StartShake(_cameraShaker, transform.position);
+            CustomCameraController.Instance.StartShake(_cameraShaker, wallPosition);
         }
 
         private void OnDestroy() => _healthAndDamage.OnHealthChanged -= HandleHealthAndDamage;
 
-        private void FixedUpdate()
+        private void Update()
         {
-            _destroyTimeLeft -= Time.fixedDeltaTime;
+            _destroyTimeLeft -= Time.deltaTime;
             if (_destroyTimeLeft < 0)
             {
                 DestroyWall();
@@ -76,7 +76,7 @@ namespace Ability_Scripts.Spawns
             var mappedPosition = Vector3.Lerp(_startPosition, _endPosition, mappedPercent);
 
             transform.position = mappedPosition;
-            _currentSpawnDuration += Time.fixedDeltaTime;
+            _currentSpawnDuration += Time.deltaTime;
 
             if (_currentSpawnDuration > _spawnDuration)
             {

@@ -43,7 +43,7 @@ namespace Player.Type_4
             SetDroneState(DroneState.HoverIdle);
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (_lerpAmount >= 1)
             {
@@ -131,7 +131,7 @@ namespace Player.Type_4
             }
 
             var lerpPosition = Vector3.Lerp(_startPosition, _targetPosition, _lerpAmount);
-            _lerpAmount += _currentLerpSpeed * Time.fixedDeltaTime;
+            _lerpAmount += _currentLerpSpeed * Time.deltaTime;
             _droneTransform.localPosition = lerpPosition;
         }
 

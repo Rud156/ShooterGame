@@ -76,7 +76,7 @@ namespace HealthSystem
             NotifyHealthChangeAndHUD(_currentHealth);
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             UpdateHealthDecay();
             UpdateAutoHeal();
@@ -98,7 +98,7 @@ namespace HealthSystem
 
                 case AutoHealWhen.Always:
                 {
-                    _autoHealTimer -= Time.fixedDeltaTime;
+                    _autoHealTimer -= Time.deltaTime;
                     if (_autoHealTimer <= 0)
                     {
                         TakeHeal(_autoHealPerTickAmount);
@@ -135,7 +135,7 @@ namespace HealthSystem
             {
                 case DecayState.DecayCountdown:
                 {
-                    _decayDuration -= Time.fixedDeltaTime;
+                    _decayDuration -= Time.deltaTime;
                     if (_decayDuration <= 0)
                     {
                         _decayClearAmountCurrentFrame = 0;
@@ -148,7 +148,7 @@ namespace HealthSystem
                 {
                     if (_currentHealth < _currentHealthPreDecay)
                     {
-                        _decayClearAmountCurrentFrame += Time.fixedDeltaTime * _decayClearRate;
+                        _decayClearAmountCurrentFrame += Time.deltaTime * _decayClearRate;
                         if (_decayClearAmountCurrentFrame > 1)
                         {
                             var startHealth = _currentHealth;

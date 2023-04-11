@@ -28,7 +28,7 @@ namespace Ability_Scripts.Projectiles
 
         private void OnTriggerEnter(Collider other) => ProjectileHit(other);
 
-        private void FixedUpdate()
+        private void Update()
         {
             var targetDirection = _target.position - transform.position;
             targetDirection.Normalize();
@@ -38,7 +38,7 @@ namespace Ability_Scripts.Projectiles
             _rb.angularVelocity = rotateAmount * _rotationSpeed;
             _rb.velocity = forward * _projectileVelocity;
 
-            _destroyTimeLeft -= Time.fixedDeltaTime;
+            _destroyTimeLeft -= Time.deltaTime;
             if (_destroyTimeLeft <= 0)
             {
                 ProjectileDestroy();

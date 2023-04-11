@@ -57,11 +57,8 @@ namespace Ability_Scripts.Projectiles
             {
                 CheckCollisionWithObject();
             }
-        }
-
-        private void FixedUpdate()
-        {
-            _destroyTimeLeft -= Time.fixedDeltaTime;
+            
+            _destroyTimeLeft -= Time.deltaTime;
             if (_destroyTimeLeft <= 0)
             {
                 ProjectileDestroy();
@@ -159,21 +156,21 @@ namespace Ability_Scripts.Projectiles
             var xVelocity = velocity.x;
             if (xVelocity < 0)
             {
-                xVelocity += _velocityDecreaseRate * Time.fixedDeltaTime;
+                xVelocity += _velocityDecreaseRate * Time.deltaTime;
             }
             else
             {
-                xVelocity -= _velocityDecreaseRate * Time.fixedDeltaTime;
+                xVelocity -= _velocityDecreaseRate * Time.deltaTime;
             }
 
             var zVelocity = velocity.z;
             if (zVelocity < 0)
             {
-                zVelocity += _velocityDecreaseRate * Time.fixedDeltaTime;
+                zVelocity += _velocityDecreaseRate * Time.deltaTime;
             }
             else
             {
-                zVelocity -= _velocityDecreaseRate * Time.fixedDeltaTime;
+                zVelocity -= _velocityDecreaseRate * Time.deltaTime;
             }
 
             _currentVelocity.x = xVelocity;
