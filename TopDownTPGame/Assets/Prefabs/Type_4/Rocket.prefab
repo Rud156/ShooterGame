@@ -1364,7 +1364,7 @@ Transform:
   - {fileID: 348866458821068714}
   - {fileID: 3478866269718607928}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1504131108388283769
 CharacterController:
@@ -1408,6 +1408,7 @@ MonoBehaviour:
   _walkSpeed: 7
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
+  _playerCameraController: {fileID: 1504131108388283775}
   _headTransform: {fileID: 7123121629424185660}
   _bodyTransform: {fileID: 6819896113603597656}
   _legsTransform: {fileID: 3839878297847745940}
@@ -1424,6 +1425,8 @@ MonoBehaviour:
   - {fileID: 1384930608354434781}
   - {fileID: 1625475324297445380}
   _playerInputModifierData: []
+  _currentActiveAbilities: []
+  _abilitiesToAddNextFrame: []
 --- !u!114 &795477187898822337
 MonoBehaviour:
   m_ObjectHideFlags: 0

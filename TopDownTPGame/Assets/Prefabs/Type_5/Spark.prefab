@@ -1315,6 +1315,7 @@ MonoBehaviour:
   _walkSpeed: 7
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
+  _playerCameraController: {fileID: 1252368709468985573}
   _headTransform: {fileID: 5704354926256409912}
   _bodyTransform: {fileID: 9070472464592238885}
   _legsTransform: {fileID: 3953132557191276434}

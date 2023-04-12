@@ -25,6 +25,9 @@ namespace Player.Base
         [SerializeField] private float _airControlMultiplier;
         [SerializeField] private float _gravityMultiplier;
 
+        [Header("Components")]
+        [SerializeField] private PlayerCameraController _playerCameraController;
+
         [Header("Character Position Points")]
         [SerializeField] private Transform _headTransform;
         [SerializeField] private Transform _bodyTransform;
@@ -150,6 +153,7 @@ namespace Player.Base
             while (_accumulator >= GlobalStaticData.FixedUpdateTime)
             {
                 _accumulator -= GlobalStaticData.FixedUpdateTime;
+                _playerCameraController.PlayerCameraFixedUpdateFunctions();
                 PlayerFixedUpdateFunctions();
             }
         }

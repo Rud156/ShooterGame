@@ -1442,6 +1442,7 @@ MonoBehaviour:
   _walkSpeed: 7
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
+  _playerCameraController: {fileID: 1683011238459484373}
   _headTransform: {fileID: 1232245839320925077}
   _bodyTransform: {fileID: 1726318311942653970}
   _legsTransform: {fileID: 8220200554012599036}
@@ -1464,6 +1465,8 @@ MonoBehaviour:
     effectParent: {fileID: 1683011238459484368}
     modifierType: 0
     inputModifierAmount: 2.5
+  _currentActiveAbilities: []
+  _abilitiesToAddNextFrame: []
 --- !u!114 &8602320672462730023
 MonoBehaviour:
   m_ObjectHideFlags: 0

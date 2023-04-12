@@ -29,9 +29,6 @@ namespace Player.Base
         [SerializeField] private float _kbmSensitivity;
         [SerializeField] private float _gamepadSensitivity;
 
-        // Fixed Update
-        private float _accumulator;
-
         // Input
         private Vector2 _mouseInput;
 
@@ -78,16 +75,17 @@ namespace Player.Base
         {
             UpdateMouseInput();
             UpdateCameraShoulderLerp();
-
-            _accumulator += Time.deltaTime;
-            while (_accumulator >= GlobalStaticData.FixedUpdateTime)
-            {
-                _accumulator -= GlobalStaticData.FixedUpdateTime;
-                UpdateCameraControl();
-            }
         }
 
         #endregion Unity Functions
+
+        #region External Functions
+
+        // This function should always be called from BasePlayerController since the data needs to be 
+        // predicted and also sent to the server
+        public void PlayerCameraFixedUpdateFunctions() => UpdateCameraControl();
+
+        #endregion External Functions
 
         #region Camera Control
 
