@@ -5,6 +5,7 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
+using Utils.Common;
 using Utils.Structs;
 
 #endregion
@@ -36,7 +37,7 @@ namespace Player.Type_3
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            _currentTime += Time.fixedDeltaTime;
+            _currentTime += GlobalStaticData.FixedUpdateTime;
             if (_currentTime >= _slashDuration)
             {
                 _abilityEnd = true;

@@ -140,7 +140,7 @@ namespace Ability_Scripts.Spawns
 
         private void UpdateActivatingState()
         {
-            _floatData1 -= Time.fixedDeltaTime * _activationAlphaChangeRate;
+            _floatData1 -= Time.deltaTime * _activationAlphaChangeRate;
             if (_floatData1 <= 0)
             {
                 _floatData1 = 0;
@@ -187,7 +187,7 @@ namespace Ability_Scripts.Spawns
 
         private void UpdateWindUpState()
         {
-            _floatData1 -= Time.fixedDeltaTime;
+            _floatData1 -= Time.deltaTime;
             if (_floatData1 <= 0)
             {
                 SetTurretState(TurretState.Targeting);
@@ -217,7 +217,7 @@ namespace Ability_Scripts.Spawns
 
         private void UpdateDestroyState()
         {
-            _floatData1 += Time.fixedDeltaTime * _destroyAlphaChangeRate;
+            _floatData1 += Time.deltaTime * _destroyAlphaChangeRate;
             if (_floatData1 >= 1)
             {
                 _floatData1 = 1;
@@ -274,13 +274,13 @@ namespace Ability_Scripts.Spawns
                 return;
             }
 
-            _floatData2 -= Time.fixedDeltaTime;
+            _floatData2 -= Time.deltaTime;
             if (_floatData2 <= 0)
             {
                 SetTurretTargetingState(TurretTargetingState.FindTarget);
             }
 
-            _floatData1 -= Time.fixedDeltaTime;
+            _floatData1 -= Time.deltaTime;
             if (_floatData1 <= 0)
             {
                 _targetHealthAndDamage.TakeDamage(_damagePerSec);

@@ -4,6 +4,7 @@ using System;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -37,7 +38,7 @@ namespace Player.Type_4
             {
                 case SatchelVelocityState.FullVelocity:
                 {
-                    _currentTimer -= Time.fixedDeltaTime;
+                    _currentTimer -= GlobalStaticData.FixedUpdateTime;
                     if (_currentTimer <= 0)
                     {
                         _currentTimer = _satchelAffectTime;
@@ -58,7 +59,7 @@ namespace Player.Type_4
                         _computedVelocity.y = 0;
                     }
 
-                    _currentTimer -= Time.fixedDeltaTime;
+                    _currentTimer -= GlobalStaticData.FixedUpdateTime;
                     if (_currentTimer <= 0 || playerController.IsGrounded)
                     {
                         SetSatchelVelocityState(SatchelVelocityState.EndSatchel);
@@ -132,21 +133,21 @@ namespace Player.Type_4
             var xVelocity = _computedVelocity.x;
             if (xVelocity < 0)
             {
-                xVelocity += _velocityDecreaseRate * Time.fixedDeltaTime;
+                xVelocity += _velocityDecreaseRate * GlobalStaticData.FixedUpdateTime;
             }
             else
             {
-                xVelocity -= _velocityDecreaseRate * Time.fixedDeltaTime;
+                xVelocity -= _velocityDecreaseRate * GlobalStaticData.FixedUpdateTime;
             }
 
             var zVelocity = _computedVelocity.z;
             if (zVelocity < 0)
             {
-                zVelocity += _velocityDecreaseRate * Time.fixedDeltaTime;
+                zVelocity += _velocityDecreaseRate * GlobalStaticData.FixedUpdateTime;
             }
             else
             {
-                zVelocity -= _velocityDecreaseRate * Time.fixedDeltaTime;
+                zVelocity -= _velocityDecreaseRate * GlobalStaticData.FixedUpdateTime;
             }
 
             _computedVelocity.x = xVelocity;

@@ -8,6 +8,7 @@ using Player.Common;
 using UI.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Utils.Common;
 
 #endregion
 
@@ -144,7 +145,7 @@ namespace Player.Type_2
 
         private void UpdateTriggerTypeSelect(BasePlayerController playerController)
         {
-            _currentTimer -= Time.fixedDeltaTime;
+            _currentTimer -= GlobalStaticData.FixedUpdateTime;
 
             var key = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             switch (_abilityState)
@@ -180,7 +181,7 @@ namespace Player.Type_2
 
         private void UpdateDashMovement()
         {
-            _currentTimer -= Time.fixedDeltaTime;
+            _currentTimer -= GlobalStaticData.FixedUpdateTime;
             if (_currentTimer <= 0)
             {
                 SetAbilityState(AbilityState.End);
@@ -210,7 +211,7 @@ namespace Player.Type_2
 
         private void UpdateHoldRunMovement(BasePlayerController playerController)
         {
-            _currentTimer -= Time.fixedDeltaTime;
+            _currentTimer -= GlobalStaticData.FixedUpdateTime;
             var key = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             if (_currentTimer <= 0 || key.KeyPressedThisFrame)
             {

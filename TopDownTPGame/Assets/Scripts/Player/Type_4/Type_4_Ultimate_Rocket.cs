@@ -7,6 +7,7 @@ using Player.Common;
 using Player.Type_4;
 using UI.Player;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -40,7 +41,7 @@ public class Type_4_Ultimate_Rocket : Ability
 
     public override void AbilityUpdate(BasePlayerController playerController)
     {
-        _currentWindUpTime -= Time.fixedDeltaTime;
+        _currentWindUpTime -= GlobalStaticData.FixedUpdateTime;
         if (_currentWindUpTime <= 0)
         {
             var shootPosition = _shootController.GetShootPosition();
@@ -84,7 +85,7 @@ public class Type_4_Ultimate_Rocket : Ability
 
         if (_currentUltimatePercent < PlayerStaticData.MaxUltimatePercent)
         {
-            _currentUltimatePercent += Time.fixedDeltaTime * _ultimateChargeRate;
+            _currentUltimatePercent += GlobalStaticData.FixedUpdateTime * _ultimateChargeRate;
             if (_currentUltimatePercent > PlayerStaticData.MaxUltimatePercent)
             {
                 _currentUltimatePercent = PlayerStaticData.MaxUltimatePercent;

@@ -5,6 +5,7 @@ using Player.Common;
 using UI.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Utils.Common;
 using Utils.Misc;
 
 #endregion
@@ -45,7 +46,7 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            _currentDashTimeLeft -= Time.fixedDeltaTime;
+            _currentDashTimeLeft -= GlobalStaticData.FixedUpdateTime;
 
             var currentVelocity = playerController.CharacterVelocity;
             var characterTransform = transform;

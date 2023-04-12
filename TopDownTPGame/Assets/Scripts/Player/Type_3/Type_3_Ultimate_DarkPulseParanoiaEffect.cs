@@ -4,6 +4,7 @@ using Effects;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -27,7 +28,7 @@ namespace Player.Type_3
 
         public override void StartAbility(BasePlayerController playerController) => _currentTimeLeft = _paranoiaDuration;
 
-        public override void AbilityUpdate(BasePlayerController playerController) => _currentTimeLeft -= Time.fixedDeltaTime;
+        public override void AbilityUpdate(BasePlayerController playerController) => _currentTimeLeft -= GlobalStaticData.FixedUpdateTime;
 
         public override void EndAbility(BasePlayerController playerController)
         {

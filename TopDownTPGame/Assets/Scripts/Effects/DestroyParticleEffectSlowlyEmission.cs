@@ -2,6 +2,7 @@
 
 using System;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -54,7 +55,7 @@ namespace Effects
 
                 case DestroyState.DelayedDestroy:
                 {
-                    _floatValue -= Time.fixedDeltaTime;
+                    _floatValue -= Time.deltaTime;
                     if (_floatValue <= 0)
                     {
                         Destroy(_destroyParent ? _parent : gameObject);

@@ -3,6 +3,7 @@
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils.Common;
 using Utils.Input;
 using Utils.Misc;
 
@@ -27,6 +28,9 @@ namespace Player.Base
         [Header("Input Sensitivity Multiplier")]
         [SerializeField] private float _kbmSensitivity;
         [SerializeField] private float _gamepadSensitivity;
+
+        // Fixed Update
+        private float _accumulator;
 
         // Input
         private Vector2 _mouseInput;
@@ -74,9 +78,14 @@ namespace Player.Base
         {
             UpdateMouseInput();
             UpdateCameraShoulderLerp();
-        }
 
-        private void FixedUpdate() => UpdateCameraControl();
+            _accumulator += Time.deltaTime;
+            while (_accumulator >= GlobalStaticData.FixedUpdateTime)
+            {
+                _accumulator -= GlobalStaticData.FixedUpdateTime;
+                UpdateCameraControl();
+            }
+        }
 
         #endregion Unity Functions
 
@@ -105,8 +114,8 @@ namespace Player.Base
             var rotationSpeed = sensitivity * _cameraRotationSpeed;
 
             var cameraRotation = _cinemachineFollowTarget.rotation.eulerAngles;
-            cameraRotation.y += _mouseInput.x * rotationSpeed * Time.fixedDeltaTime;
-            cameraRotation.x += -_mouseInput.y * rotationSpeed * Time.fixedDeltaTime;
+            cameraRotation.y += _mouseInput.x * rotationSpeed * GlobalStaticData.FixedUpdateTime;
+            cameraRotation.x += -_mouseInput.y * rotationSpeed * GlobalStaticData.FixedUpdateTime;
             cameraRotation.x = ExtensionFunctions.To360Angle(cameraRotation.x);
 
             switch (cameraRotation.x)

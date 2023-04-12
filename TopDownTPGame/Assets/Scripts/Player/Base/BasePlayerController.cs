@@ -6,6 +6,7 @@ using Effects;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils.Common;
 using Utils.Input;
 using Utils.Misc;
 
@@ -43,6 +44,9 @@ namespace Player.Base
 
         [Header("Custom Effects")]
         [SerializeField] private List<PlayerInputModifierData> _playerInputModifierData;
+
+        // Fixed Update
+        private float _accumulator;
 
         // Input
         private Vector2 _coreMoveInput;
@@ -141,9 +145,16 @@ namespace Player.Base
         {
             UpdateKeyboardInput();
             DelegateUpdateAbilities();
+
+            _accumulator += Time.deltaTime;
+            while (_accumulator >= GlobalStaticData.FixedUpdateTime)
+            {
+                _accumulator -= GlobalStaticData.FixedUpdateTime;
+                PlayerFixedUpdateFunctions();
+            }
         }
 
-        private void FixedUpdate()
+        private void PlayerFixedUpdateFunctions()
         {
             // Process these at the beginning to not cause a race condition
             ProcessNextFrameAbilities();
@@ -182,7 +193,7 @@ namespace Player.Base
                 var movementModifier = _playerActiveInputsModifiers[i];
                 if (movementModifier.IsTimed)
                 {
-                    movementModifier.CurrentDuration -= Time.fixedDeltaTime;
+                    movementModifier.CurrentDuration -= GlobalStaticData.FixedUpdateTime;
                     if (movementModifier.CurrentDuration <= 0)
                     {
                         RemoveInputModifierEffects(_playerActiveInputsModifiers[i]);
@@ -555,7 +566,7 @@ namespace Player.Base
             }
         }
 
-        private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * Time.fixedDeltaTime);
+        private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * GlobalStaticData.FixedUpdateTime);
 
         #endregion Core Movement
 

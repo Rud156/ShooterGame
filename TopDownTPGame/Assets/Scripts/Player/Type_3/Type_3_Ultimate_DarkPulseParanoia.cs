@@ -50,7 +50,7 @@ namespace Player.Type_3
             _currentPulseWaitDuration = 0;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (_currentPulseCount <= 0)
             {
@@ -61,7 +61,7 @@ namespace Player.Type_3
                 return;
             }
 
-            _currentPulseWaitDuration -= Time.fixedDeltaTime;
+            _currentPulseWaitDuration -= Time.deltaTime;
             if (_currentPulseWaitDuration <= 0)
             {
                 _currentPulseCount -= 1;
