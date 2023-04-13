@@ -1091,9 +1091,6 @@ MonoBehaviour:
   - {fileID: 9015896159279792058}
   - {fileID: 4734483721622460076}
   _playerInputModifierData: []
-  _startStateVelocity: 0
-  _targetStateVelocity: 0
-  _currentStateVelocity: 0
 --- !u!114 &3268835866765903229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,16 +1154,22 @@ MonoBehaviour:
     spawnRotation: {x: -90, y: 0, z: 0}
     effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
       type: 3}
+    minEmissionRate: 0
+    maxEmissionRate: 0
   _runEffectPrefab:
     spawnOffset: {x: 0, y: -0.7, z: 0}
     spawnRotation: {x: 0, y: 0, z: 0}
     effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
       type: 3}
+    minEmissionRate: 0
+    maxEmissionRate: 100
   _landEffectPrefab:
     spawnOffset: {x: 0, y: -0.9, z: 0}
     spawnRotation: {x: -90, y: 0, z: 0}
     effectPrefab: {fileID: 8586881294353101766, guid: 515389321b5ca5f45a65881b09160674,
       type: 3}
+    minEmissionRate: 0
+    maxEmissionRate: 0
   _playerController: {fileID: 2637092012038209769}
 --- !u!114 &2637092012038209774
 MonoBehaviour:
@@ -1180,7 +1183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c03e50dd5cc524992dcb3283ad6e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerController: {fileID: 2637092012038209769}
   _cinemachineFollowTarget: {fileID: 4317024363540812747}
   _cameraRotationSpeed: 100
   _minCameraAngle: -60

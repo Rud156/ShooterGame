@@ -2,6 +2,7 @@
 
 using System;
 using UnityEngine;
+using Utils.Misc;
 
 #endregion
 
@@ -39,6 +40,45 @@ namespace Player.Base
             _playerController.OnPlayerGroundedChanged -= HandlePlayerGroundedChanged;
             _playerController.OnPlayerStatePushed -= HandlePlayerStateChanged;
             _playerController.OnPlayerJumped -= HandlePlayerJumped;
+        }
+
+        private void Update()
+        {
+            var playerState = _playerController.GetTopPlayerState();
+            switch (playerState)
+            {
+                case PlayerState.Idle:
+                case PlayerState.Walking:
+                case PlayerState.Falling:
+                case PlayerState.CustomMovement:
+                    break;
+
+                case PlayerState.Running:
+                {
+                    var startStateVelocity = _playerController.GetStartStateVelocity();
+                    var targetStateVelocity = _playerController.GetTargetStateVelocity();
+                    var currentStateVelocity = _playerController.GetCurrentStateVelocity();
+
+                    var mappedEmissionRate = ExtensionFunctions.Map(
+                        currentStateVelocity,
+                        startStateVelocity,
+                        targetStateVelocity,
+                        _runEffectPrefab.minEmissionRate,
+                        _runEffectPrefab.maxEmissionRate
+                    );
+                    if (ExtensionFunctions.IsNearlyEqual(startStateVelocity, targetStateVelocity))
+                    {
+                        mappedEmissionRate = _runEffectPrefab.maxEmissionRate;
+                    }
+
+                    var emissionSystem = _runEffect.emission;
+                    emissionSystem.rateOverTime = mappedEmissionRate;
+                }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         #endregion Unity Functions
@@ -99,6 +139,8 @@ namespace Player.Base
             public Vector3 spawnOffset;
             public Vector3 spawnRotation;
             public GameObject effectPrefab;
+            public float minEmissionRate;
+            public float maxEmissionRate;
         }
 
         #endregion Structs

@@ -156,6 +156,10 @@ namespace Player.Base
             var mappedAnimSpeed = ExtensionFunctions.IsNearlyEqual(targetStateVelocity, 0)
                 ? ExtensionFunctions.Map(currentStateVelocity, startStateVelocity, targetStateVelocity, 1, 0)
                 : ExtensionFunctions.Map(currentStateVelocity, startStateVelocity, targetStateVelocity, 0, 1);
+            if (ExtensionFunctions.IsNearlyEqual(startStateVelocity, targetStateVelocity))
+            {
+                mappedAnimSpeed = 1;
+            }
 
             _playerAnimator.speed = Mathf.Clamp01(mappedAnimSpeed);
         }

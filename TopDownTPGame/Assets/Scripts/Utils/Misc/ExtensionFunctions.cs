@@ -20,9 +20,6 @@ namespace Utils.Misc
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Map(float from, float fromMin, float fromMax, float toMin, float toMax)
         {
-            if (IsNearlyEqual(fromMin, fromMax))
-                return toMax;
-
             var fromAbs = from - fromMin;
             var fromMaxAbs = fromMax - fromMin;
 
