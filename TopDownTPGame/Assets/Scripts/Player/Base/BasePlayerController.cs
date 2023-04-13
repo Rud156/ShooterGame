@@ -69,9 +69,9 @@ namespace Player.Base
         // This is the Acceleration/Deceleration Target
         // Current Start Velocity will not be directly set but instead slowly increased or decreased
         // Based on Target State Velocity
-        private float _currentAccelerationSpeed;
         private float _startStateVelocity;
         private float _targetStateVelocity;
+        private float _currentAccelerationSpeed;
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
 
@@ -414,7 +414,7 @@ namespace Player.Base
         {
             _targetStateVelocity = _walkSpeed;
             _currentAccelerationSpeed = _walkAccelerationSpeed;
-            if (_runKey.KeyPressedThisFrame && IsGrounded && _lastNonZeroCoreInput.y > 0)
+            if (_runKey.KeyPressedThisFrame && IsGrounded && _coreMoveInput.y > 0)
             {
                 _startStateVelocity = _currentStateVelocity;
                 PushPlayerState(PlayerState.Running);
@@ -430,7 +430,7 @@ namespace Player.Base
         {
             _targetStateVelocity = _runSpeed;
             _currentAccelerationSpeed = _runAccelerationSpeed;
-            if (HasNoDirectionalInput() || _lastNonZeroCoreInput.y <= 0 || _runKey.KeyReleasedThisFrame || !_runKey.KeyPressed)
+            if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || _runKey.KeyReleasedThisFrame || !_runKey.KeyPressed)
             {
                 _startStateVelocity = _currentStateVelocity;
                 PopPlayerState();
