@@ -25,7 +25,6 @@ namespace Player.Base
         private void Start()
         {
             _playerController.OnPlayerGroundedChanged += HandlePlayerGroundedChanged;
-            _playerController.OnPlayerStateChanged += HandlePlayerStateChanged;
             _playerController.OnPlayerJumped += HandlePlayerJumped;
 
             var runEffectObject = Instantiate(_runEffectPrefab.effectPrefab, transform.position, Quaternion.Euler(_runEffectPrefab.spawnRotation));
@@ -38,7 +37,6 @@ namespace Player.Base
         private void OnDestroy()
         {
             _playerController.OnPlayerGroundedChanged -= HandlePlayerGroundedChanged;
-            _playerController.OnPlayerStatePushed -= HandlePlayerStateChanged;
             _playerController.OnPlayerJumped -= HandlePlayerJumped;
         }
 
@@ -47,32 +45,55 @@ namespace Player.Base
             var playerState = _playerController.GetTopPlayerState();
             switch (playerState)
             {
-                case PlayerState.Idle:
-                case PlayerState.Walking:
                 case PlayerState.Falling:
                 case PlayerState.CustomMovement:
+                {
+                    if (_runEffect.isPlaying)
+                    {
+                        _runEffect.Stop();
+                    }
+                }
                     break;
 
+                case PlayerState.Idle:
+                case PlayerState.Walking:
                 case PlayerState.Running:
                 {
                     var startStateVelocity = _playerController.GetStartStateVelocity();
                     var targetStateVelocity = _playerController.GetTargetStateVelocity();
                     var currentStateVelocity = _playerController.GetCurrentStateVelocity();
+                    var walkSpeed = _playerController.GetWalkSpeed();
+                    var runSpeed = _playerController.GetRunSpeed();
 
-                    var mappedEmissionRate = ExtensionFunctions.Map(
-                        currentStateVelocity,
-                        startStateVelocity,
-                        targetStateVelocity,
-                        _runEffectPrefab.minEmissionRate,
-                        _runEffectPrefab.maxEmissionRate
-                    );
-                    if (ExtensionFunctions.IsNearlyEqual(startStateVelocity, targetStateVelocity))
+                    if (currentStateVelocity > walkSpeed)
                     {
-                        mappedEmissionRate = _runEffectPrefab.maxEmissionRate;
-                    }
+                        if (!_runEffect.isPlaying)
+                        {
+                            _runEffect.Play();
+                        }
 
-                    var emissionSystem = _runEffect.emission;
-                    emissionSystem.rateOverTime = mappedEmissionRate;
+                        var mappedEmissionRate = ExtensionFunctions.Map(
+                            currentStateVelocity,
+                            walkSpeed,
+                            runSpeed,
+                            _runEffectPrefab.minEmissionRate,
+                            _runEffectPrefab.maxEmissionRate
+                        );
+                        if (ExtensionFunctions.IsNearlyEqual(startStateVelocity, targetStateVelocity))
+                        {
+                            mappedEmissionRate = _runEffectPrefab.maxEmissionRate;
+                        }
+
+                        var emissionSystem = _runEffect.emission;
+                        emissionSystem.rateOverTime = mappedEmissionRate;
+                    }
+                    else
+                    {
+                        if (_runEffect.isPlaying)
+                        {
+                            _runEffect.Stop();
+                        }
+                    }
                 }
                     break;
 
@@ -93,26 +114,6 @@ namespace Player.Base
                 landEffectObject.transform.SetParent(transform);
                 landEffectObject.transform.localPosition += _landEffectPrefab.spawnOffset;
                 landEffectObject.transform.SetParent(null);
-            }
-        }
-
-        private void HandlePlayerStateChanged(PlayerState currentState)
-        {
-            switch (currentState)
-            {
-                case PlayerState.Idle:
-                case PlayerState.Walking:
-                case PlayerState.Falling:
-                case PlayerState.CustomMovement:
-                    _runEffect.Stop();
-                    break;
-
-                case PlayerState.Running:
-                    _runEffect.Play();
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(currentState), currentState, null);
             }
         }
 
