@@ -7,8 +7,8 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
-using Utils.Common;
 using Utils.Misc;
+using World;
 
 #endregion
 
@@ -110,18 +110,18 @@ namespace Player.Type_1
 
             if (_currentOverheatTime > 0 && _abilityEnd)
             {
-                _currentOverheatTime -= GlobalStaticData.FixedUpdateTime * _overheatCooldownMultiplier;
+                _currentOverheatTime -= WorldTimeManager.Instance.FixedUpdateTime * _overheatCooldownMultiplier;
             }
 
             if (_currentChargeDecay > 0)
             {
-                _currentChargeDecay -= GlobalStaticData.FixedUpdateTime;
+                _currentChargeDecay -= WorldTimeManager.Instance.FixedUpdateTime;
             }
             else
             {
                 if (_currentChargeAmount > 0)
                 {
-                    _currentChargeAmount -= GlobalStaticData.FixedUpdateTime * _chargeDecayRate;
+                    _currentChargeAmount -= WorldTimeManager.Instance.FixedUpdateTime * _chargeDecayRate;
                 }
             }
 

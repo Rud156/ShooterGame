@@ -4,7 +4,7 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
-using Utils.Common;
+using World;
 
 #endregion
 
@@ -37,7 +37,7 @@ namespace Player.Type_1
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            _currentWindUpTime -= GlobalStaticData.FixedUpdateTime;
+            _currentWindUpTime -= WorldTimeManager.Instance.FixedUpdateTime;
             if (_currentWindUpTime <= 0)
             {
                 var characterTransform = transform;
@@ -83,7 +83,7 @@ namespace Player.Type_1
 
             if (_currentUltimatePercent < PlayerStaticData.MaxUltimatePercent)
             {
-                _currentUltimatePercent += GlobalStaticData.FixedUpdateTime * _ultimateChargeRate;
+                _currentUltimatePercent += WorldTimeManager.Instance.FixedUpdateTime * _ultimateChargeRate;
                 if (_currentUltimatePercent > PlayerStaticData.MaxUltimatePercent)
                 {
                     _currentUltimatePercent = PlayerStaticData.MaxUltimatePercent;

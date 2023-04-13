@@ -3,7 +3,7 @@
 using Player.Base;
 using Player.Common;
 using UnityEngine;
-using Utils.Common;
+using World;
 
 #endregion
 
@@ -31,7 +31,7 @@ namespace Player.Type_5
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            _currentTimeLeft -= GlobalStaticData.FixedUpdateTime;
+            _currentTimeLeft -= WorldTimeManager.Instance.FixedUpdateTime;
 
             var hitColliderCount = Physics.OverlapSphereNonAlloc(transform.position, _shieldColliderRadius, _hitColliders, _shieldColliderMask);
             for (var i = 0; i < hitColliderCount; i++)

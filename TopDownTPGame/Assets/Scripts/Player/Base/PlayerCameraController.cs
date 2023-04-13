@@ -3,9 +3,9 @@
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Utils.Common;
 using Utils.Input;
 using Utils.Misc;
+using World;
 
 #endregion
 
@@ -14,7 +14,6 @@ namespace Player.Base
     public class PlayerCameraController : MonoBehaviour
     {
         [Header("Components")]
-        [SerializeField] private BasePlayerController _playerController;
         [SerializeField] private Transform _cinemachineFollowTarget;
 
         [Header("Camera Data")]
@@ -55,7 +54,7 @@ namespace Player.Base
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            _playerController.OnPlayerFixedUpdate += PlayerCameraFixedUpdate;
+            WorldTimeManager.Instance.OnWorldCustomFixedUpdate += PlayerCameraFixedUpdate;
 
             CustomInputManager.Instance.PlayerInput.Look.started += HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.performed += HandleMouseInput;
@@ -67,7 +66,7 @@ namespace Player.Base
 
         private void OnDestroy()
         {
-            _playerController.OnPlayerFixedUpdate -= PlayerCameraFixedUpdate;
+            WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= PlayerCameraFixedUpdate;
 
             CustomInputManager.Instance.PlayerInput.Look.started -= HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.performed -= HandleMouseInput;
@@ -87,7 +86,7 @@ namespace Player.Base
 
         #region Utils
 
-        private void PlayerCameraFixedUpdate() => UpdateCameraControl();
+        private void PlayerCameraFixedUpdate(float fixedUpdateTime) => UpdateCameraControl();
 
         #endregion Utils
 
@@ -116,8 +115,8 @@ namespace Player.Base
             var rotationSpeed = sensitivity * _cameraRotationSpeed;
 
             var cameraRotation = _cinemachineFollowTarget.rotation.eulerAngles;
-            cameraRotation.y += _mouseInput.x * rotationSpeed * GlobalStaticData.FixedUpdateTime;
-            cameraRotation.x += -_mouseInput.y * rotationSpeed * GlobalStaticData.FixedUpdateTime;
+            cameraRotation.y += _mouseInput.x * rotationSpeed * WorldTimeManager.Instance.FixedUpdateTime;
+            cameraRotation.x += -_mouseInput.y * rotationSpeed * WorldTimeManager.Instance.FixedUpdateTime;
             cameraRotation.x = ExtensionFunctions.To360Angle(cameraRotation.x);
 
             switch (cameraRotation.x)

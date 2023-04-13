@@ -4,7 +4,7 @@ using System;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
-using Utils.Common;
+using World;
 
 #endregion
 
@@ -38,7 +38,7 @@ namespace Player.Type_4
             {
                 case SatchelVelocityState.FullVelocity:
                 {
-                    _currentTimer -= GlobalStaticData.FixedUpdateTime;
+                    _currentTimer -= WorldTimeManager.Instance.FixedUpdateTime;
                     if (_currentTimer <= 0)
                     {
                         _currentTimer = _satchelAffectTime;
@@ -59,7 +59,7 @@ namespace Player.Type_4
                         _computedVelocity.y = 0;
                     }
 
-                    _currentTimer -= GlobalStaticData.FixedUpdateTime;
+                    _currentTimer -= WorldTimeManager.Instance.FixedUpdateTime;
                     if (_currentTimer <= 0 || playerController.IsGrounded)
                     {
                         SetSatchelVelocityState(SatchelVelocityState.EndSatchel);
@@ -133,21 +133,21 @@ namespace Player.Type_4
             var xVelocity = _computedVelocity.x;
             if (xVelocity < 0)
             {
-                xVelocity += _velocityDecreaseRate * GlobalStaticData.FixedUpdateTime;
+                xVelocity += _velocityDecreaseRate * WorldTimeManager.Instance.FixedUpdateTime;
             }
             else
             {
-                xVelocity -= _velocityDecreaseRate * GlobalStaticData.FixedUpdateTime;
+                xVelocity -= _velocityDecreaseRate * WorldTimeManager.Instance.FixedUpdateTime;
             }
 
             var zVelocity = _computedVelocity.z;
             if (zVelocity < 0)
             {
-                zVelocity += _velocityDecreaseRate * GlobalStaticData.FixedUpdateTime;
+                zVelocity += _velocityDecreaseRate * WorldTimeManager.Instance.FixedUpdateTime;
             }
             else
             {
-                zVelocity -= _velocityDecreaseRate * GlobalStaticData.FixedUpdateTime;
+                zVelocity -= _velocityDecreaseRate * WorldTimeManager.Instance.FixedUpdateTime;
             }
 
             _computedVelocity.x = xVelocity;

@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 using Utils.Common;
 using Utils.Input;
 using Utils.Misc;
+using World;
 
 #endregion
 
@@ -47,9 +48,6 @@ namespace Player.Base
 
         [Header("Custom Effects")]
         [SerializeField] private List<PlayerInputModifierData> _playerInputModifierData;
-
-        // Fixed Update Accumulator
-        private float _accumulator;
 
         // Input
         private Vector2 _coreMoveInput;
@@ -94,7 +92,6 @@ namespace Player.Base
         // Camera
         private Transform _cinemachineControllerTransform;
 
-        public delegate void PlayerFixedUpdate();
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
         public delegate void PlayerStateChanged(PlayerState currentState);
@@ -103,7 +100,6 @@ namespace Player.Base
         public delegate void PlayerAbilityStarted(Ability ability);
         public delegate void PlayerAbilityEnded(Ability ability);
 
-        public event PlayerFixedUpdate OnPlayerFixedUpdate;
         public event PlayerStatePushed OnPlayerStatePushed;
         public event PlayerStatePopped OnPlayerStatePopped;
         public event PlayerStateChanged OnPlayerStateChanged;
@@ -117,6 +113,7 @@ namespace Player.Base
         private void Start()
         {
             InitializeInputEvents();
+            WorldTimeManager.Instance.OnWorldCustomFixedUpdate += PlayerFixedUpdateFunctions;
 
             _characterController = GetComponent<CharacterController>();
             _playerStateStack = new List<PlayerState>();
@@ -155,23 +152,16 @@ namespace Player.Base
             }
 
             DeInitializeInputEvents();
+            WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= PlayerFixedUpdateFunctions;
         }
 
         private void Update()
         {
             UpdateKeyboardInput();
             DelegateUpdateAbilities();
-
-            _accumulator += Time.deltaTime;
-            while (_accumulator >= GlobalStaticData.FixedUpdateTime)
-            {
-                _accumulator -= GlobalStaticData.FixedUpdateTime;
-                OnPlayerFixedUpdate?.Invoke();
-                PlayerFixedUpdateFunctions();
-            }
         }
 
-        private void PlayerFixedUpdateFunctions()
+        private void PlayerFixedUpdateFunctions(float fixedUpdateTime)
         {
             // Process these at the beginning to not cause a race condition
             ProcessNextFrameAbilities();
@@ -210,7 +200,7 @@ namespace Player.Base
                 var movementModifier = _playerActiveInputsModifiers[i];
                 if (movementModifier.IsTimed)
                 {
-                    movementModifier.CurrentDuration -= GlobalStaticData.FixedUpdateTime;
+                    movementModifier.CurrentDuration -= WorldTimeManager.Instance.FixedUpdateTime;
                     if (movementModifier.CurrentDuration <= 0)
                     {
                         RemoveInputModifierEffects(_playerActiveInputsModifiers[i]);
@@ -494,7 +484,7 @@ namespace Player.Base
             // This means we need to Decelerate
             if (_currentStateVelocity > _targetStateVelocity)
             {
-                _currentStateVelocity -= _decelerationSpeed * GlobalStaticData.FixedUpdateTime;
+                _currentStateVelocity -= _decelerationSpeed * WorldTimeManager.Instance.FixedUpdateTime;
                 if (_currentStateVelocity < _targetStateVelocity)
                 {
                     _currentStateVelocity = _targetStateVelocity;
@@ -503,7 +493,7 @@ namespace Player.Base
             // This means we need to Accelerate
             else if (_currentStateVelocity < _targetStateVelocity)
             {
-                _currentStateVelocity += _currentAccelerationSpeed * GlobalStaticData.FixedUpdateTime;
+                _currentStateVelocity += _currentAccelerationSpeed * WorldTimeManager.Instance.FixedUpdateTime;
                 if (_currentStateVelocity > _targetStateVelocity)
                 {
                     _currentStateVelocity = _targetStateVelocity;
@@ -613,7 +603,7 @@ namespace Player.Base
             }
         }
 
-        private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * GlobalStaticData.FixedUpdateTime);
+        private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * WorldTimeManager.Instance.FixedUpdateTime);
 
         public float GetWalkSpeed() => _walkSpeed;
 

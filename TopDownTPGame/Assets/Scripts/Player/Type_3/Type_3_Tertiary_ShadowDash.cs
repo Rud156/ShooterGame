@@ -4,8 +4,8 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
-using Utils.Common;
 using Utils.Misc;
+using World;
 
 #endregion
 
@@ -50,7 +50,7 @@ namespace Player.Type_3
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            _currentDashTimeLeft -= GlobalStaticData.FixedUpdateTime;
+            _currentDashTimeLeft -= WorldTimeManager.Instance.FixedUpdateTime;
 
             var forward = _cinemachineFollow.forward;
             var right = _cinemachineFollow.right;

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using Player.Base;
 using UI.Player;
 using UnityEngine;
-using Utils.Common;
 using Utils.Misc;
+using World;
 
 #endregion
 
@@ -98,7 +98,7 @@ namespace Player.Common
         {
             if (_currentCooldownDuration > 0)
             {
-                _currentCooldownDuration -= GlobalStaticData.FixedUpdateTime * _cooldownMultiplier;
+                _currentCooldownDuration -= WorldTimeManager.Instance.FixedUpdateTime * _cooldownMultiplier;
                 if (_currentCooldownDuration < 0)
                 {
                     _currentCooldownDuration = 0;

@@ -7,7 +7,7 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
-using Utils.Common;
+using World;
 
 #endregion
 
@@ -48,7 +48,7 @@ namespace Player.Type_4
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
-            _currentWindUpTime -= GlobalStaticData.FixedUpdateTime;
+            _currentWindUpTime -= WorldTimeManager.Instance.FixedUpdateTime;
             if (_currentWindUpTime <= 0)
             {
                 var shootPosition = _shootController.GetShootPosition();

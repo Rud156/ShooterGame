@@ -3,7 +3,7 @@
 using Player.Base;
 using Player.Common;
 using UnityEngine;
-using Utils.Common;
+using World;
 
 #endregion
 
@@ -24,7 +24,7 @@ namespace Player.Type_2
 
         public override void StartAbility(BasePlayerController playerController) => _currentTimeLeft = _frozenDuration;
 
-        public override void AbilityUpdate(BasePlayerController playerController) => _currentTimeLeft -= GlobalStaticData.FixedUpdateTime;
+        public override void AbilityUpdate(BasePlayerController playerController) => _currentTimeLeft -= WorldTimeManager.Instance.FixedUpdateTime;
 
         public override void EndAbility(BasePlayerController playerController) => Destroy(gameObject);
 

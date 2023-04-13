@@ -8,8 +8,8 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
-using Utils.Common;
 using Utils.Structs;
+using World;
 using Random = UnityEngine.Random;
 
 #endregion
@@ -130,7 +130,7 @@ namespace Player.Type_2
             base.UnityFixedUpdateDelegate(playerController);
             if (_currentOverheatTime > 0 && _abilityEnd)
             {
-                _currentOverheatTime -= GlobalStaticData.FixedUpdateTime * _overheatCooldownMultiplier;
+                _currentOverheatTime -= WorldTimeManager.Instance.FixedUpdateTime * _overheatCooldownMultiplier;
             }
         }
 
@@ -152,7 +152,7 @@ namespace Player.Type_2
 
         private void UpdateSlashTimer()
         {
-            _currentTime += GlobalStaticData.FixedUpdateTime;
+            _currentTime += WorldTimeManager.Instance.FixedUpdateTime;
             if (_currentTime >= _slashDuration)
             {
                 IncrementCurrentState();

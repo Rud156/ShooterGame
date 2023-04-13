@@ -6,7 +6,7 @@ using Player.Common;
 using Player.Type_5;
 using UI.Player;
 using UnityEngine;
-using Utils.Common;
+using World;
 
 #endregion
 
@@ -45,7 +45,7 @@ public class Type_5_Ultimate_Shield : Ability
 
     public override void AbilityUpdate(BasePlayerController playerController)
     {
-        _currentWindUpTime -= GlobalStaticData.FixedUpdateTime;
+        _currentWindUpTime -= WorldTimeManager.Instance.FixedUpdateTime;
         if (_currentWindUpTime <= 0)
         {
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _shieldDeployRadius, _hitColliders, _shieldDeployMask);
@@ -96,7 +96,7 @@ public class Type_5_Ultimate_Shield : Ability
 
         if (_currentUltimatePercent < PlayerStaticData.MaxUltimatePercent)
         {
-            _currentUltimatePercent += GlobalStaticData.FixedUpdateTime * _ultimateChargeRate;
+            _currentUltimatePercent += WorldTimeManager.Instance.FixedUpdateTime * _ultimateChargeRate;
             if (_currentUltimatePercent > PlayerStaticData.MaxUltimatePercent)
             {
                 _currentUltimatePercent = PlayerStaticData.MaxUltimatePercent;

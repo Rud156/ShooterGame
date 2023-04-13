@@ -8,8 +8,8 @@ using Player.Base;
 using Player.Common;
 using UI.Player;
 using UnityEngine;
-using Utils.Common;
 using Utils.Misc;
+using World;
 
 #endregion
 
@@ -112,7 +112,7 @@ namespace Player.Type_3
             base.UnityFixedUpdateDelegate(playerController);
             if (_currentOverheatTime > 0 && _abilityEnd)
             {
-                _currentOverheatTime -= GlobalStaticData.FixedUpdateTime * _overheatCooldownMultiplier;
+                _currentOverheatTime -= WorldTimeManager.Instance.FixedUpdateTime * _overheatCooldownMultiplier;
             }
         }
 
