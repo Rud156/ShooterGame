@@ -6,7 +6,6 @@ using Effects;
 using Player.Common;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Utils.Common;
 using Utils.Input;
 using Utils.Misc;
 using World;
