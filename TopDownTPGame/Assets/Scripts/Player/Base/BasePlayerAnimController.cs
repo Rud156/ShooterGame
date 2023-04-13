@@ -44,7 +44,6 @@ namespace Player.Base
 
         private void Start()
         {
-            _playerController.OnPlayerStateChanged += HandlePlayerStateChanged;
             _playerController.OnPlayerJumped += HandlePlayerJumped;
             _playerController.OnPlayerGroundedChanged += HandleGroundedChanged;
 
@@ -53,7 +52,6 @@ namespace Player.Base
 
         private void OnDestroy()
         {
-            _playerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
             _playerController.OnPlayerJumped -= HandlePlayerJumped;
             _playerController.OnPlayerGroundedChanged -= HandleGroundedChanged;
         }
@@ -94,22 +92,46 @@ namespace Player.Base
 
         private void HandleCoreMovement()
         {
+            // Reset Speed to 1 by default
+            _playerAnimator.speed = 1;
+
             var playerState = _playerController.GetTopPlayerState();
             switch (playerState)
             {
                 case PlayerState.Idle:
-                {
-                    _movementAnim.x = 0;
-                    _movementAnim.y = 0;
-                }
-                    break;
-
                 case PlayerState.Walking:
-                    SetGroundedAnimValue(MaxWalkingAnimValue);
-                    break;
-
                 case PlayerState.Running:
-                    SetGroundedAnimValue(MaxRunningAnimValue);
+                {
+                    var walkSpeed = _playerController.GetWalkSpeed();
+                    var currentSpeed = _playerController.GetCurrentStateVelocity();
+
+                    if (currentSpeed > walkSpeed)
+                    {
+                        SetAnimatorSpeedForTargetSpeed();
+                        SetGroundedAnimValue(MaxRunningAnimValue);
+
+                        _playerAnimator.SetBool(IsWalkingParam, false);
+                        _playerAnimator.SetBool(IsRunningParam, true);
+                    }
+                    else if (currentSpeed > 0)
+                    {
+                        SetAnimatorSpeedForTargetSpeed();
+                        SetGroundedAnimValue(MaxWalkingAnimValue);
+
+                        _playerAnimator.SetBool(IsWalkingParam, true);
+                        _playerAnimator.SetBool(IsRunningParam, false);
+                    }
+                    else
+                    {
+                        _playerAnimator.SetBool(IsWalkingParam, false);
+                        _playerAnimator.SetBool(IsRunningParam, false);
+
+                        _movementAnim.x = 0;
+                        _movementAnim.y = 0;
+
+                        CheckAndStartNewIdleAnim();
+                    }
+                }
                     break;
 
                 case PlayerState.Falling:
@@ -125,60 +147,38 @@ namespace Player.Base
             }
         }
 
-        private void HandlePlayerStateChanged(PlayerState currentState)
+        private void SetAnimatorSpeedForTargetSpeed()
         {
-            CheckAndStartNewIdleAnim();
+            var startStateVelocity = _playerController.GetStartStateVelocity();
+            var targetStateVelocity = _playerController.GetTargetStateVelocity();
+            var currentStateVelocity = _playerController.GetCurrentStateVelocity();
 
-            var playerState = _playerController.GetTopPlayerState();
-            switch (playerState)
-            {
-                case PlayerState.Idle:
-                    break;
+            var mappedAnimSpeed = ExtensionFunctions.IsNearlyEqual(targetStateVelocity, 0)
+                ? ExtensionFunctions.Map(currentStateVelocity, startStateVelocity, targetStateVelocity, 1, 0)
+                : ExtensionFunctions.Map(currentStateVelocity, startStateVelocity, targetStateVelocity, 0, 1);
 
-                case PlayerState.Walking:
-                {
-                    _playerAnimator.SetBool(IsWalkingParam, true);
-                    _playerAnimator.SetBool(IsRunningParam, false);
-                }
-                    break;
-
-                case PlayerState.Running:
-                {
-                    _playerAnimator.SetBool(IsWalkingParam, false);
-                    _playerAnimator.SetBool(IsRunningParam, true);
-                }
-                    break;
-
-                case PlayerState.Falling:
-                    break;
-
-                case PlayerState.CustomMovement:
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            _playerAnimator.speed = Mathf.Clamp01(mappedAnimSpeed);
         }
 
         private void SetGroundedAnimValue(float maxVerticalValue)
         {
-            var coreInput = _playerController.GetCoreMoveInput();
-            if (ExtensionFunctions.IsNearlyEqual(coreInput.x, 0))
+            var lastNonZeroCoreInput = _playerController.GetLastNonZeroCoreInput();
+            if (ExtensionFunctions.IsNearlyEqual(lastNonZeroCoreInput.x, 0))
             {
                 _movementAnim.x = 0;
             }
             else
             {
-                _movementAnim.x = coreInput.x;
+                _movementAnim.x = lastNonZeroCoreInput.x;
             }
 
-            if (ExtensionFunctions.IsNearlyEqual(coreInput.y, 0))
+            if (ExtensionFunctions.IsNearlyEqual(lastNonZeroCoreInput.y, 0))
             {
                 _movementAnim.y = 0;
             }
             else
             {
-                _movementAnim.y = coreInput.y > 0 ? maxVerticalValue : -maxVerticalValue;
+                _movementAnim.y = lastNonZeroCoreInput.y > 0 ? maxVerticalValue : -maxVerticalValue;
             }
         }
 
@@ -200,7 +200,8 @@ namespace Player.Base
 
         private void UpdateIdleAnim()
         {
-            if (_currentIdleAnimTimer <= 0 || _playerController.GetTopPlayerState() != PlayerState.Idle)
+            var currentStateVelocity = _playerController.GetCurrentStateVelocity();
+            if (_currentIdleAnimTimer <= 0 || _playerController.GetTopPlayerState() != PlayerState.Idle || !ExtensionFunctions.IsNearlyEqual(currentStateVelocity, 0))
             {
                 return;
             }
@@ -221,7 +222,8 @@ namespace Player.Base
             }
 
             var currentState = _playerController.GetTopPlayerState();
-            if (currentState != PlayerState.Idle)
+            var currentStateVelocity = _playerController.GetCurrentStateVelocity();
+            if (currentState != PlayerState.Idle || !ExtensionFunctions.IsNearlyEqual(currentStateVelocity, 0))
             {
                 return;
             }
@@ -241,21 +243,21 @@ namespace Player.Base
 
         private IEnumerator StartDelayedRandomAnim(int randomAnimIndex)
         {
-            yield return new WaitForSeconds(_delayedIdleStartBuffer);
-
             var currentAnimData = _idleAnimDurations[randomAnimIndex];
             _currentAnimIndex = randomAnimIndex;
             _currentIdleAnimTimer = currentAnimData.animDuration;
             _currentIdleAnimPlayCountLeft = Random.Range(currentAnimData.minPlayCount, currentAnimData.maxPlayCount + 1);
+
+            yield return new WaitForSeconds(_delayedIdleStartBuffer);
             _playerAnimator.SetInteger(IdleTriggerParam, randomAnimIndex + 1);
         }
 
         private IEnumerator RestartDelayedCurrentAnim()
         {
-            yield return new WaitForSeconds(_delayedIdleStartBuffer);
-
             var currentAnimData = _idleAnimDurations[_currentAnimIndex];
             _currentIdleAnimTimer = currentAnimData.animDuration;
+
+            yield return new WaitForSeconds(_delayedIdleStartBuffer);
             _playerAnimator.SetInteger(IdleTriggerParam, _currentAnimIndex + 1);
         }
 

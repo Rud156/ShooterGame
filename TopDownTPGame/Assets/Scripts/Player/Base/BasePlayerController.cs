@@ -21,12 +21,12 @@ namespace Player.Base
 
         [Header("Basic Move")]
         [SerializeField] private float _runSpeed;
+        [SerializeField] private float _runAccelerationSpeed;
         [SerializeField] private float _walkSpeed;
+        [SerializeField] private float _walkAccelerationSpeed;
+        [SerializeField] private float _decelerationSpeed;
         [SerializeField] private float _airControlMultiplier;
         [SerializeField] private float _gravityMultiplier;
-
-        [Header("Components")]
-        [SerializeField] private PlayerCameraController _playerCameraController;
 
         [Header("Character Position Points")]
         [SerializeField] private Transform _headTransform;
@@ -48,11 +48,12 @@ namespace Player.Base
         [Header("Custom Effects")]
         [SerializeField] private List<PlayerInputModifierData> _playerInputModifierData;
 
-        // Fixed Update
+        // Fixed Update Accumulator
         private float _accumulator;
 
         // Input
         private Vector2 _coreMoveInput;
+        private Vector2 _lastNonZeroCoreInput;
         private PlayerInputKey _runKey;
         private PlayerInputKey _jumpKey;
         private PlayerInputKey _abilityPrimaryKey;
@@ -64,6 +65,13 @@ namespace Player.Base
         // Movement/Controller
         private CharacterController _characterController;
         private List<PlayerState> _playerStateStack;
+
+        // This is the Acceleration/Deceleration Target
+        // Current Start Velocity will not be directly set but instead slowly increased or decreased
+        // Based on Target State Velocity
+        private float _currentAccelerationSpeed;
+        private float _startStateVelocity;
+        private float _targetStateVelocity;
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
 
@@ -80,12 +88,13 @@ namespace Player.Base
         private List<PlayerInputModifiers> _playerActiveInputsModifiers;
 
         // Custom Ability
-        [SerializeField] private List<Ability> _currentActiveAbilities;
-        [SerializeField] private List<Ability> _abilitiesToAddNextFrame;
+        private List<Ability> _currentActiveAbilities;
+        private List<Ability> _abilitiesToAddNextFrame;
 
         // Camera
         private Transform _cinemachineControllerTransform;
 
+        public delegate void PlayerFixedUpdate();
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
         public delegate void PlayerStateChanged(PlayerState currentState);
@@ -94,6 +103,7 @@ namespace Player.Base
         public delegate void PlayerAbilityStarted(Ability ability);
         public delegate void PlayerAbilityEnded(Ability ability);
 
+        public event PlayerFixedUpdate OnPlayerFixedUpdate;
         public event PlayerStatePushed OnPlayerStatePushed;
         public event PlayerStatePopped OnPlayerStatePopped;
         public event PlayerStateChanged OnPlayerStateChanged;
@@ -114,16 +124,19 @@ namespace Player.Base
             _currentActiveAbilities = new List<Ability>();
             _abilitiesToAddNextFrame = new List<Ability>();
 
-            _coreMoveInput = new Vector2();
-            _runKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
-            _jumpKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
-            _abilityPrimaryKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
-            _abilitySecondaryKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
-            _abilityTertiaryKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
-            _abilityUltimateKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
-            _constantSpeedFallKey = new PlayerInputKey() { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _coreMoveInput = Vector2.zero;
+            _lastNonZeroCoreInput = Vector2.zero;
+            _runKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _jumpKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _abilityPrimaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _abilitySecondaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _abilityTertiaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _abilityUltimateKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _constantSpeedFallKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
 
             _currentStateVelocity = 0;
+            _targetStateVelocity = 0;
+            _startStateVelocity = 0;
             _cinemachineControllerTransform = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController).transform;
 
             foreach (var ability in _playerAbilities)
@@ -153,7 +166,7 @@ namespace Player.Base
             while (_accumulator >= GlobalStaticData.FixedUpdateTime)
             {
                 _accumulator -= GlobalStaticData.FixedUpdateTime;
-                _playerCameraController.PlayerCameraFixedUpdateFunctions();
+                OnPlayerFixedUpdate?.Invoke();
                 PlayerFixedUpdateFunctions();
             }
         }
@@ -383,36 +396,43 @@ namespace Player.Base
                     throw new ArgumentOutOfRangeException();
             }
 
+            UpdateCurrentToTargetVelocity();
             UpdateCoreMovement();
         }
 
         private void UpdateIdleState()
         {
-            _currentStateVelocity = 0;
+            _targetStateVelocity = 0;
             if (!HasNoDirectionalInput())
             {
+                _startStateVelocity = _currentStateVelocity;
                 PushPlayerState(PlayerState.Walking);
             }
         }
 
         private void UpdateWalkingState()
         {
-            _currentStateVelocity = _walkSpeed;
-            if (_runKey.KeyPressedThisFrame && IsGrounded && _coreMoveInput.y > 0)
+            _targetStateVelocity = _walkSpeed;
+            _currentAccelerationSpeed = _walkAccelerationSpeed;
+            if (_runKey.KeyPressedThisFrame && IsGrounded && _lastNonZeroCoreInput.y > 0)
             {
+                _startStateVelocity = _currentStateVelocity;
                 PushPlayerState(PlayerState.Running);
             }
             else if (HasNoDirectionalInput())
             {
+                _startStateVelocity = _currentStateVelocity;
                 PopPlayerState();
             }
         }
 
         private void UpdateRunningState()
         {
-            _currentStateVelocity = _runSpeed;
-            if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || _runKey.KeyReleasedThisFrame || !_runKey.KeyPressed)
+            _targetStateVelocity = _runSpeed;
+            _currentAccelerationSpeed = _runAccelerationSpeed;
+            if (HasNoDirectionalInput() || _lastNonZeroCoreInput.y <= 0 || _runKey.KeyReleasedThisFrame || !_runKey.KeyPressed)
             {
+                _startStateVelocity = _currentStateVelocity;
                 PopPlayerState();
             }
         }
@@ -423,7 +443,8 @@ namespace Player.Base
             // Which means the player jumped from a standstill
             if (_playerStateStack.Count <= 2)
             {
-                _currentStateVelocity = _walkSpeed;
+                _targetStateVelocity = _walkSpeed;
+                _currentAccelerationSpeed = _walkAccelerationSpeed;
             }
 
             if (IsGrounded)
@@ -468,6 +489,28 @@ namespace Player.Base
 
         #region Core Movement
 
+        private void UpdateCurrentToTargetVelocity()
+        {
+            // This means we need to Decelerate
+            if (_currentStateVelocity > _targetStateVelocity)
+            {
+                _currentStateVelocity -= _decelerationSpeed * GlobalStaticData.FixedUpdateTime;
+                if (_currentStateVelocity < _targetStateVelocity)
+                {
+                    _currentStateVelocity = _targetStateVelocity;
+                }
+            }
+            // This means we need to Accelerate
+            else if (_currentStateVelocity < _targetStateVelocity)
+            {
+                _currentStateVelocity += _currentAccelerationSpeed * GlobalStaticData.FixedUpdateTime;
+                if (_currentStateVelocity > _targetStateVelocity)
+                {
+                    _currentStateVelocity = _targetStateVelocity;
+                }
+            }
+        }
+
         private void UpdateCoreMovement()
         {
             var characterTransform = transform;
@@ -481,7 +524,7 @@ namespace Player.Base
             }
             else if (_playerStateStack[^1] != PlayerState.Falling)
             {
-                var groundedMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
+                var groundedMovement = forward * _lastNonZeroCoreInput.y + right * _lastNonZeroCoreInput.x;
                 groundedMovement.y = 0;
                 groundedMovement = _currentStateVelocity * groundedMovement.normalized;
 
@@ -490,7 +533,7 @@ namespace Player.Base
             }
             else
             {
-                var airMovement = forward * _coreMoveInput.y + right * _coreMoveInput.x;
+                var airMovement = forward * _lastNonZeroCoreInput.y + right * _lastNonZeroCoreInput.x;
                 airMovement.y = 0;
                 airMovement = airMovement.normalized * (_airControlMultiplier * _currentStateVelocity);
 
@@ -571,6 +614,16 @@ namespace Player.Base
         }
 
         private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * GlobalStaticData.FixedUpdateTime);
+
+        public float GetWalkSpeed() => _walkSpeed;
+
+        public float GetRunSpeed() => _runSpeed;
+
+        public float GetStartStateVelocity() => _startStateVelocity;
+
+        public float GetTargetStateVelocity() => _targetStateVelocity;
+
+        public float GetCurrentStateVelocity() => _currentStateVelocity;
 
         #endregion Core Movement
 
@@ -863,7 +916,18 @@ namespace Player.Base
             CustomInputManager.Instance.UpdateLastUsedDeviceInput(deviceName, path);
         }
 
-        private void UpdateKeyboardInput() => _coreMoveInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+        private void UpdateKeyboardInput()
+        {
+            _coreMoveInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+            if (!HasNoDirectionalInput())
+            {
+                _lastNonZeroCoreInput = _coreMoveInput;
+            }
+            else if (HasNoDirectionalInput() && ExtensionFunctions.IsNearlyEqual(_currentStateVelocity, 0))
+            {
+                _lastNonZeroCoreInput = _coreMoveInput;
+            }
+        }
 
         private void HandlePlayerPressJump(InputAction.CallbackContext context) => _jumpKey.UpdateInputData(context);
 
@@ -906,6 +970,8 @@ namespace Player.Base
         }
 
         public Vector2 GetCoreMoveInput() => _coreMoveInput;
+
+        public Vector2 GetLastNonZeroCoreInput() => _lastNonZeroCoreInput;
 
         #endregion New Input System
 

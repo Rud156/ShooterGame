@@ -1069,10 +1069,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _runSpeed: 25
+  _runAccelerationSpeed: 25
   _walkSpeed: 7
+  _walkAccelerationSpeed: 9
+  _decelerationSpeed: 35
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
-  _playerCameraController: {fileID: 2637092012038209774}
   _headTransform: {fileID: 4193972179462556998}
   _bodyTransform: {fileID: 1931861583005108140}
   _legsTransform: {fileID: 7677642630880245804}
@@ -1089,8 +1091,9 @@ MonoBehaviour:
   - {fileID: 9015896159279792058}
   - {fileID: 4734483721622460076}
   _playerInputModifierData: []
-  _currentActiveAbilities: []
-  _abilitiesToAddNextFrame: []
+  _startStateVelocity: 0
+  _targetStateVelocity: 0
+  _currentStateVelocity: 0
 --- !u!114 &3268835866765903229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1177,6 +1180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c03e50dd5cc524992dcb3283ad6e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerController: {fileID: 2637092012038209769}
   _cinemachineFollowTarget: {fileID: 4317024363540812747}
   _cameraRotationSpeed: 100
   _minCameraAngle: -60

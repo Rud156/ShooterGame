@@ -14,6 +14,7 @@ namespace Player.Base
     public class PlayerCameraController : MonoBehaviour
     {
         [Header("Components")]
+        [SerializeField] private BasePlayerController _playerController;
         [SerializeField] private Transform _cinemachineFollowTarget;
 
         [Header("Camera Data")]
@@ -50,8 +51,11 @@ namespace Player.Base
             _cinemachineFollowTarget.transform.localPosition = new Vector3(-_xOffsetAmount, 0, 0);
             _currentShoulderLerp = 1;
 
+            // TODO: Move this to a Util Class/Manager
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            _playerController.OnPlayerFixedUpdate += PlayerCameraFixedUpdate;
 
             CustomInputManager.Instance.PlayerInput.Look.started += HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.performed += HandleMouseInput;
@@ -63,6 +67,8 @@ namespace Player.Base
 
         private void OnDestroy()
         {
+            _playerController.OnPlayerFixedUpdate -= PlayerCameraFixedUpdate;
+
             CustomInputManager.Instance.PlayerInput.Look.started -= HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.performed -= HandleMouseInput;
             CustomInputManager.Instance.PlayerInput.Look.canceled -= HandleMouseInput;
@@ -79,13 +85,11 @@ namespace Player.Base
 
         #endregion Unity Functions
 
-        #region External Functions
+        #region Utils
 
-        // This function should always be called from BasePlayerController since the data needs to be 
-        // predicted and also sent to the server
-        public void PlayerCameraFixedUpdateFunctions() => UpdateCameraControl();
+        private void PlayerCameraFixedUpdate() => UpdateCameraControl();
 
-        #endregion External Functions
+        #endregion Utils
 
         #region Camera Control
 
