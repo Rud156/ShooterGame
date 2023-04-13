@@ -57,7 +57,7 @@ namespace Ability_Scripts.Projectiles
             {
                 CheckCollisionWithObject();
             }
-            
+
             _destroyTimeLeft -= Time.deltaTime;
             if (_destroyTimeLeft <= 0)
             {

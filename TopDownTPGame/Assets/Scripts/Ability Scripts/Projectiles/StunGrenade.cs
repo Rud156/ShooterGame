@@ -1,6 +1,5 @@
 #region
 
-using System;
 using CustomCamera;
 using HealthSystem;
 using Player.Base;
