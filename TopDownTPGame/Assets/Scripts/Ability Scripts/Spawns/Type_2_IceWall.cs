@@ -88,9 +88,9 @@ namespace Ability_Scripts.Spawns
 
         #region Utils
 
-        private void HandleHealthAndDamage(int startHealth, int currentHealth, int maxHealth)
+        private void HandleHealthAndDamage(float startHealth, float currentHealth, float maxHealth)
         {
-            _material.color = Color.Lerp(_minHealthColor, _fullHealthColor, (float)currentHealth / maxHealth);
+            _material.color = Color.Lerp(_minHealthColor, _fullHealthColor, currentHealth / maxHealth);
             if (currentHealth <= 0)
             {
                 DestroyWall();
@@ -99,7 +99,8 @@ namespace Ability_Scripts.Spawns
 
         private void DestroyWall()
         {
-            Instantiate(_destroyEffectPrefab, transform.position, transform.rotation);
+            var wallTransform = transform;
+            Instantiate(_destroyEffectPrefab, wallTransform.position, wallTransform.rotation);
             Destroy(gameObject);
         }
 

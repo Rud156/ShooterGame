@@ -72,10 +72,11 @@ namespace UI.Player
 
         #region External Functions
 
-        public void DisplayHealthChanged(int currentHealth, int maxHealth)
+        public void DisplayHealthChanged(float currentHealth, float maxHealth)
         {
-            _currentHealthLabel.text = currentHealth.ToString();
-            _maxHealthLabel.text = maxHealth.ToString();
+            // TODO: Update this so that the display is always int but everything is computed as float
+            _currentHealthLabel.text = currentHealth.ToString("0.00");
+            _maxHealthLabel.text = $"/ {maxHealth:0.00}";
 
             _healthBar.lowValue = 0;
             _healthBar.highValue = maxHealth;

@@ -34,6 +34,6 @@ namespace HealthSystem
 
         public virtual void HealModifierEnd() => _healthAndDamage.RemoveHealModifier(_id);
 
-        public abstract int ModifiedHeal(int inputHealAmount);
+        public abstract int ModifiedHeal(float inputHealAmount);
     }
 }
