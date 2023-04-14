@@ -13,45 +13,45 @@ namespace HealthSystem
     public class HealthAndDamage : MonoBehaviour
     {
         [Header("Health Data")]
-        [SerializeField] private float _maxHealth;
+        [SerializeField] private int _maxHealth;
         [SerializeField] private bool _displayToHUD;
 
         [Header("Auto Heal Data")]
         [SerializeField] private AutoHealWhen _autoHealWhen;
         [SerializeField] private float _autoHealTickRate;
-        [SerializeField] private float _autoHealPerTickAmount;
+        [SerializeField] private int _autoHealPerTickAmount;
 
         [Header("Health Decay")]
-        [SerializeField] private float _minHealthDecayGuard;
+        [SerializeField] private int _minHealthDecayGuard;
         [SerializeField] private float _decayClearRate;
 
         [Header("Debug")]
-        [SerializeField] private float _debugDamageAmount;
-        [SerializeField] private float _debugHealAmount;
-        [SerializeField] private float _debugDecayAmount;
+        [SerializeField] private int _debugDamageAmount;
+        [SerializeField] private int _debugHealAmount;
+        [SerializeField] private int _debugDecayAmount;
         [SerializeField] private float _debugDecayDuration;
 
-        private float _currentHealth;
+        private int _currentHealth;
         private List<Tuple<string, HealModifier>> _healModifiers;
         private List<Tuple<string, DamageModifier>> _damageModifiers;
 
         private DecayState _decayState;
         private float _decayDuration;
         private float _decayClearAmountCurrentFrame;
-        private float _currentHealthPreDecay;
+        private int _currentHealthPreDecay;
 
         private AutoHealWhen _currentAutoHealState;
         private float _autoHealTimer;
 
-        public delegate void HealthChanged(float startHealth, float currentHealth, float maxHealth);
-        public delegate void HealthDecayed(float startHealth, float decayedHealth, float decayDuration);
-        public delegate void HealthDecayCleared(float currentHealth, float maxHealth);
-        public delegate void DamageTaken(float damageTaken, float startingHealth, float finalHealth);
-        public delegate void Healed(float healAmount, float startingHealth, float finalHealth);
-        public delegate void HealModifierAdded(HealModifier healModifier, float currentHealth);
-        public delegate void HealModifierRemoved(HealModifier healModifier, float currentHealth);
-        public delegate void DamageModifierAdded(DamageModifier damageModifier, float currentHealth);
-        public delegate void DamageModifierRemoved(DamageModifier damageModifier, float currentHealth);
+        public delegate void HealthChanged(int startHealth, int currentHealth, int maxHealth);
+        public delegate void HealthDecayed(int startHealth, int decayedHealth, float decayDuration);
+        public delegate void HealthDecayCleared(int currentHealth, int maxHealth);
+        public delegate void DamageTaken(int damageTaken, int startingHealth, int finalHealth);
+        public delegate void Healed(int healAmount, int startingHealth, int finalHealth);
+        public delegate void HealModifierAdded(HealModifier healModifier, int currentHealth);
+        public delegate void HealModifierRemoved(HealModifier healModifier, int currentHealth);
+        public delegate void DamageModifierAdded(DamageModifier damageModifier, int currentHealth);
+        public delegate void DamageModifierRemoved(DamageModifier damageModifier, int currentHealth);
 
 
         public event HealthChanged OnHealthChanged;
@@ -118,10 +118,10 @@ namespace HealthSystem
 
         #region Decay
 
-        public void ApplyHealthDecay(float decayAmount, float decayDuration)
+        public void ApplyHealthDecay(int decayAmount, float decayDuration)
         {
             _currentHealthPreDecay = _decayState == DecayState.DecayNotApplied ? _currentHealth : _currentHealthPreDecay;
-            _currentHealth = (float)Mathf.Clamp(_currentHealth - decayAmount, _minHealthDecayGuard, _maxHealth);
+            _currentHealth = Mathf.Clamp(_currentHealth - decayAmount, _minHealthDecayGuard, _maxHealth);
             _decayDuration = decayDuration;
             SetDecayState(DecayState.DecayCountdown);
 
@@ -153,7 +153,7 @@ namespace HealthSystem
                         {
                             var startHealth = _currentHealth;
 
-                            var healthGainedAmount = _decayClearAmountCurrentFrame;
+                            var healthGainedAmount = Mathf.FloorToInt(_decayClearAmountCurrentFrame);
                             _currentHealth += healthGainedAmount;
                             _decayClearAmountCurrentFrame -= healthGainedAmount;
 
@@ -211,11 +211,11 @@ namespace HealthSystem
 
         #region Damage And Heal
 
-        public float CurrentHealth => _currentHealth;
+        public int CurrentHealth => _currentHealth;
 
-        public float MaxHealth => _maxHealth;
+        public int MaxHealth => _maxHealth;
 
-        public void TakeDamage(float damageAmount)
+        public void TakeDamage(int damageAmount)
         {
             var startHealth = _currentHealth;
             var modifiedDamageAmount = damageAmount;
@@ -236,7 +236,7 @@ namespace HealthSystem
             NotifyHealthChangeAndHUD(startHealth);
         }
 
-        public void TakeHeal(float healAmount)
+        public void TakeHeal(int healAmount)
         {
             var startHealth = _currentHealth;
             var modifiedHealAmount = healAmount;
@@ -290,7 +290,7 @@ namespace HealthSystem
 
         #region Utils
 
-        private void NotifyHealthChangeAndHUD(float startHealth)
+        private void NotifyHealthChangeAndHUD(int startHealth)
         {
             OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
             if (_displayToHUD)

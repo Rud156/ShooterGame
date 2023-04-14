@@ -88,9 +88,9 @@ namespace Ability_Scripts.Spawns
 
         #region Utils
 
-        private void HandleHealthAndDamage(float startHealth, float currentHealth, float maxHealth)
+        private void HandleHealthAndDamage(int startHealth, int currentHealth, int maxHealth)
         {
-            _material.color = Color.Lerp(_minHealthColor, _fullHealthColor, currentHealth / maxHealth);
+            _material.color = Color.Lerp(_minHealthColor, _fullHealthColor, (float)currentHealth / maxHealth);
             if (currentHealth <= 0)
             {
                 DestroyWall();
