@@ -12,6 +12,10 @@
     font-size: 10px;
 }
 
+.xs_small_text {
+    font-size: 15px;
+}
+
 .small_text {
     font-size: 20;
 }
