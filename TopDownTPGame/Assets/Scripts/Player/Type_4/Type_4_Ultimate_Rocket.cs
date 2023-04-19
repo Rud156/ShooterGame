@@ -5,7 +5,7 @@ using CustomCamera;
 using Player.Base;
 using Player.Common;
 using Player.Type_4;
-using UI.Player;
+using UI.DisplayManagers.Player;
 using UnityEngine;
 using World;
 

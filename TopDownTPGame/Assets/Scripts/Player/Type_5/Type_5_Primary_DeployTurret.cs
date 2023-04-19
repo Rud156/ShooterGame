@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Ability_Scripts.Spawns;
 using Player.Base;
 using Player.Common;
-using UI.Player;
+using UI.DisplayManagers.Player;
 using UnityEngine;
 using Utils.Materials;
 

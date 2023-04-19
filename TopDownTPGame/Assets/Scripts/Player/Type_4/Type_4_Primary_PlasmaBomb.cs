@@ -4,7 +4,7 @@ using Ability_Scripts.Projectiles;
 using CustomCamera;
 using Player.Base;
 using Player.Common;
-using UI.Player;
+using UI.DisplayManagers.Player;
 using UnityEngine;
 
 #endregion

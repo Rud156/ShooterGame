@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using Player.Base;
-using UI.Player;
+using UI.DisplayManagers.Player;
 using UnityEngine;
 using Utils.Misc;
 using World;

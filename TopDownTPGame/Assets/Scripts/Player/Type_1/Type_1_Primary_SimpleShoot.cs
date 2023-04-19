@@ -5,7 +5,7 @@ using CustomCamera;
 using HealthSystem;
 using Player.Base;
 using Player.Common;
-using UI.Player;
+using UI.DisplayManagers.Player;
 using UnityEngine;
 using Utils.Misc;
 using World;

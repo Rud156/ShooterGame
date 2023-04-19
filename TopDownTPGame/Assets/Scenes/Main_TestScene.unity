@@ -495,6 +495,7 @@ GameObject:
   - component: {fileID: 254855387}
   - component: {fileID: 254855386}
   - component: {fileID: 254855385}
+  - component: {fileID: 254855390}
   m_Layer: 8
   m_Name: Test Small Target
   m_TagString: Untagged
@@ -611,6 +612,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &254855390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254855384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1648539f7dd4dc59c50aa9d13f597d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &281278230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -684,6 +697,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 281278232}
+    - targetCorrespondingSourceObject: {fileID: 1205494302726118, guid: b4e219626d450cf42b4242a26dcff257,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 281278238}
   m_SourcePrefab: {fileID: 100100000, guid: b4e219626d450cf42b4242a26dcff257, type: 3}
 --- !u!1 &281278231 stripped
 GameObject:
@@ -735,6 +752,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 14.356887, y: 33.10681, z: 8.030043}
   m_Center: {x: 0.027720928, y: 14.766799, z: 0.00000047683716}
+--- !u!114 &281278238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281278231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1648539f7dd4dc59c50aa9d13f597d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &372652144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,6 +1257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 864060275}
   - component: {fileID: 864060274}
+  - component: {fileID: 864060276}
   m_Layer: 0
   m_Name: General HUD Controllers
   m_TagString: Untagged
@@ -1279,6 +1309,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &864060276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864060273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1de7e4d5e3e04edab095a9eca2179788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBarPrefab: {fileID: 9197481963319205126, guid: cecdd81517ff65848ade0567ec9aed53,
+    type: 3}
 --- !u!1 &989368882
 GameObject:
   m_ObjectHideFlags: 0

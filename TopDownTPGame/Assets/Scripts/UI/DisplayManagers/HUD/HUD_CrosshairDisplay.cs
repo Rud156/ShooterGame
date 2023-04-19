@@ -6,7 +6,7 @@ using Utils.Misc;
 
 #endregion
 
-namespace UI.HUD
+namespace UI.DisplayManagers.HUD
 {
     public class HUD_CrosshairDisplay : MonoBehaviour
     {

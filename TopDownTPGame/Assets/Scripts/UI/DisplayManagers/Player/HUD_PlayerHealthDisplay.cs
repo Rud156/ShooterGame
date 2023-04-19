@@ -7,7 +7,7 @@ using Utils.Misc;
 
 #endregion
 
-namespace UI.Player
+namespace UI.DisplayManagers.Player
 {
     public class HUD_PlayerHealthDisplay : MonoBehaviour
     {

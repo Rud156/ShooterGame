@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using EditorCools;
-using UI.Player;
+using UI.DisplayManagers.Player;
 using UnityEngine;
 
 #endregion
