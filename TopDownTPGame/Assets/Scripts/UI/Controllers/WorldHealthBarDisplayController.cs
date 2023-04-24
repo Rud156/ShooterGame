@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using HealthSystem;
 using UI.DisplayManagers.HUD;
 using UnityEngine;

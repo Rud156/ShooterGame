@@ -496,6 +496,7 @@ GameObject:
   - component: {fileID: 254855386}
   - component: {fileID: 254855385}
   - component: {fileID: 254855390}
+  - component: {fileID: 254855391}
   m_Layer: 8
   m_Name: Test Small Target
   m_TagString: Untagged
@@ -623,7 +624,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1648539f7dd4dc59c50aa9d13f597d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBarOffset: {x: 0, y: 0, z: 0}
+  _healthBarOffset: {x: 0, y: 1.5, z: 0}
+--- !u!114 &254855391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254855384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de4a33372e6420d898c0fb1910ce0e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthAndDamage: {fileID: 254855385}
+  _flashMaterial: {fileID: 2100000, guid: 9af1451e933776244ab457a876d41d4b, type: 2}
+  _flashCount: 2
+  _flashOnDuration: 0.1
+  _flashOffDuration: 0.05
+  _materialData:
+  - gameObjectRenderer: {fileID: 254855387}
+    gameObjectMaterial:
+    - {fileID: 2100000, guid: bc7f19f6b57973040a41b894297e2567, type: 2}
 --- !u!1001 &281278230
 PrefabInstance:
   m_ObjectHideFlags: 0
