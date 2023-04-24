@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using HealthSystem;
 using UI.DisplayManagers.HUD;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace UI.Controllers
 
         private void OnDestroy() => HUD_WorldHealthBarDisplay.Instance.DestroyHealthBar(_healthBarId);
 
-        private void Update() => UpdateWorldHealthBar();
+        private void LateUpdate() => UpdateWorldHealthBar();
 
         #endregion Unity Functions
 

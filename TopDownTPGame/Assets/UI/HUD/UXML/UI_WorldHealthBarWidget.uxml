@@ -2,5 +2,5 @@
     <Style src="project://database/Assets/UI/HUD/CSS/UICSS_WorldHealthBarWidget.uss?fileID=7433441132597879392&amp;guid=52c81bc1885f4cfda6405dafabc181b4&amp;type=3#UICSS_WorldHealthBarWidget" />
     <Style src="project://database/Assets/UI/Common/CSS/UICSS_Text.uss?fileID=7433441132597879392&amp;guid=c5a32fcfdf9c4b64fa4b167158b62812&amp;type=3#UICSS_Text" />
     <Style src="project://database/Assets/UI/Common/CSS/UICSS_Colors.uss?fileID=7433441132597879392&amp;guid=ab7ec7b9843a91344b5614d0904c9986&amp;type=3#UICSS_Colors" />
-    <ui:ProgressBar value="30" title="my-progress" name="HealthProgressBar" class="world_health_bar" style="height: 15px; width: 250px; translate: -50% -50%;" />
+    <ui:ProgressBar value="30" title="my-progress" name="HealthProgressBar" class="world_health_bar" style="height: 15px; width: 150px; translate: -50% -50%;" />
 </ui:UXML>
