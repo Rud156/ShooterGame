@@ -28,15 +28,25 @@ namespace Utils.Materials
 
         #region Unity Functions
 
-        private void Start() => _healthAndDamage.OnDamageTaken += HandleDamageTaken;
+        private void Start()
+        {
+            _healthAndDamage.OnDamageTaken += HandleDamageTaken;
+            _healthAndDamage.OnHealthDecayed += HandleHealthDecayed;
+        }
 
-        private void OnDestroy() => _healthAndDamage.OnDamageTaken -= HandleDamageTaken;
+        private void OnDestroy()
+        {
+            _healthAndDamage.OnDamageTaken -= HandleDamageTaken;
+            _healthAndDamage.OnHealthDecayed -= HandleHealthDecayed;
+        }
 
         #endregion Unity Functions
 
         #region Utils
 
         private void HandleDamageTaken(int damageTaken, int startingHealth, int finalHealth) => SwitchMaterial(1);
+
+        private void HandleHealthDecayed(int startHealth, int decayedHealth, float decayDuration) => SwitchMaterial(1);
 
         public override void SwitchMaterial(int materialIndex)
         {
