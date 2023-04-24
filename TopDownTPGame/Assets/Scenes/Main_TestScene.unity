@@ -644,7 +644,7 @@ MonoBehaviour:
   _flashOffDuration: 0.05
   _materialData:
   - gameObjectRenderer: {fileID: 254855387}
-    gameObjectMaterial:
+    gameObjectMaterials:
     - {fileID: 2100000, guid: bc7f19f6b57973040a41b894297e2567, type: 2}
 --- !u!1001 &281278230
 PrefabInstance:
@@ -727,6 +727,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 281278238}
+    - targetCorrespondingSourceObject: {fileID: 1205494302726118, guid: b4e219626d450cf42b4242a26dcff257,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 281278242}
   m_SourcePrefab: {fileID: 100100000, guid: b4e219626d450cf42b4242a26dcff257, type: 3}
 --- !u!1 &281278231 stripped
 GameObject:
@@ -790,6 +794,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBarOffset: {x: 0, y: 0, z: 0}
+--- !u!23 &281278239 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23289408931987818, guid: b4e219626d450cf42b4242a26dcff257,
+    type: 3}
+  m_PrefabInstance: {fileID: 281278230}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &281278242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281278231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de4a33372e6420d898c0fb1910ce0e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthAndDamage: {fileID: 281278232}
+  _flashMaterial: {fileID: 2100000, guid: 9af1451e933776244ab457a876d41d4b, type: 2}
+  _flashCount: 2
+  _flashOnDuration: 0.1
+  _flashOffDuration: 0.05
+  _materialData:
+  - gameObjectRenderer: {fileID: 281278239}
+    gameObjectMaterials:
+    - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
 --- !u!1 &372652144
 GameObject:
   m_ObjectHideFlags: 0

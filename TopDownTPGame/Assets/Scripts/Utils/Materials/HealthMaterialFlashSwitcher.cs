@@ -53,9 +53,9 @@ namespace Utils.Materials
             {
                 foreach (var materialData in _materialData)
                 {
-                    for (var matIndex = 0; matIndex < materialData.gameObjectMaterial.Count; matIndex++)
+                    for (var matIndex = 0; matIndex < materialData.gameObjectMaterials.Count; matIndex++)
                     {
-                        materialData.gameObjectRenderer.materials[matIndex] = _flashMaterial;
+                        materialData.gameObjectRenderer.material = _flashMaterial;
                     }
                 }
 
@@ -63,10 +63,7 @@ namespace Utils.Materials
 
                 foreach (var materialData in _materialData)
                 {
-                    for (var matIndex = 0; matIndex < materialData.gameObjectMaterial.Count; matIndex++)
-                    {
-                        materialData.gameObjectRenderer.materials[matIndex] = materialData.gameObjectMaterial[matIndex];
-                    }
+                    materialData.gameObjectRenderer.materials = materialData.gameObjectMaterials.ToArray();
                 }
 
                 yield return new WaitForSeconds(_flashOffDuration);
@@ -83,7 +80,7 @@ namespace Utils.Materials
         public struct MaterialData
         {
             public Renderer gameObjectRenderer;
-            public List<Material> gameObjectMaterial;
+            public List<Material> gameObjectMaterials;
         }
 
         #endregion Structs
