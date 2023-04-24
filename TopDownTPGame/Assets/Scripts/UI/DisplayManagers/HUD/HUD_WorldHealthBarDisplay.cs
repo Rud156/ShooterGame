@@ -12,10 +12,15 @@ namespace UI.DisplayManagers.HUD
     public class HUD_WorldHealthBarDisplay : MonoBehaviour
     {
         private const string HealthBarParentString = "UI_WorldHealthBarContainer";
-        private const string HealthBarLabelString = "HealthProgressText";
+        private const string HealthProgressBarString = "HealthProgressBar";
 
         [Header("Prefabs")]
         [SerializeField] private VisualTreeAsset _healthBarPrefab;
+
+        [Header("Display Colors")]
+        [SerializeField] private Color _lowHealthColor;
+        [SerializeField] private Color _midHealthColor;
+        [SerializeField] private Color _fullHealthColor;
 
         private VisualElement _parent;
         private Dictionary<int, HealthBarData> _healthBars;
@@ -31,10 +36,13 @@ namespace UI.DisplayManagers.HUD
             _healthBarCounterId += 1;
 
             var healthBarWidget = _healthBarPrefab.Instantiate();
-            var healthBarLabel = healthBarWidget.Q<Label>(HealthBarLabelString);
+            var healthProgressBar = healthBarWidget.Q<ProgressBar>(HealthProgressBarString);
             _parent.Add(healthBarWidget);
 
-            healthBarLabel.text = $"{currentHealth}/{maxHealth}";
+            var progressBar = healthProgressBar.Q<VisualElement>("unity-progress-bar");
+            var progressBackground = progressBar.Q<VisualElement>(className: "unity-progress-bar__background");
+            var progressBarProgress = progressBackground.Q<VisualElement>(className: "unity-progress-bar__progress");
+
             healthBarWidget.style.position = Position.Absolute;
             healthBarWidget.style.left = position.x;
             healthBarWidget.style.top = position.y;
@@ -43,8 +51,9 @@ namespace UI.DisplayManagers.HUD
                 healthBarId,
                 new HealthBarData
                 {
-                    healthBarWidget = healthBarWidget,
-                    healthBarLabel = healthBarLabel
+                    HealthBarWidget = healthBarWidget,
+                    HealthProgressBar = healthProgressBar,
+                    HealthProgressBarProgress = progressBarProgress
                 }
             );
 
@@ -55,10 +64,37 @@ namespace UI.DisplayManagers.HUD
         {
             if (_healthBars.TryGetValue(healthBarId, out var healthBarData))
             {
-                var textLabel = healthBarData.healthBarLabel;
-                textLabel.text = $"{currentHealth}/{maxHealth}";
+                var healthProgressBar = healthBarData.HealthProgressBar;
+                healthProgressBar.lowValue = 0;
+                healthProgressBar.highValue = maxHealth;
+                healthProgressBar.value = currentHealth;
 
-                var healthBarWidget = healthBarData.healthBarWidget;
+                var healthRatio = (float)currentHealth / maxHealth;
+                var progressBarBackground = healthBarData.HealthProgressBarProgress;
+                var healthColor = healthRatio <= 0.5
+                    ? Color.Lerp(_lowHealthColor, _midHealthColor, healthRatio * 2)
+                    : Color.Lerp(_midHealthColor, _fullHealthColor, (healthRatio - 0.5f) * 2);
+                progressBarBackground.style.backgroundColor = healthColor;
+
+                var healthBarWidget = healthBarData.HealthBarWidget;
+                const int screenLeft = 0;
+                var screenRight = Screen.width;
+                const int screenTop = 0;
+                var screenBottom = Screen.height;
+
+                if (position.x < screenLeft || position.x > screenRight)
+                {
+                    healthBarWidget.style.display = DisplayStyle.None;
+                }
+                else if (position.y < screenTop || position.y > screenBottom)
+                {
+                    healthBarWidget.style.display = DisplayStyle.None;
+                }
+                else
+                {
+                    healthBarWidget.style.display = DisplayStyle.Flex;
+                }
+
                 healthBarWidget.style.left = position.x;
                 healthBarWidget.style.top = position.y;
             }
@@ -68,7 +104,7 @@ namespace UI.DisplayManagers.HUD
         {
             if (_healthBars.TryGetValue(healthBarId, out var healthBarData))
             {
-                _parent.Remove(healthBarData.healthBarWidget);
+                _parent.Remove(healthBarData.HealthBarWidget);
                 _healthBars.Remove(healthBarId);
             }
         }
@@ -93,8 +129,9 @@ namespace UI.DisplayManagers.HUD
 
         private struct HealthBarData
         {
-            public VisualElement healthBarWidget;
-            public Label healthBarLabel;
+            public VisualElement HealthBarWidget;
+            public ProgressBar HealthProgressBar;
+            public VisualElement HealthProgressBarProgress;
         }
 
         #endregion Structs

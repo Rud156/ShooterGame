@@ -516,7 +516,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  _displayToHUD: 0
   _autoHealWhen: 0
   _autoHealTickRate: 0
   _autoHealPerTickAmount: 0
@@ -624,6 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1648539f7dd4dc59c50aa9d13f597d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthBarOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &281278230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -635,6 +635,10 @@ PrefabInstance:
     - target: {fileID: 1205494302726118, guid: b4e219626d450cf42b4242a26dcff257, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Pylon_01 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205494302726118, guid: b4e219626d450cf42b4242a26dcff257, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1205494302726118, guid: b4e219626d450cf42b4242a26dcff257, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -721,7 +725,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 10000
-  _displayToHUD: 0
   _autoHealWhen: 0
   _autoHealTickRate: 0
   _autoHealPerTickAmount: 0
@@ -764,6 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1648539f7dd4dc59c50aa9d13f597d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthBarOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &372652144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,6 +1327,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBarPrefab: {fileID: 9197481963319205126, guid: cecdd81517ff65848ade0567ec9aed53,
     type: 3}
+  _lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  _midHealthColor: {r: 1, g: 1, b: 0, a: 1}
+  _fullHealthColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &989368882
 GameObject:
   m_ObjectHideFlags: 0

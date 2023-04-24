@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using EditorCools;
-using UI.DisplayManagers.Player;
 using UnityEngine;
 
 #endregion
@@ -14,7 +13,6 @@ namespace HealthSystem
     {
         [Header("Health Data")]
         [SerializeField] private int _maxHealth;
-        [SerializeField] private bool _displayToHUD;
 
         [Header("Auto Heal Data")]
         [SerializeField] private AutoHealWhen _autoHealWhen;
@@ -73,7 +71,7 @@ namespace HealthSystem
             _currentHealth = _maxHealth;
 
             SetAutoHealState(_autoHealWhen);
-            NotifyHealthChangeAndHUD(_currentHealth);
+            NotifyHealthChange(_currentHealth);
         }
 
         private void Update()
@@ -126,7 +124,7 @@ namespace HealthSystem
             SetDecayState(DecayState.DecayCountdown);
 
             OnHealthDecayed?.Invoke(_currentHealthPreDecay, _currentHealth, decayDuration);
-            NotifyHealthChangeAndHUD(_currentHealthPreDecay);
+            NotifyHealthChange(_currentHealthPreDecay);
         }
 
         private void UpdateHealthDecay()
@@ -157,7 +155,7 @@ namespace HealthSystem
                             _currentHealth += healthGainedAmount;
                             _decayClearAmountCurrentFrame -= healthGainedAmount;
 
-                            NotifyHealthChangeAndHUD(startHealth);
+                            NotifyHealthChange(startHealth);
                         }
                     }
                     else
@@ -233,7 +231,7 @@ namespace HealthSystem
             }
 
             OnDamageTaken?.Invoke(modifiedDamageAmount, startHealth, _currentHealth);
-            NotifyHealthChangeAndHUD(startHealth);
+            NotifyHealthChange(startHealth);
         }
 
         public void TakeHeal(int healAmount)
@@ -249,7 +247,7 @@ namespace HealthSystem
             _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
             OnHealed?.Invoke(modifiedHealAmount, startHealth, _currentHealth);
-            NotifyHealthChangeAndHUD(startHealth);
+            NotifyHealthChange(startHealth);
         }
 
         public void AddHealModifier(HealModifier healModifier, string id)
@@ -290,14 +288,7 @@ namespace HealthSystem
 
         #region Utils
 
-        private void NotifyHealthChangeAndHUD(int startHealth)
-        {
-            OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
-            if (_displayToHUD)
-            {
-                HUD_PlayerHealthDisplay.Instance.DisplayHealthChanged(_currentHealth, _maxHealth);
-            }
-        }
+        private void NotifyHealthChange(int startHealth) => OnHealthChanged?.Invoke(startHealth, _currentHealth, _maxHealth);
 
         private int GetHealModifierIndex(string id)
         {

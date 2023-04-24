@@ -1245,6 +1245,7 @@ GameObject:
   - component: {fileID: 6406710316826357844}
   - component: {fileID: 1252368709468985573}
   - component: {fileID: 2669688019543946796}
+  - component: {fileID: 4412031399196160647}
   m_Layer: 6
   m_Name: Spark
   m_TagString: Player
@@ -1447,7 +1448,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  _displayToHUD: 1
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
@@ -1457,6 +1457,18 @@ MonoBehaviour:
   _debugHealAmount: 30
   _debugDecayAmount: 70
   _debugDecayDuration: 3
+--- !u!114 &4412031399196160647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252368709468985580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f802d70c69ec436fa61bb1e4d1120df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1264870413198541307
 GameObject:
   m_ObjectHideFlags: 0

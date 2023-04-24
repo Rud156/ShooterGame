@@ -1339,6 +1339,7 @@ GameObject:
   - component: {fileID: 1568775567157980309}
   - component: {fileID: 1504131108388283775}
   - component: {fileID: 5502045882867128996}
+  - component: {fileID: 510275916920260935}
   m_Layer: 6
   m_Name: Rocket
   m_TagString: Player
@@ -1540,7 +1541,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  _displayToHUD: 1
   _autoHealWhen: 0
   _autoHealTickRate: 0.75
   _autoHealPerTickAmount: 1
@@ -1550,6 +1550,18 @@ MonoBehaviour:
   _debugHealAmount: 30
   _debugDecayAmount: 70
   _debugDecayDuration: 3
+--- !u!114 &510275916920260935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504131108388283766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f802d70c69ec436fa61bb1e4d1120df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1504131108692597976
 GameObject:
   m_ObjectHideFlags: 0

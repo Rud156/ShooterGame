@@ -11,6 +11,10 @@ namespace UI.Controllers
     [RequireComponent(typeof(HealthAndDamage))]
     public class WorldHealthBarDisplayController : MonoBehaviour
     {
+        [Header("World Display")]
+        [SerializeField] private Vector3 _healthBarOffset;
+
+        private Camera _mainCamera;
         private HealthAndDamage _healthAndDamage;
         private int _healthBarId;
 
@@ -18,30 +22,32 @@ namespace UI.Controllers
 
         private void Start()
         {
+            _mainCamera = Camera.main;
             _healthAndDamage = GetComponent<HealthAndDamage>();
 
-            var position = Vector2.zero;
+            var screenPoint = _mainCamera.WorldToScreenPoint(transform.position + _healthBarOffset);
+            var mappedPoint = new Vector2(screenPoint.x, Screen.height - screenPoint.y);
             var currentHealth = _healthAndDamage.CurrentHealth;
             var maxHealth = _healthAndDamage.MaxHealth;
 
-            _healthBarId = HUD_WorldHealthBarDisplay.Instance.CreateHealthBar(position, currentHealth, maxHealth);
-            _healthAndDamage.OnHealthChanged += HandleHealthChanged;
+            _healthBarId = HUD_WorldHealthBarDisplay.Instance.CreateHealthBar(mappedPoint, currentHealth, maxHealth);
         }
 
-        private void OnDestroy()
-        {
-            HUD_WorldHealthBarDisplay.Instance.DestroyHealthBar(_healthBarId);
-            _healthAndDamage.OnHealthChanged -= HandleHealthChanged;
-        }
+        private void OnDestroy() => HUD_WorldHealthBarDisplay.Instance.DestroyHealthBar(_healthBarId);
+
+        private void Update() => UpdateWorldHealthBar();
 
         #endregion Unity Functions
 
         #region Utils
 
-        private void HandleHealthChanged(int startHealth, int currentHealth, int maxHealth)
+        private void UpdateWorldHealthBar()
         {
-            var position = Vector2.zero;
-            HUD_WorldHealthBarDisplay.Instance.UpdateHealthBar(_healthBarId, position, currentHealth, maxHealth);
+            var screenPoint = _mainCamera.WorldToScreenPoint(transform.position + _healthBarOffset);
+            var mappedPoint = new Vector2(screenPoint.x, Screen.height - screenPoint.y);
+            var currentHealth = _healthAndDamage.CurrentHealth;
+            var maxHealth = _healthAndDamage.MaxHealth;
+            HUD_WorldHealthBarDisplay.Instance.UpdateHealthBar(_healthBarId, mappedPoint, currentHealth, maxHealth);
         }
 
         #endregion Utils
