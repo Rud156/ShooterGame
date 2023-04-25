@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 4110412891374248875}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9017421003013663971
 GameObject:
@@ -254,8 +254,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.39215687, g: 0, b: 1, a: 1}
-      maxColor: {r: 1, g: 0, b: 1, a: 1}
+      minColor: {r: 0.9098039, g: 0.3372549, b: 0.5372549, a: 1}
+      maxColor: {r: 0.47843137, g: 0.1254902, b: 0.2901961, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
