@@ -210,11 +210,6 @@ namespace Player.Base
                         _playerActiveInputsModifiers[i] = movementModifier;
                     }
                 }
-                else if (_playerActiveInputsModifiers[i].ModifierType == PlayerInputModifierType.ConstantSpeedFall && IsGrounded)
-                {
-                    RemoveInputModifierEffects(_playerActiveInputsModifiers[i]);
-                    _playerActiveInputsModifiers.RemoveAt(i);
-                }
             }
         }
 
@@ -571,6 +566,11 @@ namespace Player.Base
             if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling && _playerStateStack[^1] != PlayerState.CustomMovement)
             {
                 PushPlayerState(PlayerState.Falling);
+            }
+
+            if (isGrounded)
+            {
+                CheckAndRemovePlayerAndInputsModifier(ConstantSpeedFallHoldIdentifier);
             }
 
             IsGrounded = isGrounded;

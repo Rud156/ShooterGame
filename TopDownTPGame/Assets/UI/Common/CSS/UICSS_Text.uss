@@ -1,11 +1,21 @@
 .default_font {
-    -unity-font: url("project://database/Assets/Fonts/Satoshi/Satoshi-Medium.otf");
+    -unity-font: url('project://database/Assets/Fonts/Satoshi/Satoshi-Medium.otf?fileID=12800000&guid=1f9f774862d01ad4f9e7a85afd6dbab2&type=3#Satoshi-Medium');
+    margin: 0;
+    padding: 0;
+}
+
+.bold-font {
+    -unity-font: url('project://database/Assets/Fonts/Satoshi/Satoshi-Bold.otf?fileID=12800000&guid=7812b90be9488e949a6f23bd8fd5bcb7&type=3#Satoshi-Bold');
     margin: 0;
     padding: 0;
 }
 
 .default_text_visibility {
-    text-shadow: 2px 2px 2px #050505;
+    text-shadow: 2px 2px 2px rgb(5, 5, 5);
+}
+
+.text-bold {
+    -unity-font-style: bold;
 }
 
 .very_small_text {
