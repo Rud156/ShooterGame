@@ -1,7 +1,9 @@
 #region
 
+using System;
 using HealthSystem;
 using Player.Common;
+using Player.Type_4;
 using UnityEngine;
 
 #endregion
@@ -9,7 +11,7 @@ using UnityEngine;
 namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class PlasmaBomb : MonoBehaviour
+    public class PlasmaPulse : MonoBehaviour
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _destroyEffectPrefab;
@@ -30,6 +32,8 @@ namespace Ability_Scripts.Projectiles
 
         private float _destroyTimeLeft;
 
+        private Action<Collider, Type_4_Primary_PlasmaBomb.PlasmaBombType> _callbackFunc;
+
         #region Unity Functions
 
         private void Start()
@@ -48,6 +52,12 @@ namespace Ability_Scripts.Projectiles
         }
 
         #endregion Unity Functions
+
+        #region External Functions
+
+        public void SetCollisionCallback(Action<Collider, Type_4_Primary_PlasmaBomb.PlasmaBombType> callback) => _callbackFunc = callback;
+
+        #endregion External Functions
 
         #region Utils
 
@@ -69,6 +79,7 @@ namespace Ability_Scripts.Projectiles
                 if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
                 {
                     healthAndDamage.TakeDamage(_damageAmount);
+                    _callbackFunc?.Invoke(_hitColliders[i], Type_4_Primary_PlasmaBomb.PlasmaBombType.PlasmaPulse);
                 }
             }
 

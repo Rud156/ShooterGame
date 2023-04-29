@@ -1,5 +1,6 @@
 #region
 
+using System;
 using Ability_Scripts.Projectiles;
 using CustomCamera;
 using Player.Base;
@@ -28,7 +29,8 @@ namespace Player.Type_4
         [SerializeField] private CameraShaker _cameraShaker;
 
         [Header("Ultimate Charge Data")]
-        [SerializeField] private int _ultimateChargeAmount;
+        [SerializeField] private int _plasmaBombLineUltimateChargeAmount;
+        [SerializeField] private int _plasmaPulseUltimateChargeAmount;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -56,9 +58,9 @@ namespace Player.Type_4
 
                 var projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
                 var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
+                plasmaBomb.SetCollisionCallback(HandlePlasmaBombCollision);
+                plasmaBomb.SetParentSpawner(this);
                 plasmaBomb.LaunchProjectile(direction);
-
-                // TODO: Complete this function...
 
                 _droneController.KnockbackDrone(PlayerStaticData.Type_4_PrimaryDroneKnockbackMultiplier);
                 CustomCameraController.Instance.StartShake(_cameraShaker);
@@ -77,5 +79,38 @@ namespace Player.Type_4
         public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
 
         #endregion Ability Functions
+
+        #region External Functions
+
+        public void AddCallbackFunctionToPlasmaPulse(PlasmaPulse plasmaPulse) => plasmaPulse.SetCollisionCallback(HandlePlasmaBombCollision);
+
+        private void HandlePlasmaBombCollision(Collider other, PlasmaBombType plasmaBombType)
+        {
+            switch (plasmaBombType)
+            {
+                case PlasmaBombType.PlasmaBomLine:
+                    _type4Ultimate.AddUltimateCharge(_plasmaBombLineUltimateChargeAmount);
+                    break;
+
+                case PlasmaBombType.PlasmaPulse:
+                    _type4Ultimate.AddUltimateCharge(_plasmaPulseUltimateChargeAmount);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(plasmaBombType), plasmaBombType, null);
+            }
+        }
+
+        #endregion External Functions
+
+        #region Enums
+
+        public enum PlasmaBombType
+        {
+            PlasmaBomLine,
+            PlasmaPulse,
+        }
+
+        #endregion Enums
     }
 }

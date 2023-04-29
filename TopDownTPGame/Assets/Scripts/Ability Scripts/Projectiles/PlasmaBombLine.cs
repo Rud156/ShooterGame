@@ -1,6 +1,8 @@
 #region
 
+using System;
 using HealthSystem;
+using Player.Type_4;
 using UnityEngine;
 
 #endregion
@@ -28,6 +30,9 @@ namespace Ability_Scripts.Projectiles
         private float _destroyTimeLeft;
         private float _nextBombDropTime;
 
+        private Type_4_Primary_PlasmaBomb _parentSpawner;
+        private Action<Collider, Type_4_Primary_PlasmaBomb.PlasmaBombType> _callbackFunc;
+
         #region Unity Functions
 
         private void Start() => Init();
@@ -44,7 +49,10 @@ namespace Ability_Scripts.Projectiles
 
             if (Time.time >= _nextBombDropTime)
             {
-                Instantiate(_plasmaPulsePrefab, transform.position, Quaternion.identity);
+                var plasmaPulseObject = Instantiate(_plasmaPulsePrefab, transform.position, Quaternion.identity);
+                var plasmaPulse = plasmaPulseObject.GetComponent<PlasmaPulse>();
+                _parentSpawner.AddCallbackFunctionToPlasmaPulse(plasmaPulse);
+
                 _nextBombDropTime = Time.time + _pulseDropRate;
             }
         }
@@ -76,8 +84,13 @@ namespace Ability_Scripts.Projectiles
             if (other.TryGetComponent(out HealthAndDamage healthAndDamage))
             {
                 healthAndDamage.TakeDamage(_damageAmount);
+                _callbackFunc?.Invoke(other, Type_4_Primary_PlasmaBomb.PlasmaBombType.PlasmaBomLine);
             }
         }
+
+        public void SetCollisionCallback(Action<Collider, Type_4_Primary_PlasmaBomb.PlasmaBombType> callback) => _callbackFunc = callback;
+
+        public void SetParentSpawner(Type_4_Primary_PlasmaBomb parentSpawner) => _parentSpawner = parentSpawner;
 
         #endregion External Functions
 

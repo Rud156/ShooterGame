@@ -22,6 +22,7 @@ namespace Player.Type_4
         [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_4_DroneController _droneController;
+        [SerializeField] private Type_4_Ultimate_Rocket _type4Ultimate;
 
         [Header("Spawn Data")]
         [SerializeField] private float _windUpTime;
@@ -30,6 +31,9 @@ namespace Player.Type_4
 
         [Header("Camera Data")]
         [SerializeField] private CameraShaker _cameraShaker;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _ultimateChargeAmount;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -61,6 +65,7 @@ namespace Player.Type_4
 
                 homingTarget.SetTarget(_validTarget);
                 simpleDamageTrigger.SetParent(_parent);
+                simpleDamageTrigger.SetCollisionCallback(HandleHomingMissileCollided);
 
                 _abilityEnd = true;
                 _currentCooldownDuration = _cooldownDuration;
@@ -96,6 +101,12 @@ namespace Player.Type_4
         }
 
         #endregion Unity Functions
+
+        #region External Functions
+
+        private void HandleHomingMissileCollided(Collider other) => _type4Ultimate.AddUltimateCharge(_ultimateChargeAmount);
+
+        #endregion External Functions
 
         #region Utils
 

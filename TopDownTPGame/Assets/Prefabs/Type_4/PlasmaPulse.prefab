@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: -8407849478509963863}
   - component: {fileID: 7004124681472690160}
   m_Layer: 7
-  m_Name: PlasmaBomb
+  m_Name: PlasmaPulse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
