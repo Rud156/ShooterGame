@@ -1,5 +1,6 @@
 #region
 
+using System;
 using Ability_Scripts.Projectiles;
 using CustomCamera;
 using Player.Base;
@@ -18,10 +19,15 @@ namespace Player.Type_5
 
         [Header("Components")]
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Type_5_Ultimate_ShieldAbility _type5Ultimate;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Camera Data")]
         [SerializeField] private CameraShaker _cameraShaker;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _primaryUltimateChargeAmount;
+        [SerializeField] private int _secondaryUltimateChargeAmount;
 
         private bool _abilityEnd;
 
@@ -36,6 +42,8 @@ namespace Player.Type_5
             var stunGrenade = Instantiate(_stunGrenadePrefab, _shootController.GetShootPosition(), Quaternion.identity);
             var projectile = stunGrenade.GetComponent<StunGrenade>();
             projectile.LaunchProjectile(_shootController.GetShootLookDirection());
+            projectile.SetCollisionCallback(HandleStunGrenadeCollision);
+            projectile.SetParentSpawner(this);
 
             _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;
@@ -50,5 +58,38 @@ namespace Player.Type_5
         public override void StartAbility(BasePlayerController playerController) => _abilityEnd = false;
 
         #endregion Ability Functions
+
+        #region External Functions
+
+        public void AddCallbackFunToSecondaryGrenade(StunGrenade stunGrenade) => stunGrenade.SetCollisionCallback(HandleStunGrenadeCollision);
+
+        public void HandleStunGrenadeCollision(Collider other, StunGrenadeType stunGrenadeType)
+        {
+            switch (stunGrenadeType)
+            {
+                case StunGrenadeType.Primary:
+                    _type5Ultimate.AddUltimateCharge(_primaryUltimateChargeAmount);
+                    break;
+
+                case StunGrenadeType.Secondary:
+                    _type5Ultimate.AddUltimateCharge(_secondaryUltimateChargeAmount);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(stunGrenadeType), stunGrenadeType, null);
+            }
+        }
+
+        #endregion External Functions
+
+        #region Enums
+
+        public enum StunGrenadeType
+        {
+            Primary,
+            Secondary
+        }
+
+        #endregion Enums
     }
 }

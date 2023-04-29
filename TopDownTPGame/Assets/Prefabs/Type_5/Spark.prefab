@@ -804,8 +804,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _windUptime: 0.3
-  _ultimateChargeRate: 0.1
+  _ultimateChargePerSec: 0
+  _maxUltimateChargeAmount: 1700
   _cameraShaker: {fileID: 11400000, guid: 325db4dcf003ddf41a78fa4afd488d17, type: 2}
+  _debugIsActive: 0
 --- !u!1 &913904669468239344
 GameObject:
   m_ObjectHideFlags: 0
@@ -6323,6 +6325,7 @@ MonoBehaviour:
     type: 3}
   _parent: {fileID: 1252368709468985580}
   _shootController: {fileID: 5021002024800133882}
+  _type5Ultimate: {fileID: 5302275595620308645}
   _spawnMaxDistance: 20
   _maxTurretsCanSpawn: 3
   _minYNormalThreshold: 0.7
@@ -6330,6 +6333,7 @@ MonoBehaviour:
   _turretDeployCheckMask:
     serializedVersion: 2
     m_Bits: 1
+  _ultimateChargeDataPerSec: 1
   _debugIsActive: 0
   _debugDisplayDuration: 0.1
 --- !u!1 &5859682739866585888
@@ -7871,8 +7875,11 @@ MonoBehaviour:
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
   _shootController: {fileID: 5021002024800133882}
+  _type5Ultimate: {fileID: 5302275595620308645}
   _playerAnimator: {fileID: 9109486599992866581}
   _cameraShaker: {fileID: 11400000, guid: f2cbeae7a4294524689dfa57836ddd2f, type: 2}
+  _primaryUltimateChargeAmount: 50
+  _secondaryUltimateChargeAmount: 35
 --- !u!1 &6945665330080807566
 GameObject:
   m_ObjectHideFlags: 0

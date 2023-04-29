@@ -1,5 +1,6 @@
 #region
 
+using System;
 using CustomCamera;
 using HealthSystem;
 using Player.Base;
@@ -46,6 +47,9 @@ namespace Ability_Scripts.Projectiles
         private bool _isInitialized;
         private float _destroyTimeLeft;
 
+        private Type_5_Secondary_StunGrenade _parentSpawner;
+        private Action<Collider, Type_5_Secondary_StunGrenade.StunGrenadeType> _callbackFunc;
+
         #region Unity Functions
 
         private void Start() => Init();
@@ -72,6 +76,10 @@ namespace Ability_Scripts.Projectiles
             _destroyTimeLeft = _projectileDestroyTime;
         }
 
+        public void SetCollisionCallback(Action<Collider, Type_5_Secondary_StunGrenade.StunGrenadeType> callback) => _callbackFunc = callback;
+
+        public void SetParentSpawner(Type_5_Secondary_StunGrenade parentSpawner) => _parentSpawner = parentSpawner;
+
         public void ProjectileDestroy()
         {
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, _hitColliders, _stunMask);
@@ -94,6 +102,7 @@ namespace Ability_Scripts.Projectiles
                 if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
                 {
                     healthAndDamage.TakeDamage(_damageAmount);
+                    _callbackFunc?.Invoke(_hitColliders[i], Type_5_Secondary_StunGrenade.StunGrenadeType.Primary);
                 }
             }
 
@@ -107,6 +116,11 @@ namespace Ability_Scripts.Projectiles
                     var secondaryProjectile = Instantiate(_secondaryGrenadePrefab, transform.position, Quaternion.Euler(0, startAngle, 0));
                     var stunGrenade = secondaryProjectile.GetComponent<StunGrenade>();
                     var forward = secondaryProjectile.transform.forward;
+
+                    if (_parentSpawner != null)
+                    {
+                        _parentSpawner.AddCallbackFunToSecondaryGrenade(stunGrenade);
+                    }
 
                     stunGrenade.LaunchProjectile(forward);
                     startAngle += angleDifference;

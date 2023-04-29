@@ -63,6 +63,7 @@ namespace Ability_Scripts.Spawns
         private Transform _currentTarget;
         private HealthAndDamage _targetHealthAndDamage;
 
+        private Action _callbackFunc;
 
         #region Unity Functions
 
@@ -113,6 +114,8 @@ namespace Ability_Scripts.Spawns
         #region External Functions
 
         public void SetOwnerInstanceId(int ownerId) => _ownerId = ownerId;
+
+        public void SetDamageCallback(Action callback) => _callbackFunc = callback;
 
         public void ActivateTurret()
         {
@@ -284,6 +287,7 @@ namespace Ability_Scripts.Spawns
             if (_floatData1 <= 0)
             {
                 _targetHealthAndDamage.TakeDamage(_damagePerSec);
+                _callbackFunc?.Invoke();
                 _floatData1 = OneSecond;
             }
 

@@ -21,6 +21,7 @@ namespace Player.Type_5
         [Header("Components")]
         [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Type_5_Ultimate_ShieldAbility _type5Ultimate;
 
         [Header("Spawn Data")]
         [SerializeField] private float _spawnMaxDistance;
@@ -28,6 +29,9 @@ namespace Player.Type_5
         [SerializeField] private float _minYNormalThreshold;
         [SerializeField] private Vector3 _spawnOffset;
         [SerializeField] private LayerMask _turretDeployCheckMask;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _ultimateChargeDataPerSec;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -145,6 +149,7 @@ namespace Player.Type_5
                         var turretController = _turretObject.GetComponent<Type_5_TurretController>();
                         turretController.ActivateTurret();
                         turretController.SetOwnerInstanceId(_parent.GetInstanceID());
+                        turretController.SetDamageCallback(HandleTurretDamaged);
 
                         _turretObject.transform.SetParent(hitInfo.transform);
                         _spawnedTurretControllers.Add(turretController);
@@ -179,6 +184,8 @@ namespace Player.Type_5
         }
 
         #endregion Turret State Updates
+
+        private void HandleTurretDamaged() => _type5Ultimate.AddUltimateCharge(_ultimateChargeDataPerSec);
 
         private bool IsNormalInAcceptedRange(float currentYNormal) => currentYNormal >= _minYNormalThreshold && currentYNormal <= 1;
 
