@@ -25,7 +25,9 @@ namespace Player.Type_2
         [Header("Components")]
         [SerializeField] private GameObject _parent;
         [SerializeField] private GameObject _rightHandSword;
+        [SerializeField] private SimpleDamageTrigger _swordDamageTrigger;
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Type_2_Ultimate_WaterBubbleFrozenAbility _type2Ultimate;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Anim Data")]
@@ -41,6 +43,10 @@ namespace Player.Type_2
         [SerializeField] private float _overheatTime;
         [SerializeField] private float _overheatAmountPerShot;
         [SerializeField] private float _overheatCooldownMultiplier;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _swordChargeUltimateCharge;
+        [SerializeField] private int _frontOrbUltimateCharge;
 
         private WaterControlState _waterControlState;
         private bool _abilityEnd;
@@ -123,6 +129,8 @@ namespace Player.Type_2
         {
             base.UnityStartDelegate(playerController);
             SetState(WaterControlState.LeftSlash);
+
+            _swordDamageTrigger.SetCollisionCallback(HandleSwordCollisionCallback);
         }
 
         public override void UnityFixedUpdateDelegate(BasePlayerController playerController)
@@ -176,6 +184,7 @@ namespace Player.Type_2
             var simpleDamageTrigger = frontSlashObject.GetComponent<SimpleDamageTrigger>();
 
             simpleProj.LaunchProjectile(direction);
+            simpleDamageTrigger.SetCollisionCallback(HandleProjectileHitCollider);
             simpleDamageTrigger.SetParent(_parent);
 
             IncrementCurrentState();
@@ -184,6 +193,14 @@ namespace Player.Type_2
         }
 
         #endregion Ability Updates
+
+        #region External Functions
+
+        private void HandleSwordCollisionCallback(Collider other) => _type2Ultimate.AddUltimateCharge(_swordChargeUltimateCharge);
+
+        private void HandleProjectileHitCollider(Collider other) => _type2Ultimate.AddUltimateCharge(_frontOrbUltimateCharge);
+
+        #endregion External Functions
 
         #region State Control
 
