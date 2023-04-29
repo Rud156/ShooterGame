@@ -119,7 +119,7 @@ namespace Ability_Scripts.Projectiles
 
                     if (_parentSpawner != null)
                     {
-                        _parentSpawner.AddCallbackFunToSecondaryGrenade(stunGrenade);
+                        _parentSpawner.AddCallbackFunctionToSecondaryGrenade(stunGrenade);
                     }
 
                     stunGrenade.LaunchProjectile(forward);

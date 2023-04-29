@@ -41,9 +41,9 @@ namespace Player.Type_5
         {
             var stunGrenade = Instantiate(_stunGrenadePrefab, _shootController.GetShootPosition(), Quaternion.identity);
             var projectile = stunGrenade.GetComponent<StunGrenade>();
-            projectile.LaunchProjectile(_shootController.GetShootLookDirection());
             projectile.SetCollisionCallback(HandleStunGrenadeCollision);
             projectile.SetParentSpawner(this);
+            projectile.LaunchProjectile(_shootController.GetShootLookDirection());
 
             _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;
@@ -61,9 +61,9 @@ namespace Player.Type_5
 
         #region External Functions
 
-        public void AddCallbackFunToSecondaryGrenade(StunGrenade stunGrenade) => stunGrenade.SetCollisionCallback(HandleStunGrenadeCollision);
+        public void AddCallbackFunctionToSecondaryGrenade(StunGrenade stunGrenade) => stunGrenade.SetCollisionCallback(HandleStunGrenadeCollision);
 
-        public void HandleStunGrenadeCollision(Collider other, StunGrenadeType stunGrenadeType)
+        private void HandleStunGrenadeCollision(Collider other, StunGrenadeType stunGrenadeType)
         {
             switch (stunGrenadeType)
             {
