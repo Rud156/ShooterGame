@@ -1,6 +1,7 @@
 #region
 
 using System.Collections.Generic;
+using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
@@ -16,6 +17,8 @@ namespace Player.Type_3
     {
         [Header("Components")]
         [SerializeField] private GameObject _slashSword;
+        [SerializeField] private SimpleDamageTrigger _swordDamageTrigger;
+        [SerializeField] private Type_3_Ultimate_DarkPulseParanoiaAbility _type3Ultimate;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Anim Data")]
@@ -25,6 +28,9 @@ namespace Player.Type_3
 
         [Header("Slash Data")]
         [SerializeField] private float _slashDuration;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _ultimateChargeAmount;
 
         private float _currentTime;
         private bool _abilityEnd;
@@ -70,5 +76,21 @@ namespace Player.Type_3
         }
 
         #endregion Ability Functions
+
+        #region Unity Functions
+
+        public override void UnityStartDelegate(BasePlayerController playerController)
+        {
+            base.UnityStartDelegate(playerController);
+            _swordDamageTrigger.SetCollisionCallback(HandleSwordCollisionCallback);
+        }
+
+        #endregion Unity Functions
+
+        #region External Functions
+
+        private void HandleSwordCollisionCallback(Collider other) => _type3Ultimate.AddUltimateCharge(_ultimateChargeAmount);
+
+        #endregion External Functions
     }
 }

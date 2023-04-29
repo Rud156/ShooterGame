@@ -1399,7 +1399,7 @@ Transform:
   - {fileID: 660414317381231213}
   - {fileID: 3729988723055359378}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1683011238459484371
 CharacterController:
@@ -1817,6 +1817,7 @@ MonoBehaviour:
     type: 3}
   _raycastPointsPrefab: {fileID: 7820997016974016892, guid: 5a5843dcc06f83f48a78d4f7905660e0,
     type: 3}
+  _type3Ultimate: {fileID: 4947250994315406716}
   _playerAnimator: {fileID: 2003848228306025429}
   _animMinIndex: 1
   _animMaxIndex: 3
@@ -1829,6 +1830,7 @@ MonoBehaviour:
   _overheatTime: 7
   _overheatCooldownMultiplier: 0.75
   _cameraShaker: {fileID: 11400000, guid: 04d5a09676b620343b5c11a5fcc51aec, type: 2}
+  _ultimateChargeAmount: 30
   _debugIsActive: 0
   _debugDisplayDuration: 0.1
 --- !u!1 &2168690003061204118
@@ -5654,7 +5656,9 @@ MonoBehaviour:
   _playerAnimator: {fileID: 2003848228306025429}
   _parent: {fileID: 1683011238459484380}
   _windUpTime: 0.25
-  _ultimateChargeRate: 0.1
+  _ultimateChargePerSec: 5
+  _maxUltimateChargeAmount: 1450
+  _debugIsActive: 1
 --- !u!1 &8015724341772771277
 GameObject:
   m_ObjectHideFlags: 0
@@ -6123,6 +6127,8 @@ MonoBehaviour:
   _allowedActiveAbilities: 150000001600000018000000
   _cooldownDuration: 0.5
   _slashSword: {fileID: 3231960826966510338}
+  _swordDamageTrigger: {fileID: 7520291056482411842}
+  _type3Ultimate: {fileID: 4947250994315406716}
   _playerAnimator: {fileID: 2003848228306025429}
   _animMinIndex: 1
   _animMaxIndex: 5
@@ -6138,6 +6144,7 @@ MonoBehaviour:
   - Position: {x: 0.0056, y: 0.0007, z: 0.0017}
     Rotation: {x: 75.664116, y: 4.3987637, z: 89.70326}
   _slashDuration: 0.25
+  _ultimateChargeAmount: 30
 --- !u!1 &8931156106442044601
 GameObject:
   m_ObjectHideFlags: 0
@@ -6410,3 +6417,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4949523141628798945}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7520291056482411842 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3237329254265012899, guid: 81400e1d15edc804d83bea079ebf5d6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4949523141628798945}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3231960826966510338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4a0c7605393644dae5f26a4128a7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

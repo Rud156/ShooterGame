@@ -22,6 +22,7 @@ namespace Player.Type_3
         [SerializeField] private GameObject _raycastPointsPrefab;
 
         [Header("Components")]
+        [SerializeField] private Type_3_Ultimate_DarkPulseParanoiaAbility _type3Ultimate;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Shoot Data")]
@@ -38,6 +39,9 @@ namespace Player.Type_3
 
         [Header("Camera Data")]
         [SerializeField] private CameraShaker _cameraShaker;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _ultimateChargeAmount;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -76,6 +80,7 @@ namespace Player.Type_3
                 }
 
                 _validHitTarget.TakeDamage(_damageAmount);
+                _type3Ultimate.AddUltimateCharge(_ultimateChargeAmount);
                 Instantiate(_damageEffectPrefab, _hitPoint, Quaternion.identity);
 
                 _playerAnimator.SetInteger(PlayerStaticData.Type_3_Primary, Random.Range(_animMinIndex, _animMaxIndex + 1));

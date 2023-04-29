@@ -49,7 +49,7 @@ namespace Player.Type_2
         #region Ability Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) =>
-            base.AbilityCanStart(playerController) && _currentUltimateAmount >= PlayerStaticData.MaxUltimateDisplayLimit;
+            base.AbilityCanStart(playerController) && _currentUltimateAmount >= _maxUltimateChargeAmount;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 

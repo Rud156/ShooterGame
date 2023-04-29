@@ -228,8 +228,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _windUpTime: 0.15
-  _ultimateChargePerSec: 5
-  _maxUltimateChargeAmount: 1500
+  _ultimateChargePerSec: 3
+  _maxUltimateChargeAmount: 750
   _debugIsActive: 1
   _debugDisplayDuration: 0
 --- !u!1 &121732952388288876
