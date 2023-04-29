@@ -1749,6 +1749,7 @@ MonoBehaviour:
     type: 3}
   _holdRunTrailEffectPrefab: {fileID: 4581791113312155467, guid: ed3fa45c44aceef479ace8b50e33ea83,
     type: 3}
+  _type2Ultimate: {fileID: 4734483721622460076}
   _playerAnimator: {fileID: 7451471454665554315}
   _tertiaryMaterial: {fileID: 2100000, guid: 8180121e3ddd8244e912617ce06e35de, type: 2}
   _tertiaryMaterialDatas:
@@ -1785,6 +1786,7 @@ MonoBehaviour:
     m_Bits: 1
   _damageCheckRadius: 3
   _damageAmount: 20
+  _ultimateChargeAmount: 25
 --- !u!1 &4494404238369316440
 GameObject:
   m_ObjectHideFlags: 0

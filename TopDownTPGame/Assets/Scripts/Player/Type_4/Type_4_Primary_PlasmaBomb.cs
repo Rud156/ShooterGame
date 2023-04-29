@@ -19,12 +19,16 @@ namespace Player.Type_4
         [Header("Components")]
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_4_DroneController _droneController;
+        [SerializeField] private Type_4_Ultimate_Rocket _type4Ultimate;
 
         [Header("Plasma Shoot Data")]
         [SerializeField] private float _fireRate;
 
         [Header("Camera Data")]
         [SerializeField] private CameraShaker _cameraShaker;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _ultimateChargeAmount;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -53,6 +57,8 @@ namespace Player.Type_4
                 var projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
                 var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
                 plasmaBomb.LaunchProjectile(direction);
+
+                // TODO: Complete this function...
 
                 _droneController.KnockbackDrone(PlayerStaticData.Type_4_PrimaryDroneKnockbackMultiplier);
                 CustomCameraController.Instance.StartShake(_cameraShaker);

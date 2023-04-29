@@ -26,12 +26,14 @@ namespace Player.Type_1
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
 
-        private float _ultimateChargeTick;
-        private int _currentUltimateAmount;
         private GameObject _warCryObject;
 
         private float _currentWindUpTime;
         private bool _abilityEnd;
+
+        // Ultimate Data
+        private float _ultimateChargeTick;
+        private int _currentUltimateAmount;
 
         #region Ability Functions
 

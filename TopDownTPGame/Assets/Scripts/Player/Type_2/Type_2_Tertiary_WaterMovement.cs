@@ -23,6 +23,7 @@ namespace Player.Type_2
         [SerializeField] private GameObject _holdRunTrailEffectPrefab;
 
         [Header("Components")]
+        [SerializeField] private Type_2_Ultimate_WaterBubbleFrozenAbility _type2Ultimate;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Render Data")]
@@ -44,6 +45,9 @@ namespace Player.Type_2
         [SerializeField] private LayerMask _damageCheckMask;
         [SerializeField] private float _damageCheckRadius;
         [SerializeField] private int _damageAmount;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _ultimateChargeAmount;
 
         private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
@@ -94,6 +98,7 @@ namespace Player.Type_2
             {
                 burstDamageData.BurstDamageMarker.SetDamageAmount(_damageAmount);
                 burstDamageData.BurstDamageMarker.ApplyDamage();
+                _type2Ultimate.AddUltimateCharge(_ultimateChargeAmount);
                 Destroy(burstDamageData.MarkedEffectObject);
                 Destroy(burstDamageData.BurstDamageMarker);
 
