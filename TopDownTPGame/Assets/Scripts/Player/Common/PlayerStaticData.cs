@@ -9,7 +9,7 @@ namespace Player.Common
     public static class PlayerStaticData
     {
         public const int MaxCollidersCheck = 100;
-        public const int MaxUltimatePercent = 100;
+        public const int MaxUltimateDisplayLimit = 100;
 
         // Player Animations (Since these can be used by any character)
         // Type 1

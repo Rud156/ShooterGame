@@ -22,6 +22,7 @@ namespace Player.Type_1
         [Header("Components")]
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_1_Primary_SimpleShoot _type1Primary;
+        [SerializeField] private Type_1_Ultimate_WarCryPulseAbility _type1Ultimate;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Charged Shoot Data")]
@@ -35,6 +36,7 @@ namespace Player.Type_1
         [Header("Animations")]
         [SerializeField] private int _attackAnimCount;
 
+        private int _lastChargeDamageAmount;
         private float _currentWindUpTime;
         private bool _abilityEnd;
 
@@ -60,8 +62,10 @@ namespace Player.Type_1
                 var maxChargeAmount = _type1Primary.GetMaxChargeAmount();
                 var mappedDamage = Mathf.CeilToInt(ExtensionFunctions.Map(chargeAmount, 0, maxChargeAmount, _minChargeDamage, _maxChargeDamage));
                 var simpleDamage = projectile.GetComponent<SimpleDamageOverrideTrigger>();
+                simpleDamage.SetCollisionCallback(HandleProjectileHitCollider);
                 simpleDamage.SetDamageAmount(mappedDamage);
 
+                _lastChargeDamageAmount = mappedDamage;
                 _playerAnimator.SetInteger(PlayerStaticData.Type_1_Secondary, Random.Range(1, _attackAnimCount + 1));
                 _type1Primary.UseStoredCharge(chargeAmount);
                 _abilityEnd = true;
@@ -88,7 +92,6 @@ namespace Player.Type_1
             base.UnityUpdateDelegate(playerController);
 
             var chargeAmount = _type1Primary.GetCurrentChargeAmount();
-            var maxChargeAmount = _type1Primary.GetMaxChargeAmount();
             HUD_PlayerAbilityDisplay.Instance.UpdateCounter(AbilityTrigger.Secondary, $"{chargeAmount}", true);
 
             var overlayPercent = chargeAmount > 0 ? 0 : 1;
@@ -96,5 +99,11 @@ namespace Player.Type_1
         }
 
         #endregion Unity Functions
+
+        #region External Functions
+
+        private void HandleProjectileHitCollider(Collider other) => _type1Ultimate.AddUltimateCharge(_lastChargeDamageAmount);
+
+        #endregion External Functions
     }
 }

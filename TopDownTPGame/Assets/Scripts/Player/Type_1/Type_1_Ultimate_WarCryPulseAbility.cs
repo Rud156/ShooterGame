@@ -20,9 +20,14 @@ namespace Player.Type_1
 
         [Header("Ultimate Data")]
         [SerializeField] private float _windUptime;
-        [SerializeField] private float _ultimateChargeRate;
+        [SerializeField] private int _ultimateChargePerSec;
+        [SerializeField] private int _maxUltimateChargeAmount;
 
-        private float _currentUltimatePercent;
+        [Header("Debug")]
+        [SerializeField] private bool _debugIsActive;
+
+        private float _ultimateChargeTick;
+        private int _currentUltimateAmount;
         private GameObject _warCryObject;
 
         private float _currentWindUpTime;
@@ -31,7 +36,7 @@ namespace Player.Type_1
         #region Ability Functions
 
         public override bool AbilityCanStart(BasePlayerController playerController) =>
-            base.AbilityCanStart(playerController) && _currentUltimatePercent >= PlayerStaticData.MaxUltimatePercent;
+            base.AbilityCanStart(playerController) && _currentUltimateAmount >= _maxUltimateChargeAmount;
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _abilityEnd;
 
@@ -54,7 +59,7 @@ namespace Player.Type_1
         public override void StartAbility(BasePlayerController playerController)
         {
             _currentWindUpTime = _windUptime;
-            _currentUltimatePercent = 0;
+            _currentUltimateAmount = 0;
             _abilityEnd = false;
         }
 
@@ -81,13 +86,15 @@ namespace Player.Type_1
         {
             base.UnityFixedUpdateDelegate(playerController);
 
-            if (_currentUltimatePercent < PlayerStaticData.MaxUltimatePercent)
+            if (_currentUltimateAmount < _maxUltimateChargeAmount)
             {
-                _currentUltimatePercent += WorldTimeManager.Instance.FixedUpdateTime * _ultimateChargeRate;
-                if (_currentUltimatePercent > PlayerStaticData.MaxUltimatePercent)
+                while (_ultimateChargeTick >= 1)
                 {
-                    _currentUltimatePercent = PlayerStaticData.MaxUltimatePercent;
+                    _currentUltimateAmount += _ultimateChargePerSec;
+                    _ultimateChargeTick -= 1;
                 }
+
+                _ultimateChargeTick += WorldTimeManager.Instance.FixedUpdateTime;
             }
         }
 
@@ -97,11 +104,8 @@ namespace Player.Type_1
 
         public void AddUltimateCharge(int amount)
         {
-            _currentUltimatePercent += amount;
-            if (_currentUltimatePercent > PlayerStaticData.MaxUltimatePercent)
-            {
-                _currentUltimatePercent = PlayerStaticData.MaxUltimatePercent;
-            }
+            _currentUltimateAmount += amount;
+            _currentUltimateAmount = Mathf.Clamp(_currentUltimateAmount, 0, _maxUltimateChargeAmount);
         }
 
         #endregion External Functions
@@ -110,10 +114,12 @@ namespace Player.Type_1
 
         private void DisplayUltimateToHUD()
         {
-            HUD_PlayerAbilityDisplay.Instance.UpdateTimer(AbilityTrigger.Ultimate, $"{_currentUltimatePercent:0.0} %", true);
+            var ultimatePercent = (float)_currentUltimateAmount / _maxUltimateChargeAmount * PlayerStaticData.MaxUltimateDisplayLimit;
+            HUD_PlayerAbilityDisplay.Instance.UpdateTimer(AbilityTrigger.Ultimate, $"{ultimatePercent:0.0} %", true);
 
-            var overlayPercent = _currentUltimatePercent >= PlayerStaticData.MaxUltimatePercent ? 0 : 1;
+            var overlayPercent = _currentUltimateAmount >= _maxUltimateChargeAmount ? 0 : 1;
             HUD_PlayerAbilityDisplay.Instance.UpdateOverlay(AbilityTrigger.Ultimate, overlayPercent);
+            HUD_PlayerAbilityDisplay.Instance.UpdateCounter(AbilityTrigger.Ultimate, $"{_currentUltimateAmount}", _debugIsActive);
         }
 
         #endregion Utils

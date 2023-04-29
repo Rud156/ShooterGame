@@ -24,6 +24,7 @@ namespace Player.Type_1
         [Header("Components")]
         [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
+        [SerializeField] private Type_1_Ultimate_WarCryPulseAbility _type1Ultimate;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Simple Shoot Data")]
@@ -39,6 +40,9 @@ namespace Player.Type_1
         [SerializeField] private float _chargeGainedForShootCharacters;
         [SerializeField] private float _chargeDecayDelay;
         [SerializeField] private float _chargeDecayRate;
+
+        [Header("Ultimate Charge Data")]
+        [SerializeField] private int _ultimateChargeAmount;
 
         [Header("Animations")]
         [SerializeField] private int _attackAnimCount;
@@ -73,7 +77,7 @@ namespace Player.Type_1
                 simpleDamageTrigger.SetParent(_parent);
 
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
-                simpleDamage.SetCollisionCallback(ProjectileHitCollider);
+                simpleDamage.SetCollisionCallback(HandleProjectileHitCollider);
 
                 _playerAnimator.SetInteger(PlayerStaticData.Type_1_Primary, Random.Range(1, _attackAnimCount + 1));
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
@@ -133,7 +137,7 @@ namespace Player.Type_1
 
         #region External Functions
 
-        private void ProjectileHitCollider(Collider other)
+        private void HandleProjectileHitCollider(Collider other)
         {
             if (other.CompareTag(TagManager.Player))
             {
@@ -145,6 +149,8 @@ namespace Player.Type_1
                 _currentChargeAmount += _chargeGainedForShootStaticObject;
                 _currentChargeDecay = _chargeDecayDelay;
             }
+
+            _type1Ultimate.AddUltimateCharge(_ultimateChargeAmount);
         }
 
         public int GetCurrentChargeAmount() => Mathf.CeilToInt(_currentChargeAmount);

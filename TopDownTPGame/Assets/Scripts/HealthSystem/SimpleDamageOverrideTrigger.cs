@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using UnityEngine;
 
 #endregion
@@ -9,6 +10,7 @@ namespace HealthSystem
     public class SimpleDamageOverrideTrigger : MonoBehaviour
     {
         private int _damageAmount;
+        private Action<Collider> _callbackFunc;
 
         #region Unity Functions
 
@@ -17,6 +19,7 @@ namespace HealthSystem
             if (other.TryGetComponent(out HealthAndDamage healthAndDamage))
             {
                 healthAndDamage.TakeDamage(_damageAmount);
+                _callbackFunc?.Invoke(other);
             }
         }
 
@@ -25,6 +28,8 @@ namespace HealthSystem
         #region External Functions
 
         public void SetDamageAmount(int damageAmount) => _damageAmount = damageAmount;
+
+        public void SetCollisionCallback(Action<Collider> callback) => _callbackFunc = callback;
 
         #endregion External Functions
     }
