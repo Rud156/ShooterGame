@@ -1,8 +1,6 @@
 ﻿#region
 
-using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 #endregion
 

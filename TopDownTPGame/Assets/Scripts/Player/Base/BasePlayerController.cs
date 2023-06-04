@@ -29,9 +29,6 @@ namespace Player.Base
         [SerializeField] private float _airControlMultiplier;
         [SerializeField] private float _gravityMultiplier;
 
-        [Header("Basic Rotation")]
-        [SerializeField] private float _rotationSpeed;
-
         [Header("Character Position Points")]
         [SerializeField] private Transform _headTransform;
         [SerializeField] private Transform _bodyTransform;
@@ -55,8 +52,6 @@ namespace Player.Base
         // Input
         private Vector2 _coreMoveInput;
         private Vector2 _lastNonZeroCoreInput;
-        private PlayerInputKey _playerKeyboardRotationKey;
-        private PlayerInputKey _playerGamepadRotationKey;
         private PlayerInputKey _runKey;
         private PlayerInputKey _jumpKey;
         private PlayerInputKey _abilityPrimaryKey;
@@ -132,9 +127,10 @@ namespace Player.Base
 
             _coreMoveInput = Vector2.zero;
             _lastNonZeroCoreInput = Vector2.zero;
-            _playerKeyboardRotationKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
-            _playerGamepadRotationKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+
             _runKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _runKey.SetKeyToggle(true);
+
             _jumpKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
             _abilityPrimaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
             _abilitySecondaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
@@ -417,7 +413,7 @@ namespace Player.Base
         {
             _targetStateVelocity = _walkSpeed;
             _currentAccelerationSpeed = _walkAccelerationSpeed;
-            if (_runKey.KeyPressedThisFrame && IsGrounded && _coreMoveInput.y > 0)
+            if (_runKey.KeyPressed && IsGrounded && _coreMoveInput.y > 0)
             {
                 _startStateVelocity = _currentStateVelocity;
                 PushPlayerState(PlayerState.Running);
@@ -433,7 +429,7 @@ namespace Player.Base
         {
             _targetStateVelocity = _runSpeed;
             _currentAccelerationSpeed = _runAccelerationSpeed;
-            if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || _runKey.KeyReleasedThisFrame || !_runKey.KeyPressed)
+            if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || !_runKey.KeyPressed)
             {
                 _startStateVelocity = _currentStateVelocity;
                 PopPlayerState();
@@ -516,27 +512,38 @@ namespace Player.Base
 
         private void UpdatePlayerRotationKeyboard()
         {
-            var yRotation = transform.eulerAngles.y;
-            yRotation += _lastNonZeroCoreInput.x * _rotationSpeed * WorldTimeManager.Instance.FixedUpdateTime;
-            transform.rotation = Quaternion.Euler(0, yRotation, 0);
-
-            if (_playerKeyboardRotationKey.KeyPressed)
+            if (CustomInputManager.Instance.LastUsedDeviceInputType != CustomInputManager.KeyboardMouseGroupString)
             {
-                var mousePosition = CustomInputManager.Instance.PlayerInput.MousePosition.ReadValue<Vector2>();
-                var rayStartPoint = _mainCamera.ScreenPointToRay(mousePosition);
-                if (_terrainCollider.Raycast(rayStartPoint, out var hitInfo, MaxTerrainRaycastDistance))
-                {
-                    var worldMousePosition = hitInfo.point;
-                    var direction = worldMousePosition - transform.position;
-                    transform.rotation = Quaternion.LookRotation(direction);
-                }
+                return;
+            }
+
+            var mousePosition = CustomInputManager.Instance.PlayerInput.MousePosition.ReadValue<Vector2>();
+            var rayStartPoint = _mainCamera.ScreenPointToRay(mousePosition);
+            if (_terrainCollider.Raycast(rayStartPoint, out var hitInfo, MaxTerrainRaycastDistance))
+            {
+                var worldMousePosition = hitInfo.point;
+                var direction = worldMousePosition - transform.position;
+                transform.rotation = Quaternion.LookRotation(direction);
             }
         }
 
         private void UpdatePlayerRotationGamepadRotation()
         {
-            if (_playerGamepadRotationKey.KeyPressed)
+            if (CustomInputManager.Instance.LastUsedDeviceInputType != CustomInputManager.GamepadGroupString)
             {
+                return;
+            }
+
+            var gamepadRotation = CustomInputManager.Instance.PlayerInput.GamepadPreciseRotation.ReadValue<Vector2>();
+            if (gamepadRotation == Vector2.zero)
+            {
+                return;
+            }
+
+            var angle = Mathf.Atan2(gamepadRotation.x, gamepadRotation.y) * Mathf.Rad2Deg;
+            if (angle != 0)
+            {
+                transform.rotation = Quaternion.Euler(0, angle, 0);
             }
         }
 
@@ -874,14 +881,6 @@ namespace Player.Base
             playerInputMaster.Move.performed += HandleKeyboardInput;
             playerInputMaster.Move.canceled += HandleKeyboardInput;
 
-            playerInputMaster.KeyboardPreciseRotation.started += HandleKeyboardPreciseRotationInput;
-            playerInputMaster.KeyboardPreciseRotation.performed += HandleKeyboardPreciseRotationInput;
-            playerInputMaster.KeyboardPreciseRotation.canceled += HandleKeyboardPreciseRotationInput;
-
-            playerInputMaster.GamepadPreciseRotation.started += HandleGamepadPreciseRotationInput;
-            playerInputMaster.GamepadPreciseRotation.performed += HandleGamepadPreciseRotationInput;
-            playerInputMaster.GamepadPreciseRotation.canceled += HandleGamepadPreciseRotationInput;
-
             playerInputMaster.Jump.started += HandlePlayerPressJump;
             playerInputMaster.Jump.performed += HandlePlayerPressJump;
             playerInputMaster.Jump.canceled += HandlePlayerPressJump;
@@ -918,14 +917,6 @@ namespace Player.Base
             playerInputMaster.Move.started -= HandleKeyboardInput;
             playerInputMaster.Move.performed -= HandleKeyboardInput;
             playerInputMaster.Move.canceled -= HandleKeyboardInput;
-
-            playerInputMaster.KeyboardPreciseRotation.started -= HandleKeyboardPreciseRotationInput;
-            playerInputMaster.KeyboardPreciseRotation.performed -= HandleKeyboardPreciseRotationInput;
-            playerInputMaster.KeyboardPreciseRotation.canceled -= HandleKeyboardPreciseRotationInput;
-
-            playerInputMaster.GamepadPreciseRotation.started -= HandleGamepadPreciseRotationInput;
-            playerInputMaster.GamepadPreciseRotation.performed -= HandleGamepadPreciseRotationInput;
-            playerInputMaster.GamepadPreciseRotation.canceled -= HandleGamepadPreciseRotationInput;
 
             playerInputMaster.Jump.started -= HandlePlayerPressJump;
             playerInputMaster.Jump.performed -= HandlePlayerPressJump;
@@ -968,6 +959,14 @@ namespace Player.Base
         private void UpdateKeyboardInput()
         {
             _coreMoveInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+            if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.GamepadGroupString)
+            {
+                var xMovement = Mathf.Abs(_coreMoveInput.x);
+                var yMovement = Mathf.Abs(_coreMoveInput.y);
+                _coreMoveInput.x = 0;
+                _coreMoveInput.y = Mathf.Max(xMovement, yMovement);
+            }
+
             if (!HasNoDirectionalInput())
             {
                 _lastNonZeroCoreInput = _coreMoveInput;
@@ -977,10 +976,6 @@ namespace Player.Base
                 _lastNonZeroCoreInput = _coreMoveInput;
             }
         }
-
-        private void HandleKeyboardPreciseRotationInput(InputAction.CallbackContext context) => _playerKeyboardRotationKey.UpdateInputData(context);
-
-        private void HandleGamepadPreciseRotationInput(InputAction.CallbackContext context) => _playerGamepadRotationKey.UpdateInputData(context);
 
         private void HandlePlayerPressJump(InputAction.CallbackContext context) => _jumpKey.UpdateInputData(context);
 
