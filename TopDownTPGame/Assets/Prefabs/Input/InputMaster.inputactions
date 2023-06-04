@@ -15,6 +15,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "KeyboardPreciseRotation",
+                    "type": "Value",
+                    "id": "7bd92c24-f113-4cd5-bd69-0d84f16ca532",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "GamepadPreciseRotation",
+                    "type": "Value",
+                    "id": "8610bd71-b17e-4ea4-a906-e6878d19f8f4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Look",
                     "type": "Value",
                     "id": "6cd6a360-d4d5-4e6d-9406-22f5ad0c50b1",
@@ -103,6 +121,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "95815242-bb2a-46dd-a708-bd2c11eae83d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -241,7 +268,7 @@
                 {
                     "name": "",
                     "id": "2893ff14-b1fd-4386-81d6-3e439b0c5bef",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -263,7 +290,7 @@
                 {
                     "name": "",
                     "id": "683c5431-3f8d-4a53-87e5-b78eb342a282",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -444,6 +471,39 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Camera Right Shoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db637e0a-ad75-4f15-b3c5-03631e95831a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "KeyboardPreciseRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "679508ab-28a6-4b11-a2a8-f72be2d9c920",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e231f369-7300-4cd6-8120-f9b5e8fe3906",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GamepadPreciseRotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

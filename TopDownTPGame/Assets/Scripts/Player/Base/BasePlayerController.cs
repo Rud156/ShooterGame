@@ -18,6 +18,7 @@ namespace Player.Base
     public class BasePlayerController : MonoBehaviour
     {
         private const string ConstantSpeedFallHoldIdentifier = "ConstantSpeedFallHold";
+        private const float MaxTerrainRaycastDistance = 1000;
 
         [Header("Basic Move")]
         [SerializeField] private float _runSpeed;
@@ -54,6 +55,8 @@ namespace Player.Base
         // Input
         private Vector2 _coreMoveInput;
         private Vector2 _lastNonZeroCoreInput;
+        private PlayerInputKey _playerKeyboardRotationKey;
+        private PlayerInputKey _playerGamepadRotationKey;
         private PlayerInputKey _runKey;
         private PlayerInputKey _jumpKey;
         private PlayerInputKey _abilityPrimaryKey;
@@ -65,6 +68,10 @@ namespace Player.Base
         // Movement/Controller
         private CharacterController _characterController;
         private List<PlayerState> _playerStateStack;
+
+        // Rotation
+        private TerrainCollider _terrainCollider;
+        private Camera _mainCamera;
 
         // This is the Acceleration/Deceleration Target
         // Current Start Velocity will not be directly set but instead slowly increased or decreased
@@ -125,6 +132,8 @@ namespace Player.Base
 
             _coreMoveInput = Vector2.zero;
             _lastNonZeroCoreInput = Vector2.zero;
+            _playerKeyboardRotationKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
+            _playerGamepadRotationKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
             _runKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
             _jumpKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
             _abilityPrimaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
@@ -136,6 +145,9 @@ namespace Player.Base
             _currentStateVelocity = 0;
             _targetStateVelocity = 0;
             _startStateVelocity = 0;
+
+            _mainCamera = Camera.main;
+            _terrainCollider = Terrain.activeTerrain.GetComponent<TerrainCollider>();
             _cinemachineControllerTransform = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController).transform;
 
             foreach (var ability in _playerAbilities)
@@ -384,6 +396,10 @@ namespace Player.Base
             }
 
             UpdateCurrentToTargetVelocity();
+
+            UpdatePlayerRotationKeyboard();
+            UpdatePlayerRotationGamepadRotation();
+
             UpdateCoreMovement();
         }
 
@@ -498,11 +514,30 @@ namespace Player.Base
             }
         }
 
-        private void UpdateCoreRotation()
+        private void UpdatePlayerRotationKeyboard()
         {
             var yRotation = transform.eulerAngles.y;
             yRotation += _lastNonZeroCoreInput.x * _rotationSpeed * WorldTimeManager.Instance.FixedUpdateTime;
             transform.rotation = Quaternion.Euler(0, yRotation, 0);
+
+            if (_playerKeyboardRotationKey.KeyPressed)
+            {
+                var mousePosition = CustomInputManager.Instance.PlayerInput.MousePosition.ReadValue<Vector2>();
+                var rayStartPoint = _mainCamera.ScreenPointToRay(mousePosition);
+                if (_terrainCollider.Raycast(rayStartPoint, out var hitInfo, MaxTerrainRaycastDistance))
+                {
+                    var worldMousePosition = hitInfo.point;
+                    var direction = worldMousePosition - transform.position;
+                    transform.rotation = Quaternion.LookRotation(direction);
+                }
+            }
+        }
+
+        private void UpdatePlayerRotationGamepadRotation()
+        {
+            if (_playerGamepadRotationKey.KeyPressed)
+            {
+            }
         }
 
         private void UpdateCoreMovement()
@@ -839,6 +874,14 @@ namespace Player.Base
             playerInputMaster.Move.performed += HandleKeyboardInput;
             playerInputMaster.Move.canceled += HandleKeyboardInput;
 
+            playerInputMaster.KeyboardPreciseRotation.started += HandleKeyboardPreciseRotationInput;
+            playerInputMaster.KeyboardPreciseRotation.performed += HandleKeyboardPreciseRotationInput;
+            playerInputMaster.KeyboardPreciseRotation.canceled += HandleKeyboardPreciseRotationInput;
+
+            playerInputMaster.GamepadPreciseRotation.started += HandleGamepadPreciseRotationInput;
+            playerInputMaster.GamepadPreciseRotation.performed += HandleGamepadPreciseRotationInput;
+            playerInputMaster.GamepadPreciseRotation.canceled += HandleGamepadPreciseRotationInput;
+
             playerInputMaster.Jump.started += HandlePlayerPressJump;
             playerInputMaster.Jump.performed += HandlePlayerPressJump;
             playerInputMaster.Jump.canceled += HandlePlayerPressJump;
@@ -875,6 +918,14 @@ namespace Player.Base
             playerInputMaster.Move.started -= HandleKeyboardInput;
             playerInputMaster.Move.performed -= HandleKeyboardInput;
             playerInputMaster.Move.canceled -= HandleKeyboardInput;
+
+            playerInputMaster.KeyboardPreciseRotation.started -= HandleKeyboardPreciseRotationInput;
+            playerInputMaster.KeyboardPreciseRotation.performed -= HandleKeyboardPreciseRotationInput;
+            playerInputMaster.KeyboardPreciseRotation.canceled -= HandleKeyboardPreciseRotationInput;
+
+            playerInputMaster.GamepadPreciseRotation.started -= HandleGamepadPreciseRotationInput;
+            playerInputMaster.GamepadPreciseRotation.performed -= HandleGamepadPreciseRotationInput;
+            playerInputMaster.GamepadPreciseRotation.canceled -= HandleGamepadPreciseRotationInput;
 
             playerInputMaster.Jump.started -= HandlePlayerPressJump;
             playerInputMaster.Jump.performed -= HandlePlayerPressJump;
@@ -926,6 +977,10 @@ namespace Player.Base
                 _lastNonZeroCoreInput = _coreMoveInput;
             }
         }
+
+        private void HandleKeyboardPreciseRotationInput(InputAction.CallbackContext context) => _playerKeyboardRotationKey.UpdateInputData(context);
+
+        private void HandleGamepadPreciseRotationInput(InputAction.CallbackContext context) => _playerGamepadRotationKey.UpdateInputData(context);
 
         private void HandlePlayerPressJump(InputAction.CallbackContext context) => _jumpKey.UpdateInputData(context);
 

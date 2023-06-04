@@ -37,6 +37,24 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""KeyboardPreciseRotation"",
+                    ""type"": ""Value"",
+                    ""id"": ""7bd92c24-f113-4cd5-bd69-0d84f16ca532"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GamepadPreciseRotation"",
+                    ""type"": ""Value"",
+                    ""id"": ""8610bd71-b17e-4ea4-a906-e6878d19f8f4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Look"",
                     ""type"": ""Value"",
                     ""id"": ""6cd6a360-d4d5-4e6d-9406-22f5ad0c50b1"",
@@ -125,6 +143,15 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""95815242-bb2a-46dd-a708-bd2c11eae83d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -263,7 +290,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2893ff14-b1fd-4386-81d6-3e439b0c5bef"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -285,7 +312,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""683c5431-3f8d-4a53-87e5-b78eb342a282"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -468,6 +495,39 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""action"": ""Camera Right Shoulder"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db637e0a-ad75-4f15-b3c5-03631e95831a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""KeyboardPreciseRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""679508ab-28a6-4b11-a2a8-f72be2d9c920"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e231f369-7300-4cd6-8120-f9b5e8fe3906"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamepadPreciseRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -538,6 +598,8 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_KeyboardPreciseRotation = m_Player.FindAction("KeyboardPreciseRotation", throwIfNotFound: true);
+        m_Player_GamepadPreciseRotation = m_Player.FindAction("GamepadPreciseRotation", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
@@ -548,6 +610,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         m_Player_AbilityUltimate = m_Player.FindAction("Ability Ultimate", throwIfNotFound: true);
         m_Player_CameraLeftShoulder = m_Player.FindAction("Camera Left Shoulder", throwIfNotFound: true);
         m_Player_CameraRightShoulder = m_Player.FindAction("Camera Right Shoulder", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -610,6 +673,8 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_KeyboardPreciseRotation;
+    private readonly InputAction m_Player_GamepadPreciseRotation;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Run;
@@ -620,11 +685,14 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_AbilityUltimate;
     private readonly InputAction m_Player_CameraLeftShoulder;
     private readonly InputAction m_Player_CameraRightShoulder;
+    private readonly InputAction m_Player_MousePosition;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
         public PlayerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @KeyboardPreciseRotation => m_Wrapper.m_Player_KeyboardPreciseRotation;
+        public InputAction @GamepadPreciseRotation => m_Wrapper.m_Player_GamepadPreciseRotation;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Run => m_Wrapper.m_Player_Run;
@@ -635,6 +703,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         public InputAction @AbilityUltimate => m_Wrapper.m_Player_AbilityUltimate;
         public InputAction @CameraLeftShoulder => m_Wrapper.m_Player_CameraLeftShoulder;
         public InputAction @CameraRightShoulder => m_Wrapper.m_Player_CameraRightShoulder;
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -647,6 +716,12 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @KeyboardPreciseRotation.started += instance.OnKeyboardPreciseRotation;
+            @KeyboardPreciseRotation.performed += instance.OnKeyboardPreciseRotation;
+            @KeyboardPreciseRotation.canceled += instance.OnKeyboardPreciseRotation;
+            @GamepadPreciseRotation.started += instance.OnGamepadPreciseRotation;
+            @GamepadPreciseRotation.performed += instance.OnGamepadPreciseRotation;
+            @GamepadPreciseRotation.canceled += instance.OnGamepadPreciseRotation;
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
@@ -677,6 +752,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @CameraRightShoulder.started += instance.OnCameraRightShoulder;
             @CameraRightShoulder.performed += instance.OnCameraRightShoulder;
             @CameraRightShoulder.canceled += instance.OnCameraRightShoulder;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -684,6 +762,12 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @KeyboardPreciseRotation.started -= instance.OnKeyboardPreciseRotation;
+            @KeyboardPreciseRotation.performed -= instance.OnKeyboardPreciseRotation;
+            @KeyboardPreciseRotation.canceled -= instance.OnKeyboardPreciseRotation;
+            @GamepadPreciseRotation.started -= instance.OnGamepadPreciseRotation;
+            @GamepadPreciseRotation.performed -= instance.OnGamepadPreciseRotation;
+            @GamepadPreciseRotation.canceled -= instance.OnGamepadPreciseRotation;
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
@@ -714,6 +798,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @CameraRightShoulder.started -= instance.OnCameraRightShoulder;
             @CameraRightShoulder.performed -= instance.OnCameraRightShoulder;
             @CameraRightShoulder.canceled -= instance.OnCameraRightShoulder;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -779,6 +866,8 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnKeyboardPreciseRotation(InputAction.CallbackContext context);
+        void OnGamepadPreciseRotation(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
@@ -789,5 +878,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         void OnAbilityUltimate(InputAction.CallbackContext context);
         void OnCameraLeftShoulder(InputAction.CallbackContext context);
         void OnCameraRightShoulder(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }

@@ -21,10 +21,6 @@ namespace Player.Base
             var cinemachineVirtualCamera = cinemachineController.GetComponent<CinemachineVirtualCamera>();
             cinemachineVirtualCamera.Follow = _cinemachineFollowTarget;
             cinemachineVirtualCamera.LookAt = _cinemachineFollowTarget;
-
-            // TODO: Move this to a Util Class/Manager
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
 
         #endregion Unity Functions
