@@ -28,6 +28,9 @@ namespace Player.Base
         [SerializeField] private float _airControlMultiplier;
         [SerializeField] private float _gravityMultiplier;
 
+        [Header("Basic Rotation")]
+        [SerializeField] private float _rotationSpeed;
+
         [Header("Character Position Points")]
         [SerializeField] private Transform _headTransform;
         [SerializeField] private Transform _bodyTransform;
@@ -381,6 +384,7 @@ namespace Player.Base
             }
 
             UpdateCurrentToTargetVelocity();
+            UpdateCoreRotation();
             UpdateCoreMovement();
         }
 
@@ -495,6 +499,13 @@ namespace Player.Base
             }
         }
 
+        private void UpdateCoreRotation()
+        {
+            var yRotation = transform.eulerAngles.y;
+            yRotation += _lastNonZeroCoreInput.x * _rotationSpeed * WorldTimeManager.Instance.FixedUpdateTime;
+            transform.rotation = Quaternion.Euler(0, yRotation, 0);
+        }
+
         private void UpdateCoreMovement()
         {
             var characterTransform = transform;
@@ -508,7 +519,7 @@ namespace Player.Base
             }
             else if (_playerStateStack[^1] != PlayerState.Falling)
             {
-                var groundedMovement = forward * _lastNonZeroCoreInput.y + right * _lastNonZeroCoreInput.x;
+                var groundedMovement = forward * _lastNonZeroCoreInput.y;
                 groundedMovement.y = 0;
                 groundedMovement = _currentStateVelocity * groundedMovement.normalized;
 
@@ -517,7 +528,7 @@ namespace Player.Base
             }
             else
             {
-                var airMovement = forward * _lastNonZeroCoreInput.y + right * _lastNonZeroCoreInput.x;
+                var airMovement = forward * _lastNonZeroCoreInput.y;
                 airMovement.y = 0;
                 airMovement = airMovement.normalized * (_airControlMultiplier * _currentStateVelocity);
 

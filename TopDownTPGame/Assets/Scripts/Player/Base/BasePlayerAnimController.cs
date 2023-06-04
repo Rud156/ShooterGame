@@ -167,14 +167,6 @@ namespace Player.Base
         private void SetGroundedAnimValue(float maxVerticalValue)
         {
             var lastNonZeroCoreInput = _playerController.GetLastNonZeroCoreInput();
-            if (ExtensionFunctions.IsNearlyEqual(lastNonZeroCoreInput.x, 0))
-            {
-                _movementAnim.x = 0;
-            }
-            else
-            {
-                _movementAnim.x = lastNonZeroCoreInput.x;
-            }
 
             if (ExtensionFunctions.IsNearlyEqual(lastNonZeroCoreInput.y, 0))
             {

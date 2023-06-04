@@ -96,7 +96,7 @@ namespace Player.Type_4
             {
                 var shootPointTransform = playerController.IsGrounded ? _staticShootPoint : _rotatingShootPoint;
                 var shootPoint = shootPointTransform.position;
-                var direction = _shootController.GetShootLookDirection(true, true, shootPointTransform);
+                var direction = _shootController.GetShootLookDirection();
                 if (_debugIsActive)
                 {
                     Debug.DrawRay(shootPoint, direction * 50, Color.red, _debugDisplayDuration);
