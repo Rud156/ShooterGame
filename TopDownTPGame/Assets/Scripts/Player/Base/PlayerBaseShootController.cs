@@ -11,8 +11,6 @@ namespace Player.Base
     public class PlayerBaseShootController : MonoBehaviour
     {
         [Header("Shoot Data")]
-        [SerializeField] private float _virtualShootPointLocalZOffset;
-        [SerializeField] private float _virtualShootPointWorldYOffset;
         [SerializeField] private float _maxShootDistance = 500;
         [SerializeField] private LayerMask _shootMask;
 
@@ -29,8 +27,6 @@ namespace Player.Base
         #region Unity Functions
 
         private void Start() => _mainCamera = Camera.main!.transform;
-
-        private void LateUpdate() => AdjustVirtualShootPointToHeight();
 
         #endregion Unity Functions
 
@@ -64,20 +60,5 @@ namespace Player.Base
         public Transform GetShootPoint() => _physicalShootPoint;
 
         #endregion External Functions
-
-        #region Utils
-
-        private void AdjustVirtualShootPointToHeight()
-        {
-            var localPosition = _virtualShootPoint.localPosition;
-            localPosition.z = _virtualShootPointLocalZOffset;
-            _virtualShootPoint.localPosition = localPosition;
-
-            var worldPosition = _virtualShootPoint.position;
-            worldPosition.y = _virtualShootPointWorldYOffset;
-            _virtualShootPoint.position = worldPosition;
-        }
-
-        #endregion Utils
     }
 }
