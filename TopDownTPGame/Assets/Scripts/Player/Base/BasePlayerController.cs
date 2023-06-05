@@ -432,6 +432,7 @@ namespace Player.Base
             if (HasNoDirectionalInput() || _coreMoveInput.y <= 0 || !_runKey.KeyPressed)
             {
                 _startStateVelocity = _currentStateVelocity;
+                _runKey.ClearToggleActiveState();
                 PopPlayerState();
             }
         }

@@ -1,5 +1,6 @@
 #region
 
+using TMPro;
 using UnityEngine.InputSystem;
 
 #endregion
@@ -22,6 +23,12 @@ namespace Utils.Input
             {
                 _isToggleActive = false;
             }
+        }
+
+        public void ClearToggleActiveState()
+        {
+            _isToggleActive = false;
+            KeyPressed = false;
         }
 
         public void UpdateInputData(InputAction.CallbackContext context)

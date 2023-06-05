@@ -431,14 +431,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 25
+  _runSpeed: 14
   _runAccelerationSpeed: 25
   _walkSpeed: 7
   _walkAccelerationSpeed: 9
   _decelerationSpeed: 35
   _airControlMultiplier: 0.1
   _gravityMultiplier: 0.2
-  _rotationSpeed: 250
   _headTransform: {fileID: 3666561203976839012}
   _bodyTransform: {fileID: 3666965052014978398}
   _legsTransform: {fileID: 3666514463919626348}
@@ -480,8 +479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _virtualShootPointLocalZOffset: 1
-  _virtualShootPointWorldYOffset: 1.75
   _maxShootDistance: 50
   _shootMask:
     serializedVersion: 2
