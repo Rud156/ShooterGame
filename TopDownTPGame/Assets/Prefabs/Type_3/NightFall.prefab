@@ -1367,10 +1367,10 @@ GameObject:
   - component: {fileID: 1683011238459484368}
   - component: {fileID: 1683011238459484371}
   - component: {fileID: 1683011238459484370}
+  - component: {fileID: 8884677128770689443}
   - component: {fileID: 8602320672462730023}
   - component: {fileID: 4825851869419891803}
   - component: {fileID: 6682472334063619326}
-  - component: {fileID: 1683011238459484373}
   - component: {fileID: 7031137311574653001}
   - component: {fileID: -5431743634963039606}
   m_Layer: 6
@@ -1392,14 +1392,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3501208975721786438}
   - {fileID: 1220763394379991932}
   - {fileID: 1683011238159421813}
   - {fileID: 1683011238445074564}
   - {fileID: 660414317381231213}
   - {fileID: 3729988723055359378}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 133
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1683011238459484371
 CharacterController:
@@ -1439,7 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 25
+  _runSpeed: 14
   _runAccelerationSpeed: 25
   _walkSpeed: 7
   _walkAccelerationSpeed: 9
@@ -1468,6 +1467,19 @@ MonoBehaviour:
     effectParent: {fileID: 1683011238459484368}
     modifierType: 0
     inputModifierAmount: 2.5
+--- !u!114 &8884677128770689443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683011238459484380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff7609775409410dac39854335513afc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cinemachineFollowTarget: {fileID: 1220763394379991932}
 --- !u!114 &8602320672462730023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1480,13 +1492,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 50
+  _maxShootDistance: 500
   _shootMask:
     serializedVersion: 2
     m_Bits: 321
-  _shootPoint: {fileID: 1683011238445074564}
-  _closeShootClearPoint: {fileID: 3501208975721786438}
-  _cinemachineFollowPoint: {fileID: 1220763394379991932}
+  _virtualShootPoint: {fileID: 1683011238445074564}
+  _physicalShootPoint: {fileID: 1683011238445074564}
   _debugIsActive: 0
   _debugDisplayDuration: 0
 --- !u!114 &4825851869419891803
@@ -1548,26 +1559,6 @@ MonoBehaviour:
     minEmissionRate: 0
     maxEmissionRate: 0
   _playerController: {fileID: 1683011238459484370}
---- !u!114 &1683011238459484373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683011238459484380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4c03e50dd5cc524992dcb3283ad6e08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cinemachineFollowTarget: {fileID: 1220763394379991932}
-  _cameraRotationSpeed: 100
-  _minCameraAngle: -90
-  _maxCameraAngle: 90
-  _shoulderChangeLerpRate: 14
-  _xOffsetAmount: 1.75
-  _kbmSensitivity: 0.7
-  _gamepadSensitivity: 25
 --- !u!114 &7031137311574653001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1657,7 +1648,6 @@ MonoBehaviour:
   _dashEffectPrefab: {fileID: 8019111275251628808, guid: 376c98ef561f9364e89d6504090fbe44,
     type: 3}
   _playerAnimator: {fileID: 2003848228306025429}
-  _cinemachineFollow: {fileID: 1220763394379991932}
   _dashCharges: 3
   _dashDuration: 0.25
   _dashVelocity: 80
@@ -1696,37 +1686,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 276047110528544004}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1822320908875965546
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3501208975721786438}
-  m_Layer: 6
-  m_Name: ShootClearClosePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3501208975721786438
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822320908875965546}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.4000003, z: 4.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1683011238459484368}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1956978526318859239
@@ -1818,6 +1777,7 @@ MonoBehaviour:
   _raycastPointsPrefab: {fileID: 7820997016974016892, guid: 5a5843dcc06f83f48a78d4f7905660e0,
     type: 3}
   _type3Ultimate: {fileID: 4947250994315406716}
+  _shootController: {fileID: 8602320672462730023}
   _playerAnimator: {fileID: 2003848228306025429}
   _animMinIndex: 1
   _animMaxIndex: 3
@@ -6125,7 +6085,7 @@ MonoBehaviour:
   _abilityNameType: 9
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 0.5
+  _cooldownDuration: 0.25
   _slashSword: {fileID: 3231960826966510338}
   _swordDamageTrigger: {fileID: 7520291056482411842}
   _type3Ultimate: {fileID: 4947250994315406716}

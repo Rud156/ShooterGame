@@ -18,7 +18,6 @@ namespace Player.Type_3
 
         [Header("Components")]
         [SerializeField] private Animator _playerAnimator;
-        [SerializeField] private Transform _cinemachineFollow;
 
         [Header("Dash Charges")]
         [SerializeField] private int _dashCharges;
@@ -52,8 +51,8 @@ namespace Player.Type_3
         {
             _currentDashTimeLeft -= WorldTimeManager.Instance.FixedUpdateTime;
 
-            var forward = _cinemachineFollow.forward;
-            var right = _cinemachineFollow.right;
+            var forward = transform.forward;
+            var right = transform.right;
 
             _computedVelocity = forward * _startCoreInput.y + right * _startCoreInput.x;
             _computedVelocity = _dashVelocity * _computedVelocity.normalized;

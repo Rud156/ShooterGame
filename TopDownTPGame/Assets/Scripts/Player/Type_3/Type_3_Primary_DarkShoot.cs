@@ -23,6 +23,7 @@ namespace Player.Type_3
 
         [Header("Components")]
         [SerializeField] private Type_3_Ultimate_DarkPulseParanoiaAbility _type3Ultimate;
+        [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Shoot Data")]
@@ -47,7 +48,6 @@ namespace Player.Type_3
         [SerializeField] private bool _debugIsActive;
         [SerializeField] private float _debugDisplayDuration;
 
-        private Transform _playerCinemachine;
         private GameObject _raycastParent;
         private List<Transform> _raycastPoints;
 
@@ -107,8 +107,8 @@ namespace Player.Type_3
         {
             base.UnityStartDelegate(playerController);
 
-            _playerCinemachine = GameObject.FindGameObjectWithTag(TagManager.PlayerCinemachineController).transform;
-            _raycastParent = Instantiate(_raycastPointsPrefab, _playerCinemachine.position, Quaternion.identity, _playerCinemachine);
+            var shootPoint = _shootController.GetShootPosition();
+            _raycastParent = Instantiate(_raycastPointsPrefab, shootPoint, Quaternion.identity, transform);
             _raycastPoints = _raycastParent.GetComponentsInChildren<Transform>().ToList();
         }
 
@@ -140,10 +140,10 @@ namespace Player.Type_3
 
             foreach (var raycastPoint in _raycastPoints)
             {
-                var hit = Physics.Raycast(raycastPoint.position, _playerCinemachine.forward, out var hitInfo, _raycastDistance, _attackMask);
+                var hit = Physics.Raycast(raycastPoint.position, transform.forward, out var hitInfo, _raycastDistance, _attackMask);
                 if (_debugIsActive)
                 {
-                    Debug.DrawRay(raycastPoint.position, _playerCinemachine.forward * _raycastDistance, Color.red, _debugDisplayDuration);
+                    Debug.DrawRay(raycastPoint.position, transform.forward * _raycastDistance, Color.red, _debugDisplayDuration);
                 }
 
                 if (hit)
