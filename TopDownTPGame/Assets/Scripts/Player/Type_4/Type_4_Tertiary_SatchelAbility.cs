@@ -14,12 +14,8 @@ namespace Player.Type_4
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _satchelPrefab;
-        [SerializeField] private GameObject _rotatingShootPrefab;
-        [SerializeField] private GameObject _staticShootPrefab;
 
         [Header("Components")]
-        [SerializeField] private Transform _parent;
-        [SerializeField] private Transform _cinemachineFollowTarget;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
 
@@ -29,11 +25,6 @@ namespace Player.Type_4
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
         [SerializeField] private float _debugDisplayDuration;
-
-        private GameObject _staticShootPointHolder;
-        private GameObject _rotatingShootPointHolder;
-        private Transform _staticShootPoint;
-        private Transform _rotatingShootPoint;
 
         private bool _abilityEnd;
 
@@ -62,28 +53,15 @@ namespace Player.Type_4
             OnAbilityCooldownComplete += HandleCooldownComplete;
             base.UnityStartDelegate(playerController);
 
-            var spawnPosition = _parent.position;
-            _rotatingShootPointHolder = Instantiate(_rotatingShootPrefab, spawnPosition, Quaternion.identity, _parent);
-            _staticShootPointHolder = Instantiate(_staticShootPrefab, spawnPosition, Quaternion.identity, _parent);
-
-            _rotatingShootPoint = _rotatingShootPointHolder.transform.Find("RotatingShootPoint");
-            _staticShootPoint = _staticShootPointHolder.transform.Find("StaticShootPoint");
             _currentSatchelsLeft = _satchelCount;
         }
 
-        private void OnDestroy()
-        {
-            Destroy(_rotatingShootPointHolder);
-            Destroy(_staticShootPointHolder);
-            OnAbilityCooldownComplete -= HandleCooldownComplete;
-        }
+        private void OnDestroy() => OnAbilityCooldownComplete -= HandleCooldownComplete;
 
         public override void UnityUpdateDelegate(BasePlayerController playerController)
         {
             base.UnityUpdateDelegate(playerController);
             UpdateDashCountChanged();
-
-            _rotatingShootPointHolder.transform.localRotation = _cinemachineFollowTarget.localRotation;
         }
 
         #endregion Unity Functions
@@ -94,8 +72,7 @@ namespace Player.Type_4
         {
             if (_satchelObject == null && _currentSatchelsLeft > 0)
             {
-                var shootPointTransform = playerController.IsGrounded ? _staticShootPoint : _rotatingShootPoint;
-                var shootPoint = shootPointTransform.position;
+                var shootPoint = _shootController.GetVirtualShootPosition();
                 var direction = _shootController.GetShootLookDirection();
                 if (_debugIsActive)
                 {
