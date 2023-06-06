@@ -1,6 +1,5 @@
 #region
 
-using TMPro;
 using UnityEngine.InputSystem;
 
 #endregion

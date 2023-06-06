@@ -71,7 +71,7 @@ namespace Player.Type_2
             for (var i = 0; i < totalHitColliders; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == _parentGameObject.GetInstanceID())
+                if (_hitColliders[i].gameObject.GetInstanceID() == _parentGameObject.GetInstanceID())
                 {
                     continue;
                 }

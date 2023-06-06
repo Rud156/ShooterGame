@@ -99,7 +99,7 @@ namespace Player.Type_3
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == _ownerId)
+                if (_hitColliders[i].gameObject.GetInstanceID() == _ownerId)
                 {
                     continue;
                 }

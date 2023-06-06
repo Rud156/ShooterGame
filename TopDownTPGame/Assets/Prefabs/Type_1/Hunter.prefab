@@ -178,7 +178,7 @@ MonoBehaviour:
     type: 3}
   _playerAnimator: {fileID: 1470349118}
   _dashDuration: 0.25
-  _dashVelocity: 80
+  _dashVelocity: 65
   _dashEffectOffset: {x: 0, y: 0, z: 0}
   _leftDashRotation: {x: 0, y: 0, z: 0}
   _rightDashRotation: {x: 0, y: 180, z: 0}
@@ -391,7 +391,7 @@ Transform:
   - {fileID: 1233005979}
   - {fileID: 6179268466213411140}
   m_Father: {fileID: 0}
-  m_RootOrder: 134
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &95916530318942734
 CharacterController:
@@ -479,7 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 50
+  _maxShootDistance: 500
   _shootMask:
     serializedVersion: 2
     m_Bits: 321

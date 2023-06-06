@@ -96,6 +96,11 @@ namespace Player.Type_2
             // Clear all the Burst Damage Markers
             foreach (var burstDamageData in _burstDamageMarkers)
             {
+                if (burstDamageData.BurstDamageMarker == null)
+                {
+                    continue;
+                }
+
                 burstDamageData.BurstDamageMarker.SetDamageAmount(_damageAmount);
                 burstDamageData.BurstDamageMarker.ApplyDamage();
                 _type2Ultimate.AddUltimateCharge(_ultimateChargeAmount);
@@ -244,7 +249,7 @@ namespace Player.Type_2
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i] == null || _hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                if (_hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
                 {
                     continue;
                 }
@@ -254,8 +259,8 @@ namespace Player.Type_2
                 if (hasHealth && hasBurstDamageMarker)
                 {
                     var ownerId = burstDamageMarker.GetOwner();
-                    var myId = GetInstanceID();
-                    if (ownerId != myId)
+                    var thisGameObjectId = GetInstanceID();
+                    if (ownerId != thisGameObjectId)
                     {
                         hasBurstDamageMarker = false;
                     }

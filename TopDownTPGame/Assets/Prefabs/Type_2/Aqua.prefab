@@ -968,7 +968,7 @@ GameObject:
   m_Layer: 6
   m_Name: Shoot Point
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -998,10 +998,10 @@ GameObject:
   - component: {fileID: 2637092012038209771}
   - component: {fileID: 2637092012038209768}
   - component: {fileID: 2637092012038209769}
+  - component: {fileID: 6701544014852752059}
   - component: {fileID: 3268835866765903229}
   - component: {fileID: 8076725673007897618}
   - component: {fileID: 5905943182045767463}
-  - component: {fileID: 2637092012038209774}
   - component: {fileID: 3408678438235963055}
   - component: {fileID: 2397999443656805021}
   m_Layer: 6
@@ -1023,14 +1023,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4207640246935570126}
   - {fileID: 4317024363540812747}
   - {fileID: 2637092012946061646}
   - {fileID: 2637092012017492159}
   - {fileID: 2368701884863666857}
   - {fileID: 1362992553}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 133
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2637092012038209768
 CharacterController:
@@ -1070,7 +1069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 25
+  _runSpeed: 14
   _runAccelerationSpeed: 25
   _walkSpeed: 7
   _walkAccelerationSpeed: 9
@@ -1093,6 +1092,19 @@ MonoBehaviour:
   - {fileID: 9015896159279792058}
   - {fileID: 4734483721622460076}
   _playerInputModifierData: []
+--- !u!114 &6701544014852752059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637092012038209767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff7609775409410dac39854335513afc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cinemachineFollowTarget: {fileID: 4317024363540812747}
 --- !u!114 &3268835866765903229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,13 +1117,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 50
+  _maxShootDistance: 500
   _shootMask:
     serializedVersion: 2
     m_Bits: 321
-  _shootPoint: {fileID: 2637092012017492159}
-  _closeShootClearPoint: {fileID: 4207640246935570126}
-  _cinemachineFollowPoint: {fileID: 4317024363540812747}
+  _virtualShootPoint: {fileID: 2637092012017492159}
+  _physicalShootPoint: {fileID: 2637092012017492159}
   _debugIsActive: 0
   _debugDisplayDuration: 0
 --- !u!114 &8076725673007897618
@@ -1173,26 +1184,6 @@ MonoBehaviour:
     minEmissionRate: 0
     maxEmissionRate: 0
   _playerController: {fileID: 2637092012038209769}
---- !u!114 &2637092012038209774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2637092012038209767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4c03e50dd5cc524992dcb3283ad6e08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cinemachineFollowTarget: {fileID: 4317024363540812747}
-  _cameraRotationSpeed: 100
-  _minCameraAngle: -60
-  _maxCameraAngle: 60
-  _shoulderChangeLerpRate: 14
-  _xOffsetAmount: 1.75
-  _kbmSensitivity: 0.7
-  _gamepadSensitivity: 25
 --- !u!114 &3408678438235963055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1776,7 +1767,7 @@ MonoBehaviour:
     - {fileID: 2100000, guid: 903deec0895457d43a093ac8ee3e1d97, type: 2}
   _holdRunEffectOffset: {x: 0, y: 0, z: 1}
   _holdTriggerDuration: 0.2
-  _holdRunVelocity: 40
+  _holdRunVelocity: 20
   _holdRunDuration: 5
   _dashEffectOffset: {x: 0, y: 0, z: 1}
   _dashVelocity: 80
@@ -2321,37 +2312,6 @@ Transform:
   - {fileID: 2085600552674363865}
   m_Father: {fileID: 7244092196140188853}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7442507163526312492
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4207640246935570126}
-  m_Layer: 6
-  m_Name: ShootClearClosePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4207640246935570126
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442507163526312492}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.4000003, z: 4.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2637092012038209771}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7514192250333987431
 GameObject:
