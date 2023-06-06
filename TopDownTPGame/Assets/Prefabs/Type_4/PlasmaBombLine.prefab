@@ -100,8 +100,8 @@ MonoBehaviour:
     type: 3}
   _plasmaPulsePrefab: {fileID: 7004124681472689935, guid: db700e63146674244b2af5bd8cd60918,
     type: 3}
-  _projectileLaunchVelocity: 75
-  _projectileDestroyTime: 1.5
+  _projectileLaunchVelocity: 50
+  _projectileDestroyTime: 1
   _pulseDropRate: 0.1
   _damageAmount: 15
 --- !u!1 &6552805674668648026

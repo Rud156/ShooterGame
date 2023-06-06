@@ -26,6 +26,6 @@
 }
 
 .trigger_name_backer {
-    background-image: url("project://database/Assets/Textures/Misc/Smoke26.png");
+    background-image: url("project://database/Assets/Textures/Misc/Cloud.png");
     -unity-background-image-tint-color: rgba(0, 0, 0, 0.9);
 }

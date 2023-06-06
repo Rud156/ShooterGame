@@ -50,10 +50,6 @@ namespace Player.Base
             _cinemachineFollowTarget.transform.localPosition = new Vector3(-_xOffsetAmount, 0, 0);
             _currentShoulderLerp = 1;
 
-            // TODO: Move this to a Util Class/Manager
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
             WorldTimeManager.Instance.OnWorldCustomFixedUpdate += PlayerCameraFixedUpdate;
 
             CustomInputManager.Instance.PlayerInput.Look.started += HandleMouseInput;

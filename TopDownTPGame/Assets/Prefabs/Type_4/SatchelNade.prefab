@@ -116,7 +116,7 @@ Transform:
   m_Children:
   - {fileID: 1872775645322770994}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &981255966402603157
 BoxCollider:
@@ -193,7 +193,7 @@ MonoBehaviour:
   _maxRadiusForAffect: 20
   _minRadiusForMaxAffect: 5
   _minVelocity: 5
-  _maxVelocity: 40
+  _maxVelocity: 25
   _affectMask:
     serializedVersion: 2
     m_Bits: 64

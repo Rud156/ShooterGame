@@ -54,6 +54,17 @@ namespace Utils.Input
 
             if (currentInputType != _lastUsedDeviceInputType)
             {
+                if (currentInputType == GamepadGroupString)
+                {
+                    Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.visible = false;
+                }
+                else
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
+
                 _lastUsedDeviceInputType = currentInputType;
                 OnLastUsedInputChanged?.Invoke(_lastUsedDeviceInputType);
             }

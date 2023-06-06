@@ -57,6 +57,10 @@ namespace Player.Base
 
         public Transform GetShootPoint() => _physicalShootPoint;
 
+        public Vector3 GetVirtualShootPosition() => _virtualShootPoint.position;
+
+        public Transform GetVirtualShootPoint() => _virtualShootPoint;
+
         #endregion External Functions
     }
 }
