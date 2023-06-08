@@ -1,6 +1,8 @@
 #region
 
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 #endregion
 
@@ -20,6 +22,24 @@ namespace Utils.Input
 
         private InputMaster _inputMaster;
         private string _lastUsedDeviceInputType = KeyboardMouseGroupString;
+
+        #region Unity Functions
+
+        private void Start()
+        {
+            PlayerInput.MouseDelta.started += HandleMouseMoved;
+            PlayerInput.MouseDelta.performed += HandleMouseMoved;
+            PlayerInput.MouseDelta.canceled += HandleMouseMoved;
+        }
+
+        private void OnDestroy()
+        {
+            PlayerInput.MouseDelta.started -= HandleMouseMoved;
+            PlayerInput.MouseDelta.performed -= HandleMouseMoved;
+            PlayerInput.MouseDelta.canceled -= HandleMouseMoved;
+        }
+
+        #endregion Unity Functions
 
         #region Input Setup
 
@@ -56,7 +76,7 @@ namespace Utils.Input
             {
                 if (currentInputType == GamepadGroupString)
                 {
-                    Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                 }
                 else
@@ -71,6 +91,21 @@ namespace Utils.Input
         }
 
         #endregion External Functions
+
+        #region Utils
+
+        private void HandleMouseMoved(InputAction.CallbackContext context)
+        {
+            var mouseInput = CustomInputManager.Instance.PlayerInput.Look.ReadValue<Vector2>();
+            if (mouseInput != Vector2.zero)
+            {
+                var path = context.action.activeControl.path;
+                var deviceName = context.action.activeControl.displayName;
+                UpdateLastUsedDeviceInput(deviceName, path);
+            }
+        }
+
+        #endregion Utils
 
         #region Singleton
 

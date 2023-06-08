@@ -152,6 +152,15 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Mouse Delta"",
+                    ""type"": ""Value"",
+                    ""id"": ""2e76c823-7fe6-4890-8d94-5304f12a544a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -528,6 +537,17 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""action"": ""GamepadPreciseRotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1a54e92-535f-4394-b146-9f2f4b1d0f04"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Mouse Delta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -611,6 +631,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         m_Player_CameraLeftShoulder = m_Player.FindAction("Camera Left Shoulder", throwIfNotFound: true);
         m_Player_CameraRightShoulder = m_Player.FindAction("Camera Right Shoulder", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
+        m_Player_MouseDelta = m_Player.FindAction("Mouse Delta", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -686,6 +707,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CameraLeftShoulder;
     private readonly InputAction m_Player_CameraRightShoulder;
     private readonly InputAction m_Player_MousePosition;
+    private readonly InputAction m_Player_MouseDelta;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -704,6 +726,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         public InputAction @CameraLeftShoulder => m_Wrapper.m_Player_CameraLeftShoulder;
         public InputAction @CameraRightShoulder => m_Wrapper.m_Player_CameraRightShoulder;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
+        public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -755,6 +778,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @MousePosition.started += instance.OnMousePosition;
             @MousePosition.performed += instance.OnMousePosition;
             @MousePosition.canceled += instance.OnMousePosition;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -801,6 +827,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @MousePosition.started -= instance.OnMousePosition;
             @MousePosition.performed -= instance.OnMousePosition;
             @MousePosition.canceled -= instance.OnMousePosition;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -879,5 +908,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         void OnCameraLeftShoulder(InputAction.CallbackContext context);
         void OnCameraRightShoulder(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
 }

@@ -130,6 +130,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Mouse Delta",
+                    "type": "Value",
+                    "id": "2e76c823-7fe6-4890-8d94-5304f12a544a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -504,6 +513,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "GamepadPreciseRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f1a54e92-535f-4394-b146-9f2f4b1d0f04",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Mouse Delta",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

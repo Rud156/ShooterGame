@@ -804,7 +804,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _windUptime: 0.3
-  _ultimateChargePerSec: 0
+  _ultimateChargePerSec: 100
   _maxUltimateChargeAmount: 1700
   _cameraShaker: {fileID: 11400000, guid: 325db4dcf003ddf41a78fa4afd488d17, type: 2}
   _debugIsActive: 0
@@ -1242,10 +1242,10 @@ GameObject:
   - component: {fileID: 1252368709468985568}
   - component: {fileID: 1252368709468985571}
   - component: {fileID: 1252368709468985570}
+  - component: {fileID: 2201755579195725423}
   - component: {fileID: 5021002024800133882}
   - component: {fileID: 6549813001968202726}
   - component: {fileID: 6406710316826357844}
-  - component: {fileID: 1252368709468985573}
   - component: {fileID: 2669688019543946796}
   - component: {fileID: 4412031399196160647}
   m_Layer: 6
@@ -1267,14 +1267,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8467959500002590892}
   - {fileID: 5274914482714144314}
   - {fileID: 1252368708560691525}
   - {fileID: 1252368709447252148}
   - {fileID: 3543032926980936973}
   - {fileID: 3889310737721836962}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 133
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1252368709468985571
 CharacterController:
@@ -1314,7 +1313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a640d406af0d6694faba69876197f9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 25
+  _runSpeed: 14
   _runAccelerationSpeed: 25
   _walkSpeed: 7
   _walkAccelerationSpeed: 9
@@ -1337,6 +1336,19 @@ MonoBehaviour:
   - {fileID: 4247393837429394251}
   - {fileID: 5302275595620308645}
   _playerInputModifierData: []
+--- !u!114 &2201755579195725423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252368709468985580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff7609775409410dac39854335513afc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cinemachineFollowTarget: {fileID: 5274914482714144314}
 --- !u!114 &5021002024800133882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1349,13 +1361,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94a1f106654be095fd6702ea35a3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxShootDistance: 50
+  _maxShootDistance: 500
   _shootMask:
     serializedVersion: 2
     m_Bits: 321
-  _shootPoint: {fileID: 1252368709447252148}
-  _closeShootClearPoint: {fileID: 8467959500002590892}
-  _cinemachineFollowPoint: {fileID: 5274914482714144314}
+  _virtualShootPoint: {fileID: 1252368709447252148}
+  _physicalShootPoint: {fileID: 1252368709447252148}
   _debugIsActive: 0
   _debugDisplayDuration: 0
 --- !u!114 &6549813001968202726
@@ -1417,26 +1428,6 @@ MonoBehaviour:
     minEmissionRate: 0
     maxEmissionRate: 0
   _playerController: {fileID: 1252368709468985570}
---- !u!114 &1252368709468985573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1252368709468985580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4c03e50dd5cc524992dcb3283ad6e08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cinemachineFollowTarget: {fileID: 5274914482714144314}
-  _cameraRotationSpeed: 100
-  _minCameraAngle: -90
-  _maxCameraAngle: 90
-  _shoulderChangeLerpRate: 14
-  _xOffsetAmount: 1.75
-  _kbmSensitivity: 0.7
-  _gamepadSensitivity: 25
 --- !u!114 &2669688019543946796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4450,37 +4441,6 @@ Transform:
   m_Father: {fileID: 4134706235998850547}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4385254762077454158
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8467959500002590892}
-  m_Layer: 6
-  m_Name: ShootClearClosePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8467959500002590892
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4385254762077454158}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.4000003, z: 4.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1252368709468985568}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4464379518743837673
 GameObject:
   m_ObjectHideFlags: 0
@@ -6320,16 +6280,17 @@ MonoBehaviour:
   _abilityNameType: 16
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 3
+  _cooldownDuration: 1
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
   _parent: {fileID: 1252368709468985580}
   _shootController: {fileID: 5021002024800133882}
   _type5Ultimate: {fileID: 5302275595620308645}
-  _spawnMaxDistance: 20
+  _spawnMaxDistance: 5
   _maxTurretsCanSpawn: 3
   _minYNormalThreshold: 0.7
-  _spawnOffset: {x: 0, y: 0, z: 0}
+  _maxYNormalThreshold: 1
+  _defaultSpawnOffset: {x: 0, y: 0, z: 0}
   _turretDeployCheckMask:
     serializedVersion: 2
     m_Bits: 1
@@ -7871,7 +7832,7 @@ MonoBehaviour:
   _abilityNameType: 17
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 7
+  _cooldownDuration: 1
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
   _shootController: {fileID: 5021002024800133882}
@@ -8917,7 +8878,7 @@ MonoBehaviour:
   _abilityNameType: 18
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 20
+  _cooldownDuration: 1
   _shieldPrefab: {fileID: 7981294947940924098, guid: 1ea4fde9248da5041a535aa2d7ba7f1d,
     type: 3}
   _shootController: {fileID: 5021002024800133882}

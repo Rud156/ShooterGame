@@ -22,10 +22,15 @@ namespace UI.HUD
         [SerializeField] private Color _damageColor;
         [SerializeField] private Color _healColor;
 
-        [Header("Display Data")]
+        [Header("Fade Data")]
         [SerializeField] private float _fadeInDuration;
         [SerializeField] private float _stayDuration;
         [SerializeField] private float _fadeOutDuration;
+
+        [Header("Scale Data")]
+        [SerializeField] private float _startScaleAmount;
+        [SerializeField] private float _endScaleAmount;
+        [SerializeField] private float _scaleRate;
 
         private VisualElement _parent;
         private List<DamageOrHealData> _damageOrHealWidgets;
@@ -135,6 +140,22 @@ namespace UI.HUD
                         widgetData.CurrentTime -= Time.deltaTime;
                         if (widgetData.CurrentTime <= 0)
                         {
+                            widgetData.DamageOrHealWidgetState = DamageOrHealState.ScaleUp;
+                            widgetData.CurrentTime = 0;
+                        }
+
+                        _damageOrHealWidgets[i] = widgetData;
+                    }
+                        break;
+
+                    case DamageOrHealState.ScaleUp:
+                    {
+                        var mappedScale = Mathf.Lerp(_startScaleAmount, _endScaleAmount, widgetData.CurrentTime);
+                        widgetData.DamageOrHealWidget.style.scale = Vector2.one * mappedScale;
+                        widgetData.CurrentTime += _scaleRate * Time.deltaTime;
+
+                        if (widgetData.CurrentTime >= 1)
+                        {
                             widgetData.DamageOrHealWidgetState = DamageOrHealState.Stay;
                             widgetData.CurrentTime = _stayDuration;
                         }
@@ -220,6 +241,7 @@ namespace UI.HUD
         private enum DamageOrHealState
         {
             FadeIn,
+            ScaleUp,
             Stay,
             FadeOut,
             Destroy
