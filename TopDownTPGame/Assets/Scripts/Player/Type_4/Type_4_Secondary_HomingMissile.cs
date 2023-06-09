@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using World;
 
 #endregion
@@ -62,8 +63,10 @@ namespace Player.Type_4
                 var missile = Instantiate(_homingMissilePrefab, shootPosition, lookDirection);
                 var homingTarget = missile.GetComponent<PlasmaHomingMissile>();
                 var simpleDamageTrigger = missile.GetComponent<SimpleDamageTrigger>();
+                var ownerData = missile.GetComponent<OwnerData>();
 
                 homingTarget.SetTarget(_validTarget);
+                ownerData.OwnerId = _parent.GetInstanceID();
                 simpleDamageTrigger.SetParent(_parent);
                 simpleDamageTrigger.SetCollisionCallback(HandleHomingMissileCollided);
 

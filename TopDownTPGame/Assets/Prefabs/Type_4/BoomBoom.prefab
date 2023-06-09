@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 742194319}
   - component: {fileID: 8057118086033337048}
   - component: {fileID: 8057118086033337049}
+  - component: {fileID: -5005848917501305837}
   m_Layer: 7
   m_Name: BoomBoom
   m_TagString: Untagged
@@ -116,6 +117,18 @@ MonoBehaviour:
     m_Bits: 321
   _debugIsActive: 0
   _debugDisplayDuration: 10
+--- !u!114 &-5005848917501305837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057118086033337042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8413304897716341622
 GameObject:
   m_ObjectHideFlags: 0

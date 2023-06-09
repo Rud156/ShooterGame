@@ -3,6 +3,7 @@
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using Utils.Common;
 using World;
 
 #endregion
@@ -11,6 +12,9 @@ namespace Player.Type_5
 {
     public class Type_5_Ultimate_EngineerShield : Ability
     {
+        [Header("Components")]
+        [SerializeField] private OwnerData _ownerData;
+
         [Header("Shield Data")]
         [SerializeField] private float _shieldDuration;
 
@@ -36,13 +40,14 @@ namespace Player.Type_5
             var hitColliderCount = Physics.OverlapSphereNonAlloc(transform.position, _shieldColliderRadius, _hitColliders, _shieldColliderMask);
             for (var i = 0; i < hitColliderCount; i++)
             {
-                if (_hitColliders[i] == null)
-                {
-                    continue;
-                }
+                var ownerId = _ownerData.OwnerId;
+                var ownerData = _hitColliders[i].GetComponent<OwnerData>();
+                var projectileOwnerId = ownerData.OwnerId;
 
-                // TODO: Need to make a common OwnerID script from which to get OwnerID...
-                Destroy(_hitColliders[i].gameObject);
+                if (ownerId != projectileOwnerId)
+                {
+                    Destroy(_hitColliders[i].gameObject);
+                }
             }
         }
 

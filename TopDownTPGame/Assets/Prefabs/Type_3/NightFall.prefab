@@ -1398,7 +1398,7 @@ Transform:
   - {fileID: 660414317381231213}
   - {fileID: 3729988723055359378}
   m_Father: {fileID: 0}
-  m_RootOrder: 133
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1683011238459484371
 CharacterController:
@@ -5613,12 +5613,12 @@ MonoBehaviour:
   _cooldownDuration: 0
   _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
     type: 3}
-  _playerAnimator: {fileID: 2003848228306025429}
   _parent: {fileID: 1683011238459484380}
+  _playerAnimator: {fileID: 2003848228306025429}
   _windUpTime: 0.25
   _ultimateChargePerSec: 5
   _maxUltimateChargeAmount: 1450
-  _debugIsActive: 1
+  _debugIsActive: 0
 --- !u!1 &8015724341772771277
 GameObject:
   m_ObjectHideFlags: 0
@@ -6275,6 +6275,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5805098254390205743}
     m_Modifications:
+    - target: {fileID: -5816692354966234312, guid: 81400e1d15edc804d83bea079ebf5d6e,
+        type: 3}
+      propertyPath: _parent
+      value: 
+      objectReference: {fileID: 1683011238459484380}
+    - target: {fileID: -5816692354966234312, guid: 81400e1d15edc804d83bea079ebf5d6e,
+        type: 3}
+      propertyPath: _autoSetOwnerId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3237329254265012899, guid: 81400e1d15edc804d83bea079ebf5d6e,
         type: 3}
       propertyPath: _parent

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 418013023188048172}
   - component: {fileID: 418013023188048175}
+  - component: {fileID: 9222600760308836657}
   m_Layer: 0
   m_Name: DarkPulseSpawner
   m_TagString: Untagged
@@ -59,3 +60,17 @@ MonoBehaviour:
   _cameraShaker: {fileID: 11400000, guid: a9a786f964e70494b9a5a73e30a65347, type: 2}
   _healthDecayAmount: 50
   _healthDecayDuration: 3
+--- !u!114 &9222600760308836657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418013023188048173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}

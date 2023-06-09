@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4882258394201929665}
   - component: {fileID: 4882258394201929678}
+  - component: {fileID: 4556205042200454199}
   m_Layer: 0
   m_Name: EngineerShield
   m_TagString: Untagged
@@ -136,8 +137,21 @@ MonoBehaviour:
   _abilityPositioning: 0
   _allowedActiveAbilities: 
   _cooldownDuration: 0
+  _ownerData: {fileID: 0}
   _shieldDuration: 7
   _shieldColliderRadius: 1.5
   _shieldColliderMask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &4556205042200454199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4882258394201929679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

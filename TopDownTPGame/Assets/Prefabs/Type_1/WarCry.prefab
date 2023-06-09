@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8753566998753262364}
   - component: {fileID: 8753566998753262363}
+  - component: {fileID: -6582322227844903250}
   m_Layer: 0
   m_Name: WarCry
   m_TagString: Untagged
@@ -56,3 +57,17 @@ MonoBehaviour:
     m_Bits: 64
   _cameraShaker: {fileID: 11400000, guid: 83437499a6c36574f826f5e03eb5592e, type: 2}
   _cooldownMultiplier: 3
+  _debugIsActive: 0
+  _debugDisplayDuration: 0
+--- !u!114 &-6582322227844903250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8753566998753262365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

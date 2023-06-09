@@ -4,6 +4,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using World;
 
 #endregion
@@ -16,6 +17,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _ultimatePulsePrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parent;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Ultimate Data")]
@@ -50,6 +52,10 @@ namespace Player.Type_1
                 var characterTransform = transform;
                 _warCryObject = Instantiate(_ultimatePulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
                 _warCryObject.GetComponent<Type_1_Ultimate_WarCryPulse>().SetTargetAnimatorData(_playerAnimator, PlayerStaticData.Type_1_Ultimate);
+
+                var ownerData = _warCryObject.GetComponent<OwnerData>();
+                ownerData.OwnerId = _parent.GetInstanceID();
+
                 _abilityEnd = true;
 
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);

@@ -220,7 +220,7 @@ MonoBehaviour:
     type: 3}
   _waterBubblePrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
     type: 3}
-  _parentGameObject: {fileID: 2637092012038209767}
+  _parent: {fileID: 2637092012038209767}
   _playerAnimator: {fileID: 7451471454665554315}
   _cameraShaker: {fileID: 11400000, guid: 4dd3fa128d3f96449a98d2ea633f8b79, type: 2}
   _abilityCastRadius: 10
@@ -1029,7 +1029,7 @@ Transform:
   - {fileID: 2368701884863666857}
   - {fileID: 1362992553}
   m_Father: {fileID: 0}
-  m_RootOrder: 133
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2637092012038209768
 CharacterController:
@@ -1516,6 +1516,7 @@ MonoBehaviour:
   _cooldownDuration: 14
   _iceWallPrefab: {fileID: 8855951514977000263, guid: 54b25c9551d650942a2936e1e39b341c,
     type: 3}
+  _parent: {fileID: 2637092012038209767}
   _shootController: {fileID: 3268835866765903229}
   _playerAnimator: {fileID: 7451471454665554315}
   _windUpTime: 0.25
@@ -2898,6 +2899,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6996539981956235111}
     m_Modifications:
+    - target: {fileID: -1839084779858252492, guid: 0237a9152d1898b4e9381a9425783132,
+        type: 3}
+      propertyPath: _parent
+      value: 
+      objectReference: {fileID: 2637092012038209767}
+    - target: {fileID: -1839084779858252492, guid: 0237a9152d1898b4e9381a9425783132,
+        type: 3}
+      propertyPath: _autoSetOwnerId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5086268201243115593, guid: 0237a9152d1898b4e9381a9425783132,
         type: 3}
       propertyPath: m_RootOrder

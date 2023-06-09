@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4947489715981850302}
   - component: {fileID: 4947489715981850243}
   - component: {fileID: 4947489715981850242}
+  - component: {fileID: -553162919651117717}
   m_Layer: 7
   m_Name: PlasmaBombLine
   m_TagString: Untagged
@@ -104,6 +105,18 @@ MonoBehaviour:
   _projectileDestroyTime: 1
   _pulseDropRate: 0.1
   _damageAmount: 15
+--- !u!114 &-553162919651117717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4947489715981850301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6552805674668648026
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Utils.Common;
 using World;
 
 #endregion
@@ -18,7 +20,7 @@ namespace Player.Type_2
         [SerializeField] private GameObject _waterBubblePrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parentGameObject;
+        [SerializeField] private GameObject _parent;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Camera Data")]
@@ -71,7 +73,7 @@ namespace Player.Type_2
             for (var i = 0; i < totalHitColliders; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i].gameObject.GetInstanceID() == _parentGameObject.GetInstanceID())
+                if (_hitColliders[i].gameObject.GetInstanceID() == _parent.GetInstanceID())
                 {
                     continue;
                 }
@@ -82,6 +84,9 @@ namespace Player.Type_2
                     var position = targetTransform.position;
                     var waterBubble = Instantiate(_waterBubblePrefab, position, Quaternion.identity, targetTransform);
                     var waterBubbleFrozen = waterBubble.GetComponent<Type_2_Ultimate_WaterBubbleFrozen>();
+                    var ownerData = waterBubble.GetComponent<OwnerData>();
+
+                    ownerData.OwnerId = _parent.GetInstanceID();
                     targetController.CheckAndAddExternalAbility(waterBubbleFrozen);
                 }
             }

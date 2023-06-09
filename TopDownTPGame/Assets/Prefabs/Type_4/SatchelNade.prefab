@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 981255966402603157}
   - component: {fileID: 3462899490673628805}
   - component: {fileID: 3462899490673628826}
+  - component: {fileID: -6146848591643819640}
   m_Layer: 7
   m_Name: SatchelNade
   m_TagString: Untagged
@@ -199,3 +200,15 @@ MonoBehaviour:
     m_Bits: 64
   _debugIsActive: 0
   _debugDisplayDuration: 10
+--- !u!114 &-6146848591643819640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3462899490673628828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

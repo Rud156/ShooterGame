@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 8769402461998157669}
   - component: {fileID: 7548192263693597652}
   - component: {fileID: -7433943695938108305}
+  - component: {fileID: 1413583090549725755}
   m_Layer: 7
   m_Name: StunGrenade
   m_TagString: Untagged
@@ -283,3 +284,15 @@ MonoBehaviour:
   _cameraShaker: {fileID: 11400000, guid: ccfdf1064b114f84086219c443bfd2cd, type: 2}
   _debugIsActive: 0
   _debugDisplayDuration: 10
+--- !u!114 &1413583090549725755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548192263693597651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

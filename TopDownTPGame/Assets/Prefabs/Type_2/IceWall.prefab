@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8855951514977000249}
   - component: {fileID: 8855951514977000252}
   - component: {fileID: 6678552366994652362}
+  - component: {fileID: -593924521845900915}
   m_Layer: 0
   m_Name: IceWall
   m_TagString: Untagged
@@ -184,6 +185,18 @@ MonoBehaviour:
   _debugHealAmount: 0
   _debugDecayAmount: 0
   _debugDecayDuration: 0
+--- !u!114 &-593924521845900915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855951514977000263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5549856369288046091
 PrefabInstance:
   m_ObjectHideFlags: 0

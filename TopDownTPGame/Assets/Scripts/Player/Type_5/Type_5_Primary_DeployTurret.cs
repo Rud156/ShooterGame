@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using Utils.Materials;
 
 #endregion
@@ -112,6 +113,9 @@ namespace Player.Type_5
         {
             _turretObject = Instantiate(_turretPrefab, transform.position, Quaternion.identity);
             _turretMaterialSwitcher = _turretObject.GetComponent<BaseMaterialSwitcher>();
+
+            var ownerData = _turretObject.GetComponent<OwnerData>();
+            ownerData.OwnerId = _parent.GetInstanceID();
 
             SetTurretState(TurretState.Placement);
         }

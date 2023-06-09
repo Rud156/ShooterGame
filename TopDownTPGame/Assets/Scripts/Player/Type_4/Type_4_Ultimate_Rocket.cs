@@ -7,6 +7,7 @@ using Player.Common;
 using Player.Type_4;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using World;
 
 #endregion
@@ -17,6 +18,7 @@ public class Type_4_Ultimate_Rocket : Ability
     [SerializeField] private GameObject _rocketPrefab;
 
     [Header("Components")]
+    [SerializeField] private GameObject _parent;
     [SerializeField] private PlayerBaseShootController _shootController;
     [SerializeField] private Type_4_DroneController _droneController;
 
@@ -55,8 +57,10 @@ public class Type_4_Ultimate_Rocket : Ability
 
             var rocket = Instantiate(_rocketPrefab, shootPosition, Quaternion.LookRotation(direction));
             var rocketProjectile = rocket.GetComponent<RocketProjectile>();
+            var ownerData = rocket.GetComponent<OwnerData>();
 
             rocketProjectile.LaunchProjectile(direction);
+            ownerData.OwnerId = _parent.GetInstanceID();
 
             _currentUltimateAmount = 0;
             _abilityEnd = true;

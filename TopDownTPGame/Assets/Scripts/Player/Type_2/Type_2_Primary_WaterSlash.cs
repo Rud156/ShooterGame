@@ -8,6 +8,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using Utils.Structs;
 using World;
 using Random = UnityEngine.Random;
@@ -182,10 +183,12 @@ namespace Player.Type_2
             var direction = _shootController.GetShootLookDirection();
             var simpleProj = frontSlashObject.GetComponent<SimpleProjectile>();
             var simpleDamageTrigger = frontSlashObject.GetComponent<SimpleDamageTrigger>();
+            var ownerData = frontSlashObject.GetComponent<OwnerData>();
 
             simpleProj.LaunchProjectile(direction);
             simpleDamageTrigger.SetCollisionCallback(HandleProjectileHitCollider);
             simpleDamageTrigger.SetParent(_parent);
+            ownerData.OwnerId = _parent.GetInstanceID();
 
             IncrementCurrentState();
             _lastTriggeredTime = Time.time;

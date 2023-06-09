@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Ability_Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class PlasmaPulse : MonoBehaviour
+    public class PlasmaPulse : MonoBehaviour, IProjectile
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _destroyEffectPrefab;
@@ -47,7 +47,7 @@ namespace Ability_Scripts.Projectiles
             _destroyTimeLeft -= Time.deltaTime;
             if (_destroyTimeLeft <= 0)
             {
-                DestroyProjectile();
+                ProjectileDestroy();
             }
         }
 
@@ -61,7 +61,17 @@ namespace Ability_Scripts.Projectiles
 
         #region Utils
 
-        private void DestroyProjectile()
+        public void LaunchProjectile(Vector3 direction)
+        {
+            // Do nothing here...
+        }
+
+        public void ProjectileHit(Collider other)
+        {
+            // Do nothing here...
+        }
+
+        public void ProjectileDestroy()
         {
             if (_destroyEffectPrefab != null)
             {
@@ -85,7 +95,7 @@ namespace Ability_Scripts.Projectiles
 
             Destroy(gameObject);
         }
-
-        #endregion Utils
     }
+
+    #endregion Utils
 }

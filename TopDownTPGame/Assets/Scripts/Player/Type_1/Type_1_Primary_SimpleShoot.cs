@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using Utils.Misc;
 using World;
 
@@ -72,9 +73,11 @@ namespace Player.Type_1
                 var projectile = Instantiate(_projectilePrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
                 var simpleDamageTrigger = projectile.GetComponent<SimpleDamageTrigger>();
+                var ownerData = projectile.GetComponent<OwnerData>();
 
                 simpleProj.LaunchProjectile(direction);
                 simpleDamageTrigger.SetParent(_parent);
+                ownerData.OwnerId = _parent.GetInstanceID();
 
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(HandleProjectileHitCollider);

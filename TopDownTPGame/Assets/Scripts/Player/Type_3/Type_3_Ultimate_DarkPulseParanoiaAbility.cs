@@ -4,6 +4,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using World;
 
 #endregion
@@ -16,8 +17,8 @@ namespace Player.Type_3
         [SerializeField] private GameObject _darkPulsePrefab;
 
         [Header("Components")]
-        [SerializeField] private Animator _playerAnimator;
         [SerializeField] private GameObject _parent;
+        [SerializeField] private Animator _playerAnimator;
 
         [Header("Ultimate Data")]
         [SerializeField] private float _windUpTime;
@@ -52,7 +53,10 @@ namespace Player.Type_3
                 var darkPulse = Instantiate(_darkPulsePrefab, characterTransform.position, Quaternion.identity, characterTransform);
 
                 var darkObject = darkPulse.GetComponent<Type_3_Ultimate_DarkPulseParanoia>();
+                var ownerData = darkPulse.GetComponent<OwnerData>();
+
                 darkObject.SetOwnerInstanceId(_parent.GetInstanceID(), _playerAnimator, PlayerStaticData.Type_3_Ultimate);
+                ownerData.OwnerId = _parent.GetInstanceID();
 
                 _darkPulseObject = darkPulse;
                 _abilityEnd = true;

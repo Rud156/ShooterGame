@@ -6,6 +6,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -17,6 +18,7 @@ namespace Player.Type_5
         [SerializeField] private GameObject _shieldPrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
 
@@ -35,7 +37,10 @@ namespace Player.Type_5
         {
             var shieldObject = Instantiate(_shieldPrefab, _shootController.GetShootPosition(), Quaternion.identity);
             var shieldDeploy = shieldObject.GetComponent<ShieldDeployProjectile>();
+            var ownerData = shieldObject.GetComponent<OwnerData>();
+
             shieldDeploy.LaunchProjectile(_shootController.GetShootLookDirection());
+            ownerData.OwnerId = _parent.GetInstanceID();
 
             _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;

@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -18,6 +19,7 @@ namespace Player.Type_4
         [SerializeField] private GameObject _plasmaBombPrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_4_DroneController _droneController;
         [SerializeField] private Type_4_Ultimate_Rocket _type4Ultimate;
@@ -58,9 +60,12 @@ namespace Player.Type_4
 
                 var projectile = Instantiate(_plasmaBombPrefab, spawnPosition, Quaternion.identity);
                 var plasmaBomb = projectile.GetComponent<PlasmaBombLine>();
+                var ownerData = projectile.GetComponent<OwnerData>();
+
                 plasmaBomb.SetCollisionCallback(HandlePlasmaBombCollision);
                 plasmaBomb.SetParentSpawner(this);
                 plasmaBomb.LaunchProjectile(direction);
+                ownerData.OwnerId = _parent.GetInstanceID();
 
                 _droneController.KnockbackDrone(PlayerStaticData.Type_4_PrimaryDroneKnockbackMultiplier);
                 CustomCameraController.Instance.StartShake(_cameraShaker);

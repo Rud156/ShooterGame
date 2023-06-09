@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2076649741587126073}
   - component: {fileID: 2076649741587126072}
   - component: {fileID: -4108857055161420574}
+  - component: {fileID: -1615071987652896966}
   m_Layer: 7
   m_Name: Seekers
   m_TagString: Untagged
@@ -199,6 +200,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 0}
   _damageAmount: 50
+--- !u!114 &-1615071987652896966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076649741587126079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1076435630065481394
 PrefabInstance:
   m_ObjectHideFlags: 0

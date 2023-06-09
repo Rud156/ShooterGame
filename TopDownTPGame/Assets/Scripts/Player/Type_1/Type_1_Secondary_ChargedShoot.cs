@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using Utils.Misc;
 using World;
 
@@ -20,6 +21,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _chargedObjectPrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_1_Primary_SimpleShoot _type1Primary;
         [SerializeField] private Type_1_Ultimate_WarCryPulseAbility _type1Ultimate;
@@ -56,7 +58,10 @@ namespace Player.Type_1
 
                 var projectile = Instantiate(_chargedObjectPrefab, spawnPosition, Quaternion.identity);
                 var simpleProj = projectile.GetComponent<SimpleProjectile>();
+                var ownerData = projectile.GetComponent<OwnerData>();
+
                 simpleProj.LaunchProjectile(direction);
+                ownerData.OwnerId = _parent.GetInstanceID();
 
                 var chargeAmount = _type1Primary.GetCurrentChargeAmount();
                 var maxChargeAmount = _type1Primary.GetMaxChargeAmount();

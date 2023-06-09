@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -18,6 +19,7 @@ namespace Player.Type_5
         [SerializeField] private GameObject _stunGrenadePrefab;
 
         [Header("Components")]
+        [SerializeField] private GameObject _parent;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_5_Ultimate_ShieldAbility _type5Ultimate;
         [SerializeField] private Animator _playerAnimator;
@@ -41,9 +43,12 @@ namespace Player.Type_5
         {
             var stunGrenade = Instantiate(_stunGrenadePrefab, _shootController.GetShootPosition(), Quaternion.identity);
             var projectile = stunGrenade.GetComponent<StunGrenade>();
+            var ownerData = stunGrenade.GetComponent<OwnerData>();
+
             projectile.SetCollisionCallback(HandleStunGrenadeCollision);
             projectile.SetParentSpawner(this);
             projectile.LaunchProjectile(_shootController.GetShootLookDirection());
+            ownerData.OwnerId = _parent.GetInstanceID();
 
             _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;

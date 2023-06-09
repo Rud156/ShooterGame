@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 5093047753733651182}
   - component: {fileID: 4197700677174948864}
   - component: {fileID: 5093047753733651190}
+  - component: {fileID: 6871701178438210890}
   m_Layer: 7
   m_Name: SimpleOrb
   m_TagString: Untagged
@@ -234,6 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d4a0c7605393644dae5f26a4128a7f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parent: {fileID: 0}
   _damageAmount: 20
 --- !u!114 &5093047753733651190
 MonoBehaviour:
@@ -252,6 +254,18 @@ MonoBehaviour:
   _effectSpawnPoint: {fileID: 6565975074958470523}
   _destroyEffect: {fileID: 3008524000958200615, guid: 6677851335234034780e94f9fb4ffecf,
     type: 3}
+--- !u!114 &6871701178438210890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093047753733651196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1445454616167624922
 PrefabInstance:
   m_ObjectHideFlags: 0
