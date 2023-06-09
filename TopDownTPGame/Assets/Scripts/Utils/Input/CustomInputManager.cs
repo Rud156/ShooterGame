@@ -1,6 +1,5 @@
 #region
 
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -96,7 +95,7 @@ namespace Utils.Input
 
         private void HandleMouseMoved(InputAction.CallbackContext context)
         {
-            var mouseInput = CustomInputManager.Instance.PlayerInput.Look.ReadValue<Vector2>();
+            var mouseInput = PlayerInput.Look.ReadValue<Vector2>();
             if (mouseInput != Vector2.zero)
             {
                 var path = context.action.activeControl.path;

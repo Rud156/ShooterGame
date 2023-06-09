@@ -26,6 +26,7 @@ namespace Player.Type_5
         [Header("Spawn Data")]
         [SerializeField] private float _spawnMaxDistance;
         [SerializeField] private int _maxTurretsCanSpawn;
+        [SerializeField] private float _raycastDownDistance;
         [SerializeField] private float _minYNormalThreshold;
         [SerializeField] private float _maxYNormalThreshold;
         [SerializeField] private LayerMask _turretDeployCheckMask;
@@ -125,60 +126,63 @@ namespace Player.Type_5
                 Debug.DrawRay(shootPosition, direction * _spawnMaxDistance, Color.red, _debugDisplayDuration);
             }
 
-            var characterTransform = transform;
-            var yNormal = 1.0f;
-            var spawnPosition = characterTransform.position + characterTransform.forward * _spawnMaxDistance;
-            var spawnRotation = Quaternion.identity;
+            var spawnPosition = shootPosition + transform.forward * _spawnMaxDistance;
             if (hit)
             {
-                yNormal = hitInfo.normal.y;
                 spawnPosition = hitInfo.point;
-                spawnRotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
             }
 
-            _turretObject.transform.position = spawnPosition;
-            _turretObject.transform.rotation = spawnRotation;
-
-            if (IsNormalInAcceptedRange(yNormal))
+            var hitDown = Physics.Raycast(spawnPosition, Vector3.down, out var hitInfoDown, _raycastDownDistance, _turretDeployCheckMask);
+            if (hitDown)
             {
-                UpdateTurretMaterial(2);
+                _turretObject.transform.position = hitInfoDown.point;
+                _turretObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfoDown.normal);
 
-                var primaryKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
-                if (primaryKey.KeyPressedThisFrame)
+                var yNormal = hitInfoDown.normal.y;
+                if (IsNormalInAcceptedRange(yNormal))
                 {
-                    // Delete Last Spawned Turret...
-                    if (_spawnedTurretControllers.Count >= _maxTurretsCanSpawn)
+                    UpdateTurretMaterial(2);
+
+                    var primaryKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
+                    if (primaryKey.KeyPressedThisFrame)
                     {
-                        _spawnedTurretControllers[0].DestroyTurret();
-                        _spawnedTurretControllers.RemoveAt(0);
+                        // Delete Last Spawned Turret...
+                        if (_spawnedTurretControllers.Count >= _maxTurretsCanSpawn)
+                        {
+                            _spawnedTurretControllers[0].DestroyTurret();
+                            _spawnedTurretControllers.RemoveAt(0);
+                        }
+
+                        UpdateTurretMaterial(1); // Update the Material first since ActivateTurret uses the turret Material
+                        var turretController = _turretObject.GetComponent<Type_5_TurretController>();
+                        turretController.ActivateTurret();
+                        turretController.SetOwnerInstanceId(_parent.GetInstanceID());
+                        turretController.SetDamageCallback(HandleTurretDamaged);
+
+                        _turretObject.transform.SetParent(hitInfo.transform);
+                        _spawnedTurretControllers.Add(turretController);
+                        _turretObject = null;
+                        _currentCooldownDuration = _cooldownDuration;
+
+                        SetTurretState(TurretState.Placed);
+                        HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
                     }
-
-                    UpdateTurretMaterial(1); // Update the Material first since ActivateTurret uses the turret Material
-                    var turretController = _turretObject.GetComponent<Type_5_TurretController>();
-                    turretController.ActivateTurret();
-                    turretController.SetOwnerInstanceId(_parent.GetInstanceID());
-                    turretController.SetDamageCallback(HandleTurretDamaged);
-
-                    _turretObject.transform.SetParent(hitInfo.transform);
-                    _spawnedTurretControllers.Add(turretController);
-                    _turretObject = null;
-                    _currentCooldownDuration = _cooldownDuration;
-
-                    SetTurretState(TurretState.Placed);
-                    HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
+                }
+                else
+                {
+                    var endPosition = direction * _spawnMaxDistance;
+                    _turretObject.transform.position = shootPosition + endPosition;
+                    UpdateTurretMaterial(3);
                 }
             }
             else
             {
-                var endPosition = direction * _spawnMaxDistance;
-                _turretObject.transform.position = shootPosition + endPosition;
                 UpdateTurretMaterial(3);
             }
 
             var secondaryKey = playerController.GetKeyForAbilityTrigger(AbilityTrigger.Secondary);
             var tertiaryKey = playerController.GetKeyForAbilityTrigger(AbilityTrigger.Tertiary);
             var ultimateKey = playerController.GetKeyForAbilityTrigger(AbilityTrigger.Ultimate);
-
             if (secondaryKey.KeyPressedThisFrame || tertiaryKey.KeyPressedThisFrame || ultimateKey.KeyPressedThisFrame)
             {
                 Destroy(_turretObject);

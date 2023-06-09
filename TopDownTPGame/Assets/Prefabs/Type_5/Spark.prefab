@@ -804,7 +804,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _windUptime: 0.3
-  _ultimateChargePerSec: 100
+  _ultimateChargePerSec: 3
   _maxUltimateChargeAmount: 1700
   _cameraShaker: {fileID: 11400000, guid: 325db4dcf003ddf41a78fa4afd488d17, type: 2}
   _debugIsActive: 0
@@ -6280,7 +6280,7 @@ MonoBehaviour:
   _abilityNameType: 16
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 1
+  _cooldownDuration: 3
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
   _parent: {fileID: 1252368709468985580}
@@ -6288,9 +6288,9 @@ MonoBehaviour:
   _type5Ultimate: {fileID: 5302275595620308645}
   _spawnMaxDistance: 5
   _maxTurretsCanSpawn: 3
+  _raycastDownDistance: 5
   _minYNormalThreshold: 0.7
   _maxYNormalThreshold: 1
-  _defaultSpawnOffset: {x: 0, y: 0, z: 0}
   _turretDeployCheckMask:
     serializedVersion: 2
     m_Bits: 1
@@ -7832,7 +7832,7 @@ MonoBehaviour:
   _abilityNameType: 17
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 1
+  _cooldownDuration: 7
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
   _shootController: {fileID: 5021002024800133882}
@@ -8878,7 +8878,7 @@ MonoBehaviour:
   _abilityNameType: 18
   _abilityPositioning: 0
   _allowedActiveAbilities: 150000001600000018000000
-  _cooldownDuration: 1
+  _cooldownDuration: 20
   _shieldPrefab: {fileID: 7981294947940924098, guid: 1ea4fde9248da5041a535aa2d7ba7f1d,
     type: 3}
   _shootController: {fileID: 5021002024800133882}
