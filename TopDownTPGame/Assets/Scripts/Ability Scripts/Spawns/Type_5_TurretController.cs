@@ -164,7 +164,8 @@ namespace Ability_Scripts.Spawns
             var hasTargetInLos = false;
             for (var i = 0; i < hitCount; i++)
             {
-                if (_hitColliders[i].GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }
@@ -328,7 +329,8 @@ namespace Ability_Scripts.Spawns
 
             for (var i = 0; i < hitCount; i++)
             {
-                if (_hitColliders[i].GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }
@@ -360,7 +362,8 @@ namespace Ability_Scripts.Spawns
 
             for (var i = 0; i < hitCount; i++)
             {
-                if (_hitColliders[i].GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }

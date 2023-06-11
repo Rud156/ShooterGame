@@ -71,8 +71,8 @@ namespace Player.Type_2
 
             for (var i = 0; i < totalHitColliders; i++)
             {
-                // Do not target itself
-                if (_hitColliders[i].gameObject.GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }

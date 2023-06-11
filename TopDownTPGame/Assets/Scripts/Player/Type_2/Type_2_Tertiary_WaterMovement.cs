@@ -105,7 +105,7 @@ namespace Player.Type_2
                 }
 
                 burstDamageData.BurstDamageMarker.SetDamageAmount(_damageAmount);
-                burstDamageData.BurstDamageMarker.ApplyDamage();
+                burstDamageData.BurstDamageMarker.ApplyDamage(true);
                 _type2Ultimate.AddUltimateCharge(_ultimateChargeAmount);
                 Destroy(burstDamageData.MarkedEffectObject);
                 Destroy(burstDamageData.BurstDamageMarker);
@@ -252,8 +252,8 @@ namespace Player.Type_2
 
             for (var i = 0; i < targetsHit; i++)
             {
-                // Do not target itself
-                if (_hitColliders[i].GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }

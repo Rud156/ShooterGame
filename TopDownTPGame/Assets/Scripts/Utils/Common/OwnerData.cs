@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using UnityEngine;
 
 #endregion
@@ -15,19 +16,23 @@ namespace Utils.Common
         [Header("Self Data")]
         [SerializeField] private bool _isSelfOwner;
 
-        private int _ownerId;
+        private string _ownerId;
 
         #region Unity Functions
 
-        private void Start()
+        private void Awake()
         {
             if (_isSelfOwner)
             {
-                _ownerId = gameObject.GetInstanceID();
+                _ownerId = Guid.NewGuid().ToString();
             }
-            else if (_autoSetOwnerId)
+        }
+
+        private void Start()
+        {
+            if (_autoSetOwnerId)
             {
-                _ownerId = _parent.GetInstanceID();
+                _ownerId = _parent.GetComponent<OwnerData>().OwnerId;
             }
         }
 
@@ -35,7 +40,7 @@ namespace Utils.Common
         {
             if (_autoSetOwnerId)
             {
-                _ownerId = _parent.GetInstanceID();
+                _ownerId = _parent.GetComponent<OwnerData>().OwnerId;
             }
         }
 
@@ -43,7 +48,7 @@ namespace Utils.Common
 
         #region External Functions
 
-        public int OwnerId
+        public string OwnerId
         {
             get => _ownerId;
 

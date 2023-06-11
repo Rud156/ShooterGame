@@ -19,7 +19,14 @@ namespace HealthSystem
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.GetComponent<OwnerData>().OwnerId != GetComponent<OwnerData>().OwnerId && other.TryGetComponent(out HealthAndDamage healthAndDamage))
+            var otherOwnerData = other.GetComponent<OwnerData>();
+            if (otherOwnerData == null)
+            {
+                _callbackFunc?.Invoke(other);
+                return;
+            }
+
+            if (otherOwnerData.OwnerId != GetComponent<OwnerData>().OwnerId && other.TryGetComponent(out HealthAndDamage healthAndDamage))
             {
                 healthAndDamage.TakeDamage(_damageAmount);
                 _callbackFunc?.Invoke(other);

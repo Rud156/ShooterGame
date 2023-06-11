@@ -100,8 +100,8 @@ namespace Player.Type_3
             var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _pulseRadius, _hitColliders, _pulseMask);
             for (var i = 0; i < targetsHit; i++)
             {
-                // Do not target itself
-                if (_hitColliders[i].gameObject.GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }

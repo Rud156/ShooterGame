@@ -44,6 +44,10 @@ namespace Player.Type_5
             for (var i = 0; i < hitColliderCount; i++)
             {
                 var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null)
+                {
+                    continue;
+                }
 
                 if (hitOwnerData.OwnerId != _ownerData.OwnerId)
                 {
