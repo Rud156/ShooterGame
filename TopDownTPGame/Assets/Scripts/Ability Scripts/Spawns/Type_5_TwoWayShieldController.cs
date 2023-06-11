@@ -2,6 +2,7 @@
 
 using Player.Common;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -49,7 +50,7 @@ namespace Ability_Scripts.Spawns
                     continue;
                 }
 
-                var outerGameObjectId = _outerSphereColliders[i].gameObject.GetInstanceID();
+                var outerGameObjectId = _outerSphereColliders[i].gameObject.GetComponent<OwnerData>().OwnerId;
                 var collidedWithInner = false;
                 for (var j = 0; j < innerSphereHitCount; j++)
                 {
@@ -58,7 +59,7 @@ namespace Ability_Scripts.Spawns
                         continue;
                     }
 
-                    var innerGameObjectId = _innerSphereColliders[i].gameObject.GetInstanceID();
+                    var innerGameObjectId = _innerSphereColliders[i].gameObject.GetComponent<OwnerData>().OwnerId;
                     if (innerGameObjectId == outerGameObjectId)
                     {
                         collidedWithInner = true;

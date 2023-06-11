@@ -24,7 +24,7 @@ namespace Player.Type_2
         [SerializeField] private GameObject _shootFrontPrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private GameObject _rightHandSword;
         [SerializeField] private SimpleDamageTrigger _swordDamageTrigger;
         [SerializeField] private PlayerBaseShootController _shootController;
@@ -187,8 +187,7 @@ namespace Player.Type_2
 
             simpleProj.LaunchProjectile(direction);
             simpleDamageTrigger.SetCollisionCallback(HandleProjectileHitCollider);
-            simpleDamageTrigger.SetParent(_parent);
-            ownerData.OwnerId = _parent.GetInstanceID();
+            ownerData.OwnerId = _ownerIdData.OwnerId;
 
             IncrementCurrentState();
             _lastTriggeredTime = Time.time;

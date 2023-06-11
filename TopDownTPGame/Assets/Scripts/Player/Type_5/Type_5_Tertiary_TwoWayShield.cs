@@ -18,7 +18,7 @@ namespace Player.Type_5
         [SerializeField] private GameObject _shieldPrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
 
@@ -40,7 +40,7 @@ namespace Player.Type_5
             var ownerData = shieldObject.GetComponent<OwnerData>();
 
             shieldDeploy.LaunchProjectile(_shootController.GetShootLookDirection());
-            ownerData.OwnerId = _parent.GetInstanceID();
+            ownerData.OwnerId = _ownerIdData.OwnerId;
 
             _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;

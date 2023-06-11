@@ -20,7 +20,7 @@ namespace Player.Type_5
         [SerializeField] private GameObject _turretPrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_5_Ultimate_ShieldAbility _type5Ultimate;
 
@@ -115,7 +115,7 @@ namespace Player.Type_5
             _turretMaterialSwitcher = _turretObject.GetComponent<BaseMaterialSwitcher>();
 
             var ownerData = _turretObject.GetComponent<OwnerData>();
-            ownerData.OwnerId = _parent.GetInstanceID();
+            ownerData.OwnerId = _ownerIdData.OwnerId;
 
             SetTurretState(TurretState.Placement);
         }
@@ -160,8 +160,10 @@ namespace Player.Type_5
                         UpdateTurretMaterial(1); // Update the Material first since ActivateTurret uses the turret Material
                         var turretController = _turretObject.GetComponent<Type_5_TurretController>();
                         turretController.ActivateTurret();
-                        turretController.SetOwnerInstanceId(_parent.GetInstanceID());
                         turretController.SetDamageCallback(HandleTurretDamaged);
+
+                        var ownerData = _turretObject.GetComponent<OwnerData>();
+                        ownerData.OwnerId = _ownerIdData.OwnerId;
 
                         _turretObject.transform.SetParent(hitInfo.transform);
                         _spawnedTurretControllers.Add(turretController);

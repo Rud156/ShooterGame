@@ -54,7 +54,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _ultimatePulsePrefab: {fileID: 8753566998753262365, guid: 618fc5f0ab0e34d49b7a90a780dfd22c,
     type: 3}
-  _parent: {fileID: 95916530318942721}
+  _ownerIdData: {fileID: -1878374417444643077}
   _playerAnimator: {fileID: 1470349118}
   _windUptime: 0.25
   _ultimateChargePerSec: 5
@@ -114,7 +114,7 @@ MonoBehaviour:
   _cooldownDuration: 5
   _chargedObjectPrefab: {fileID: 9148642754012515157, guid: 957bdfe836ffab34a8c7248cc5163f40,
     type: 3}
-  _parent: {fileID: 95916530318942721}
+  _ownerIdData: {fileID: -1878374417444643077}
   _shootController: {fileID: 1948321099}
   _type1Primary: {fileID: 1678420950}
   _type1Ultimate: {fileID: 189484484}
@@ -275,7 +275,7 @@ MonoBehaviour:
   _cooldownDuration: 3
   _projectilePrefab: {fileID: 5093047753733651196, guid: 181ae5f998936ec4e9ac2303665f21da,
     type: 3}
-  _parent: {fileID: 95916530318942721}
+  _ownerIdData: {fileID: -1878374417444643077}
   _shootController: {fileID: 1948321099}
   _type1Ultimate: {fileID: 189484484}
   _playerAnimator: {fileID: 1470349118}

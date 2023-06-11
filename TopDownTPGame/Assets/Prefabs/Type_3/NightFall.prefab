@@ -1399,7 +1399,7 @@ Transform:
   - {fileID: 660414317381231213}
   - {fileID: 3729988723055359378}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 133
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1683011238459484371
 CharacterController:
@@ -5629,7 +5629,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _darkPulsePrefab: {fileID: 418013023188048173, guid: 65e21fdbf833645459f8d535e2054fbc,
     type: 3}
-  _parent: {fileID: 1683011238459484380}
+  _ownerIdData: {fileID: 2253218142344740249}
   _playerAnimator: {fileID: 2003848228306025429}
   _windUpTime: 0.25
   _ultimateChargePerSec: 5

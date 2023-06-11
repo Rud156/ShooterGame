@@ -220,7 +220,7 @@ MonoBehaviour:
     type: 3}
   _waterBubblePrefab: {fileID: 5352708457230724641, guid: 2e1acece17a0f62489315e7519395fcd,
     type: 3}
-  _parent: {fileID: 2637092012038209767}
+  _ownerIdData: {fileID: -3362515556063367980}
   _playerAnimator: {fileID: 7451471454665554315}
   _cameraShaker: {fileID: 11400000, guid: 4dd3fa128d3f96449a98d2ea633f8b79, type: 2}
   _abilityCastRadius: 10
@@ -1030,7 +1030,7 @@ Transform:
   - {fileID: 2368701884863666857}
   - {fileID: 1362992553}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 133
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2637092012038209768
 CharacterController:
@@ -1418,7 +1418,7 @@ MonoBehaviour:
   _cooldownDuration: 3
   _shootFrontPrefab: {fileID: 1151988907945508128, guid: 6481fd2296d78e74e9315a48641f1306,
     type: 3}
-  _parent: {fileID: 2637092012038209767}
+  _ownerIdData: {fileID: -3362515556063367980}
   _rightHandSword: {fileID: 1129290133836766669}
   _swordDamageTrigger: {fileID: 894185260324517946}
   _shootController: {fileID: 3268835866765903229}
@@ -1532,7 +1532,7 @@ MonoBehaviour:
   _cooldownDuration: 14
   _iceWallPrefab: {fileID: 8855951514977000263, guid: 54b25c9551d650942a2936e1e39b341c,
     type: 3}
-  _parent: {fileID: 2637092012038209767}
+  _ownerIdData: {fileID: -3362515556063367980}
   _shootController: {fileID: 3268835866765903229}
   _playerAnimator: {fileID: 7451471454665554315}
   _windUpTime: 0.25
@@ -1749,6 +1749,8 @@ MonoBehaviour:
   _abilityPositioning: 0
   _allowedActiveAbilities: 1500000018000000
   _cooldownDuration: 5
+  _burstDamageMarkerPrefab: {fileID: 984768308197040757, guid: 44c9b29c645fe694d993c02caf73f88e,
+    type: 3}
   _markerEffectPrefab: {fileID: 8160184973231911241, guid: 199b7c15692db1947aa70ad0e5a62301,
     type: 3}
   _burstDamageEffectPrefab: {fileID: 168058103202751482, guid: 730386caebd4dc846850e53629da47e1,
@@ -1757,6 +1759,7 @@ MonoBehaviour:
     type: 3}
   _holdRunTrailEffectPrefab: {fileID: 4581791113312155467, guid: ed3fa45c44aceef479ace8b50e33ea83,
     type: 3}
+  _ownerIdData: {fileID: -3362515556063367980}
   _type2Ultimate: {fileID: 4734483721622460076}
   _playerAnimator: {fileID: 7451471454665554315}
   _tertiaryMaterial: {fileID: 2100000, guid: 8180121e3ddd8244e912617ce06e35de, type: 2}

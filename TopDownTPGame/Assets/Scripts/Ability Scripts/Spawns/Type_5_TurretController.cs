@@ -4,6 +4,7 @@ using System;
 using HealthSystem;
 using Player.Common;
 using UnityEngine;
+using Utils.Common;
 using Random = UnityEngine.Random;
 
 #endregion
@@ -16,6 +17,7 @@ namespace Ability_Scripts.Spawns
         private const float OneSecond = 1;
 
         [Header("Components")]
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private Collider _turretCollider;
         [SerializeField] private Transform _turretTop;
@@ -53,7 +55,6 @@ namespace Ability_Scripts.Spawns
 
         [SerializeField] private TurretState _turretState;
         [SerializeField] private TurretTargetingState _turretTargetingState;
-        private int _ownerId;
 
         private float _floatData1;
         private float _floatData2;
@@ -113,8 +114,6 @@ namespace Ability_Scripts.Spawns
 
         #region External Functions
 
-        public void SetOwnerInstanceId(int ownerId) => _ownerId = ownerId;
-
         public void SetDamageCallback(Action callback) => _callbackFunc = callback;
 
         public void ActivateTurret()
@@ -165,7 +164,7 @@ namespace Ability_Scripts.Spawns
             var hasTargetInLos = false;
             for (var i = 0; i < hitCount; i++)
             {
-                if (_hitColliders[i].gameObject.GetInstanceID() == _ownerId)
+                if (_hitColliders[i].GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }
@@ -318,7 +317,7 @@ namespace Ability_Scripts.Spawns
             var startPosition = _shootPoint.position;
             var direction = target.position - startPosition;
             var hit = Physics.Raycast(startPosition, direction, out var hitInfo, _targetingRadius, _targetingMask);
-            return hit && hitInfo.transform.gameObject.GetInstanceID() == target.gameObject.GetInstanceID();
+            return hit && hitInfo.transform.gameObject.GetComponent<OwnerData>().OwnerId == target.gameObject.GetComponent<OwnerData>().OwnerId;
         }
 
         private HealthAndDamage GetNearestHealthAndDamage()
@@ -329,7 +328,7 @@ namespace Ability_Scripts.Spawns
 
             for (var i = 0; i < hitCount; i++)
             {
-                if (_hitColliders[i].gameObject.GetInstanceID() == _ownerId)
+                if (_hitColliders[i].GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }
@@ -361,7 +360,7 @@ namespace Ability_Scripts.Spawns
 
             for (var i = 0; i < hitCount; i++)
             {
-                if (_hitColliders[i].gameObject.GetInstanceID() == _ownerId)
+                if (_hitColliders[i].GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }

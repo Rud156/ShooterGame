@@ -17,7 +17,7 @@ namespace Player.Type_4
         [SerializeField] private GameObject _satchelPrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
 
@@ -86,7 +86,7 @@ namespace Player.Type_4
                 var ownerData = satchel.GetComponent<OwnerData>();
 
                 satchelNade.LaunchProjectile(direction);
-                ownerData.OwnerId = _parent.GetInstanceID();
+                ownerData.OwnerId = _ownerIdData.OwnerId;
                 _playerAnimator.SetTrigger(PlayerStaticData.Type_4_Tertiary);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
 

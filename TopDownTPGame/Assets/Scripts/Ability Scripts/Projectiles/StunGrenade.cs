@@ -7,6 +7,7 @@ using Player.Base;
 using Player.Common;
 using Player.Type_5;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -18,6 +19,9 @@ namespace Ability_Scripts.Projectiles
         [Header("Prefabs")]
         [SerializeField] private GameObject _stunPrefab;
         [SerializeField] private GameObject _destroyEffect;
+
+        [Header("Components")]
+        [SerializeField] private OwnerData _ownerIdData;
 
         [Header("General Grenade Data")]
         [SerializeField] private float _additionalGravity;
@@ -115,6 +119,9 @@ namespace Ability_Scripts.Projectiles
                 {
                     var secondaryProjectile = Instantiate(_secondaryGrenadePrefab, transform.position, Quaternion.Euler(0, startAngle, 0));
                     var stunGrenade = secondaryProjectile.GetComponent<StunGrenade>();
+                    var ownerData = secondaryProjectile.GetComponent<OwnerData>();
+
+                    ownerData.OwnerId = _ownerIdData.OwnerId;
                     var forward = secondaryProjectile.transform.forward;
 
                     if (_parentSpawner != null)
@@ -127,8 +134,9 @@ namespace Ability_Scripts.Projectiles
                 }
             }
 
-            Instantiate(_destroyEffect, transform.position, Quaternion.identity);
-            CustomCameraController.Instance.StartShake(_cameraShaker, transform.position);
+            var spawnPosition = transform.position;
+            Instantiate(_destroyEffect, spawnPosition, Quaternion.identity);
+            CustomCameraController.Instance.StartShake(_cameraShaker, spawnPosition);
             Destroy(gameObject);
         }
 

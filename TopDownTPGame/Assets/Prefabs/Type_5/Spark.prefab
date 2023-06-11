@@ -6299,7 +6299,7 @@ MonoBehaviour:
   _cooldownDuration: 3
   _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
     type: 3}
-  _parent: {fileID: 1252368709468985580}
+  _ownerIdData: {fileID: -5910114497584426853}
   _shootController: {fileID: 5021002024800133882}
   _type5Ultimate: {fileID: 5302275595620308645}
   _spawnMaxDistance: 5
@@ -7851,7 +7851,7 @@ MonoBehaviour:
   _cooldownDuration: 7
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
-  _parent: {fileID: 0}
+  _ownerIdData: {fileID: -5910114497584426853}
   _shootController: {fileID: 5021002024800133882}
   _type5Ultimate: {fileID: 5302275595620308645}
   _playerAnimator: {fileID: 9109486599992866581}
@@ -8898,7 +8898,7 @@ MonoBehaviour:
   _cooldownDuration: 20
   _shieldPrefab: {fileID: 7981294947940924098, guid: 1ea4fde9248da5041a535aa2d7ba7f1d,
     type: 3}
-  _parent: {fileID: 0}
+  _ownerIdData: {fileID: -5910114497584426853}
   _shootController: {fileID: 5021002024800133882}
   _playerAnimator: {fileID: 9109486599992866581}
   _cameraShaker: {fileID: 11400000, guid: 3a1ed4cf624963a4e91772610fc86c7c, type: 2}

@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40edec94e6100c0499051cb5d46dd6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ownerIdData: {fileID: -553162919651117717}
   _destroyEffectPrefab: {fileID: 940138414478437881, guid: 2e8d9b9fab1406a4695fdca2bdd71486,
     type: 3}
   _plasmaPulsePrefab: {fileID: 7004124681472689935, guid: db700e63146674244b2af5bd8cd60918,
@@ -117,6 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0
 --- !u!1 &6552805674668648026
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 7540061491522308426}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7981294947940924125
 MeshFilter:
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shieldPrefab: {fileID: 4473170707245966689, guid: 239025d1cb7b17d478d03d24dd0cfdc4,
     type: 3}
+  _ownerIdData: {fileID: 8598232423517968415}
   _additionalGravity: 25
   _projectileDestroyTime: 3
   _launchVelocity: 30
@@ -165,6 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0
 --- !u!1001 &687279063760227262
 PrefabInstance:
   m_ObjectHideFlags: 0

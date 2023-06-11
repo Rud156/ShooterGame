@@ -6,6 +6,7 @@ using Player.Common;
 using Player.Type_5;
 using UI.DisplayManagers.Player;
 using UnityEngine;
+using Utils.Common;
 using World;
 
 #endregion
@@ -62,7 +63,11 @@ public class Type_5_Ultimate_ShieldAbility : Ability
                 {
                     var targetTransform = _hitColliders[i].transform;
                     var shield = Instantiate(_shieldPrefab, targetTransform.position, Quaternion.identity, targetTransform);
+                    var targetOwnerData = targetTransform.GetComponent<OwnerData>();
                     var shieldAbility = shield.GetComponent<Type_5_Ultimate_EngineerShield>();
+                    var shieldOwnerData = shield.GetComponent<OwnerData>();
+
+                    shieldOwnerData.OwnerId = targetOwnerData.OwnerId;
                     targetController.CheckAndAddExternalAbility(shieldAbility);
                 }
             }

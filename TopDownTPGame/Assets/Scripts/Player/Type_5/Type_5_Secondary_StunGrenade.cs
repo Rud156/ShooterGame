@@ -19,7 +19,7 @@ namespace Player.Type_5
         [SerializeField] private GameObject _stunGrenadePrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_5_Ultimate_ShieldAbility _type5Ultimate;
         [SerializeField] private Animator _playerAnimator;
@@ -48,7 +48,7 @@ namespace Player.Type_5
             projectile.SetCollisionCallback(HandleStunGrenadeCollision);
             projectile.SetParentSpawner(this);
             projectile.LaunchProjectile(_shootController.GetShootLookDirection());
-            ownerData.OwnerId = _parent.GetInstanceID();
+            ownerData.OwnerId = _ownerIdData.OwnerId;
 
             _currentCooldownDuration = _cooldownDuration;
             _abilityEnd = true;

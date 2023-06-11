@@ -23,7 +23,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _projectilePrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_1_Ultimate_WarCryPulseAbility _type1Ultimate;
         [SerializeField] private Animator _playerAnimator;
@@ -76,8 +76,7 @@ namespace Player.Type_1
                 var ownerData = projectile.GetComponent<OwnerData>();
 
                 simpleProj.LaunchProjectile(direction);
-                simpleDamageTrigger.SetParent(_parent);
-                ownerData.OwnerId = _parent.GetInstanceID();
+                ownerData.OwnerId = _ownerIdData.OwnerId;
 
                 var simpleDamage = projectile.GetComponent<SimpleDamageTrigger>();
                 simpleDamage.SetCollisionCallback(HandleProjectileHitCollider);

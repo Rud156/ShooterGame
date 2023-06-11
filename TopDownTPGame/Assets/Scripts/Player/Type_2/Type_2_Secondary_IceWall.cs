@@ -17,7 +17,7 @@ namespace Player.Type_2
         [SerializeField] private GameObject _iceWallPrefab;
 
         [Header("Component")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Animator _playerAnimator;
 
@@ -54,7 +54,7 @@ namespace Player.Type_2
             var iceWall = Instantiate(_iceWallPrefab, spawnPosition, Quaternion.Euler(0, characterTransform.rotation.eulerAngles.y, 0));
             var ownerData = iceWall.GetComponent<OwnerData>();
 
-            ownerData.OwnerId = _parent.GetInstanceID();
+            ownerData.OwnerId = _ownerIdData.OwnerId;
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
 
             _playerAnimator.SetTrigger(PlayerStaticData.Type_2_Secondary);

@@ -4,6 +4,7 @@ using System;
 using HealthSystem;
 using Player.Type_4;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -12,6 +13,9 @@ namespace Ability_Scripts.Projectiles
     [RequireComponent(typeof(Rigidbody))]
     public class PlasmaBombLine : MonoBehaviour, IProjectile
     {
+        [Header("Components")]
+        [SerializeField] private OwnerData _ownerIdData;
+
         [Header("Prefabs")]
         [SerializeField] private GameObject _destroyEffectPrefab;
         [SerializeField] private GameObject _plasmaPulsePrefab;
@@ -51,7 +55,10 @@ namespace Ability_Scripts.Projectiles
             {
                 var plasmaPulseObject = Instantiate(_plasmaPulsePrefab, transform.position, Quaternion.identity);
                 var plasmaPulse = plasmaPulseObject.GetComponent<PlasmaPulse>();
+                var ownerData = plasmaPulseObject.GetComponent<OwnerData>();
+
                 _parentSpawner.AddCallbackFunctionToPlasmaPulse(plasmaPulse);
+                ownerData.OwnerId = _ownerIdData.OwnerId;
 
                 _nextBombDropTime = Time.time + _pulseDropRate;
             }

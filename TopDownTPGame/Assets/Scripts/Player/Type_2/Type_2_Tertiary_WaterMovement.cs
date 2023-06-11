@@ -8,6 +8,7 @@ using Player.Common;
 using UI.DisplayManagers.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Utils.Common;
 using World;
 
 #endregion
@@ -17,12 +18,14 @@ namespace Player.Type_2
     public class Type_2_Tertiary_WaterMovement : Ability
     {
         [Header("Prefabs")]
+        [SerializeField] private GameObject _burstDamageMarkerPrefab;
         [SerializeField] private GameObject _markerEffectPrefab;
         [SerializeField] private GameObject _burstDamageEffectPrefab;
         [SerializeField] private GameObject _dashTrailEffectPrefab;
         [SerializeField] private GameObject _holdRunTrailEffectPrefab;
 
         [Header("Components")]
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private Type_2_Ultimate_WaterBubbleFrozenAbility _type2Ultimate;
         [SerializeField] private Animator _playerAnimator;
 
@@ -106,6 +109,7 @@ namespace Player.Type_2
                 _type2Ultimate.AddUltimateCharge(_ultimateChargeAmount);
                 Destroy(burstDamageData.MarkedEffectObject);
                 Destroy(burstDamageData.BurstDamageMarker);
+                Destroy(burstDamageData.BurstDamageObject);
 
                 var position = burstDamageData.BurstDamageMarker.transform.position;
                 Instantiate(_burstDamageEffectPrefab, position, Quaternion.identity);
@@ -249,18 +253,18 @@ namespace Player.Type_2
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i].gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                if (_hitColliders[i].GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }
 
-                var hasHealth = _hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage);
-                var hasBurstDamageMarker = _hitColliders[i].TryGetComponent(out BurstDamageMarker burstDamageMarker);
+                var hasHealth = _hitColliders[i].TryGetComponent(out HealthAndDamage _);
+                var targetBurstDamageMarker = _hitColliders[i].GetComponentInChildren<BurstDamageMarker>();
+                var hasBurstDamageMarker = targetBurstDamageMarker != null;
                 if (hasHealth && hasBurstDamageMarker)
                 {
-                    var ownerId = burstDamageMarker.GetOwner();
-                    var thisGameObjectId = GetInstanceID();
-                    if (ownerId != thisGameObjectId)
+                    var targetOwnerId = targetBurstDamageMarker.GetComponent<OwnerData>().OwnerId;
+                    if (targetOwnerId != _ownerIdData.OwnerId)
                     {
                         hasBurstDamageMarker = false;
                     }
@@ -268,16 +272,18 @@ namespace Player.Type_2
 
                 if (hasHealth && !hasBurstDamageMarker)
                 {
-                    var burstDamage = _hitColliders[i].gameObject.AddComponent<BurstDamageMarker>();
-                    burstDamage.SetOwner(GetInstanceID());
+                    var burstDamage = Instantiate(_burstDamageMarkerPrefab, _hitColliders[i].transform.position, Quaternion.identity, _hitColliders[i].transform);
+                    var ownerData = burstDamage.GetComponent<OwnerData>();
+                    ownerData.OwnerId = _ownerIdData.OwnerId;
 
                     var targetTransform = _hitColliders[i].transform;
                     var effect = Instantiate(_markerEffectPrefab, targetTransform.position, Quaternion.identity, targetTransform);
 
                     _burstDamageMarkers.Add(new BurstDamageData()
                     {
-                        BurstDamageMarker = burstDamage,
+                        BurstDamageMarker = burstDamage.GetComponent<BurstDamageMarker>(),
                         MarkedEffectObject = effect,
+                        BurstDamageObject = burstDamage
                     });
                 }
             }
@@ -327,6 +333,7 @@ namespace Player.Type_2
         {
             public BurstDamageMarker BurstDamageMarker;
             public GameObject MarkedEffectObject;
+            public GameObject BurstDamageObject;
         }
 
         [Serializable]

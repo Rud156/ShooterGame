@@ -3,6 +3,7 @@
 using Player.Base;
 using Player.Type_4;
 using UnityEngine;
+using Utils.Common;
 using Utils.Misc;
 
 #endregion
@@ -131,7 +132,7 @@ namespace Ability_Scripts.Projectiles
                     var distance = Vector3.Distance(position, hitObjectPosition);
                     var isInLos = Physics.Raycast(position, direction, out var hitInfo, distance, _affectMask);
 
-                    if (isInLos && hitInfo.collider.gameObject.GetInstanceID() == targetCollider.gameObject.GetInstanceID())
+                    if (isInLos && hitInfo.collider.gameObject.GetComponent<OwnerData>().OwnerId == targetCollider.gameObject.GetComponent<OwnerData>().OwnerId)
                     {
                         var velocityApplied = distance <= _minRadiusForMaxAffect
                             ? _maxVelocity

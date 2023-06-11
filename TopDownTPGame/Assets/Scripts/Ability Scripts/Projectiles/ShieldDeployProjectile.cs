@@ -1,6 +1,7 @@
 #region
 
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -11,6 +12,9 @@ namespace Ability_Scripts.Projectiles
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _shieldPrefab;
+
+        [Header("Components")]
+        [SerializeField] private OwnerData _ownerIdData;
 
         [Header("Shield Data")]
         [SerializeField] private float _additionalGravity;
@@ -55,7 +59,10 @@ namespace Ability_Scripts.Projectiles
 
         public void ProjectileHit(Collider other)
         {
-            Instantiate(_shieldPrefab, transform.position, Quaternion.identity);
+            var shieldObject = Instantiate(_shieldPrefab, transform.position, Quaternion.identity);
+            var ownerData = shieldObject.GetComponent<OwnerData>();
+
+            ownerData.OwnerId = _ownerIdData.OwnerId;
             ProjectileDestroy();
         }
 

@@ -137,7 +137,7 @@ MonoBehaviour:
   _abilityPositioning: 0
   _allowedActiveAbilities: 
   _cooldownDuration: 0
-  _ownerData: {fileID: 0}
+  _ownerData: {fileID: 4556205042200454199}
   _shieldDuration: 7
   _shieldColliderRadius: 1.5
   _shieldColliderMask:
@@ -155,3 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0

@@ -9,7 +9,6 @@ namespace HealthSystem
     public class BurstDamageMarker : MonoBehaviour
     {
         private int _damageAmount;
-        private int _ownerId;
 
         #region External Functions
 
@@ -20,10 +19,6 @@ namespace HealthSystem
             var healthAndDamage = GetComponent<HealthAndDamage>();
             healthAndDamage.TakeDamage(_damageAmount);
         }
-
-        public void SetOwner(int ownerId) => _ownerId = ownerId;
-
-        public int GetOwner() => _ownerId;
 
         #endregion External Functions
     }

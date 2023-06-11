@@ -17,7 +17,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _ultimatePulsePrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Ultimate Data")]
@@ -54,7 +54,7 @@ namespace Player.Type_1
                 _warCryObject.GetComponent<Type_1_Ultimate_WarCryPulse>().SetTargetAnimatorData(_playerAnimator, PlayerStaticData.Type_1_Ultimate);
 
                 var ownerData = _warCryObject.GetComponent<OwnerData>();
-                ownerData.OwnerId = _parent.GetInstanceID();
+                ownerData.OwnerId = _ownerIdData.OwnerId;
 
                 _abilityEnd = true;
 

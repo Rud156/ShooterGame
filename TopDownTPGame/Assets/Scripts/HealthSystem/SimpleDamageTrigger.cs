@@ -2,6 +2,7 @@
 
 using System;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -9,9 +10,6 @@ namespace HealthSystem
 {
     public class SimpleDamageTrigger : MonoBehaviour
     {
-        [Header("Parent")]
-        [SerializeField] private GameObject _parent;
-
         [Header("Damage Data")]
         [SerializeField] private int _damageAmount;
 
@@ -21,7 +19,7 @@ namespace HealthSystem
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.GetInstanceID() != _parent.GetInstanceID() && other.TryGetComponent(out HealthAndDamage healthAndDamage))
+            if (other.gameObject.GetComponent<OwnerData>().OwnerId != GetComponent<OwnerData>().OwnerId && other.TryGetComponent(out HealthAndDamage healthAndDamage))
             {
                 healthAndDamage.TakeDamage(_damageAmount);
                 _callbackFunc?.Invoke(other);
@@ -33,8 +31,6 @@ namespace HealthSystem
         #region External Functions
 
         public void SetCollisionCallback(Action<Collider> callback) => _callbackFunc = callback;
-
-        public void SetParent(GameObject parent) => _parent = parent;
 
         #endregion External Functions
     }

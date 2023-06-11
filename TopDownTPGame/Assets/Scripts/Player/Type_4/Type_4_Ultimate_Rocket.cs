@@ -18,7 +18,7 @@ public class Type_4_Ultimate_Rocket : Ability
     [SerializeField] private GameObject _rocketPrefab;
 
     [Header("Components")]
-    [SerializeField] private GameObject _parent;
+    [SerializeField] private OwnerData _ownerIdData;
     [SerializeField] private PlayerBaseShootController _shootController;
     [SerializeField] private Type_4_DroneController _droneController;
 
@@ -60,7 +60,7 @@ public class Type_4_Ultimate_Rocket : Ability
             var ownerData = rocket.GetComponent<OwnerData>();
 
             rocketProjectile.LaunchProjectile(direction);
-            ownerData.OwnerId = _parent.GetInstanceID();
+            ownerData.OwnerId = _ownerIdData.OwnerId;
 
             _currentUltimateAmount = 0;
             _abilityEnd = true;

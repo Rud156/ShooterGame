@@ -269,6 +269,7 @@ MonoBehaviour:
     type: 3}
   _destroyEffect: {fileID: 6862442894405721568, guid: 1c693fb54d8489148a7330560ce8ac49,
     type: 3}
+  _ownerIdData: {fileID: 1413583090549725755}
   _additionalGravity: 25
   _launchVelocity: 20
   _projectileDestroyTime: 2
@@ -296,3 +297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0

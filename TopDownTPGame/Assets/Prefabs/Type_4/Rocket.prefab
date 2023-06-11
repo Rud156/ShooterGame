@@ -4311,7 +4311,7 @@ MonoBehaviour:
   _cooldownDuration: 5
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
-  _parent: {fileID: 1504131108388283770}
+  _ownerIdData: {fileID: -8485191191730809671}
   _shootController: {fileID: 795477187898822337}
   _playerAnimator: {fileID: 2081323094457028716}
   _satchelCount: 3
@@ -5834,7 +5834,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _plasmaBombPrefab: {fileID: 4947489715981850301, guid: e967618039d656546ac03453bac3afef,
     type: 3}
-  _parent: {fileID: 0}
+  _ownerIdData: {fileID: -8485191191730809671}
   _shootController: {fileID: 795477187898822337}
   _droneController: {fileID: 7442812568484971631}
   _type4Ultimate: {fileID: 1625475324297445380}
@@ -7266,7 +7266,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
-  _parent: {fileID: 0}
+  _ownerIdData: {fileID: -8485191191730809671}
   _shootController: {fileID: 795477187898822337}
   _droneController: {fileID: 7442812568484971631}
   _windUpTime: 0.25
@@ -7328,7 +7328,7 @@ MonoBehaviour:
   _cooldownDuration: 7
   _homingMissilePrefab: {fileID: 2076649741587126079, guid: 76f9cdf7e84438f49b0c3f7fd316b800,
     type: 3}
-  _parent: {fileID: 1504131108388283766}
+  _ownerIdData: {fileID: -8485191191730809671}
   _shootController: {fileID: 795477187898822337}
   _droneController: {fileID: 7442812568484971631}
   _type4Ultimate: {fileID: 1625475324297445380}
@@ -7836,6 +7836,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3478866269718607928}
     m_Modifications:
+    - target: {fileID: -7387571290797747707, guid: 82b1871bad04a894b829a0c66cc5711f,
+        type: 3}
+      propertyPath: _parent
+      value: 
+      objectReference: {fileID: 1504131108388283766}
+    - target: {fileID: -7387571290797747707, guid: 82b1871bad04a894b829a0c66cc5711f,
+        type: 3}
+      propertyPath: _autoSetOwnerId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2203775836616393905, guid: 82b1871bad04a894b829a0c66cc5711f,
         type: 3}
       propertyPath: m_Name

@@ -20,7 +20,7 @@ namespace Player.Type_4
         [SerializeField] private GameObject _homingMissilePrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_4_DroneController _droneController;
         [SerializeField] private Type_4_Ultimate_Rocket _type4Ultimate;
@@ -66,8 +66,7 @@ namespace Player.Type_4
                 var ownerData = missile.GetComponent<OwnerData>();
 
                 homingTarget.SetTarget(_validTarget);
-                ownerData.OwnerId = _parent.GetInstanceID();
-                simpleDamageTrigger.SetParent(_parent);
+                ownerData.OwnerId = _ownerIdData.OwnerId;
                 simpleDamageTrigger.SetCollisionCallback(HandleHomingMissileCollided);
 
                 _abilityEnd = true;

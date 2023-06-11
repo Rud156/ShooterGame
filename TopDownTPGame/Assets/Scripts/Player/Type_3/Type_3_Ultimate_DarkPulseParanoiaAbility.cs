@@ -17,7 +17,7 @@ namespace Player.Type_3
         [SerializeField] private GameObject _darkPulsePrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private Animator _playerAnimator;
 
         [Header("Ultimate Data")]
@@ -55,8 +55,8 @@ namespace Player.Type_3
                 var darkObject = darkPulse.GetComponent<Type_3_Ultimate_DarkPulseParanoia>();
                 var ownerData = darkPulse.GetComponent<OwnerData>();
 
-                darkObject.SetOwnerInstanceId(_parent.GetInstanceID(), _playerAnimator, PlayerStaticData.Type_3_Ultimate);
-                ownerData.OwnerId = _parent.GetInstanceID();
+                darkObject.SetOwnerInstanceId(_playerAnimator, PlayerStaticData.Type_3_Ultimate);
+                ownerData.OwnerId = _ownerIdData.OwnerId;
 
                 _darkPulseObject = darkPulse;
                 _abilityEnd = true;

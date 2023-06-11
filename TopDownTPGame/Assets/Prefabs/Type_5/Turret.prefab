@@ -406,6 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8be624033041d08a8ca3ad8d3fe74f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ownerIdData: {fileID: -3146944740536768039}
   _shootPoint: {fileID: 6587741568055134983}
   _turretCollider: {fileID: 7130402121719879040}
   _turretTop: {fileID: 2752422006056786181}
@@ -442,6 +443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0
 --- !u!1 &8003068403400172120
 GameObject:
   m_ObjectHideFlags: 0

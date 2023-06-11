@@ -19,7 +19,7 @@ namespace Player.Type_4
         [SerializeField] private GameObject _plasmaBombPrefab;
 
         [Header("Components")]
-        [SerializeField] private GameObject _parent;
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private PlayerBaseShootController _shootController;
         [SerializeField] private Type_4_DroneController _droneController;
         [SerializeField] private Type_4_Ultimate_Rocket _type4Ultimate;
@@ -65,7 +65,7 @@ namespace Player.Type_4
                 plasmaBomb.SetCollisionCallback(HandlePlasmaBombCollision);
                 plasmaBomb.SetParentSpawner(this);
                 plasmaBomb.LaunchProjectile(direction);
-                ownerData.OwnerId = _parent.GetInstanceID();
+                ownerData.OwnerId = _ownerIdData.OwnerId;
 
                 _droneController.KnockbackDrone(PlayerStaticData.Type_4_PrimaryDroneKnockbackMultiplier);
                 CustomCameraController.Instance.StartShake(_cameraShaker);

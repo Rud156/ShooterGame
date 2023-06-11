@@ -5,6 +5,7 @@ using HealthSystem;
 using Player.Base;
 using Player.Common;
 using UnityEngine;
+using Utils.Common;
 
 #endregion
 
@@ -32,6 +33,8 @@ namespace Player.Type_3
 
         private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
+        private OwnerData _ownerIdData;
+
         private int _currentPulseCount;
         private float _currentPulseWaitDuration;
 
@@ -40,7 +43,6 @@ namespace Player.Type_3
 
         private Animator _targetAnimator;
         private int _targetAnimTrigger;
-        private int _ownerId;
 
         #region Unity Functions
 
@@ -48,6 +50,7 @@ namespace Player.Type_3
         {
             _currentPulseCount = _pulseCount;
             _currentPulseWaitDuration = 0;
+            _ownerIdData = GetComponent<OwnerData>();
         }
 
         private void Update()
@@ -82,9 +85,8 @@ namespace Player.Type_3
 
         #region External Functions
 
-        public void SetOwnerInstanceId(int ownerId, Animator targetAnimator, int targetAnimTrigger)
+        public void SetOwnerInstanceId(Animator targetAnimator, int targetAnimTrigger)
         {
-            _ownerId = ownerId;
             _targetAnimator = targetAnimator;
             _targetAnimTrigger = targetAnimTrigger;
         }
@@ -99,7 +101,7 @@ namespace Player.Type_3
             for (var i = 0; i < targetsHit; i++)
             {
                 // Do not target itself
-                if (_hitColliders[i].gameObject.GetInstanceID() == _ownerId)
+                if (_hitColliders[i].gameObject.GetComponent<OwnerData>().OwnerId == _ownerIdData.OwnerId)
                 {
                     continue;
                 }

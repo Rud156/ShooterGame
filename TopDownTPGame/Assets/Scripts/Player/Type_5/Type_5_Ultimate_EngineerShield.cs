@@ -31,7 +31,10 @@ namespace Player.Type_5
 
         public override bool AbilityNeedsToEnd(BasePlayerController playerController) => _currentTimeLeft <= 0;
 
-        public override void StartAbility(BasePlayerController playerController) => _currentTimeLeft = _shieldDuration;
+        public override void StartAbility(BasePlayerController playerController)
+        {
+            _currentTimeLeft = _shieldDuration;
+        }
 
         public override void AbilityUpdate(BasePlayerController playerController)
         {
@@ -40,11 +43,9 @@ namespace Player.Type_5
             var hitColliderCount = Physics.OverlapSphereNonAlloc(transform.position, _shieldColliderRadius, _hitColliders, _shieldColliderMask);
             for (var i = 0; i < hitColliderCount; i++)
             {
-                var ownerId = _ownerData.OwnerId;
-                var ownerData = _hitColliders[i].GetComponent<OwnerData>();
-                var projectileOwnerId = ownerData.OwnerId;
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
 
-                if (ownerId != projectileOwnerId)
+                if (hitOwnerData.OwnerId != _ownerData.OwnerId)
                 {
                     Destroy(_hitColliders[i].gameObject);
                 }
