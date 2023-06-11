@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 1948321108}
   - component: {fileID: 8572434850116300471}
   - component: {fileID: 7333976340012271590}
+  - component: {fileID: -1878374417444643077}
   m_Layer: 6
   m_Name: Hunter
   m_TagString: Player
@@ -582,6 +583,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f802d70c69ec436fa61bb1e4d1120df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1878374417444643077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95916530318942721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 1
 --- !u!1 &3668185252038762774
 GameObject:
   m_ObjectHideFlags: 0

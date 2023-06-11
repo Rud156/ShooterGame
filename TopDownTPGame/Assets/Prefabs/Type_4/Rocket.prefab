@@ -1309,6 +1309,7 @@ GameObject:
   - component: {fileID: 1568775567157980309}
   - component: {fileID: 5502045882867128996}
   - component: {fileID: 510275916920260935}
+  - component: {fileID: -8485191191730809671}
   m_Layer: 6
   m_Name: Rocket
   m_TagString: Player
@@ -1523,6 +1524,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f802d70c69ec436fa61bb1e4d1120df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8485191191730809671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504131108388283766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 1
 --- !u!1 &1504131108692597976
 GameObject:
   m_ObjectHideFlags: 0
@@ -4295,12 +4311,7 @@ MonoBehaviour:
   _cooldownDuration: 5
   _satchelPrefab: {fileID: 3462899490673628828, guid: a6723c4a63bccc444a262f303a1a0ec2,
     type: 3}
-  _rotatingShootPrefab: {fileID: 1050605402142570255, guid: 08a6998b1c9239d43a7e6d7a04da1988,
-    type: 3}
-  _staticShootPrefab: {fileID: 1050605402142570255, guid: b3ba307cbf67cb1479f25e4a26e0c35d,
-    type: 3}
   _parent: {fileID: 1504131108388283770}
-  _cinemachineFollowTarget: {fileID: 7692622918951593744}
   _shootController: {fileID: 795477187898822337}
   _playerAnimator: {fileID: 2081323094457028716}
   _satchelCount: 3
@@ -5823,6 +5834,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _plasmaBombPrefab: {fileID: 4947489715981850301, guid: e967618039d656546ac03453bac3afef,
     type: 3}
+  _parent: {fileID: 0}
   _shootController: {fileID: 795477187898822337}
   _droneController: {fileID: 7442812568484971631}
   _type4Ultimate: {fileID: 1625475324297445380}
@@ -7254,6 +7266,7 @@ MonoBehaviour:
   _cooldownDuration: 0
   _rocketPrefab: {fileID: 8057118086033337042, guid: 005cab29545b5cc458417b24f96d7000,
     type: 3}
+  _parent: {fileID: 0}
   _shootController: {fileID: 795477187898822337}
   _droneController: {fileID: 7442812568484971631}
   _windUpTime: 0.25

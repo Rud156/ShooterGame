@@ -1248,6 +1248,7 @@ GameObject:
   - component: {fileID: 6406710316826357844}
   - component: {fileID: 2669688019543946796}
   - component: {fileID: 4412031399196160647}
+  - component: {fileID: -5910114497584426853}
   m_Layer: 6
   m_Name: Spark
   m_TagString: Player
@@ -1462,6 +1463,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f802d70c69ec436fa61bb1e4d1120df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5910114497584426853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252368709468985580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 1
 --- !u!1 &1264870413198541307
 GameObject:
   m_ObjectHideFlags: 0
@@ -7835,6 +7851,7 @@ MonoBehaviour:
   _cooldownDuration: 7
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: b0bf5306baf656b4c8fd9868e07efc5a,
     type: 3}
+  _parent: {fileID: 0}
   _shootController: {fileID: 5021002024800133882}
   _type5Ultimate: {fileID: 5302275595620308645}
   _playerAnimator: {fileID: 9109486599992866581}
@@ -8881,6 +8898,7 @@ MonoBehaviour:
   _cooldownDuration: 20
   _shieldPrefab: {fileID: 7981294947940924098, guid: 1ea4fde9248da5041a535aa2d7ba7f1d,
     type: 3}
+  _parent: {fileID: 0}
   _shootController: {fileID: 5021002024800133882}
   _playerAnimator: {fileID: 9109486599992866581}
   _cameraShaker: {fileID: 11400000, guid: 3a1ed4cf624963a4e91772610fc86c7c, type: 2}
