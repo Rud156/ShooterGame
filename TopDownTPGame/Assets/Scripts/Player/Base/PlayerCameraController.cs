@@ -52,24 +52,24 @@ namespace Player.Base
 
             WorldTimeManager.Instance.OnWorldCustomFixedUpdate += PlayerCameraFixedUpdate;
 
-            CustomInputManager.Instance.PlayerInput.Look.started += HandleMouseInput;
-            CustomInputManager.Instance.PlayerInput.Look.performed += HandleMouseInput;
-            CustomInputManager.Instance.PlayerInput.Look.canceled += HandleMouseInput;
+            CustomInputManager.Instance.PlayerOldInput.Look.started += HandleMouseInput;
+            CustomInputManager.Instance.PlayerOldInput.Look.performed += HandleMouseInput;
+            CustomInputManager.Instance.PlayerOldInput.Look.canceled += HandleMouseInput;
 
-            CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started += HandleCameraLeftShoulderSwap;
-            CustomInputManager.Instance.PlayerInput.CameraRightShoulder.started += HandleCameraRightShouldSwap;
+            CustomInputManager.Instance.PlayerOldInput.CameraLeftShoulder.started += HandleCameraLeftShoulderSwap;
+            CustomInputManager.Instance.PlayerOldInput.CameraRightShoulder.started += HandleCameraRightShouldSwap;
         }
 
         private void OnDestroy()
         {
             WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= PlayerCameraFixedUpdate;
 
-            CustomInputManager.Instance.PlayerInput.Look.started -= HandleMouseInput;
-            CustomInputManager.Instance.PlayerInput.Look.performed -= HandleMouseInput;
-            CustomInputManager.Instance.PlayerInput.Look.canceled -= HandleMouseInput;
+            CustomInputManager.Instance.PlayerOldInput.Look.started -= HandleMouseInput;
+            CustomInputManager.Instance.PlayerOldInput.Look.performed -= HandleMouseInput;
+            CustomInputManager.Instance.PlayerOldInput.Look.canceled -= HandleMouseInput;
 
-            CustomInputManager.Instance.PlayerInput.CameraLeftShoulder.started -= HandleCameraLeftShoulderSwap;
-            CustomInputManager.Instance.PlayerInput.CameraRightShoulder.started -= HandleCameraRightShouldSwap;
+            CustomInputManager.Instance.PlayerOldInput.CameraLeftShoulder.started -= HandleCameraLeftShoulderSwap;
+            CustomInputManager.Instance.PlayerOldInput.CameraRightShoulder.started -= HandleCameraRightShouldSwap;
         }
 
         private void Update()
@@ -149,7 +149,7 @@ namespace Player.Base
 
         private void UpdateMouseInput()
         {
-            _mouseInput = CustomInputManager.Instance.PlayerInput.Look.ReadValue<Vector2>();
+            _mouseInput = CustomInputManager.Instance.PlayerOldInput.Look.ReadValue<Vector2>();
 
             // Cuz Unity is an idiot
             _mouseInput *= 0.5f;

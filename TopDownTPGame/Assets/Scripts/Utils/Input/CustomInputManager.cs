@@ -52,6 +52,8 @@ namespace Utils.Input
 
         public InputMaster.PlayerActions PlayerInput => _inputMaster.Player;
 
+        public InputMaster.PlayerOldActions PlayerOldInput => _inputMaster.PlayerOld;
+
         public string LastUsedDeviceInputType => _lastUsedDeviceInputType;
 
         public void EnablePlayerControls() => _inputMaster.Player.Enable();
@@ -95,7 +97,7 @@ namespace Utils.Input
 
         private void HandleMouseMoved(InputAction.CallbackContext context)
         {
-            var mouseInput = PlayerInput.Look.ReadValue<Vector2>();
+            var mouseInput = _inputMaster.PlayerOld.Look.ReadValue<Vector2>();
             if (mouseInput != Vector2.zero)
             {
                 var path = context.action.activeControl.path;

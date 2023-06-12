@@ -524,7 +524,11 @@ namespace Player.Base
             {
                 var worldMousePosition = hitInfo.point;
                 var direction = worldMousePosition - transform.position;
-                transform.rotation = Quaternion.LookRotation(direction);
+
+                var computedRotation = Quaternion.LookRotation(direction).eulerAngles;
+                computedRotation.x = 0;
+                computedRotation.z = 0;
+                transform.eulerAngles = computedRotation;
             }
         }
 
@@ -561,6 +565,12 @@ namespace Player.Base
             else if (_playerStateStack[^1] != PlayerState.Falling)
             {
                 var groundedMovement = forward * _lastNonZeroCoreInput.y;
+                if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.KeyboardMouseGroupString)
+                {
+                    var right = characterTransform.right;
+                    groundedMovement += right * _lastNonZeroCoreInput.x;
+                }
+
                 groundedMovement.y = 0;
                 groundedMovement = _currentStateVelocity * groundedMovement.normalized;
 
@@ -570,6 +580,12 @@ namespace Player.Base
             else
             {
                 var airMovement = forward * _lastNonZeroCoreInput.y;
+                if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.KeyboardMouseGroupString)
+                {
+                    var right = characterTransform.right;
+                    airMovement += right * _lastNonZeroCoreInput.x;
+                }
+
                 airMovement.y = 0;
                 airMovement = airMovement.normalized * (_airControlMultiplier * _currentStateVelocity);
 

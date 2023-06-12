@@ -15,27 +15,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "KeyboardPreciseRotation",
-                    "type": "Value",
-                    "id": "7bd92c24-f113-4cd5-bd69-0d84f16ca532",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "GamepadPreciseRotation",
                     "type": "Value",
                     "id": "8610bd71-b17e-4ea4-a906-e6878d19f8f4",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Look",
-                    "type": "Value",
-                    "id": "6cd6a360-d4d5-4e6d-9406-22f5ad0c50b1",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -99,24 +81,6 @@
                     "name": "Ability Ultimate",
                     "type": "Button",
                     "id": "f5ee8a4a-9259-4a9b-b8f0-aa163fd539dd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Camera Left Shoulder",
-                    "type": "Button",
-                    "id": "cfb57a3c-601b-478e-9801-4829356b10a0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Camera Right Shoulder",
-                    "type": "Button",
-                    "id": "27102b93-6216-4fe6-b1a0-ad0797325a0b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -251,28 +215,6 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "StickDeadzone",
-                    "groups": ";Gamepad",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "16c48502-3567-4a27-831a-48f60a195d3e",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -441,61 +383,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e7862322-bb2a-4ba2-a49a-86d3bb1c59bb",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Camera Left Shoulder",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "310db39e-74bb-426a-95c2-df1eb0fc8011",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Camera Left Shoulder",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1a3adb36-2734-4f78-bcda-8cece44b03f5",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Camera Right Shoulder",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6d3748d2-0eb0-474d-8c0e-7f0cf8380296",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Camera Right Shoulder",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "db637e0a-ad75-4f15-b3c5-03631e95831a",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "KeyboardPreciseRotation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "679508ab-28a6-4b11-a2a8-f72be2d9c920",
                     "path": "<Mouse>/position",
                     "interactions": "",
@@ -524,6 +411,107 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Mouse Delta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerOld",
+            "id": "390678d3-8e8f-49a9-bef2-57172193d7de",
+            "actions": [
+                {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "bebe7931-ab2b-46c7-8ce5-055ff2075213",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Camera Left Shoulder",
+                    "type": "Button",
+                    "id": "08677aa8-9312-42a5-86d2-360bb2f92328",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Camera Right Shoulder",
+                    "type": "Button",
+                    "id": "518d87ae-eaaa-4e3d-8ee1-911ec2c03f9f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c1cfd122-1893-41e7-81a1-1a4da23f0bb4",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "Gamepad",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "56cb2f12-58dc-4a1b-99d4-ab4331e01906",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c1485399-f057-4c9c-bfc5-fda13bd8af1d",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Camera Left Shoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6af3242-5830-46d6-bb5c-5b635c1277ca",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Camera Left Shoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5efe4f99-8f56-4874-889e-d85472cc4679",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Camera Right Shoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc4c6049-c8c9-4bcd-b187-0a83560d2a3c",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Camera Right Shoulder",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
