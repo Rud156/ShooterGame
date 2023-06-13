@@ -16,11 +16,11 @@ namespace Utils.Input
         public const string GamepadGroupString = "Gamepad";
         public const string KeyboardMouseGroupString = "Keyboard&Mouse";
 
-        public delegate void LastUsedInputChanged(string currentInputGroup);
+        public delegate void LastUsedInputChanged(InputType currentInputType);
         public event LastUsedInputChanged OnLastUsedInputChanged;
 
         private InputMaster _inputMaster;
-        private string _lastUsedDeviceInputType = KeyboardMouseGroupString;
+        private InputType _lastUsedInputType = InputType.KeyboardMouse;
 
         #region Unity Functions
 
@@ -54,7 +54,7 @@ namespace Utils.Input
 
         public InputMaster.PlayerOldActions PlayerOldInput => _inputMaster.PlayerOld;
 
-        public string LastUsedDeviceInputType => _lastUsedDeviceInputType;
+        public InputType LastUsedDeviceInputType => _lastUsedInputType;
 
         public void EnablePlayerControls() => _inputMaster.Player.Enable();
 
@@ -66,16 +66,16 @@ namespace Utils.Input
             var hasMouse = deviceName.Contains(MouseDisplayName) || path.Contains(MouseDisplayName);
             var hasGamepad = deviceName.Contains(GamepadDisplayName) || path.Contains(GamepadDisplayName);
 
-            var currentInputType = hasGamepad ? GamepadGroupString : KeyboardMouseGroupString;
+            var currentInputType = hasGamepad ? InputType.GamePad : InputType.KeyboardMouse;
             if (!hasGamepad && !hasKeyboard && !hasMouse)
             {
                 Debug.LogWarning("Invalid Input detected. Moving to Last Used");
-                currentInputType = _lastUsedDeviceInputType;
+                currentInputType = _lastUsedInputType;
             }
 
-            if (currentInputType != _lastUsedDeviceInputType)
+            if (currentInputType != _lastUsedInputType)
             {
-                if (currentInputType == GamepadGroupString)
+                if (currentInputType == InputType.GamePad)
                 {
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
@@ -86,8 +86,8 @@ namespace Utils.Input
                     Cursor.visible = true;
                 }
 
-                _lastUsedDeviceInputType = currentInputType;
-                OnLastUsedInputChanged?.Invoke(_lastUsedDeviceInputType);
+                _lastUsedInputType = currentInputType;
+                OnLastUsedInputChanged?.Invoke(_lastUsedInputType);
             }
         }
 
@@ -107,6 +107,16 @@ namespace Utils.Input
         }
 
         #endregion Utils
+
+        #region Enums
+
+        public enum InputType
+        {
+            GamePad,
+            KeyboardMouse
+        }
+
+        #endregion Enums
 
         #region Singleton
 

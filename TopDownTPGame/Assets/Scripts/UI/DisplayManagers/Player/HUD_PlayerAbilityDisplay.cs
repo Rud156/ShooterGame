@@ -277,12 +277,13 @@ namespace UI.DisplayManagers.Player
 
         #region External Functions
 
-        private void UpdateAllAbilityTriggers(string currentInputGroup)
+        private void UpdateAllAbilityTriggers(CustomInputManager.InputType currentInputGroup)
         {
-            UpdateAbilityTrigger(AbilityTrigger.Primary, currentInputGroup);
-            UpdateAbilityTrigger(AbilityTrigger.Secondary, currentInputGroup);
-            UpdateAbilityTrigger(AbilityTrigger.Tertiary, currentInputGroup);
-            UpdateAbilityTrigger(AbilityTrigger.Ultimate, currentInputGroup);
+            var inputGroupString = currentInputGroup == CustomInputManager.InputType.GamePad ? CustomInputManager.GamepadGroupString : CustomInputManager.KeyboardMouseGroupString;
+            UpdateAbilityTrigger(AbilityTrigger.Primary, inputGroupString);
+            UpdateAbilityTrigger(AbilityTrigger.Secondary, inputGroupString);
+            UpdateAbilityTrigger(AbilityTrigger.Tertiary, inputGroupString);
+            UpdateAbilityTrigger(AbilityTrigger.Ultimate, inputGroupString);
         }
 
         public void UpdateTimer(AbilityTrigger abilityTrigger, string timerString, bool showTimer)

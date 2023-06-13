@@ -169,7 +169,7 @@ namespace Player.Base
         {
             var lastNonZeroCoreInput = _playerController.GetLastNonZeroCoreInput();
 
-            if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.KeyboardMouseGroupString)
+            if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.InputType.KeyboardMouse)
             {
                 if (ExtensionFunctions.IsNearlyEqual(lastNonZeroCoreInput.x, 0))
                 {

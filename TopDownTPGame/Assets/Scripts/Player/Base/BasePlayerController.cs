@@ -513,7 +513,7 @@ namespace Player.Base
 
         private void UpdatePlayerRotationKeyboard()
         {
-            if (CustomInputManager.Instance.LastUsedDeviceInputType != CustomInputManager.KeyboardMouseGroupString)
+            if (CustomInputManager.Instance.LastUsedDeviceInputType != CustomInputManager.InputType.KeyboardMouse)
             {
                 return;
             }
@@ -534,7 +534,7 @@ namespace Player.Base
 
         private void UpdatePlayerRotationGamepadRotation()
         {
-            if (CustomInputManager.Instance.LastUsedDeviceInputType != CustomInputManager.GamepadGroupString)
+            if (CustomInputManager.Instance.LastUsedDeviceInputType != CustomInputManager.InputType.GamePad)
             {
                 return;
             }
@@ -565,7 +565,7 @@ namespace Player.Base
             else if (_playerStateStack[^1] != PlayerState.Falling)
             {
                 var groundedMovement = forward * _lastNonZeroCoreInput.y;
-                if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.KeyboardMouseGroupString)
+                if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.InputType.KeyboardMouse)
                 {
                     var right = characterTransform.right;
                     groundedMovement += right * _lastNonZeroCoreInput.x;
@@ -580,7 +580,7 @@ namespace Player.Base
             else
             {
                 var airMovement = forward * _lastNonZeroCoreInput.y;
-                if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.KeyboardMouseGroupString)
+                if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.InputType.KeyboardMouse)
                 {
                     var right = characterTransform.right;
                     airMovement += right * _lastNonZeroCoreInput.x;
@@ -976,7 +976,7 @@ namespace Player.Base
         private void UpdateKeyboardInput()
         {
             _coreMoveInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
-            if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.GamepadGroupString)
+            if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.InputType.GamePad)
             {
                 var xMovement = Mathf.Abs(_coreMoveInput.x);
                 var yMovement = Mathf.Abs(_coreMoveInput.y);

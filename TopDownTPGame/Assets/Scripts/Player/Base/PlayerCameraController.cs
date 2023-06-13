@@ -107,7 +107,7 @@ namespace Player.Base
 
         private void UpdateCameraControl()
         {
-            var sensitivity = CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.GamepadGroupString ? _gamepadSensitivity : _kbmSensitivity;
+            var sensitivity = CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.InputType.GamePad ? _gamepadSensitivity : _kbmSensitivity;
             var rotationSpeed = sensitivity * _cameraRotationSpeed;
 
             var cameraRotation = _cinemachineFollowTarget.rotation.eulerAngles;
