@@ -1399,7 +1399,7 @@ Transform:
   - {fileID: 660414317381231213}
   - {fileID: 3729988723055359378}
   m_Father: {fileID: 0}
-  m_RootOrder: 133
+  m_RootOrder: 134
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1683011238459484371
 CharacterController:
@@ -6107,16 +6107,10 @@ MonoBehaviour:
   _type3Ultimate: {fileID: 4947250994315406716}
   _playerAnimator: {fileID: 2003848228306025429}
   _animMinIndex: 1
-  _animMaxIndex: 5
+  _animMaxIndex: 2
   _swordPositionRotations:
-  - Position: {x: -0.0012, y: 0.0014, z: 0.0057}
-    Rotation: {x: 81.18733, y: 37.19498, z: 183.22426}
   - Position: {x: 0.0054, y: 0, z: 0.0025}
     Rotation: {x: 318.579, y: 154.66876, z: 280.78284}
-  - Position: {x: 0.00663, y: 0.00802, z: 0.00598}
-    Rotation: {x: 325.19016, y: 176.72066, z: 228.03535}
-  - Position: {x: 0.00678, y: 0.00365, z: 0.00394}
-    Rotation: {x: 351.62637, y: 348.3391, z: 102.89877}
   - Position: {x: 0.0056, y: 0.0007, z: 0.0017}
     Rotation: {x: 75.664116, y: 4.3987637, z: 89.70326}
   _slashDuration: 0.25

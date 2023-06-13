@@ -1425,16 +1425,10 @@ MonoBehaviour:
   _type2Ultimate: {fileID: 4734483721622460076}
   _playerAnimator: {fileID: 7451471454665554315}
   _animMinIndex: 1
-  _animMaxIndex: 5
+  _animMaxIndex: 2
   _swordPositionRotations:
-  - Position: {x: -0.001091, y: 0.000193, z: -0.000538}
-    Rotation: {x: 5.9827166, y: 166.41469, z: 81.1222}
   - Position: {x: -0.00063, y: 0.000132, z: -0.000227}
     Rotation: {x: 304.6309, y: 208.24826, z: 59.148483}
-  - Position: {x: -0.001039, y: 0.000129, z: 0.000046}
-    Rotation: {x: 12.44101, y: 18.018436, z: 279.2739}
-  - Position: {x: -0.00111, y: 0.00021, z: -0.00018}
-    Rotation: {x: 20.654224, y: 9.275231, z: 276.33917}
   - Position: {x: -0.000985, y: 0.000131, z: -0.000128}
     Rotation: {x: 346.57858, y: 6.643816, z: 279.5027}
   _resetDuration: 0.5

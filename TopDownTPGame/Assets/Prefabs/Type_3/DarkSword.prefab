@@ -35,7 +35,7 @@ Transform:
   - {fileID: 2251756354804842153}
   - {fileID: 8480907906668272658}
   m_Father: {fileID: 0}
-  m_RootOrder: 70
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5775841598401657635
 Rigidbody:
@@ -83,8 +83,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25, y: 1, z: 0.25}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 0.25, y: 3, z: 0.25}
+  m_Center: {x: 0, y: 1.75, z: 0}
 --- !u!114 &3237329254265012899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d4a0c7605393644dae5f26a4128a7f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parent: {fileID: 0}
   _damageAmount: 25
 --- !u!114 &-5816692354966234312
 MonoBehaviour:
@@ -111,6 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb623471b76c480b9822940c69483a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0
 --- !u!1 &8074816425997093269
 GameObject:
   m_ObjectHideFlags: 0
