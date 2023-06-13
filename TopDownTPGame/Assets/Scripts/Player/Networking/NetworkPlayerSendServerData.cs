@@ -1,6 +1,6 @@
 namespace Player.Networking
 {
-    public struct NetworkPlayerInputData
+    public struct NetworkPlayerSendServerData
     {
         // WASD Movement
         public int XInput;
@@ -23,5 +23,9 @@ namespace Player.Networking
         public NetworkPlayerInputKey AbilityTertiaryKey;
         public NetworkPlayerInputKey AbilityUltimateKey;
         public NetworkPlayerInputKey ConstantSpeedFallKey;
+
+        // Package Data
+        public uint InputSequenceCount;
+        public float TimeStamp;
     }
 }

@@ -976,12 +976,22 @@ namespace Player.Base
         private void UpdateKeyboardInput()
         {
             _coreMoveInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
-            if (CustomInputManager.Instance.LastUsedDeviceInputType == CustomInputManager.InputType.GamePad)
+            switch (CustomInputManager.Instance.LastUsedDeviceInputType)
             {
-                var xMovement = Mathf.Abs(_coreMoveInput.x);
-                var yMovement = Mathf.Abs(_coreMoveInput.y);
-                _coreMoveInput.x = 0;
-                _coreMoveInput.y = Mathf.Max(xMovement, yMovement);
+                case CustomInputManager.InputType.GamePad:
+                {
+                    var xMovement = Mathf.Abs(_coreMoveInput.x);
+                    var yMovement = Mathf.Abs(_coreMoveInput.y);
+                    _coreMoveInput.x = 0;
+                    _coreMoveInput.y = Mathf.Max(xMovement, yMovement);
+                }
+                    break;
+
+                case CustomInputManager.InputType.KeyboardMouse:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             if (!HasNoDirectionalInput())
