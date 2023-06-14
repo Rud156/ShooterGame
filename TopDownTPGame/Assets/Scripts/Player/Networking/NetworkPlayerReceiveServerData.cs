@@ -19,5 +19,11 @@ namespace Player.Networking
         public bool JumpPressed;
         public bool IsGrounded;
         public List<PlayerState> PlayerStateStack;
+
+        // Timer Package Data
+        public long UtcTimeStamp;
+        public float GameTimeStamp;
+        public long ServerProcessedUtcTimeStamp;
+        public float ServerProcessedGameTimeStamp;
     }
 }

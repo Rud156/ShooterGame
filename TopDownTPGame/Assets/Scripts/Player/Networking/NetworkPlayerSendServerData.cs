@@ -24,8 +24,8 @@ namespace Player.Networking
         public NetworkPlayerInputKey AbilityUltimateKey;
         public NetworkPlayerInputKey ConstantSpeedFallKey;
 
-        // Package Data
-        public uint InputSequenceCount;
-        public float TimeStamp;
+        // Timer Package Data
+        public long UtcTimeStamp;
+        public float GameTimeStamp;
     }
 }
