@@ -1,4 +1,0 @@
-.debug_widget_item_backer {
-    background-image: url("project://database/Assets/Textures/Misc/WhitePixel.png");
-    -unity-background-image-tint-color: rgba(0, 0, 0, 0.5);
-}
