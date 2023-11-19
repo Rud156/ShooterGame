@@ -4717,7 +4717,7 @@ Transform:
   m_GameObject: {fileID: 2867569408481251842}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.67, z: 0}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11326,14 +11326,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Hips'\n\tTransform 'RightHandIndex1'\n\tTransform
-    'LeftHandRing1'\n\tTransform 'LeftHandMiddle1'\n\tTransform 'LeftShoulder'\n\tTransform
-    'Head'\n\tTransform 'RightHandMiddle2'\n\tTransform 'LeftHandPinky1'\n\tTransform
-    'LeftHandRing2'\n\tTransform 'RightForeArm'\n\tand more ...\n\tFrom animation
-    clip 'Run Forward'\n\tFrom animation clip 'Run Back'\n\tFrom animation clip 'Run
-    Left'\n\tFrom animation clip 'Run Right'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

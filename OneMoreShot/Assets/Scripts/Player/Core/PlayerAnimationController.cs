@@ -22,6 +22,12 @@ namespace Player.Core
             _playerController.OnPlayerStateChanged += HandlePlayerStateChanged;
         }
 
+        private void OnDestroy()
+        {
+            _playerController.OnPlayerJumped -= HandlePlayerJumped;
+            _playerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
+        }
+
         #endregion
 
         #region Animation State Handling
