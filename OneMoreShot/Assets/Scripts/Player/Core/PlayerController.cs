@@ -107,7 +107,7 @@ namespace Player.Core
             }
             else
             {
-                _characterVelocity.y = Physics.gravity.y;
+                _characterVelocity.y = -Physics.gravity.y;
             }
 
             // Means that the player is falling down
@@ -148,8 +148,19 @@ namespace Player.Core
                     throw new ArgumentOutOfRangeException();
             }
 
-            UpdatePlayerRotationKeyboard();
-            UpdatePlayerRotationGamepadRotation();
+            switch (CustomInputManager.Instance.LastUsedDeviceInputType)
+            {
+                case InputType.GamePad:
+                    UpdatePlayerRotationGamepadRotation();
+                    break;
+
+                case InputType.KeyboardMouse:
+                    UpdatePlayerRotationKeyboard();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
             UpdateCoreMovement();
         }
@@ -158,11 +169,6 @@ namespace Player.Core
 
         private void UpdatePlayerRotationKeyboard()
         {
-            if (CustomInputManager.Instance.LastUsedDeviceInputType != InputType.KeyboardMouse)
-            {
-                return;
-            }
-
             var mousePosition = CustomInputManager.Instance.PlayerInput.MousePosition.ReadValue<Vector2>();
             var rayStartPoint = _mainCamera.ScreenPointToRay(mousePosition);
             if (_groundCollider.Raycast(rayStartPoint, out var hitInfo, MaxTerrainRaycastDistance))
@@ -179,12 +185,7 @@ namespace Player.Core
 
         private void UpdatePlayerRotationGamepadRotation()
         {
-            if (CustomInputManager.Instance.LastUsedDeviceInputType != InputType.GamePad)
-            {
-                return;
-            }
-
-            var gamepadRotation = CustomInputManager.Instance.PlayerInput.GamepadPreciseRotation.ReadValue<Vector2>();
+            var gamepadRotation = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
             if (gamepadRotation == Vector2.zero)
             {
                 return;

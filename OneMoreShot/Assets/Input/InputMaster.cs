@@ -89,15 +89,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""GamepadPreciseRotation"",
-                    ""type"": ""Value"",
-                    ""id"": ""f0041384-c35c-477c-a54d-e474615b9306"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -320,17 +311,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4109bac4-c996-42c1-a68b-dcae8fac6b78"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""GamepadPreciseRotation"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -407,7 +387,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
         m_Player_MouseDelta = m_Player.FindAction("Mouse Delta", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_GamepadPreciseRotation = m_Player.FindAction("GamepadPreciseRotation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -476,7 +455,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_MouseDelta;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_GamepadPreciseRotation;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -488,7 +466,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @GamepadPreciseRotation => m_Wrapper.m_Player_GamepadPreciseRotation;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -519,9 +496,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @GamepadPreciseRotation.started += instance.OnGamepadPreciseRotation;
-            @GamepadPreciseRotation.performed += instance.OnGamepadPreciseRotation;
-            @GamepadPreciseRotation.canceled += instance.OnGamepadPreciseRotation;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -547,9 +521,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @GamepadPreciseRotation.started -= instance.OnGamepadPreciseRotation;
-            @GamepadPreciseRotation.performed -= instance.OnGamepadPreciseRotation;
-            @GamepadPreciseRotation.canceled -= instance.OnGamepadPreciseRotation;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -621,6 +592,5 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnGamepadPreciseRotation(InputAction.CallbackContext context);
     }
 }

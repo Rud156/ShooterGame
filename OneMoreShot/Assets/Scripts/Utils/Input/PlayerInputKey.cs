@@ -8,24 +8,6 @@ namespace Utils.Input
         public bool KeyReleasedThisFrame;
         public bool KeyPressed;
 
-        private bool _isToggleKey;
-        private bool _isToggleActive;
-
-        public void SetKeyToggle(bool toggle)
-        {
-            _isToggleKey = toggle;
-            if (_isToggleKey)
-            {
-                _isToggleActive = false;
-            }
-        }
-
-        public void ClearToggleActiveState()
-        {
-            _isToggleActive = false;
-            KeyPressed = false;
-        }
-
         public void UpdateInputData(InputAction.CallbackContext context)
         {
             var keyPressedThisFrame = context.started;
@@ -34,29 +16,13 @@ namespace Utils.Input
             if (keyPressedThisFrame && !KeyPressedThisFrame)
             {
                 KeyPressedThisFrame = true;
+                KeyPressed = true;
             }
 
             if (keyReleasedThisFrame && !KeyReleasedThisFrame)
             {
                 KeyReleasedThisFrame = true;
-            }
-
-            if (_isToggleKey && context.started)
-            {
-                if (!_isToggleActive)
-                {
-                    KeyPressed = true;
-                    _isToggleActive = true;
-                }
-                else
-                {
-                    KeyPressed = false;
-                    _isToggleActive = false;
-                }
-            }
-            else if (!_isToggleKey)
-            {
-                KeyPressed = context.performed;
+                KeyPressed = false;
             }
 
             var path = context.action.activeControl.device.path;
