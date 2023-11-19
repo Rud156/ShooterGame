@@ -18,7 +18,6 @@ namespace Player.Core
         [SerializeField] private float _jumpVelocity;
         [SerializeField] private float _gravityMultiplier;
         [SerializeField] private float _airMultiplier;
-        [SerializeField] private float _groundedVelocityTriggerThreshold;
 
         [Header("Temp")]
         [SerializeField] private Collider _groundCollider;
@@ -74,6 +73,7 @@ namespace Player.Core
             _coreMovementInput = Vector2.zero;
             _lastNonZeroCoreMovementInput = Vector2.zero;
             _characterVelocity = Vector3.zero;
+            _jumpReset = true;
             _currentStateVelocity = 0;
             PushPlayerState(PlayerState.Idle);
         }
@@ -90,7 +90,7 @@ namespace Player.Core
         {
             UpdateGroundedState();
             UpdatePlayerMovement();
-            ApplyFinalMovement();
+            ApplyFinalMovement(fixedUpdateTime);
             ResetFrameInputs();
         }
 
@@ -103,11 +103,12 @@ namespace Player.Core
             var isGrounded = _characterController.isGrounded;
             if (!isGrounded)
             {
-                _characterVelocity.y -= Physics.gravity.y * _gravityMultiplier;
+                _characterVelocity.y += Physics.gravity.y * _gravityMultiplier;
             }
             else
             {
-                _characterVelocity.y = -Physics.gravity.y;
+                _characterVelocity.y = Physics.gravity.y;
+                _jumpReset = true;
             }
 
             // Means that the player is falling down
@@ -151,7 +152,7 @@ namespace Player.Core
             switch (CustomInputManager.Instance.LastUsedDeviceInputType)
             {
                 case InputType.GamePad:
-                    UpdatePlayerRotationGamepadRotation();
+                    UpdatePlayerRotationGamepad();
                     break;
 
                 case InputType.KeyboardMouse:
@@ -183,7 +184,7 @@ namespace Player.Core
             }
         }
 
-        private void UpdatePlayerRotationGamepadRotation()
+        private void UpdatePlayerRotationGamepad()
         {
             var gamepadRotation = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
             if (gamepadRotation == Vector2.zero)
@@ -240,7 +241,7 @@ namespace Player.Core
 
         #endregion
 
-        private void ApplyFinalMovement() => _characterController.Move(_characterVelocity * WorldTimeManager.Instance.FixedUpdateTime);
+        private void ApplyFinalMovement(float fixedUpdateTime) => _characterController.Move(_characterVelocity * fixedUpdateTime);
 
         #region Player State Input Updates
 
@@ -357,6 +358,22 @@ namespace Player.Core
         private void UpdateMovementInput()
         {
             _coreMovementInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+            switch (CustomInputManager.Instance.LastUsedDeviceInputType)
+            {
+                case InputType.GamePad:
+                {
+                    var xMovement = Mathf.Abs(_coreMovementInput.x);
+                    var yMovement = Mathf.Abs(_coreMovementInput.y);
+                    _coreMovementInput.x = 0;
+                    _coreMovementInput.y = Mathf.Max(xMovement, yMovement);
+                }
+                    break;
+                case InputType.KeyboardMouse:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
             if (!HasNoDirectionalInput())
             {
