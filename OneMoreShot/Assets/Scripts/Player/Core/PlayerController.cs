@@ -37,6 +37,7 @@ namespace Player.Core
         private PlayerInputKey _jumpKey;
         private PlayerInputKey _abilityPrimaryKey;
         private PlayerInputKey _abilitySecondaryKey;
+        public Vector2 CoreMovementInput => _coreMovementInput;
 
         // Character Controller
         private CharacterController _characterController;
