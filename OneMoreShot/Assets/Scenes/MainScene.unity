@@ -3577,6 +3577,7 @@ GameObject:
   - component: {fileID: 2350652680326947813}
   - component: {fileID: 2350652680326947814}
   - component: {fileID: 2350652680326947815}
+  - component: {fileID: 2350652680326947816}
   m_Layer: 0
   m_Name: Type_1 (PicoChan)
   m_TagString: Player
@@ -3627,6 +3628,7 @@ MonoBehaviour:
   _gravityMultiplier: 0.3
   _airMultiplier: 0.1
   _groundCollider: {fileID: 734730204}
+  _playerStateStack: 
 --- !u!114 &2350652680326947814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3653,6 +3655,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAnimator: {fileID: 8818148499720819394}
+  _playerController: {fileID: 2350652680326947813}
+--- !u!114 &2350652680326947816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350652680326947811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 395c044d14e741729668c903febd175f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jumpEffect:
+    spawnOffset: {x: 0, y: -0.9, z: 0}
+    spawnRotation: {x: -90, y: 0, z: 0}
+    effectPrefab: {fileID: 113270815426296198, guid: be967c48b8f9cbd45b3a9d09ff3264ef,
+      type: 3}
+  _runEffect:
+    spawnOffset: {x: 0, y: 0, z: 0}
+    spawnRotation: {x: 0, y: 0, z: 0}
+    effectPrefab: {fileID: 8944600265781220707, guid: 2b5e98af0775c8a439d8fde7f3e318ce,
+      type: 3}
+  _landEffect:
+    spawnOffset: {x: 0, y: -0.7, z: 0}
+    spawnRotation: {x: -90, y: 0, z: 0}
+    effectPrefab: {fileID: 8586881294353101766, guid: 515389321b5ca5f45a65881b09160674,
+      type: 3}
   _playerController: {fileID: 2350652680326947813}
 --- !u!1 &2360930409982890202
 GameObject:

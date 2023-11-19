@@ -23,7 +23,7 @@ namespace Player.Core
         [SerializeField] private Collider _groundCollider;
 
         // Player State
-        private List<PlayerState> _playerStateStack;
+        [SerializeField] private List<PlayerState> _playerStateStack;
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
         private bool _jumpReset;
