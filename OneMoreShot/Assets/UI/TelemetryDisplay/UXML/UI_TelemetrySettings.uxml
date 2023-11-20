@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="UI_DebugWidgetItem" src="project://database/Assets/UI/TelemetryDisplay/UXML/UI_TelemetryWidgetItem.uxml?fileID=9197481963319205126&amp;guid=753a978ae6c383c4d84b020ca1e909fd&amp;type=3#UI_TelemetryWidgetItem" />
+    <ui:VisualElement name="TelemetrySettingsGrid" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row;">
+        <ui:Instance template="UI_DebugWidgetItem" name="Item_1" picking-mode="Ignore" style="width: 200px; height: 30px; margin-right: 7px;" />
+        <ui:Instance template="UI_DebugWidgetItem" name="Item_2" picking-mode="Ignore" style="width: 200px; height: 30px; margin-right: 7px;" />
+        <ui:Instance template="UI_DebugWidgetItem" name="Item_3" picking-mode="Ignore" style="width: 200px; height: 30px; margin-right: 7px;" />
+        <ui:Instance template="UI_DebugWidgetItem" name="Item_4" picking-mode="Ignore" style="width: 200px; height: 30px; margin-right: 7px;" />
+    </ui:VisualElement>
+</ui:UXML>

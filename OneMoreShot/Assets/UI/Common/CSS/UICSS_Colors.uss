@@ -1,0 +1,11 @@
+.color_white {
+    color: #faefe6;
+}
+
+.color_green {
+    color: #6cbd2a;
+}
+
+.color_red {
+    color: #c93426;
+}
