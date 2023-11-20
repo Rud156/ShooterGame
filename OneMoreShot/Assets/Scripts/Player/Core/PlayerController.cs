@@ -19,9 +19,6 @@ namespace Player.Core
         [SerializeField] private float _gravityMultiplier;
         [SerializeField] private float _airMultiplier;
 
-        [Header("Temp")]
-        [SerializeField] private Collider _groundCollider;
-
         // Player State
         [SerializeField] private List<PlayerState> _playerStateStack;
         private float _currentStateVelocity;
@@ -150,54 +147,22 @@ namespace Player.Core
                     throw new ArgumentOutOfRangeException();
             }
 
-            switch (CustomInputManager.Instance.LastUsedDeviceInputType)
-            {
-                case InputType.GamePad:
-                    UpdatePlayerRotationGamepad();
-                    break;
-
-                case InputType.KeyboardMouse:
-                    UpdatePlayerRotationKeyboard();
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
+            UpdatePlayerRotation();
             UpdateCoreMovement();
         }
 
         #region Core Movement
 
-        private void UpdatePlayerRotationKeyboard()
+        private void UpdatePlayerRotation()
         {
-            var mousePosition = CustomInputManager.Instance.PlayerInput.MousePosition.ReadValue<Vector2>();
-            var rayStartPoint = _mainCamera.ScreenPointToRay(mousePosition);
-            if (_groundCollider.Raycast(rayStartPoint, out var hitInfo, MaxTerrainRaycastDistance))
-            {
-                var worldMousePosition = hitInfo.point;
-                var direction = worldMousePosition - transform.position;
-
-                var computedRotation = Quaternion.LookRotation(direction).eulerAngles;
-                computedRotation.x = 0;
-                computedRotation.z = 0;
-                transform.eulerAngles = computedRotation;
-            }
-        }
-
-        private void UpdatePlayerRotationGamepad()
-        {
-            var gamepadRotation = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
-            if (gamepadRotation == Vector2.zero)
+            var inputRotation = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+            if (inputRotation == Vector2.zero)
             {
                 return;
             }
 
-            var angle = Mathf.Atan2(gamepadRotation.x, gamepadRotation.y) * Mathf.Rad2Deg;
-            if (angle != 0)
-            {
-                transform.rotation = Quaternion.Euler(0, angle, 0);
-            }
+            var angle = Mathf.Atan2(inputRotation.x, inputRotation.y) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, angle, 0);
         }
 
         private void UpdateCoreMovement()
@@ -208,11 +173,6 @@ namespace Player.Core
             if (_playerStateStack[^1] != PlayerState.Falling)
             {
                 var groundedMovement = forward * _coreMovementInput.y;
-                if (CustomInputManager.Instance.LastUsedDeviceInputType == InputType.KeyboardMouse)
-                {
-                    var right = characterTransform.right;
-                    groundedMovement += right * _coreMovementInput.x;
-                }
 
                 groundedMovement.y = 0;
                 groundedMovement = _currentStateVelocity * groundedMovement.normalized;
@@ -223,11 +183,6 @@ namespace Player.Core
             else
             {
                 var airMovement = forward * _lastNonZeroCoreMovementInput.y;
-                if (CustomInputManager.Instance.LastUsedDeviceInputType == InputType.KeyboardMouse)
-                {
-                    var right = characterTransform.right;
-                    airMovement += right * _lastNonZeroCoreMovementInput.x;
-                }
 
                 airMovement.y = 0;
                 airMovement = airMovement.normalized * (_airMultiplier * _currentStateVelocity);
@@ -341,7 +296,7 @@ namespace Player.Core
             playerInputMaster.AbilitySecondary.canceled -= HandlePlayerPressAbilitySecondary;
         }
 
-        private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMovementInput.x, 0) && ExtensionFunctions.IsNearlyEqual(_coreMovementInput.y, 0);
+        private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMovementInput.y, 0);
 
         private void HandlePlayerPressAbilitySecondary(InputAction.CallbackContext context) => _abilitySecondaryKey.UpdateInputData(context);
 
@@ -359,22 +314,12 @@ namespace Player.Core
         private void UpdateMovementInput()
         {
             _coreMovementInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
-            switch (CustomInputManager.Instance.LastUsedDeviceInputType)
-            {
-                case InputType.GamePad:
-                {
-                    var xMovement = Mathf.Abs(_coreMovementInput.x);
-                    var yMovement = Mathf.Abs(_coreMovementInput.y);
-                    _coreMovementInput.x = 0;
-                    _coreMovementInput.y = Mathf.Max(xMovement, yMovement);
-                }
-                    break;
-                case InputType.KeyboardMouse:
-                    break;
 
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            // Normalize Input to always move forward and instead Rotate the Character
+            var xMovement = Mathf.Abs(_coreMovementInput.x);
+            var yMovement = Mathf.Abs(_coreMovementInput.y);
+            _coreMovementInput.x = 0;
+            _coreMovementInput.y = Mathf.Max(xMovement, yMovement);
 
             if (!HasNoDirectionalInput())
             {

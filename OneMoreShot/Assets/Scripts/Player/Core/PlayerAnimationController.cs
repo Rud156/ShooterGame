@@ -7,7 +7,6 @@ namespace Player.Core
     {
         private static readonly int JumpParam = Animator.StringToHash("Jump");
         private static readonly int FallingParam = Animator.StringToHash("Falling");
-        private static readonly int HorizontalParam = Animator.StringToHash("Horizontal");
         private static readonly int VerticalParam = Animator.StringToHash("Vertical");
 
         [Header("Components")]
@@ -40,10 +39,7 @@ namespace Player.Core
             {
                 case PlayerState.Idle:
                 case PlayerState.Running:
-                {
-                    _playerAnimator.SetFloat(HorizontalParam, 0);
                     _playerAnimator.SetFloat(VerticalParam, 0);
-                }
                     break;
 
                 case PlayerState.Falling:
@@ -60,12 +56,11 @@ namespace Player.Core
             switch (newState)
             {
                 case PlayerState.Idle:
+                    _playerAnimator.SetFloat(VerticalParam, 0);
+                    break;
+
                 case PlayerState.Running:
-                {
-                    var coreInput = _playerController.CoreMovementInput;
-                    _playerAnimator.SetFloat(HorizontalParam, coreInput.x);
-                    _playerAnimator.SetFloat(VerticalParam, coreInput.y);
-                }
+                    _playerAnimator.SetFloat(VerticalParam, 1);
                     break;
 
                 case PlayerState.Falling:
