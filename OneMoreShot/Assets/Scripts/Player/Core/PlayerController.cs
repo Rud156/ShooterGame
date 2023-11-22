@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Player.Abilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils.Input;
@@ -19,8 +20,13 @@ namespace Player.Core
         [SerializeField] private float _gravityMultiplier;
         [SerializeField] private float _airMultiplier;
 
+        [Header("Components")]
+        [SerializeField] private Animator _playerAnimator;
+        [SerializeField] private PlayerShootController _playerShootController;
+        [SerializeField] private GameObject _abilityParentGameObject;
+
         // Player State
-        [SerializeField] private List<PlayerState> _playerStateStack;
+        private List<PlayerState> _playerStateStack;
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
         private bool _jumpReset;
@@ -41,6 +47,10 @@ namespace Player.Core
 
         // Player Rotation
         private Camera _mainCamera;
+
+        // Getters
+        public Animator PlayerAnimator => _playerAnimator;
+        public PlayerShootController PlayerShootController => _playerShootController;
 
         // Delegates
         public delegate void PlayerStatePushed(PlayerState newState);
@@ -296,7 +306,7 @@ namespace Player.Core
             playerInputMaster.AbilitySecondary.canceled -= HandlePlayerPressAbilitySecondary;
         }
 
-        private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyEqual(_coreMovementInput.y, 0);
+        private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyZero(_coreMovementInput.y);
 
         private void HandlePlayerPressAbilitySecondary(InputAction.CallbackContext context) => _abilitySecondaryKey.UpdateInputData(context);
 
@@ -325,7 +335,7 @@ namespace Player.Core
             {
                 _lastNonZeroCoreMovementInput = _coreMovementInput;
             }
-            else if (HasNoDirectionalInput() && ExtensionFunctions.IsNearlyEqual(_currentStateVelocity, 0))
+            else if (HasNoDirectionalInput() && ExtensionFunctions.IsNearlyZero(_currentStateVelocity))
             {
                 _lastNonZeroCoreMovementInput = _coreMovementInput;
             }
@@ -336,6 +346,17 @@ namespace Player.Core
             _jumpKey.ResetPerFrameInput();
             _abilityPrimaryKey.ResetPerFrameInput();
             _abilitySecondaryKey.ResetPerFrameInput();
+        }
+
+        public PlayerInputKey GetKeyForAbilityTrigger(AbilityTrigger abilityTrigger)
+        {
+            return abilityTrigger switch
+            {
+                AbilityTrigger.Primary => _abilityPrimaryKey,
+                AbilityTrigger.Secondary => _abilitySecondaryKey,
+                AbilityTrigger.ExternalAddedAbility => throw new Exception("Invalid Trigger Type"),
+                _ => throw new Exception("Invalid Trigger Type"),
+            };
         }
 
         #endregion

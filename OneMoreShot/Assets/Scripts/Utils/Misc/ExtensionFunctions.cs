@@ -15,6 +15,9 @@ namespace Utils.Misc
         public static bool IsNearlyEqual(float a, float b) => Mathf.Abs(a - b) <= FloatTolerance;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsNearlyZero(float a) => Mathf.Abs(a) <= FloatTolerance;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNearlyEqual(float a, float b, float tolerance) => Mathf.Abs(a - b) <= tolerance;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
