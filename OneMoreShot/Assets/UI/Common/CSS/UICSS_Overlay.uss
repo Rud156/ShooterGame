@@ -6,11 +6,11 @@
 }
 
 .overlay_backer {
-    background-image: url('project://database/Assets/Textures/Misc/WhitePixel.png?fileID=21300000&guid=549c8ae573207db4db0c2686e842a093&type=3#WhitePixel');
+    background-image: url('project://database/Assets/Textures/Misc/WhitePixel.png');
     -unity-background-image-tint-color: rgba(0, 0, 0, 0.75);
 }
 
 .overlay_background {
-    background-image: url('project://database/Assets/Textures/Misc/WhitePixel.png?fileID=21300000&guid=549c8ae573207db4db0c2686e842a093&type=3#WhitePixel');
+    background-image: url('project://database/Assets/Textures/Misc/WhitePixel.png');
     -unity-background-image-tint-color: rgba(0, 0, 0, 0.75);
 }

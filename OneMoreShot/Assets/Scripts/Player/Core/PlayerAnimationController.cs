@@ -47,6 +47,7 @@ namespace Player.Core
                     break;
 
                 case PlayerState.Dead:
+                case PlayerState.CustomMovement:
                     break;
 
                 default:
@@ -68,6 +69,7 @@ namespace Player.Core
                     break;
 
                 case PlayerState.Dead:
+                case PlayerState.CustomMovement:
                     break;
 
                 default:

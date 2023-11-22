@@ -70,12 +70,14 @@ namespace Player.Core
                 case PlayerState.Idle:
                 case PlayerState.Falling:
                 case PlayerState.Dead:
+                case PlayerState.CustomMovement:
                 {
                     if (_runEffectInstance.isPlaying)
                     {
                         _runEffectInstance.Stop();
                     }
                 }
+
                     break;
                 case PlayerState.Running:
                 {

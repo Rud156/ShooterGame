@@ -92,10 +92,15 @@ namespace Player.Core
             _characterVelocity = Vector3.zero;
             _jumpReset = true;
             _currentStateVelocity = 0;
-            PushPlayerState(PlayerState.Idle);
 
             _currentActiveAbilities = new List<AbilityBase>();
             _abilitiesToAddNextFrame = new List<AbilityBase>();
+            foreach (var ability in _playerAbilities)
+            {
+                ability.UnityStartDelegate(this);
+            }
+
+            PushPlayerState(PlayerState.Idle);
         }
 
         private void OnDestroy()

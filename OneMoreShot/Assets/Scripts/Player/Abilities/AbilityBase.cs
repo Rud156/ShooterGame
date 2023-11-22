@@ -23,7 +23,7 @@ namespace Player.Abilities
         [SerializeField] private AbilitySpawnOrEffectPosition _abilityPositioning;
         [SerializeField] private List<AbilityType> _disallowedActiveAbilityTypes;
 
-        private float _cooldownMultiplier;
+        private float _cooldownMultiplier = DefaultCooldownMultiplier;
         protected float _currentCooldownDuration;
 
         // Components (These will be overwritten everytime the Ability Starts)
