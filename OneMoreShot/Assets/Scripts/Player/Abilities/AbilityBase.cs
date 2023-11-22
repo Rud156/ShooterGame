@@ -16,6 +16,7 @@ namespace Player.Abilities
         [SerializeField] private Sprite _background;
 
         [Header("Core Ability Data")]
+        [SerializeField] private bool _isMovementAbility;
         [SerializeField] protected AbilityTrigger _abilityTrigger;
         [SerializeField] private AbilityType _abilityType;
         [SerializeField] protected float _abilityCooldownDuration;
@@ -61,6 +62,12 @@ namespace Player.Abilities
         }
 
         public abstract bool AbilityNeedsToEnd(PlayerController playerController);
+
+        #endregion
+
+        #region Getters
+
+        public virtual Vector3 MovementData() => Vector3.zero;
 
         #endregion
 

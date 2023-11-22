@@ -98,5 +98,11 @@ namespace Player.Type_1
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _currentDashDurationLeft <= 0;
 
         #endregion
+
+        #region Getters
+
+        public override Vector3 MovementData() => _dashComputedVelocity;
+
+        #endregion
     }
 }

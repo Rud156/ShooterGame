@@ -1,6 +1,7 @@
 ﻿using CustomCamera;
 using Player.Abilities;
 using Player.Core;
+using Projectiles;
 using UI.Player;
 using UnityEngine;
 using World;
@@ -46,7 +47,8 @@ namespace Player.Type_1
                 var direction = _playerShootController.GetShootLookDirection();
 
                 var projectile = Instantiate(_abilityProjectile, spawnPosition, Quaternion.identity);
-                // TODO: Launch The Projectile
+                var simpleProjectile = projectile.GetComponent<SimpleProjectile>();
+                simpleProjectile.LaunchProjectile(direction);
 
                 _playerAnimator.SetTrigger(Type_1_PrimaryAnimParam);
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
