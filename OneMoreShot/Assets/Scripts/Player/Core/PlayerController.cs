@@ -23,7 +23,7 @@ namespace Player.Core
         [Header("Components")]
         [SerializeField] private Animator _playerAnimator;
         [SerializeField] private PlayerShootController _playerShootController;
-        [SerializeField] private GameObject _abilityParentGameObject;
+        [SerializeField] private List<AbilityBase> _playerAbilities;
 
         // Player State
         private List<PlayerState> _playerStateStack;
@@ -48,7 +48,12 @@ namespace Player.Core
         // Player Rotation
         private Camera _mainCamera;
 
-        // Getters
+        // Player Abilities
+        private List<AbilityBase> _currentActiveAbilities;
+        private List<AbilityBase> _abilitiesToAddNextFrame; // These are abilities that have to be added next frame so will stop and override incompatible abilities
+        public List<AbilityBase> ActiveAbilities => _currentActiveAbilities;
+
+        // General Getters
         public Animator PlayerAnimator => _playerAnimator;
         public PlayerShootController PlayerShootController => _playerShootController;
 
@@ -58,11 +63,15 @@ namespace Player.Core
         public delegate void PlayerStateChanged(PlayerState previousState, PlayerState newState);
         public delegate void PlayerGroundedChange(bool previousState, bool newState);
         public delegate void PlayerJumped();
+        public delegate void PlayerAbilityStarted(AbilityBase ability);
+        public delegate void PlayerAbilityEnded(AbilityBase ability);
         public event PlayerStatePushed OnPlayerStatePushed;
         public event PlayerStatePopped OnPlayerStatePopped;
         public event PlayerStateChanged OnPlayerStateChanged;
         public event PlayerGroundedChange OnPlayerGroundedChanged;
         public event PlayerJumped OnPlayerJumped;
+        public event PlayerAbilityStarted OnPlayerAbilityStarted;
+        public event PlayerAbilityEnded OnPlayerAbilityEnded;
 
         #region Unity Functions
 
@@ -84,6 +93,9 @@ namespace Player.Core
             _jumpReset = true;
             _currentStateVelocity = 0;
             PushPlayerState(PlayerState.Idle);
+
+            _currentActiveAbilities = new List<AbilityBase>();
+            _abilitiesToAddNextFrame = new List<AbilityBase>();
         }
 
         private void OnDestroy()
@@ -92,13 +104,31 @@ namespace Player.Core
             WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= PlayerFixedUpdate;
         }
 
-        private void Update() => UpdateMovementInput();
+        private void Update()
+        {
+            UpdateMovementInput();
+            DelegateUnityUpdateAbilities();
+            UpdateAbilities();
+        }
 
         private void PlayerFixedUpdate(float fixedUpdateTime)
         {
+            ProcessNextFrameAbilities();
+            DelegateUnityFixedUpdateAbilities(fixedUpdateTime);
+
             UpdateGroundedState();
+            if (_playerStateStack[^1] != PlayerState.CustomMovement)
+            {
+                ProcessJumpInput();
+                ProcessGlobalGravity();
+            }
+
+            CheckAndActivateAbilities();
             UpdatePlayerMovement();
+
+            FixedUpdateAbilities(fixedUpdateTime);
             ApplyFinalMovement(fixedUpdateTime);
+
             ResetFrameInputs();
         }
 
@@ -109,15 +139,6 @@ namespace Player.Core
         private void UpdateGroundedState()
         {
             var isGrounded = _characterController.isGrounded;
-            if (!isGrounded)
-            {
-                _characterVelocity.y += Physics.gravity.y * _gravityMultiplier;
-            }
-            else
-            {
-                _characterVelocity.y = Physics.gravity.y;
-                _jumpReset = true;
-            }
 
             // Means that the player is falling down
             if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling)
@@ -132,9 +153,21 @@ namespace Player.Core
             }
         }
 
+        private void ProcessGlobalGravity()
+        {
+            if (!IsGrounded)
+            {
+                _characterVelocity.y += Physics.gravity.y * _gravityMultiplier;
+            }
+            else
+            {
+                _characterVelocity.y = Physics.gravity.y;
+                _jumpReset = true;
+            }
+        }
+
         private void UpdatePlayerMovement()
         {
-            ProcessJumpInput();
             switch (_playerStateStack[^1])
             {
                 case PlayerState.Idle:
@@ -153,12 +186,19 @@ namespace Player.Core
                     UpdateDeadState();
                     break;
 
+                case PlayerState.CustomMovement:
+                    UpdateCustomMovementState();
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            UpdatePlayerRotation();
-            UpdateCoreMovement();
+            if (_playerStateStack[^1] != PlayerState.CustomMovement)
+            {
+                UpdatePlayerRotation();
+                UpdateCoreMovement();
+            }
         }
 
         #region Core Movement
@@ -254,6 +294,154 @@ namespace Player.Core
         {
             // Do nothing here for now...
             // Will be needed for ReSpawns
+        }
+
+        private void UpdateCustomMovementState()
+        {
+            var hasMovementAbility = false;
+            foreach (var ability in _currentActiveAbilities)
+            {
+                if (ability.IsMovementAbility)
+                {
+                    _characterVelocity = ability.MovementData();
+                    hasMovementAbility = true;
+                    break;
+                }
+            }
+
+            if (!hasMovementAbility || _currentActiveAbilities.Count <= 0)
+            {
+                PopPlayerState();
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Ability Controls
+
+        private void CheckAndActivateAbilities()
+        {
+            foreach (var ability in _playerAbilities)
+            {
+                if (ability.AbilityCanStart(this))
+                {
+                    if (ability.IsMovementAbility)
+                    {
+                        if (_playerStateStack[^1] != PlayerState.CustomMovement)
+                        {
+                            PushPlayerState(PlayerState.CustomMovement);
+                        }
+                        else
+                        {
+                            RemoveExistingMovementAbility();
+                        }
+                    }
+
+                    ability.AbilityStart(this);
+                    OnPlayerAbilityStarted?.Invoke(ability);
+                    _currentActiveAbilities.Add(ability);
+                }
+            }
+        }
+
+        private void ProcessNextFrameAbilities()
+        {
+            foreach (var ability in _abilitiesToAddNextFrame)
+            {
+                // This Ability will already have started 
+                if (ability.AbilityCanStart(this))
+                {
+                    if (ability.IsMovementAbility)
+                    {
+                        if (_playerStateStack[^1] != PlayerState.CustomMovement)
+                        {
+                            PushPlayerState(PlayerState.CustomMovement);
+                        }
+                        else
+                        {
+                            RemoveExistingMovementAbility();
+                        }
+                    }
+
+                    // Also check for incompatible abilities
+                    for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
+                    {
+                        var activeAbility = _currentActiveAbilities[i];
+                        if (!activeAbility.HasAbilityNameInDisAllowedList(activeAbility.AbilityNameType))
+                        {
+                            activeAbility.AbilityEnd(this);
+                            OnPlayerAbilityEnded?.Invoke(activeAbility);
+                            _currentActiveAbilities.RemoveAt(i);
+                        }
+                    }
+
+                    ability.AbilityStart(this);
+                    OnPlayerAbilityStarted?.Invoke(ability);
+                    _currentActiveAbilities.Add(ability);
+                }
+            }
+
+            _abilitiesToAddNextFrame.Clear();
+        }
+
+        private void UpdateAbilities()
+        {
+            var deltaTime = Time.deltaTime;
+            for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
+            {
+                var currentAbility = _currentActiveAbilities[i];
+                currentAbility.AbilityUpdate(this, deltaTime);
+            }
+        }
+
+        private void FixedUpdateAbilities(float fixedDeltaTime)
+        {
+            for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
+            {
+                var currentAbility = _currentActiveAbilities[i];
+                currentAbility.AbilityFixedUpdate(this, fixedDeltaTime);
+
+                if (currentAbility.AbilityNeedsToEnd(this))
+                {
+                    currentAbility.AbilityEnd(this);
+                    OnPlayerAbilityEnded?.Invoke(currentAbility);
+                    _currentActiveAbilities.RemoveAt(i);
+                }
+            }
+        }
+
+        private void RemoveExistingMovementAbility()
+        {
+            for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
+            {
+                var currentAbility = _currentActiveAbilities[i];
+                if (currentAbility.IsMovementAbility)
+                {
+                    currentAbility.AbilityEnd(this);
+                    OnPlayerAbilityEnded?.Invoke(currentAbility);
+                    _currentActiveAbilities.RemoveAt(i);
+                }
+            }
+        }
+
+        #region Unity Ability Function Delegates
+
+        private void DelegateUnityUpdateAbilities()
+        {
+            foreach (var ability in _playerAbilities)
+            {
+                ability.UnityUpdateDelegate(this);
+            }
+        }
+
+        private void DelegateUnityFixedUpdateAbilities(float fixedDeltaTime)
+        {
+            foreach (var ability in _playerAbilities)
+            {
+                ability.UnityFixedUpdateDelegate(this, fixedDeltaTime);
+            }
         }
 
         #endregion

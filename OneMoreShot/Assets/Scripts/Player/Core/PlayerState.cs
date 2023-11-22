@@ -6,5 +6,7 @@
         Running,
         Falling,
         Dead,
+
+        CustomMovement, // This is used for Ability Controlled Movements
     }
 }

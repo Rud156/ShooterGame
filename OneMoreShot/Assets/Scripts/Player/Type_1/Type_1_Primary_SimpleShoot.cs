@@ -90,9 +90,9 @@ namespace Player.Type_1
 
         #region Unity Function Delegates
 
-        public override void UnityFixedUpdateDelegate(PlayerController playerController)
+        public override void UnityFixedUpdateDelegate(PlayerController playerController, float fixedDeltaTime)
         {
-            base.UnityFixedUpdateDelegate(playerController);
+            base.UnityFixedUpdateDelegate(playerController, fixedDeltaTime);
             if (_currentOverheatTime > 0)
             {
                 _currentOverheatTime -= WorldTimeManager.Instance.FixedUpdateTime * _overheatCooldownMultiplier;

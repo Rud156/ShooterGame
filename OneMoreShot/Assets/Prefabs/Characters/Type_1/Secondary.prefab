@@ -46,12 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 8b2b2198bf13feb40a52ab13c5d231d6, type: 3}
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
+  _hasInputActivation: 1
   _isMovementAbility: 1
   _abilityTrigger: 1
   _abilityType: 1
   _abilityCooldownDuration: 7
   _abilityPositioning: 0
-  _allowedActiveAbilityTypes: 
+  _disallowedActiveAbilityTypes: 
   _dashEffectPrefab: {fileID: 8019111275251628808, guid: e28f8f87ba85988489ec4a5ff805ef93,
     type: 3}
   _dashEffectOffset: {x: 0, y: 0, z: 0}

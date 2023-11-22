@@ -3,7 +3,6 @@ using Player.Core;
 using UI.Player;
 using UnityEngine;
 using Utils.Misc;
-using World;
 
 namespace Player.Abilities
 {
@@ -16,12 +15,13 @@ namespace Player.Abilities
         [SerializeField] private Sprite _background;
 
         [Header("Core Ability Data")]
+        [SerializeField] private bool _hasInputActivation;
         [SerializeField] private bool _isMovementAbility;
         [SerializeField] protected AbilityTrigger _abilityTrigger;
         [SerializeField] private AbilityType _abilityType;
         [SerializeField] protected float _abilityCooldownDuration;
         [SerializeField] private AbilitySpawnOrEffectPosition _abilityPositioning;
-        [SerializeField] private List<AbilityType> _allowedActiveAbilityTypes;
+        [SerializeField] private List<AbilityType> _disallowedActiveAbilityTypes;
 
         private float _cooldownMultiplier;
         protected float _currentCooldownDuration;
@@ -30,6 +30,10 @@ namespace Player.Abilities
         protected PlayerController _playerController;
         protected PlayerShootController _playerShootController;
         protected Animator _playerAnimator;
+
+        // Getters
+        public AbilityType AbilityNameType => _abilityType;
+        public bool IsMovementAbility => _isMovementAbility;
 
         public delegate void AbilityCooldownComplete();
         public event AbilityCooldownComplete OnAbilityCooldownComplete;
@@ -57,8 +61,33 @@ namespace Player.Abilities
 
         public virtual bool AbilityCanStart(PlayerController playerController)
         {
-            // TODO: Implement this...
-            return true;
+            bool canActivateAbility = false;
+            if (_hasInputActivation)
+            {
+                var inputKey = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
+                if (inputKey.KeyPressedThisFrame)
+                {
+                    canActivateAbility = true;
+                }
+            }
+
+            var abilities = playerController.ActiveAbilities;
+            foreach (var ability in abilities)
+            {
+                var abilityType = ability.AbilityNameType;
+                if (ability.IsMovementAbility && _isMovementAbility)
+                {
+                    // Basically cannot run more than 1 Movement Ability at once...
+                    canActivateAbility = false;
+                }
+
+                if (!_disallowedActiveAbilityTypes.Contains(abilityType))
+                {
+                    canActivateAbility = false;
+                }
+            }
+
+            return canActivateAbility;
         }
 
         public abstract bool AbilityNeedsToEnd(PlayerController playerController);
@@ -68,6 +97,8 @@ namespace Player.Abilities
         #region Getters
 
         public virtual Vector3 MovementData() => Vector3.zero;
+
+        public bool HasAbilityNameInDisAllowedList(AbilityType activeAbilityAbilityNameType) => _disallowedActiveAbilityTypes.Contains(activeAbilityAbilityNameType);
 
         #endregion
 
@@ -86,11 +117,11 @@ namespace Player.Abilities
         {
         }
 
-        public virtual void UnityFixedUpdateDelegate(PlayerController playerController)
+        public virtual void UnityFixedUpdateDelegate(PlayerController playerController, float fixedDeltaTime)
         {
             if (_currentCooldownDuration > 0)
             {
-                _currentCooldownDuration -= WorldTimeManager.Instance.FixedUpdateTime * _cooldownMultiplier;
+                _currentCooldownDuration -= fixedDeltaTime * _cooldownMultiplier;
                 if (_currentCooldownDuration <= 0)
                 {
                     _currentCooldownDuration = 0;

@@ -1115,6 +1115,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 41242701096791769}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1219699828 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3288304303297217382, guid: 848fbb3725fddcf4e91e2155105acbfa,
+    type: 3}
+  m_PrefabInstance: {fileID: 41242701096791769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9dde5038f74f538a4a1f23c00962fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1298917852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,6 +1907,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc4a8dd886e464042883c96e9c15aff6, type: 3}
+--- !u!114 &711542531846751138 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4815269597027845273, guid: fc4a8dd886e464042883c96e9c15aff6,
+    type: 3}
+  m_PrefabInstance: {fileID: 711542531846751137}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a6fbe278804ecdb6c84c8da33d8564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &749645003067488092
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -4105,9 +4129,11 @@ MonoBehaviour:
   _jumpVelocity: 35
   _gravityMultiplier: 0.3
   _airMultiplier: 0.1
-  _playerAnimator: {fileID: 0}
-  _playerShootController: {fileID: 0}
-  _abilityParentGameObject: {fileID: 1945025976}
+  _playerAnimator: {fileID: 8818148499720819394}
+  _playerShootController: {fileID: 2350652680326947817}
+  _playerAbilities:
+  - {fileID: 1219699828}
+  - {fileID: 711542531846751138}
 --- !u!114 &2350652680326947814
 MonoBehaviour:
   m_ObjectHideFlags: 0
