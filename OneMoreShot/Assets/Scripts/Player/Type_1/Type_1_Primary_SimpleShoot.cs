@@ -19,6 +19,7 @@ namespace Player.Type_1
         [SerializeField] private float _fireRate;
         [SerializeField] private float _overheatDurationAmount;
         [SerializeField] private float _overheatCooldownMultiplier;
+        [SerializeField] private int _attackAnimCount;
 
         [Header("Camera Data")]
         [SerializeField] private CameraShaker _abilityCameraShaker;
@@ -50,7 +51,7 @@ namespace Player.Type_1
                 var simpleProjectile = projectile.GetComponent<SimpleProjectile>();
                 simpleProjectile.LaunchProjectile(direction);
 
-                _playerAnimator.SetTrigger(Type_1_PrimaryAnimParam);
+                _playerAnimator.SetInteger(Type_1_PrimaryAnimParam, Random.Range(1, _attackAnimCount + 1));
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
                 CustomCameraController.Instance.StartShake(_abilityCameraShaker);
             }
@@ -76,7 +77,11 @@ namespace Player.Type_1
             }
         }
 
-        public override void AbilityEnd(PlayerController playerController) => _abilityMarkedForEnd = true;
+        public override void AbilityEnd(PlayerController playerController)
+        {
+            _abilityMarkedForEnd = true;
+            _playerAnimator.SetInteger(Type_1_PrimaryAnimParam, 0);
+        }
 
         #endregion
 

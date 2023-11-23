@@ -56,6 +56,12 @@ namespace Player.Core
                 return;
             }
 
+            var topPlayerState = _playerController.TopPlayerState;
+            if (topPlayerState == PlayerState.CustomMovement)
+            {
+                return;
+            }
+
             var landEffectObject = Instantiate(_landEffect.effectPrefab, transform.position, Quaternion.Euler(_landEffect.spawnRotation));
             landEffectObject.transform.SetParent(transform);
             landEffectObject.transform.localPosition += _landEffect.spawnOffset;

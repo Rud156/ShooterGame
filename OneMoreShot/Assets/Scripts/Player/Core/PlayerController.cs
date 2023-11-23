@@ -27,8 +27,8 @@ namespace Player.Core
 
         // Player State
         private List<PlayerState> _playerStateStack;
-        private float _currentStateVelocity;
-        private Vector3 _characterVelocity;
+        [SerializeField] private float _currentStateVelocity;
+        [SerializeField] private Vector3 _characterVelocity;
         private bool _jumpReset;
         private bool _isGrounded;
         public bool IsGrounded => _isGrounded;
@@ -124,8 +124,8 @@ namespace Player.Core
             UpdateGroundedState();
             if (_playerStateStack[^1] != PlayerState.CustomMovement)
             {
+                ProcessGlobalGravity(); // This needs to be before Jump since in the same frame the second one will override
                 ProcessJumpInput();
-                ProcessGlobalGravity();
             }
 
             CheckAndActivateAbilities();
@@ -146,7 +146,7 @@ namespace Player.Core
             var isGrounded = _characterController.isGrounded;
 
             // Means that the player is falling down
-            if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling)
+            if (!isGrounded && _playerStateStack[^1] != PlayerState.Falling && _playerStateStack[^1] != PlayerState.CustomMovement)
             {
                 PushPlayerState(PlayerState.Falling);
             }

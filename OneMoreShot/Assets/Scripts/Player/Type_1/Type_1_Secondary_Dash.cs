@@ -15,11 +15,7 @@ namespace Player.Type_1
         [SerializeField] private GameObject _dashEffectPrefab;
 
         [Header("Dash Effects Data")]
-        [SerializeField] private Vector3 _dashEffectOffset;
-        [SerializeField] private Vector3 _leftDashRotation;
-        [SerializeField] private Vector3 _rightDashRotation;
         [SerializeField] private Vector3 _frontDashRotation;
-        [SerializeField] private Vector3 _backDashRotation;
 
         [Header("Dash Data")]
         [SerializeField] private float _dashDuration;
@@ -45,17 +41,10 @@ namespace Player.Type_1
             }
 
             _startingCoreInput = coreInput;
-            var dashEffectRotation = coreInput.y switch
-            {
-                > 0 => _frontDashRotation,
-                < 0 => _backDashRotation,
-                _ => coreInput.x > 0 ? _rightDashRotation : _leftDashRotation
-            };
 
             var characterTransform = transform;
             _dashEffectInstance = Instantiate(_dashEffectPrefab, characterTransform.position, Quaternion.identity, characterTransform);
-            _dashEffectInstance.transform.localPosition += _dashEffectOffset;
-            _dashEffectInstance.transform.localRotation = Quaternion.Euler(dashEffectRotation);
+            _dashEffectInstance.transform.localRotation = Quaternion.Euler(_frontDashRotation);
 
             _currentCooldownDuration = _abilityCooldownDuration;
             _currentDashDurationLeft = _dashDuration;
