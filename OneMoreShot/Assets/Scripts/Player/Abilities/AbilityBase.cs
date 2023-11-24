@@ -61,6 +61,11 @@ namespace Player.Abilities
 
         public virtual bool AbilityCanStart(PlayerController playerController)
         {
+            if (_currentCooldownDuration > 0)
+            {
+                return false;
+            }
+
             bool canActivateAbility = false;
             if (_hasInputActivation)
             {

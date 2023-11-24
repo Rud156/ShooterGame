@@ -87,8 +87,6 @@ namespace Player.Type_1
 
         #region Ability Conditions
 
-        public override bool AbilityCanStart(PlayerController playerController) => base.AbilityCanStart(playerController) && _currentCooldownDuration <= 0;
-
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _abilityMarkedForEnd;
 
         #endregion
