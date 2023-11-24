@@ -55,7 +55,7 @@ MonoBehaviour:
   _disallowedActiveAbilityTypes: 
   _abilityProjectile: {fileID: 5093047753733651196, guid: 181ae5f998936ec4e9ac2303665f21da,
     type: 3}
-  _fireRate: 0.5
+  _fireRate: 0.25
   _overheatDurationAmount: 1.5
   _overheatCooldownMultiplier: 0.75
   _attackAnimCount: 3

@@ -3284,7 +3284,7 @@ MonoBehaviour:
     m_Bits: 65
   _virtualShootPoint: {fileID: 251024287278979075}
   _physicalShootPoint: {fileID: 251024287278979075}
-  _debugIsActive: 1
+  _debugIsActive: 0
   _debugDisplayDuration: 0.3
 --- !u!1 &3147821124406921313
 GameObject:
