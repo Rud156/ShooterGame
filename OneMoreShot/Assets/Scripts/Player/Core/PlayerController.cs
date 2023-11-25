@@ -27,11 +27,12 @@ namespace Player.Core
 
         // Player State
         private List<PlayerState> _playerStateStack;
-        [SerializeField] private float _currentStateVelocity;
-        [SerializeField] private Vector3 _characterVelocity;
+        private float _currentStateVelocity;
+        private Vector3 _characterVelocity;
         private bool _jumpReset;
         private bool _isGrounded;
         public bool IsGrounded => _isGrounded;
+        public float GravityMultiplier => _gravityMultiplier;
         public PlayerState TopPlayerState => _playerStateStack[^1];
 
         // Inputs
@@ -254,6 +255,8 @@ namespace Player.Core
 
         private void ApplyFinalMovement(float fixedUpdateTime) => _characterController.Move(_characterVelocity * fixedUpdateTime);
 
+        public void ForcePlayerRotation() => UpdatePlayerRotation();
+
         #region Player State Input Updates
 
         private void ProcessJumpInput()
@@ -308,7 +311,7 @@ namespace Player.Core
             {
                 if (ability.IsMovementAbility)
                 {
-                    _characterVelocity = ability.MovementData();
+                    _characterVelocity = ability.GetMovementData();
                     hasMovementAbility = true;
                     break;
                 }

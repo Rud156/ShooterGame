@@ -89,7 +89,7 @@ namespace Player.Type_1
 
         #region Getters
 
-        public override Vector3 MovementData() => _dashComputedVelocity;
+        public override Vector3 GetMovementData() => _dashComputedVelocity;
 
         #endregion
     }

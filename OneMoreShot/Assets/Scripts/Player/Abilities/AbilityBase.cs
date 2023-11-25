@@ -101,7 +101,7 @@ namespace Player.Abilities
 
         #region Getters
 
-        public virtual Vector3 MovementData() => Vector3.zero;
+        public virtual Vector3 GetMovementData() => Vector3.zero;
 
         public bool HasAbilityNameInDisAllowedList(AbilityType activeAbilityAbilityNameType) => _disallowedActiveAbilityTypes.Contains(activeAbilityAbilityNameType);
 

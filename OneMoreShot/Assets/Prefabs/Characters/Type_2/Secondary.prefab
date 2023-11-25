@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2901066250611394378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6811166961354062472}
+  - component: {fileID: 1791896085616453880}
+  m_Layer: 0
+  m_Name: Secondary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6811166961354062472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2901066250611394378}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1791896085616453880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2901066250611394378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca12afc39b84975a814701ae4b8f9aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: 1d9ea5b62e3c7ad4b96aba9b0b6aef6a, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
+  _hasInputActivation: 1
+  _isMovementAbility: 1
+  _abilityTrigger: 1
+  _abilityType: 3
+  _abilityCooldownDuration: 5
+  _abilityPositioning: 0
+  _disallowedActiveAbilityTypes: 
+  _burstDamageMarkerPrefab: {fileID: 0}
+  _burstMarkerEffectPrefab: {fileID: 8160184973231911241, guid: 199b7c15692db1947aa70ad0e5a62301,
+    type: 3}
+  _burstDamageEffectPrefab: {fileID: 168058103202751482, guid: 730386caebd4dc846850e53629da47e1,
+    type: 3}
+  _dashTrailEffectPrefab: {fileID: 4581791113312155467, guid: ed3fa45c44aceef479ace8b50e33ea83,
+    type: 3}
+  _holdRunTrailEffectPrefab: {fileID: 4581791113312155467, guid: ed3fa45c44aceef479ace8b50e33ea83,
+    type: 3}
+  _secondaryRenderMaterial: {fileID: 2100000, guid: 8180121e3ddd8244e912617ce06e35de,
+    type: 2}
+  _defaultRenderMaterialData:
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: 5f9d44654b83160428d7c4cf276b3572, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: bb570020a8c3bad4bbf803af20e78937, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: 5ebb6caef8207d243a588a574971408c, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: ca131910d5c9a634dbdd38e77111033f, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: 5ebb6caef8207d243a588a574971408c, type: 2}
+  - renderer: {fileID: 0}
+    materialCount: 1
+    materialList:
+    - {fileID: 2100000, guid: 5ebb6caef8207d243a588a574971408c, type: 2}
+  _dashEffectOffset: {x: 0, y: 0, z: 1}
+  _dashVelocity: 80
+  _dashDuration: 0.25
+  _holdRunEffectOffset: {x: 0, y: 0, z: 1}
+  _holdTriggerDuration: 0.2
+  _holdRunVelocity: 20
+  _holdRunDuration: 5
