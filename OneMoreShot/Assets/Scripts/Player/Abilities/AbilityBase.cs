@@ -41,12 +41,7 @@ namespace Player.Abilities
         #region Core Ability Functions
 
         // Ability initialization here...
-        public virtual void AbilityStart(PlayerController playerController)
-        {
-            _playerController = playerController;
-            _playerShootController = playerController.PlayerShootController;
-            _playerAnimator = playerController.PlayerAnimator;
-        }
+        public virtual void AbilityStart(PlayerController playerController) => SetPlayerComponents(playerController);
 
         // Ability Updates
         public abstract void AbilityFixedUpdate(PlayerController playerController, float fixedDeltaTime);
@@ -116,6 +111,8 @@ namespace Player.Abilities
                 HUD_PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
                 HUD_PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
             }
+
+            SetPlayerComponents(playerController);
         }
 
         public virtual void UnityUpdateDelegate(PlayerController playerController)
@@ -164,6 +161,17 @@ namespace Player.Abilities
             {
                 _currentCooldownDuration = 0;
             }
+        }
+
+        #endregion
+
+        #region Misc
+
+        private void SetPlayerComponents(PlayerController playerController)
+        {
+            _playerController = playerController;
+            _playerAnimator = playerController.PlayerAnimator;
+            _playerShootController = playerController.PlayerShootController;
         }
 
         #endregion

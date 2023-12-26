@@ -258,6 +258,7 @@ namespace Player.Type_2
                 }
 
                 modelData.renderer.materials = materials.ToArray();
+                materials.Clear();
             }
         }
 
@@ -272,6 +273,7 @@ namespace Player.Type_2
                 }
 
                 modelData.renderer.materials = materials.ToArray();
+                materials.Clear();
             }
         }
 

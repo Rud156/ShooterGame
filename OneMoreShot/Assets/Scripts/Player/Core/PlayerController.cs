@@ -25,6 +25,9 @@ namespace Player.Core
         [SerializeField] private PlayerShootController _playerShootController;
         [SerializeField] private List<AbilityBase> _playerAbilities;
 
+        [Header("Test")]
+        [SerializeField] private Collider _tempGround;
+
         // Player State
         private List<PlayerState> _playerStateStack;
         private float _currentStateVelocity;
@@ -256,6 +259,27 @@ namespace Player.Core
         private void ApplyFinalMovement(float fixedUpdateTime) => _characterController.Move(_characterVelocity * fixedUpdateTime);
 
         public void ForcePlayerRotation() => UpdatePlayerRotation();
+
+        public void ForcePlayerLookToMousePosition()
+        {
+            if (CustomInputManager.Instance.LastUsedDeviceInputType != InputType.KeyboardMouse)
+            {
+                return;
+            }
+
+            var mousePosition = CustomInputManager.Instance.PlayerInput.MousePosition.ReadValue<Vector2>();
+            var rayStartPoint = _mainCamera.ScreenPointToRay(mousePosition);
+            if (_tempGround.Raycast(rayStartPoint, out var hitInfo, MaxTerrainRaycastDistance))
+            {
+                var worldMousePosition = hitInfo.point;
+                var direction = worldMousePosition - transform.position;
+
+                var computedRotation = Quaternion.LookRotation(direction).eulerAngles;
+                computedRotation.x = 0;
+                computedRotation.z = 0;
+                transform.eulerAngles = computedRotation;
+            }
+        }
 
         #region Player State Input Updates
 
