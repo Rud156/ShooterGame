@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils.Input;
 using Utils.Misc;
@@ -50,7 +49,7 @@ namespace Player.Core
 
         private void PlayerCameraFixedUpdate(float fixedUpdateTime) => UpdateCameraControl();
 
-        #endregion
+        #endregion Unity Functions
 
         #region Camera Control
 
@@ -68,31 +67,31 @@ namespace Player.Core
             {
                 // Clamp X Rotation
                 case >= 0 and <= 180:
-                {
-                    if (cameraRotation.x > _maxCameraAngle)
                     {
-                        cameraRotation.x = _maxCameraAngle;
-                    }
+                        if (cameraRotation.x > _maxCameraAngle)
+                        {
+                            cameraRotation.x = _maxCameraAngle;
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case > 180 and <= 360:
-                {
-                    var negatedAngle = cameraRotation.x - 360;
-                    if (negatedAngle < _minCameraAngle)
                     {
-                        cameraRotation.x = _minCameraAngle;
-                    }
+                        var negatedAngle = cameraRotation.x - 360;
+                        if (negatedAngle < _minCameraAngle)
+                        {
+                            cameraRotation.x = _minCameraAngle;
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
 
             transform.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
             _cinemachineFollowTarget.localRotation = Quaternion.Euler(cameraRotation.x, 0, 0);
         }
 
-        #endregion
+        #endregion Camera Control
 
         #region Inputs
 
@@ -112,6 +111,6 @@ namespace Player.Core
             CustomInputManager.Instance.UpdateLastUsedDeviceInput(deviceName, path);
         }
 
-        #endregion
+        #endregion Inputs
     }
 }

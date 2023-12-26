@@ -33,7 +33,7 @@ namespace Projectiles
             }
         }
 
-        #endregion
+        #endregion Unity Functions
 
         #region Core Projectile Functions
 
@@ -58,7 +58,7 @@ namespace Projectiles
             Destroy(gameObject);
         }
 
-        #endregion
+        #endregion Core Projectile Functions
 
         #region Utils
 
@@ -73,6 +73,6 @@ namespace Projectiles
             _isInitialized = true;
         }
 
-        #endregion
+        #endregion Utils
     }
 }

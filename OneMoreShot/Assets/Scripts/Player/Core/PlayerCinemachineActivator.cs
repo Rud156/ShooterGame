@@ -19,6 +19,6 @@ namespace Player.Core
             cinemachineVirtualCamera.LookAt = _cinemachineFollowTarget;
         }
 
-        #endregion
+        #endregion Unity Functions
     }
 }

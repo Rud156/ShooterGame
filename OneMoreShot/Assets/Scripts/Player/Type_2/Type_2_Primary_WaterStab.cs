@@ -74,7 +74,6 @@ namespace Player.Type_2
         {
             base.UnityStartDelegate(playerController);
             SetState(WaterSwordState.LeftSlash);
-            _playerController.ForcePlayerLookToMousePosition();
             _waterStateCooldown = 0;
         }
 
@@ -132,6 +131,7 @@ namespace Player.Type_2
             _rightHandSword.SetActive(true);
             _rightHandSword.transform.localPosition = swordData.Position;
             _rightHandSword.transform.localRotation = Quaternion.Euler(swordData.Rotation);
+            _playerController.ForcePlayerLookToMousePosition();
         }
 
         private void UpdateSlashTimer(float fixedDeltaTime)

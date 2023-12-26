@@ -77,7 +77,7 @@ namespace Player.Type_1
             Destroy(_dashEffectInstance);
         }
 
-        #endregion
+        #endregion Core Ability Functions
 
         #region Ability Conditions
 
@@ -85,12 +85,12 @@ namespace Player.Type_1
 
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _currentDashDurationLeft <= 0;
 
-        #endregion
+        #endregion Ability Conditions
 
         #region Getters
 
         public override Vector3 GetMovementData() => _dashComputedVelocity;
 
-        #endregion
+        #endregion Getters
     }
 }

@@ -27,7 +27,7 @@ namespace Player.Core
             _playerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
         }
 
-        #endregion
+        #endregion Unity Functions
 
         #region Animation State Handling
 
@@ -77,6 +77,6 @@ namespace Player.Core
             }
         }
 
-        #endregion
+        #endregion Animation State Handling
     }
 }

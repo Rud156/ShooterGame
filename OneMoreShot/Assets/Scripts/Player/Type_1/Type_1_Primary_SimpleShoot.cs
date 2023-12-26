@@ -83,13 +83,13 @@ namespace Player.Type_1
             _playerAnimator.SetInteger(Type_1_PrimaryAnimParam, 0);
         }
 
-        #endregion
+        #endregion Core Ability Functions
 
         #region Ability Conditions
 
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _abilityMarkedForEnd;
 
-        #endregion
+        #endregion Ability Conditions
 
         #region Unity Function Delegates
 
@@ -102,6 +102,6 @@ namespace Player.Type_1
             }
         }
 
-        #endregion
+        #endregion Unity Function Delegates
     }
 }

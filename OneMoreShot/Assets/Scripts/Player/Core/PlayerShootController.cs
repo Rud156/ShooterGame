@@ -22,7 +22,7 @@ namespace Player.Core
 
         private void Start() => _mainCamera = Camera.main!.transform;
 
-        #endregion
+        #endregion Unity Functions
 
         #region External Functions
 
@@ -57,6 +57,6 @@ namespace Player.Core
 
         public Transform GetVirtualShootPoint() => _virtualShootPoint;
 
-        #endregion
+        #endregion External Functions
     }
 }

@@ -1,6 +1,6 @@
+using Player.Abilities;
 using System;
 using System.Collections.Generic;
-using Player.Abilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils.Input;
@@ -141,7 +141,7 @@ namespace Player.Core
             ResetFrameInputs();
         }
 
-        #endregion
+        #endregion Unity Functions
 
         #region Player Movement
 
@@ -254,7 +254,7 @@ namespace Player.Core
             }
         }
 
-        #endregion
+        #endregion Core Movement
 
         private void ApplyFinalMovement(float fixedUpdateTime) => _characterController.Move(_characterVelocity * fixedUpdateTime);
 
@@ -262,6 +262,7 @@ namespace Player.Core
 
         public void ForcePlayerLookToMousePosition()
         {
+            // TODO: Fix this so that it stops the PLayer from moving also for a brief moment
             if (CustomInputManager.Instance.LastUsedDeviceInputType != InputType.KeyboardMouse)
             {
                 return;
@@ -347,9 +348,9 @@ namespace Player.Core
             }
         }
 
-        #endregion
+        #endregion Player State Input Updates
 
-        #endregion
+        #endregion Player Movement
 
         #region Ability Controls
 
@@ -382,7 +383,7 @@ namespace Player.Core
         {
             foreach (var ability in _abilitiesToAddNextFrame)
             {
-                // This Ability will already have started 
+                // This Ability will already have started
                 if (ability.AbilityCanStart(this))
                 {
                     if (ability.IsMovementAbility)
@@ -476,9 +477,9 @@ namespace Player.Core
             }
         }
 
-        #endregion
+        #endregion Unity Ability Function Delegates
 
-        #endregion
+        #endregion Ability Controls
 
         #region Inputs
 
@@ -579,7 +580,7 @@ namespace Player.Core
             };
         }
 
-        #endregion
+        #endregion Inputs
 
         #region Player State
 
@@ -604,6 +605,6 @@ namespace Player.Core
             OnPlayerStateChanged?.Invoke(topState, _playerStateStack[^1]);
         }
 
-        #endregion
+        #endregion Player State
     }
 }

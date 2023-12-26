@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Player.Core;
+﻿using Player.Core;
+using System.Collections.Generic;
 using UI.Player;
 using UnityEngine;
 using Utils.Misc;
@@ -45,12 +45,13 @@ namespace Player.Abilities
 
         // Ability Updates
         public abstract void AbilityFixedUpdate(PlayerController playerController, float fixedDeltaTime);
+
         public abstract void AbilityUpdate(PlayerController playerController, float deltaTime);
 
         // Ability Data cleanup here...
         public abstract void AbilityEnd(PlayerController playerController);
 
-        #endregion
+        #endregion Core Ability Functions
 
         #region Ability Conditions
 
@@ -92,7 +93,7 @@ namespace Player.Abilities
 
         public abstract bool AbilityNeedsToEnd(PlayerController playerController);
 
-        #endregion
+        #endregion Ability Conditions
 
         #region Getters
 
@@ -100,19 +101,18 @@ namespace Player.Abilities
 
         public bool HasAbilityNameInDisAllowedList(AbilityType activeAbilityAbilityNameType) => _disallowedActiveAbilityTypes.Contains(activeAbilityAbilityNameType);
 
-        #endregion
+        #endregion Getters
 
         #region Unity Function Delegates
 
         public virtual void UnityStartDelegate(PlayerController playerController)
         {
+            SetPlayerComponents(playerController);
             if (_abilityTrigger != AbilityTrigger.ExternalAddedAbility)
             {
                 HUD_PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
                 HUD_PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
             }
-
-            SetPlayerComponents(playerController);
         }
 
         public virtual void UnityUpdateDelegate(PlayerController playerController)
@@ -136,7 +136,7 @@ namespace Player.Abilities
             }
         }
 
-        #endregion
+        #endregion Unity Function Delegates
 
         #region Ability Cooldowns
 
@@ -163,7 +163,7 @@ namespace Player.Abilities
             }
         }
 
-        #endregion
+        #endregion Ability Cooldowns
 
         #region Misc
 
@@ -174,6 +174,6 @@ namespace Player.Abilities
             _playerShootController = playerController.PlayerShootController;
         }
 
-        #endregion
+        #endregion Misc
     }
 }

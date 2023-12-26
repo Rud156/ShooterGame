@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 namespace Utils.Input
 {
     public class CustomInputManager : MonoBehaviour

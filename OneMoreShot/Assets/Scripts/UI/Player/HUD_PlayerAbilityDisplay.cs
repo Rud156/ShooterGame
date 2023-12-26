@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Player.Abilities;
+using System;
 using System.Collections;
-using Player.Abilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -55,7 +55,7 @@ namespace UI.Player
 
         private void OnDestroy() => CustomInputManager.Instance.OnLastUsedInputChanged -= UpdateAllAbilityTriggers;
 
-        #endregion
+        #endregion Unity Functions
 
         #region Ability Setup and Updates
 
@@ -97,17 +97,17 @@ namespace UI.Player
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
-                {
-                    var displayString = CustomInputManager.Instance.PlayerInput.AbilityPrimary.GetBindingDisplayString(group: lastInputType);
-                    _primaryAbilityDisplay.AbilityTriggerLabel.text = displayString;
-                }
+                    {
+                        var displayString = CustomInputManager.Instance.PlayerInput.AbilityPrimary.GetBindingDisplayString(group: lastInputType);
+                        _primaryAbilityDisplay.AbilityTriggerLabel.text = displayString;
+                    }
                     break;
 
                 case AbilityTrigger.Secondary:
-                {
-                    var displayString = CustomInputManager.Instance.PlayerInput.AbilitySecondary.GetBindingDisplayString(group: lastInputType);
-                    _secondaryAbilityDisplay.AbilityTriggerLabel.text = displayString;
-                }
+                    {
+                        var displayString = CustomInputManager.Instance.PlayerInput.AbilitySecondary.GetBindingDisplayString(group: lastInputType);
+                        _secondaryAbilityDisplay.AbilityTriggerLabel.text = displayString;
+                    }
                     break;
 
                 case AbilityTrigger.ExternalAddedAbility:
@@ -180,17 +180,17 @@ namespace UI.Player
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
-                {
-                    _primaryAbilityDisplay.CounterLabel.text = counterData;
-                    _primaryAbilityDisplay.CounterLabel.style.display = displayStyle;
-                }
+                    {
+                        _primaryAbilityDisplay.CounterLabel.text = counterData;
+                        _primaryAbilityDisplay.CounterLabel.style.display = displayStyle;
+                    }
                     break;
 
                 case AbilityTrigger.Secondary:
-                {
-                    _secondaryAbilityDisplay.CounterLabel.text = counterData;
-                    _secondaryAbilityDisplay.CounterLabel.style.display = displayStyle;
-                }
+                    {
+                        _secondaryAbilityDisplay.CounterLabel.text = counterData;
+                        _secondaryAbilityDisplay.CounterLabel.style.display = displayStyle;
+                    }
                     break;
 
                 case AbilityTrigger.ExternalAddedAbility:
@@ -237,7 +237,7 @@ namespace UI.Player
             }
         }
 
-        #endregion
+        #endregion Ability Setup and Updates
 
         #region Ability Flash and Scale
 
@@ -328,31 +328,31 @@ namespace UI.Player
             switch (abilityTrigger)
             {
                 case AbilityTrigger.Primary:
-                {
-                    if (!_flashCoroutineData.PrimaryActive)
                     {
-                        StartCoroutine(FlashCoroutine(_primaryAbilityDisplay.Flasher, AbilityTrigger.Primary));
-                    }
+                        if (!_flashCoroutineData.PrimaryActive)
+                        {
+                            StartCoroutine(FlashCoroutine(_primaryAbilityDisplay.Flasher, AbilityTrigger.Primary));
+                        }
 
-                    if (!_scaleCoroutineData.PrimaryActive)
-                    {
-                        StartCoroutine(ScaleCoroutine(_primaryAbilityDisplay.ItemRoot, AbilityTrigger.Primary));
+                        if (!_scaleCoroutineData.PrimaryActive)
+                        {
+                            StartCoroutine(ScaleCoroutine(_primaryAbilityDisplay.ItemRoot, AbilityTrigger.Primary));
+                        }
                     }
-                }
                     break;
 
                 case AbilityTrigger.Secondary:
-                {
-                    if (!_flashCoroutineData.SecondaryActive)
                     {
-                        StartCoroutine(FlashCoroutine(_secondaryAbilityDisplay.Flasher, AbilityTrigger.Secondary));
-                    }
+                        if (!_flashCoroutineData.SecondaryActive)
+                        {
+                            StartCoroutine(FlashCoroutine(_secondaryAbilityDisplay.Flasher, AbilityTrigger.Secondary));
+                        }
 
-                    if (!_scaleCoroutineData.PrimaryActive)
-                    {
-                        StartCoroutine(ScaleCoroutine(_secondaryAbilityDisplay.ItemRoot, AbilityTrigger.Secondary));
+                        if (!_scaleCoroutineData.PrimaryActive)
+                        {
+                            StartCoroutine(ScaleCoroutine(_secondaryAbilityDisplay.ItemRoot, AbilityTrigger.Secondary));
+                        }
                     }
-                }
                     break;
 
                 case AbilityTrigger.ExternalAddedAbility:
@@ -361,7 +361,7 @@ namespace UI.Player
             }
         }
 
-        #endregion
+        #endregion Ability Flash and Scale
 
         #region Singleton
 
@@ -404,10 +404,11 @@ namespace UI.Player
         {
             [FormerlySerializedAs("_primaryActive")]
             public bool PrimaryActive;
-            [FormerlySerializedAs("secondaryActive")] [FormerlySerializedAs("_secondaryActive")]
+            [FormerlySerializedAs("secondaryActive")]
+            [FormerlySerializedAs("_secondaryActive")]
             public bool SecondaryActive;
         }
 
-        #endregion
+        #endregion Structs
     }
 }

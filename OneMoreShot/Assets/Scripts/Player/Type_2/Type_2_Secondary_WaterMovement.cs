@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Player.Abilities;
 using Player.Core;
 using Player.Misc;
+using System;
+using System.Collections.Generic;
 using UI.Player;
 using UnityEngine;
 
@@ -109,7 +109,7 @@ namespace Player.Type_2
             _playerAnimator.SetBool(Type_2_SecondaryAnimParam, false);
         }
 
-        #endregion
+        #endregion Core Ability Functions
 
         #region Ability Conditions
 
@@ -117,13 +117,13 @@ namespace Player.Type_2
 
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _waterMovementState == WaterMovementState.End;
 
-        #endregion
+        #endregion Ability Conditions
 
         #region Getters
 
         public override Vector3 GetMovementData() => _computedVelocity;
 
-        #endregion
+        #endregion Getters
 
         #region Unity Function Delegates
 
@@ -133,7 +133,7 @@ namespace Player.Type_2
             _burstDamageMarkers = new List<BurstDamageData>();
         }
 
-        #endregion
+        #endregion Unity Function Delegates
 
         #region Ability State Updates
 
@@ -145,19 +145,19 @@ namespace Player.Type_2
             switch (_waterMovementState)
             {
                 case WaterMovementState.Tap when !key.KeyPressed:
-                {
-                    _currentTimer = _dashDuration;
-                    SetupDashMovement();
-                    SetAbilityState(WaterMovementState.Dash);
-                }
+                    {
+                        _currentTimer = _dashDuration;
+                        SetupDashMovement();
+                        SetAbilityState(WaterMovementState.Dash);
+                    }
                     break;
 
                 case WaterMovementState.Tap when _currentTimer <= 0:
-                {
-                    _currentTimer = _holdRunDuration;
-                    SetupHoldRunMovement();
-                    SetAbilityState(WaterMovementState.HoldRun);
-                }
+                    {
+                        _currentTimer = _holdRunDuration;
+                        SetupHoldRunMovement();
+                        SetAbilityState(WaterMovementState.HoldRun);
+                    }
                     break;
             }
         }
@@ -193,7 +193,7 @@ namespace Player.Type_2
             CheckAndApplyDamageMarker();
         }
 
-        #endregion
+        #endregion Dash Movement
 
         #region Hold Movement
 
@@ -234,7 +234,7 @@ namespace Player.Type_2
             CheckAndApplyDamageMarker();
         }
 
-        #endregion
+        #endregion Hold Movement
 
         private void SetAbilityState(WaterMovementState abilityState) => _waterMovementState = abilityState;
 
@@ -243,7 +243,7 @@ namespace Player.Type_2
             // TODO: Complete this function...
         }
 
-        #endregion
+        #endregion Ability State Updates
 
         #region Material Updates
 
@@ -277,7 +277,7 @@ namespace Player.Type_2
             }
         }
 
-        #endregion
+        #endregion Material Updates
 
         #region Structs
 
@@ -296,7 +296,7 @@ namespace Player.Type_2
             public List<Material> materialList;
         }
 
-        #endregion
+        #endregion Structs
 
         #region Enums
 
@@ -308,6 +308,6 @@ namespace Player.Type_2
             End
         }
 
-        #endregion
+        #endregion Enums
     }
 }

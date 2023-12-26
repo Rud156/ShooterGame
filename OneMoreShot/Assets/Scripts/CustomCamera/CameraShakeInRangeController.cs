@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Utils.Misc;
 
-
 namespace CustomCamera
 {
     public class CameraShakeInRangeController : MonoBehaviour

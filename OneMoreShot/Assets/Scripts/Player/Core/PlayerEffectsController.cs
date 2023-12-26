@@ -37,7 +37,7 @@ namespace Player.Core
 
         private void Update() => UpdatePlayerStateChanged();
 
-        #endregion
+        #endregion Unity Functions
 
         #region Effects State Handling
 
@@ -77,21 +77,22 @@ namespace Player.Core
                 case PlayerState.Falling:
                 case PlayerState.Dead:
                 case PlayerState.CustomMovement:
-                {
-                    if (_runEffectInstance.isPlaying)
                     {
-                        _runEffectInstance.Stop();
+                        if (_runEffectInstance.isPlaying)
+                        {
+                            _runEffectInstance.Stop();
+                        }
                     }
-                }
 
                     break;
+
                 case PlayerState.Running:
-                {
-                    if (!_runEffectInstance.isPlaying)
                     {
-                        _runEffectInstance.Play();
+                        if (!_runEffectInstance.isPlaying)
+                        {
+                            _runEffectInstance.Play();
+                        }
                     }
-                }
                     break;
 
                 default:
@@ -99,7 +100,7 @@ namespace Player.Core
             }
         }
 
-        #endregion
+        #endregion Effects State Handling
 
         #region Structs
 
@@ -111,6 +112,6 @@ namespace Player.Core
             public GameObject effectPrefab;
         }
 
-        #endregion
+        #endregion Structs
     }
 }

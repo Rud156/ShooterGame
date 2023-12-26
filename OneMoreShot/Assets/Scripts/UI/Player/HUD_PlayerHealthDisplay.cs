@@ -64,7 +64,7 @@ namespace UI.Player
             _lerpAmount += Time.deltaTime * _displayLerpSpeed;
         }
 
-        #endregion
+        #endregion Unity Functions
 
         #region External Functions
 
@@ -95,7 +95,7 @@ namespace UI.Player
             }
         }
 
-        #endregion
+        #endregion External Functions
 
         #region Bar Effects
 
@@ -129,7 +129,7 @@ namespace UI.Player
             _scaleCoroutineActive = false;
         }
 
-        #endregion
+        #endregion Bar Effects
 
         #region Setup
 
@@ -146,7 +146,7 @@ namespace UI.Player
             _progressBarProgress = progressBackground.Q<VisualElement>(className: "unity-progress-bar__progress");
         }
 
-        #endregion
+        #endregion Setup
 
         #region Singleton
 
