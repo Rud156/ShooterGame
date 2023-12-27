@@ -77,11 +77,7 @@ namespace Player.Type_1
             }
         }
 
-        public override void AbilityEnd(PlayerController playerController)
-        {
-            _abilityMarkedForEnd = true;
-            _playerAnimator.SetInteger(Type_1_PrimaryAnimParam, 0);
-        }
+        public override void AbilityEnd(PlayerController playerController) => _abilityMarkedForEnd = true;
 
         #endregion Core Ability Functions
 

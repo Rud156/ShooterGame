@@ -136,6 +136,10 @@ namespace Player.Abilities
             }
         }
 
+        public virtual void UnityDestroyDelegate(PlayerController playerController)
+        {
+        }
+
         #endregion Unity Function Delegates
 
         #region Ability Cooldowns

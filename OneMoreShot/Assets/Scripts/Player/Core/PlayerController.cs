@@ -111,6 +111,11 @@ namespace Player.Core
         {
             DeInitializeInputEvents();
             WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= PlayerFixedUpdate;
+
+            foreach (var ability in _playerAbilities)
+            {
+                ability.UnityDestroyDelegate(this);
+            }
         }
 
         private void Update()
