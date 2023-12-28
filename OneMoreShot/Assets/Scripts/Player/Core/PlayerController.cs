@@ -35,6 +35,7 @@ namespace Player.Core
         private bool _jumpReset;
         private bool _isGrounded;
         public bool IsGrounded => _isGrounded;
+        public Vector3 CharacterVelocity => _characterVelocity;
         public float GravityMultiplier => _gravityMultiplier;
         public PlayerState TopPlayerState => _playerStateStack[^1];
 
@@ -463,6 +464,8 @@ namespace Player.Core
                 }
             }
         }
+
+        public void AddExternalAbility(AbilityBase ability) => _abilitiesToAddNextFrame.Add(ability);
 
         #region Unity Ability Function Delegates
 

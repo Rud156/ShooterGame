@@ -89,7 +89,7 @@ namespace Player.Type_3
 
         #region Ability Conditions
 
-        public override bool AbilityCanStart(PlayerController playerController) => base.AbilityCanStart(playerController) && _currentDashesAvailableCount > 0;
+        public override bool AbilityCanStart(PlayerController playerController, bool ignoreCooldown = false) => base.AbilityCanStart(playerController, true) && _currentDashesAvailableCount > 0;
 
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _currentDashDurationLeft <= 0;
 

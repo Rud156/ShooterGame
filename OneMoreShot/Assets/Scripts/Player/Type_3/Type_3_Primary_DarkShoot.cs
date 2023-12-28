@@ -92,7 +92,7 @@ namespace Player.Type_3
 
         #region Ability Conditions
 
-        public override bool AbilityCanStart(PlayerController playerController) => base.AbilityCanStart(playerController) && _targetFound;
+        public override bool AbilityCanStart(PlayerController playerController, bool ignoreCooldown = false) => base.AbilityCanStart(playerController) && _targetFound;
 
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _abilityMarkedForEnd;
 

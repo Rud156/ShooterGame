@@ -13,5 +13,7 @@
 
         Type_4_Primary_DeployTurret,
         Type_4_Secondary_StunGrenade,
+
+        Ability_StunDurationBased,
     }
 }

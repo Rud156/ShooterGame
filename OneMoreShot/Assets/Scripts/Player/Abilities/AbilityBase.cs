@@ -55,9 +55,9 @@ namespace Player.Abilities
 
         #region Ability Conditions
 
-        public virtual bool AbilityCanStart(PlayerController playerController)
+        public virtual bool AbilityCanStart(PlayerController playerController, bool ignoreCooldown = false)
         {
-            if (_currentCooldownDuration > 0)
+            if (_currentCooldownDuration > 0 && !ignoreCooldown)
             {
                 return false;
             }
@@ -177,6 +177,8 @@ namespace Player.Abilities
             _playerAnimator = playerController.PlayerAnimator;
             _playerShootController = playerController.PlayerShootController;
         }
+
+        public void ForceMarkAbilityAsMovement() => _isMovementAbility = true;
 
         #endregion Misc
     }

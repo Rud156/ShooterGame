@@ -113,7 +113,7 @@ namespace Player.Type_2
 
         #region Ability Conditions
 
-        public override bool AbilityCanStart(PlayerController playerController) => base.AbilityCanStart(playerController) && playerController.IsGrounded;
+        public override bool AbilityCanStart(PlayerController playerController, bool ignoreCooldown = false) => base.AbilityCanStart(playerController) && playerController.IsGrounded;
 
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _waterMovementState == WaterMovementState.End;
 

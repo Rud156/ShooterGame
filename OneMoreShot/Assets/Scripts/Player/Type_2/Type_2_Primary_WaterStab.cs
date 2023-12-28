@@ -56,7 +56,7 @@ namespace Player.Type_2
 
         #region Ability Conditions
 
-        public override bool AbilityCanStart(PlayerController playerController) => base.AbilityCanStart(playerController) && _slashTimer <= 0;
+        public override bool AbilityCanStart(PlayerController playerController, bool ignoreCooldown = false) => base.AbilityCanStart(playerController) && _slashTimer <= 0;
 
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _abilityMarkedForEnd;
 
