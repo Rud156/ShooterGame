@@ -990,7 +990,8 @@ MonoBehaviour:
   _abilityCooldownDuration: 0
   _abilityPositioning: 0
   _disallowedActiveAbilityTypes: 
-  _stunGrenadePrefab: {fileID: 0}
+  _stunGrenadePrefab: {fileID: 7548192263693597651, guid: 105b7ae3251952542982c552eaf91bf4,
+    type: 3}
   _abilityCameraShaker: {fileID: 11400000, guid: bc349cde6ba12d143a3bac3272112b40,
     type: 2}
 --- !u!1 &1380838087808620975
@@ -2694,7 +2695,8 @@ MonoBehaviour:
   _airMultiplier: 0.1
   _playerAnimator: {fileID: 8947352336644233603}
   _playerShootController: {fileID: 7105246389162316558}
-  _playerAbilities: []
+  _playerAbilities:
+  - {fileID: 8947590499279606832}
   _tempGround: {fileID: 0}
 --- !u!114 &8183949326822709526
 MonoBehaviour:

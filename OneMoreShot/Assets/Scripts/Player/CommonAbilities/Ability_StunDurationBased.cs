@@ -25,7 +25,11 @@ namespace Assets.Scripts.Player.CommonAbilities
         {
         }
 
-        public override void AbilityEnd(PlayerController playerController) => _currentStunDuration = 0;
+        public override void AbilityEnd(PlayerController playerController)
+        {
+            _currentStunDuration = 0;
+            Destroy(gameObject);
+        }
 
         #endregion Core Ability Functions
 
