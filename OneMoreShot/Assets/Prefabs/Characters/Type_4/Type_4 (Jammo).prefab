@@ -2625,6 +2625,7 @@ GameObject:
   - component: {fileID: 3807360242681034385}
   - component: {fileID: 350646148276707188}
   - component: {fileID: 7105246389162316558}
+  - component: {fileID: 6696040193849950813}
   m_Layer: 0
   m_Name: Type_4 (Jammo)
   m_TagString: Player
@@ -2774,6 +2775,21 @@ MonoBehaviour:
   _physicalShootPoint: {fileID: 5377972502613421211}
   _debugIsActive: 0
   _debugDisplayDuration: 0.3
+--- !u!114 &6696040193849950813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213534258023752179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c01c1dd29944114896a972bd8dbce28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _debugDamageAmount: 30
+  _debugHealAmount: 40
 --- !u!1 &4250696042194767694
 GameObject:
   m_ObjectHideFlags: 0
