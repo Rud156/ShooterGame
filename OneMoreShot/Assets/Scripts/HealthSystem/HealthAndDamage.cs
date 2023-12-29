@@ -120,7 +120,7 @@ namespace HeallthSystem
 
         #region Damage Changes
 
-        private void TakeDamage(int damageAmount)
+        public void TakeDamage(int damageAmount)
         {
             var startHealth = _currentHealth;
             var modifiedDamageAmount = damageAmount;

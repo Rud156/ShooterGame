@@ -1630,6 +1630,9 @@ GameObject:
   - component: {fileID: 3315944793132314091}
   - component: {fileID: 7820805049678373270}
   - component: {fileID: 1294430305633226785}
+  - component: {fileID: 8028282242635350211}
+  - component: {fileID: -5681351431839706554}
+  - component: {fileID: -7685906705214790416}
   m_Layer: 0
   m_Name: Type_3 (Wizard)
   m_TagString: Player
@@ -1779,6 +1782,48 @@ MonoBehaviour:
   _physicalShootPoint: {fileID: 5156324101025458647}
   _debugIsActive: 0
   _debugDisplayDuration: 0.3
+--- !u!114 &8028282242635350211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5414933331851613953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c01c1dd29944114896a972bd8dbce28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _debugDamageAmount: 0
+  _debugHealAmount: 0
+--- !u!114 &-5681351431839706554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5414933331851613953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5f47ee99357e24d9c38dd52a0c9d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7685906705214790416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5414933331851613953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 1
 --- !u!1 &5482958226869630733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2248,6 +2293,7 @@ MonoBehaviour:
     type: 3}
   _raycastPointsPrefab: {fileID: 7820997016974016892, guid: 5a5843dcc06f83f48a78d4f7905660e0,
     type: 3}
+  _damageAmount: 30
   _attackAnimCount: 3
   _fireRate: 0.5
   _raycastMask:

@@ -3136,6 +3136,9 @@ GameObject:
   - component: {fileID: 7233323968664934780}
   - component: {fileID: 8380027447880016953}
   - component: {fileID: 7857952604423988966}
+  - component: {fileID: 6028122206542296152}
+  - component: {fileID: 7181868164167198480}
+  - component: {fileID: 4758944662077041240}
   m_Layer: 0
   m_Name: Type_1 (PicoChan)
   m_TagString: Player
@@ -3209,8 +3212,7 @@ MonoBehaviour:
   _playerAbilities:
   - {fileID: 4674943677519616020}
   - {fileID: 2461496070963759458}
-  _currentStateVelocity: 0
-  _characterVelocity: {x: 0, y: 0, z: 0}
+  _tempGround: {fileID: 0}
 --- !u!114 &7502903335594400860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3286,6 +3288,48 @@ MonoBehaviour:
   _physicalShootPoint: {fileID: 251024287278979075}
   _debugIsActive: 0
   _debugDisplayDuration: 0.3
+--- !u!114 &6028122206542296152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103253699236128827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c01c1dd29944114896a972bd8dbce28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _debugDamageAmount: 0
+  _debugHealAmount: 0
+--- !u!114 &7181868164167198480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103253699236128827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5f47ee99357e24d9c38dd52a0c9d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4758944662077041240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103253699236128827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 1
 --- !u!1 &3147821124406921313
 GameObject:
   m_ObjectHideFlags: 0

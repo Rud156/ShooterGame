@@ -1,4 +1,5 @@
 ﻿using CustomCamera;
+using HeallthSystem;
 using Player.Abilities;
 using Player.Core;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace Player.Type_3
         [Header("Prefabs")]
         [SerializeField] private GameObject _damageEffectPrefab;
         [SerializeField] private GameObject _raycastPointsPrefab;
+
+        [Header("Damage Data")]
+        [SerializeField] private int _damageAmount;
 
         [Header("Shoot Data")]
         [SerializeField] private int _attackAnimCount;
@@ -35,8 +39,8 @@ namespace Player.Type_3
         [SerializeField] private float _debugDisplayDuration;
 
         private List<Transform> _raycastPoints;
-        // TODO: Add Health And Damage Data as well
         private Vector3 _hitPosition;
+        private HealthAndDamage _validTargetHealthDamage;
         private bool _targetFound;
 
         private float _nextShootDuration;
@@ -54,12 +58,14 @@ namespace Player.Type_3
 
         public override void AbilityFixedUpdate(PlayerController playerController, float fixedDeltaTime)
         {
-            if (_nextShootDuration <= 0)
+            if (_nextShootDuration <= 0 && _targetFound)
             {
                 _nextShootDuration = _fireRate;
                 _currentOverheatTime += _fireRate;
 
                 Instantiate(_damageEffectPrefab, _hitPosition, Quaternion.identity);
+                _validTargetHealthDamage.TakeDamage(_damageAmount);
+
                 _playerAnimator.SetInteger(Type_3_PrimaryAnimParam, Random.Range(1, _attackAnimCount + 1));
                 HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
                 CustomCameraController.Instance.StartShake(_abilityCameraShaker);
@@ -143,14 +149,25 @@ namespace Player.Type_3
 
                 if (hit)
                 {
-                    _hitPosition = hitInfo.point;
-                    _targetFound = true;
+                    if (hitInfo.transform.TryGetComponent<HealthAndDamage>(out HealthAndDamage healthAndDamage))
+                    {
+                        _validTargetHealthDamage = healthAndDamage;
+                        _hitPosition = hitInfo.point;
+                        _targetFound = true;
+                        break;
+                    }
                 }
             }
 
             if (_currentCooldownDuration <= 0)
             {
                 HUD_PlayerAbilityDisplay.Instance.UpdateOverlay(_abilityTrigger, _targetFound ? 0 : 1);
+            }
+
+            if (!_targetFound)
+            {
+                _validTargetHealthDamage = null;
+                _hitPosition = Vector3.zero;
             }
         }
 

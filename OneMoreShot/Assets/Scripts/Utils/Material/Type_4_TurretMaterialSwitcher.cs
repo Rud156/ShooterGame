@@ -24,24 +24,24 @@ namespace Utils.Materials
             switch (materialIndex)
             {
                 case 1:
-                {
-                    _turretTop.material = _turretPlacedMaterial;
-                    _turretBottom.material = _turretPlacedMaterial;
-                }
+                    {
+                        _turretTop.material = _turretPlacedMaterial;
+                        _turretBottom.material = _turretPlacedMaterial;
+                    }
                     break;
 
                 case 2:
-                {
-                    _turretTop.material = _canPlaceMaterial;
-                    _turretBottom.material = _canPlaceMaterial;
-                }
+                    {
+                        _turretTop.material = _canPlaceMaterial;
+                        _turretBottom.material = _canPlaceMaterial;
+                    }
                     break;
 
                 case 3:
-                {
-                    _turretTop.material = _cannotPlaceMaterial;
-                    _turretBottom.material = _cannotPlaceMaterial;
-                }
+                    {
+                        _turretTop.material = _cannotPlaceMaterial;
+                        _turretBottom.material = _cannotPlaceMaterial;
+                    }
                     break;
             }
         }
