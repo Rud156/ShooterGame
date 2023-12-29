@@ -82,6 +82,16 @@ namespace Player.Type_4
 
         #endregion Ability Conditions
 
+        #region Unity Function Delegates
+
+        public override void UnityStartDelegate(PlayerController playerController)
+        {
+            base.UnityStartDelegate(playerController);
+            _spawnedTurretControllers = new List<Type_4_TurretController>();
+        }
+
+        #endregion Unity Function Delegates
+
         #region Ability Turret Functions
 
         private void UpdateTurretShouldSpawn()

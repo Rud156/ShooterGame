@@ -45,8 +45,8 @@ namespace ObjectControllers
 
         private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
-        [SerializeField] private TurretState _turretState;
-        [SerializeField] private TurretTargetingState _turretTargetingState;
+        private TurretState _turretState;
+        private TurretTargetingState _turretTargetingState;
 
         private float _floatData1;
         private float _floatData2;
@@ -107,6 +107,15 @@ namespace ObjectControllers
 
         private void UpdateActivatingState()
         {
+            _floatData1 -= Time.deltaTime * _activationAlphaChangeRate;
+            if (_floatData1 <= 0)
+            {
+                _floatData1 = 0;
+                SetTurretState(TurretState.Idle);
+            }
+
+            _turretTopMaterial.SetFloat(AlphaClip, _floatData1);
+            _turretBottomMaterial.SetFloat(AlphaClip, _floatData1);
         }
 
         private void UpdateIdleState()
@@ -115,6 +124,12 @@ namespace ObjectControllers
 
         private void UpdateWindUpState()
         {
+            _floatData1 -= Time.deltaTime;
+            if (_floatData1 <= 0)
+            {
+                SetTurretState(TurretState.Targeting);
+                SetTurretTargetingState(TurretTargetingState.FindTarget);
+            }
         }
 
         private void UpdateTargetingState()
@@ -123,6 +138,15 @@ namespace ObjectControllers
 
         private void UpdateDestroyState()
         {
+            _floatData1 += Time.deltaTime * _destroyAlphaChangeRate;
+            if (_floatData1 >= 1)
+            {
+                _floatData1 = 1;
+                Destroy(gameObject);
+            }
+
+            _turretTopMaterial.SetFloat(AlphaClip, _floatData1);
+            _turretBottomMaterial.SetFloat(AlphaClip, _floatData1);
         }
 
         #endregion State Updates

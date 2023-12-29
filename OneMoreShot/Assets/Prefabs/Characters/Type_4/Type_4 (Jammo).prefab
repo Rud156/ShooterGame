@@ -987,7 +987,7 @@ MonoBehaviour:
   _isMovementAbility: 0
   _abilityTrigger: 1
   _abilityType: 7
-  _abilityCooldownDuration: 0
+  _abilityCooldownDuration: 5
   _abilityPositioning: 0
   _disallowedActiveAbilityTypes: 
   _stunGrenadePrefab: {fileID: 7548192263693597651, guid: 105b7ae3251952542982c552eaf91bf4,
@@ -2696,6 +2696,7 @@ MonoBehaviour:
   _playerAnimator: {fileID: 8947352336644233603}
   _playerShootController: {fileID: 7105246389162316558}
   _playerAbilities:
+  - {fileID: 4869961200158699578}
   - {fileID: 8947590499279606832}
   _tempGround: {fileID: 0}
 --- !u!114 &8183949326822709526
@@ -4106,6 +4107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5854687710971609262}
+  - component: {fileID: 4869961200158699578}
   m_Layer: 0
   m_Name: Primary
   m_TagString: Untagged
@@ -4128,6 +4130,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 457733237904685523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4869961200158699578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6669175088631403465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f740b6f003afd2447ab7a13b43ac6dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: 9662b5bd26505c641802da5ea62eec8c, type: 3}
+  _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
+  _hasInputActivation: 1
+  _isMovementAbility: 0
+  _abilityTrigger: 0
+  _abilityType: 6
+  _abilityCooldownDuration: 3
+  _abilityPositioning: 0
+  _disallowedActiveAbilityTypes: 
+  _turretPrefab: {fileID: 7130402121719879043, guid: 9f273d49b9fd3c743967d4921a095eee,
+    type: 3}
+  _spawnMaxDistance: 5
+  _maxTurretsCanSpawn: 3
+  _raycastDownDistance: 5
+  _minYNormalThreshold: 0.7
+  _maxYNormalThreshold: 1
+  _turretDeployCheckMask:
+    serializedVersion: 2
+    m_Bits: 1
+  _debugIsActive: 1
+  _debugDisplayDuration: 0.1
 --- !u!1 &6708043896096609284
 GameObject:
   m_ObjectHideFlags: 0
