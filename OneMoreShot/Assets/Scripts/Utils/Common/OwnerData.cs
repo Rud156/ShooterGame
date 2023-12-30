@@ -9,8 +9,8 @@ namespace Utils.Common
 {
     public class OwnerData : MonoBehaviour
     {
-        [Header("Auto Set Owner")]
-        [SerializeField] private bool _autoSetOwnerId;
+        [Header("Set Owner Data From Parent")]
+        [SerializeField] private bool _autoSetOwnerIdFromParent;
         [SerializeField] private GameObject _parent;
 
         [Header("Self Data")]
@@ -30,7 +30,7 @@ namespace Utils.Common
 
         private void Start()
         {
-            if (_autoSetOwnerId)
+            if (_autoSetOwnerIdFromParent)
             {
                 _ownerId = _parent.GetComponent<OwnerData>().OwnerId;
             }
@@ -38,7 +38,7 @@ namespace Utils.Common
 
         private void OnEnable()
         {
-            if (_autoSetOwnerId)
+            if (_autoSetOwnerIdFromParent)
             {
                 _ownerId = _parent.GetComponent<OwnerData>().OwnerId;
             }

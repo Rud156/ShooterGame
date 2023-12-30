@@ -50,10 +50,11 @@ MonoBehaviour:
   _isMovementAbility: 1
   _abilityTrigger: 1
   _abilityType: 3
-  _abilityCooldownDuration: 5
+  _abilityCooldownDuration: 3
   _abilityPositioning: 0
   _disallowedActiveAbilityTypes: 
-  _burstDamageMarkerPrefab: {fileID: 0}
+  _burstDamageMarkerPrefab: {fileID: 8062983346016468725, guid: cb5bb6e3632ffa04aaa40dea54b0d453,
+    type: 3}
   _burstMarkerEffectPrefab: {fileID: 8160184973231911241, guid: 199b7c15692db1947aa70ad0e5a62301,
     type: 3}
   _burstDamageEffectPrefab: {fileID: 168058103202751482, guid: 730386caebd4dc846850e53629da47e1,
@@ -128,3 +129,8 @@ MonoBehaviour:
   _holdTriggerDuration: 0.2
   _holdRunVelocity: 20
   _holdRunDuration: 5
+  _damageCheckMask:
+    serializedVersion: 2
+    m_Bits: 577
+  _damageCheckRadius: 3
+  _damageAmount: 20

@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using HeallthSystem;
+using HealthSystem.DamageSystems;
+using NUnit.Framework;
 using Player.Abilities;
 using Player.Core;
 using Player.Misc;
@@ -6,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using UI.Player;
 using UnityEngine;
+using Utils.Common;
 
 namespace Player.Type_2
 {
@@ -34,6 +37,11 @@ namespace Player.Type_2
         [SerializeField] private float _holdTriggerDuration;
         [SerializeField] private float _holdRunVelocity;
         [SerializeField] private float _holdRunDuration;
+
+        [Header("Damage Data")]
+        [SerializeField] private LayerMask _damageCheckMask;
+        [SerializeField] private float _damageCheckRadius;
+        [SerializeField] private int _damageAmount;
 
         private Collider[] _hitColliders = new Collider[PlayerStaticData.MaxCollidersCheck];
 
@@ -78,26 +86,27 @@ namespace Player.Type_2
             }
         }
 
-        public override void AbilityUpdate(PlayerController playerController, float deltaTime)
-        {
-            UpdateAbilityStateTypeSelector(playerController);
-        }
+        public override void AbilityUpdate(PlayerController playerController, float deltaTime) => UpdateAbilityStateTypeSelector(playerController);
 
         public override void AbilityEnd(PlayerController playerController)
         {
             // Calculate Burst Damage
-            foreach (var burstDamageMarker in _burstDamageMarkers)
+            foreach (var burstDamageData in _burstDamageMarkers)
             {
-                // TODO: Change this to BurstDamageMarker
-                if (burstDamageMarker.BurstDamageObject == null)
+                if (burstDamageData.BurstDamageObject == null)
                 {
                     continue;
                 }
 
-                Destroy(burstDamageMarker.MarkedEffectObject);
-                Destroy(burstDamageMarker.BurstDamageObject);
+                burstDamageData.BurstDamageMarker.SetDamageAmount(_damageAmount);
+                burstDamageData.BurstDamageMarker.ApplyDamage();
 
-                // TODO: Spawn effect at damage position
+                var position = burstDamageData.BurstDamageMarker.transform.position;
+                Instantiate(_burstDamageEffectPrefab, position, Quaternion.identity);
+
+                Destroy(burstDamageData.MarkedEffectObject);
+                Destroy(burstDamageData.BurstDamageObject);
+                Destroy(burstDamageData.BurstDamageMarker);
             }
 
             _burstDamageMarkers.Clear();
@@ -240,7 +249,45 @@ namespace Player.Type_2
 
         private void CheckAndApplyDamageMarker()
         {
-            // TODO: Complete this function...
+            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _damageCheckRadius, _hitColliders, _damageCheckMask);
+
+            for (var i = 0; i < targetsHit; i++)
+            {
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerData.OwnerId)
+                {
+                    continue;
+                }
+
+                var hasHealth = _hitColliders[i].TryGetComponent(out HealthAndDamage _);
+                var targetBurstDamageMarker = _hitColliders[i].GetComponentInChildren<BurstDamageMarker>();
+                var hasBurstDamageMarker = targetBurstDamageMarker != null;
+                if (hasHealth && hasBurstDamageMarker)
+                {
+                    var targetOwnerId = targetBurstDamageMarker.GetComponent<OwnerData>().OwnerId;
+                    if (targetOwnerId != _ownerData.OwnerId)
+                    {
+                        hasBurstDamageMarker = false;
+                    }
+                }
+
+                if (hasHealth && !hasBurstDamageMarker)
+                {
+                    var burstDamage = Instantiate(_burstDamageMarkerPrefab, _hitColliders[i].transform.position, Quaternion.identity, _hitColliders[i].transform);
+                    var ownerData = burstDamage.GetComponent<OwnerData>();
+                    ownerData.OwnerId = _ownerData.OwnerId;
+
+                    var targetTransform = _hitColliders[i].transform;
+                    var effect = Instantiate(_burstMarkerEffectPrefab, targetTransform.position, Quaternion.identity, targetTransform);
+
+                    _burstDamageMarkers.Add(new BurstDamageData()
+                    {
+                        BurstDamageMarker = burstDamage.GetComponent<BurstDamageMarker>(),
+                        MarkedEffectObject = effect,
+                        BurstDamageObject = burstDamage
+                    });
+                }
+            }
         }
 
         #endregion Ability State Updates
@@ -283,7 +330,7 @@ namespace Player.Type_2
 
         private struct BurstDamageData
         {
-            // TODO: Add Burst Damage Marker...
+            public BurstDamageMarker BurstDamageMarker;
             public GameObject MarkedEffectObject;
             public GameObject BurstDamageObject;
         }

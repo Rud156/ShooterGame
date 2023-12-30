@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5086268201243115593}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96,6 +96,8 @@ GameObject:
   - component: {fileID: 5086268201243115593}
   - component: {fileID: 7501563697143181364}
   - component: {fileID: 5477425651976656384}
+  - component: {fileID: 3315374803629818271}
+  - component: {fileID: 1558455308644214542}
   m_Layer: 0
   m_Name: WaterSword
   m_TagString: Untagged
@@ -166,8 +168,36 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25, y: 1, z: 0.25}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 0.25, y: 3, z: 0.25}
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &3315374803629818271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5610884078883986163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1617df391de1ecf45b95e163c9d614ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageAmount: 30
+--- !u!114 &1558455308644214542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5610884078883986163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerIdFromParent: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0
 --- !u!1001 &3089429478424507924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -189,7 +219,7 @@ PrefabInstance:
     - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1575312493837095528, guid: d85c69562be7a624d9f38f800415bfd7,
         type: 3}

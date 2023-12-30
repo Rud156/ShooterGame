@@ -130,7 +130,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Slash_4
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8205591605755297412}
@@ -158,7 +158,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Slash_5_1 (Stab)
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5300142007873760192}
@@ -391,7 +391,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: PrimaryLayer
     m_StateMachine: {fileID: 8238331356791951199}
-    m_Mask: {fileID: 31900000, guid: eb8cd46eb9772c944aecd0a0767cebb3, type: 2}
+    m_Mask: {fileID: 31900000, guid: 313af679954ce6745875dcd15a81b788, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -594,7 +594,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Slash_1
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5361483554808186167}

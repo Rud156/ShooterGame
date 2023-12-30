@@ -438,6 +438,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2537136114721200892, guid: 495a7d694d04b204d985eba2f5c1a61f,
+        type: 3}
+      propertyPath: _tempGround
+      value: 
+      objectReference: {fileID: 734730204}
     - target: {fileID: 3396975120507765240, guid: 495a7d694d04b204d985eba2f5c1a61f,
         type: 3}
       propertyPath: m_Name
@@ -1586,7 +1591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _autoSetOwnerId: 0
+  _autoSetOwnerIdFromParent: 0
   _parent: {fileID: 0}
   _isSelfOwner: 1
 --- !u!1660057539 &9223372036854775807

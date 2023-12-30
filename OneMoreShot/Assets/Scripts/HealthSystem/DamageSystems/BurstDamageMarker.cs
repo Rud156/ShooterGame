@@ -11,7 +11,7 @@ namespace HealthSystem.DamageSystems
 
         public void SetDamageAmount(int damageAmount) => _damageAmount = damageAmount;
 
-        public void ApplyDamage(bool useParent)
+        public void ApplyDamage(bool useParent = true)
         {
             var targetGameObject = useParent ? transform.parent.gameObject : transform.gameObject;
             var healthAndDamage = targetGameObject.GetComponent<HealthAndDamage>();

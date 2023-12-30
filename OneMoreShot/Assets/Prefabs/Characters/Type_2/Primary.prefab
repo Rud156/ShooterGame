@@ -47,7 +47,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: a874b9d53af35224387f244cf7d12637, type: 3}
   _background: {fileID: 21300000, guid: 549c8ae573207db4db0c2686e842a093, type: 3}
   _hasInputActivation: 1
-  _isMovementAbility: 1
+  _isMovementAbility: 0
   _abilityTrigger: 0
   _abilityType: 2
   _abilityCooldownDuration: 0
@@ -55,18 +55,21 @@ MonoBehaviour:
   _disallowedActiveAbilityTypes: 03000000
   _rightHandSword: {fileID: 0}
   _leftSlashData:
-    AnimIndex: 0
-    SlashDuration: 0
-    Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 0, y: 0, z: 0}
+    AnimIndex: 1
+    SlashDuration: 0.28666666
+    Position: {x: -0.077, y: -0.056, z: -0.015}
+    Rotation: {x: 14.362157, y: 93.05338, z: -0.00013748549}
   _rightSlashData:
-    AnimIndex: 0
-    SlashDuration: 0
-    Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 0, y: 0, z: 0}
+    AnimIndex: 2
+    SlashDuration: 0.22
+    Position: {x: -0.058, y: -0.122, z: 0.046}
+    Rotation: {x: 350.46896, y: 49.863186, z: 343.91605}
   _stabData:
-    AnimIndex: 0
-    SlashDuration: 0
-    Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 0, y: 0, z: 0}
+    AnimIndex: 3
+    SlashDuration: 0.28666666
+    Position: {x: -0.094, y: -0.0609, z: -0.002}
+    Rotation: {x: -0.000005088008, y: 91.53499, z: 0.000019252257}
   _slashStateCooldownDuration: 1.5
+  _debugBreakLeftSlash: 0
+  _debugBreakRightSlash: 0
+  _debugBreakFrontStab: 0
