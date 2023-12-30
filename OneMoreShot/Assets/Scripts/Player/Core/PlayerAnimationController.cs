@@ -48,6 +48,7 @@ namespace Player.Core
 
                 case PlayerState.Dead:
                 case PlayerState.CustomMovement:
+                case PlayerState.FrozenMovementInput:
                     break;
 
                 default:
@@ -70,6 +71,7 @@ namespace Player.Core
 
                 case PlayerState.Dead:
                 case PlayerState.CustomMovement:
+                case PlayerState.FrozenMovementInput:
                     break;
 
                 default:

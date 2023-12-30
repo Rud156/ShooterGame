@@ -50,7 +50,7 @@ MonoBehaviour:
   _isMovementAbility: 1
   _abilityTrigger: 1
   _abilityType: 5
-  _abilityCooldownDuration: 5
+  _abilityCooldownDuration: 2
   _abilityPositioning: 0
   _disallowedActiveAbilityTypes: 
   _dashEffectPrefab: {fileID: 8019111275251628808, guid: 376c98ef561f9364e89d6504090fbe44,

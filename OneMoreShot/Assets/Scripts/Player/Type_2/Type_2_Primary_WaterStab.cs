@@ -129,9 +129,8 @@ namespace Player.Type_2
             _slashTimer = swordData.SlashDuration;
             _playerAnimator.SetInteger(Type_2_PrimaryAnimParam, swordData.AnimIndex);
             _rightHandSword.SetActive(true);
-            _rightHandSword.transform.localPosition = swordData.Position;
-            _rightHandSword.transform.localRotation = Quaternion.Euler(swordData.Rotation);
-            _playerController.ForcePlayerLookToMousePosition();
+            _rightHandSword.transform.SetLocalPositionAndRotation(swordData.Position, Quaternion.Euler(swordData.Rotation));
+            _playerController.ForcePlayerLookToMousePosition(swordData.SlashDuration);
         }
 
         private void UpdateSlashTimer(float fixedDeltaTime)

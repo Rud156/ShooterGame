@@ -3204,7 +3204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _runningSpeed: 10
-  _jumpVelocity: 35
+  _jumpVelocity: 40
   _gravityMultiplier: 0.3
   _airMultiplier: 0.1
   _playerAnimator: {fileID: 5559999904938101393}
@@ -3328,10 +3328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _autoSetOwnerId: 0
+  _autoSetOwnerIdFromParent: 0
   _parent: {fileID: 0}
   _isSelfOwner: 1
-  _ownerId: 
 --- !u!1 &3147821124406921313
 GameObject:
   m_ObjectHideFlags: 0

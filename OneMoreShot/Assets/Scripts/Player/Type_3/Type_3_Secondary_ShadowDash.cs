@@ -48,7 +48,11 @@ namespace Player.Type_3
             _dashEffectInstance = Instantiate(_dashEffectPrefab, characterTransform.position, Quaternion.identity, characterTransform);
             _dashEffectInstance.transform.localRotation = Quaternion.Euler(_frontDashRotation);
 
-            _currentCooldownDuration = _abilityCooldownDuration;
+            if (_currentCooldownDuration <= 0)
+            {
+                Debug.Log($"Cooldown: {_currentCooldownDuration}");
+                _currentCooldownDuration = _abilityCooldownDuration;
+            }
             _currentDashDurationLeft = _dashDuration;
             _playerAnimator.SetBool(Type_3_SecondaryAnimParam, true);
             HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
@@ -79,10 +83,6 @@ namespace Player.Type_3
             Destroy(_dashEffectInstance);
 
             _currentDashesAvailableCount -= 1;
-            if (_currentDashesAvailableCount <= 0)
-            {
-                _currentCooldownDuration = _abilityCooldownDuration;
-            }
         }
 
         #endregion Core Ability Functions

@@ -59,5 +59,6 @@ MonoBehaviour:
   _overheatDurationAmount: 1.5
   _overheatCooldownMultiplier: 0.75
   _attackAnimCount: 3
+  _attackMovementFreezeDuration: 0.15
   _abilityCameraShaker: {fileID: 11400000, guid: cc6b93c79154fc74badedfe77e24033b,
     type: 2}

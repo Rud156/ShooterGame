@@ -69,7 +69,5 @@ MonoBehaviour:
     SlashDuration: 0.28666666
     Position: {x: -0.094, y: -0.0609, z: -0.002}
     Rotation: {x: -0.000005088008, y: 91.53499, z: 0.000019252257}
+  _slashMovementFreezeDuration: 0.25
   _slashStateCooldownDuration: 1.5
-  _debugBreakLeftSlash: 0
-  _debugBreakRightSlash: 0
-  _debugBreakFrontStab: 0

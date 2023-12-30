@@ -23,6 +23,7 @@ namespace Player.Type_3
 
         [Header("Shoot Data")]
         [SerializeField] private int _attackAnimCount;
+        [SerializeField] private float _attackMovementFreezeDuration;
         [SerializeField] private float _fireRate;
         [SerializeField] private LayerMask _raycastMask;
         [SerializeField] private float _raycastDistance;
@@ -58,17 +59,27 @@ namespace Player.Type_3
 
         public override void AbilityFixedUpdate(PlayerController playerController, float fixedDeltaTime)
         {
-            if (_nextShootDuration <= 0 && _targetFound)
+            if (_abilityMarkedForEnd)
             {
-                _nextShootDuration = _fireRate;
-                _currentOverheatTime += _fireRate;
+                return;
+            }
 
-                Instantiate(_damageEffectPrefab, _hitPosition, Quaternion.identity);
-                _validTargetHealthDamage.TakeDamage(_damageAmount);
+            if (_nextShootDuration <= 0)
+            {
+                _playerController.ForcePlayerLookToMousePosition(_attackMovementFreezeDuration);
+                UpdateValidHitTarget();
+                if (_targetFound)
+                {
+                    _nextShootDuration = _fireRate;
+                    _currentOverheatTime += _fireRate;
 
-                _playerAnimator.SetInteger(Type_3_PrimaryAnimParam, Random.Range(1, _attackAnimCount + 1));
-                HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
-                CustomCameraController.Instance.StartShake(_abilityCameraShaker);
+                    Instantiate(_damageEffectPrefab, _hitPosition, Quaternion.identity);
+                    _validTargetHealthDamage.TakeDamage(_damageAmount);
+
+                    _playerAnimator.SetInteger(Type_3_PrimaryAnimParam, Random.Range(1, _attackAnimCount + 1));
+                    HUD_PlayerAbilityDisplay.Instance.TriggerAbilityFlashAndScale(_abilityTrigger);
+                    CustomCameraController.Instance.StartShake(_abilityCameraShaker);
+                }
             }
             else
             {
@@ -98,7 +109,7 @@ namespace Player.Type_3
 
         #region Ability Conditions
 
-        public override bool AbilityCanStart(PlayerController playerController, bool ignoreCooldown = false) => base.AbilityCanStart(playerController) && _targetFound;
+        public override bool AbilityCanStart(PlayerController playerController, bool ignoreCooldown = false) => base.AbilityCanStart(playerController);
 
         public override bool AbilityNeedsToEnd(PlayerController playerController) => _abilityMarkedForEnd;
 
@@ -121,6 +132,11 @@ namespace Player.Type_3
             if (_currentOverheatTime > 0)
             {
                 _currentOverheatTime -= WorldTimeManager.Instance.FixedUpdateTime * _overheatCooldownMultiplier;
+            }
+
+            if (_abilityMarkedForEnd && _nextShootDuration > 0)
+            {
+                _nextShootDuration -= fixedDeltaTime;
             }
         }
 

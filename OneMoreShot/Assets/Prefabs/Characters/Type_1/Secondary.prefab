@@ -50,15 +50,11 @@ MonoBehaviour:
   _isMovementAbility: 1
   _abilityTrigger: 1
   _abilityType: 1
-  _abilityCooldownDuration: 7
+  _abilityCooldownDuration: 1
   _abilityPositioning: 0
   _disallowedActiveAbilityTypes: 
   _dashEffectPrefab: {fileID: 8019111275251628808, guid: e28f8f87ba85988489ec4a5ff805ef93,
     type: 3}
-  _dashEffectOffset: {x: 0, y: 0, z: 0}
-  _leftDashRotation: {x: 0, y: 0, z: 0}
-  _rightDashRotation: {x: 0, y: 180, z: 0}
   _frontDashRotation: {x: 0, y: 270, z: 0}
-  _backDashRotation: {x: 0, y: 90, z: 0}
   _dashDuration: 0.25
-  _dashVelocity: 65
+  _dashVelocity: 70

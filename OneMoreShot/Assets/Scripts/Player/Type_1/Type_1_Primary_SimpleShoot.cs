@@ -21,6 +21,7 @@ namespace Player.Type_1
         [SerializeField] private float _overheatDurationAmount;
         [SerializeField] private float _overheatCooldownMultiplier;
         [SerializeField] private int _attackAnimCount;
+        [SerializeField] private float _attackMovementFreezeDuration;
 
         [Header("Camera Data")]
         [SerializeField] private CameraShaker _abilityCameraShaker;
@@ -44,6 +45,7 @@ namespace Player.Type_1
             {
                 _nextShootDuration = _fireRate;
                 _currentOverheatTime += _fireRate;
+                _playerController.ForcePlayerLookToMousePosition(_attackMovementFreezeDuration);
 
                 var spawnPosition = _playerShootController.GetShootPosition();
                 var direction = _playerShootController.GetShootLookDirection();
@@ -99,6 +101,11 @@ namespace Player.Type_1
             if (_currentOverheatTime > 0)
             {
                 _currentOverheatTime -= WorldTimeManager.Instance.FixedUpdateTime * _overheatCooldownMultiplier;
+            }
+
+            if (_abilityMarkedForEnd && _nextShootDuration > 0)
+            {
+                _nextShootDuration -= fixedDeltaTime;
             }
         }
 

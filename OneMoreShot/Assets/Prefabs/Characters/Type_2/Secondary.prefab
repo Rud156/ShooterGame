@@ -50,7 +50,7 @@ MonoBehaviour:
   _isMovementAbility: 1
   _abilityTrigger: 1
   _abilityType: 3
-  _abilityCooldownDuration: 3
+  _abilityCooldownDuration: 1.5
   _abilityPositioning: 0
   _disallowedActiveAbilityTypes: 
   _burstDamageMarkerPrefab: {fileID: 8062983346016468725, guid: cb5bb6e3632ffa04aaa40dea54b0d453,

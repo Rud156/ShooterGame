@@ -77,6 +77,7 @@ namespace Player.Core
                 case PlayerState.Falling:
                 case PlayerState.Dead:
                 case PlayerState.CustomMovement:
+                case PlayerState.FrozenMovementInput:
                     {
                         if (_runEffectInstance.isPlaying)
                         {

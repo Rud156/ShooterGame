@@ -228,9 +228,8 @@ namespace Player.Type_2
             }
 
             var forward = transform.forward;
-            var coreInput = playerController.CoreMovementInput;
-
             var movement = forward;
+
             movement = _holdRunVelocity * movement.normalized;
             _computedVelocity.x = movement.x;
             _computedVelocity.z = movement.z;

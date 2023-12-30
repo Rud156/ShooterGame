@@ -50,7 +50,7 @@ MonoBehaviour:
   _isMovementAbility: 0
   _abilityTrigger: 0
   _abilityType: 4
-  _abilityCooldownDuration: 1
+  _abilityCooldownDuration: 0.3
   _abilityPositioning: 0
   _disallowedActiveAbilityTypes: 
   _damageEffectPrefab: {fileID: 7891259392760164114, guid: 38149fd665e688b469d853178bf64142,
@@ -59,10 +59,11 @@ MonoBehaviour:
     type: 3}
   _damageAmount: 30
   _attackAnimCount: 3
+  _attackMovementFreezeDuration: 0.15
   _fireRate: 0.5
   _raycastMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 577
   _raycastDistance: 20
   _overheatDurationAmount: 1.5
   _overheatCooldownMultiplier: 0.75

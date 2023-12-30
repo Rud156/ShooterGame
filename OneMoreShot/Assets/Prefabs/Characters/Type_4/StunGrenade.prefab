@@ -291,7 +291,7 @@ MonoBehaviour:
     m_Bits: 65
   _grenadeStunCameraShaker: {fileID: 11400000, guid: 063bb57eadb708347a3314a5c38d36aa,
     type: 2}
-  _debugIsActive: 1
+  _debugIsActive: 0
   _debugDisplayDuration: 10
 --- !u!114 &-1418305586608267015
 MonoBehaviour:
@@ -305,7 +305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _autoSetOwnerId: 0
+  _autoSetOwnerIdFromParent: 0
   _parent: {fileID: 0}
   _isSelfOwner: 0
-  _ownerId: 

@@ -32,6 +32,7 @@ namespace Player.Core
 
         // Player State
         private List<PlayerState> _playerStateStack;
+        private float _frozenMovementDuration;
         private float _currentStateVelocity;
         private Vector3 _characterVelocity;
         private bool _jumpReset;
@@ -142,7 +143,7 @@ namespace Player.Core
             }
 
             CheckAndActivateAbilities();
-            UpdatePlayerMovement();
+            UpdatePlayerMovement(fixedUpdateTime);
 
             FixedUpdateAbilities(fixedUpdateTime);
             ApplyFinalMovement(fixedUpdateTime);
@@ -184,7 +185,7 @@ namespace Player.Core
             }
         }
 
-        private void UpdatePlayerMovement()
+        private void UpdatePlayerMovement(float fixedUpdateTime)
         {
             switch (_playerStateStack[^1])
             {
@@ -204,6 +205,10 @@ namespace Player.Core
                     UpdateDeadState();
                     break;
 
+                case PlayerState.FrozenMovementInput:
+                    UpdateFrozenMovementInput(fixedUpdateTime);
+                    break;
+
                 case PlayerState.CustomMovement:
                     UpdateCustomMovementState();
                     break;
@@ -212,7 +217,7 @@ namespace Player.Core
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (_playerStateStack[^1] != PlayerState.CustomMovement)
+            if (_playerStateStack[^1] != PlayerState.CustomMovement && _playerStateStack[^1] != PlayerState.FrozenMovementInput)
             {
                 UpdatePlayerRotation();
                 UpdateCoreMovement();
@@ -269,9 +274,8 @@ namespace Player.Core
 
         public void ForcePlayerRotation() => UpdatePlayerRotation();
 
-        public void ForcePlayerLookToMousePosition()
+        public void ForcePlayerLookToMousePosition(float duration)
         {
-            // TODO: Fix this so that it stops the PLayer from moving also for a brief moment
             if (CustomInputManager.Instance.LastUsedDeviceInputType != InputType.KeyboardMouse)
             {
                 return;
@@ -288,6 +292,9 @@ namespace Player.Core
                 computedRotation.x = 0;
                 computedRotation.z = 0;
                 transform.eulerAngles = computedRotation;
+
+                _frozenMovementDuration = duration;
+                PushPlayerState(PlayerState.FrozenMovementInput);
             }
         }
 
@@ -336,6 +343,19 @@ namespace Player.Core
         {
             // Do nothing here for now...
             // Will be needed for ReSpawns
+        }
+
+        private void UpdateFrozenMovementInput(float fixedUpdateTime)
+        {
+            if (_frozenMovementDuration <= 0)
+            {
+                PopPlayerState();
+                return;
+            }
+
+            var yVelocity = _characterVelocity.y;
+            _frozenMovementDuration -= fixedUpdateTime;
+            _characterVelocity = new Vector3(0, yVelocity, 0);
         }
 
         private void UpdateCustomMovementState()

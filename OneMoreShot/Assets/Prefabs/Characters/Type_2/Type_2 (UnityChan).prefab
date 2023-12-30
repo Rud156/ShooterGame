@@ -2809,7 +2809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _runningSpeed: 10
-  _jumpVelocity: 35
+  _jumpVelocity: 40
   _gravityMultiplier: 0.3
   _airMultiplier: 0.1
   _playerAnimator: {fileID: 5368455223200526855}
