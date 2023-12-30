@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using UI.Player;
 using UnityEngine;
+using Utils.Common;
 using Utils.Materials;
 
 namespace Player.Type_4
@@ -98,6 +99,9 @@ namespace Player.Type_4
         {
             _turretObject = Instantiate(_turretPrefab, transform.position, Quaternion.identity);
             _turretMaterialSwitcher = _turretObject.GetComponent<BaseMaterialSwitcher>();
+
+            var ownerData = _turretObject.GetComponent<OwnerData>();
+            ownerData.OwnerId = _ownerData.OwnerId;
 
             SetTurretState(TurretState.Placement);
         }

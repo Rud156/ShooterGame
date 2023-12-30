@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UI.Player;
 using UnityEngine;
+using Utils.Common;
 using Utils.Misc;
 
 namespace Player.Abilities
@@ -30,6 +31,7 @@ namespace Player.Abilities
         protected PlayerController _playerController;
         protected PlayerShootController _playerShootController;
         protected Animator _playerAnimator;
+        protected OwnerData _ownerData;
 
         // Getters
         public AbilityType AbilityNameType => _abilityType;
@@ -176,6 +178,7 @@ namespace Player.Abilities
             _playerController = playerController;
             _playerAnimator = playerController.PlayerAnimator;
             _playerShootController = playerController.PlayerShootController;
+            _ownerData = playerController.OwnerData;
         }
 
         public void ForceMarkAbilityAsMovement() => _isMovementAbility = true;

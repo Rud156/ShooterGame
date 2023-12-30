@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2752422005234650719}
   - component: {fileID: 2752422005234650713}
   - component: {fileID: 2752422005234650712}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Turret Lower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2752422006056786181}
   - component: {fileID: 2752422006056786183}
   - component: {fileID: 2752422006056786182}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Turret Upper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2752422006104053495}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6587741568055134983}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Shoot Point
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 6607468192302824615}
   - component: {fileID: 6294314499010364601}
   - component: {fileID: 7127588920106980197}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Target Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,8 @@ GameObject:
   - component: {fileID: 7130402121719879040}
   - component: {fileID: 685595196113353861}
   - component: {fileID: 6488182589207335331}
-  m_Layer: 8
+  - component: {fileID: 3724751511107798217}
+  m_Layer: 9
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,6 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c813dfdd896b924b9b63a965d797cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ownerIdData: {fileID: 3724751511107798217}
   _shootPoint: {fileID: 6587741568055134983}
   _turretCollider: {fileID: 7130402121719879040}
   _turretTop: {fileID: 2752422006056786181}
@@ -426,15 +428,30 @@ MonoBehaviour:
   _targetingRadius: 15
   _targetingMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 577
   _stayOnTargetMinDuration: 7
   _targetLowestHealthRatio: 0.3
   _windupTime: 0.75
-  _damagePerSec: 1
+  _turretDamage: 1
+  _turretDamageTick: 0.5
   _debugIsActive: 1
-  _debugDisplayDuration: 10
-  _turretState: 0
-  _turretTargetingState: 0
+  _debugDisplayDuration: 0.5
+--- !u!114 &3724751511107798217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7130402121719879043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0
+  _ownerId: 
 --- !u!1 &8003068403400172120
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +463,7 @@ GameObject:
   - component: {fileID: 2434697702596743246}
   - component: {fileID: 6459288533406972668}
   - component: {fileID: 2925912842727040007}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StartTrailEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5332,6 +5349,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2092474641090111909, guid: b9ceff92c37bd3e41b2a929f0f6ad20c,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092474641090111909, guid: b9ceff92c37bd3e41b2a929f0f6ad20c,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -5342,6 +5364,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3635564674677079654, guid: b9ceff92c37bd3e41b2a929f0f6ad20c,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635564674677079654, guid: b9ceff92c37bd3e41b2a929f0f6ad20c,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -5349,6 +5376,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8323308809067102496, guid: b9ceff92c37bd3e41b2a929f0f6ad20c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466935397330346576, guid: b9ceff92c37bd3e41b2a929f0f6ad20c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8466935397330346576, guid: b9ceff92c37bd3e41b2a929f0f6ad20c,
         type: 3}
@@ -5396,6 +5433,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TurretRingEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 608819132336580788, guid: 5c65f5621d05dbd4899fbe3df3fc30ca,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 608819132336580788, guid: 5c65f5621d05dbd4899fbe3df3fc30ca,
         type: 3}

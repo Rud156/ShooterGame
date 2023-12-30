@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils.Common;
 using Utils.Input;
 using Utils.Misc;
 using World;
@@ -23,6 +24,7 @@ namespace Player.Core
         [Header("Components")]
         [SerializeField] private Animator _playerAnimator;
         [SerializeField] private PlayerShootController _playerShootController;
+        [SerializeField] private OwnerData _ownerData;
         [SerializeField] private List<AbilityBase> _playerAbilities;
 
         [Header("Test")]
@@ -61,6 +63,7 @@ namespace Player.Core
         // General Getters
         public Animator PlayerAnimator => _playerAnimator;
         public PlayerShootController PlayerShootController => _playerShootController;
+        public OwnerData OwnerData => _ownerData;
 
         // Delegates
         public delegate void PlayerStatePushed(PlayerState newState);

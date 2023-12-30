@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 8769402461998157669}
   - component: {fileID: 7548192263693597652}
   - component: {fileID: 2888819778363528125}
+  - component: {fileID: -7896380624299888902}
   m_Layer: 7
   m_Name: StunGrenadeSecondary
   m_TagString: Untagged
@@ -272,14 +273,18 @@ MonoBehaviour:
     type: 3}
   _destroyEffect: {fileID: 6862442894405721568, guid: 91675b7586e362f4c857640275080e07,
     type: 3}
+  _ownerData: {fileID: -7896380624299888902}
+  _effectRadius: 5
   _additionalGravity: 25
   _launchVelocity: 15
   _projectileDestroyTime: 0.75
   _damageAmount: 20
+  _damageMask:
+    serializedVersion: 2
+    m_Bits: 577
   _hasSecondaryGrenades: 0
   _secondaryGrenadeCount: 0
   _secondaryGrenadePrefab: {fileID: 0}
-  _stunEffectRadius: 5
   _stunMask:
     serializedVersion: 2
     m_Bits: 65
@@ -287,3 +292,19 @@ MonoBehaviour:
     type: 2}
   _debugIsActive: 1
   _debugDisplayDuration: 10
+--- !u!114 &-7896380624299888902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548192263693597651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSetOwnerId: 0
+  _parent: {fileID: 0}
+  _isSelfOwner: 0
+  _ownerId: 

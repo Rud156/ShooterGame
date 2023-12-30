@@ -1,15 +1,18 @@
-﻿using Player.Misc;
+﻿using HeallthSystem;
+using Player.Misc;
 using System;
 using UnityEngine;
+using Utils.Common;
+using Random = UnityEngine.Random;
 
 namespace ObjectControllers
 {
     public class Type_4_TurretController : MonoBehaviour
     {
         private static readonly int AlphaClip = Shader.PropertyToID("_AlphaClip");
-        private const float OneSecond = 1;
 
         [Header("Components")]
+        [SerializeField] private OwnerData _ownerIdData;
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private Collider _turretCollider;
         [SerializeField] private Transform _turretTop;
@@ -37,7 +40,8 @@ namespace ObjectControllers
 
         [Header("Shooting Data")]
         [SerializeField] private float _windupTime;
-        [SerializeField] private int _damagePerSec;
+        [SerializeField] private int _turretDamage;
+        [SerializeField] private float _turretDamageTick;
 
         [Header("Debug")]
         [SerializeField] private bool _debugIsActive;
@@ -54,6 +58,7 @@ namespace ObjectControllers
         private Material _turretTopMaterial;
         private Material _turretBottomMaterial;
         private Transform _currentTarget;
+        private HealthAndDamage _targetHealthAndDamage;
 
         #region Unity Functions
 
@@ -120,6 +125,37 @@ namespace ObjectControllers
 
         private void UpdateIdleState()
         {
+            var hitCount = Physics.OverlapSphereNonAlloc(_shootPoint.position, _targetingRadius, _hitColliders, _targetingMask);
+            if (_debugIsActive)
+            {
+                DebugExtension.DebugWireSphere(_shootPoint.position, Color.red, _targetingRadius, _debugDisplayDuration);
+            }
+
+            var hasTargetInLos = false;
+            for (var i = 0; i < hitCount; i++)
+            {
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
+                {
+                    continue;
+                }
+
+                if (HasDirectLineOfSight(_hitColliders[i].transform) && _hitColliders[i].TryGetComponent(out HealthAndDamage _))
+                {
+                    var distance = Vector3.Distance(_hitColliders[i].transform.position, _shootPoint.position);
+                    if (distance <= _targetingRadius)
+                    {
+                        hasTargetInLos = true;
+                        break;
+                    }
+                }
+            }
+
+            if (hasTargetInLos)
+            {
+                _floatData1 = _windupTime;
+                SetTurretState(TurretState.WindUp);
+            }
         }
 
         private void UpdateWindUpState()
@@ -132,9 +168,102 @@ namespace ObjectControllers
             }
         }
 
+        #region Turret Targetting State
+
         private void UpdateTargetingState()
         {
+            switch (_turretTargetingState)
+            {
+                case TurretTargetingState.None:
+                    break;
+
+                case TurretTargetingState.FindTarget:
+                    UpdateTurretFindTargetState();
+                    break;
+
+                case TurretTargetingState.TrackAndDamageTarget:
+                    UpdateTurretTrackAndDamageState();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
+
+        private void UpdateTurretFindTargetState()
+        {
+            var random = Random.value;
+            if (random <= _targetLowestHealthRatio)
+            {
+                _targetHealthAndDamage = GetLowestHealthEnemy();
+                if (_targetHealthAndDamage == null)
+                {
+                    SetTurretState(TurretState.Idle);
+                    SetTurretTargetingState(TurretTargetingState.None);
+                    return;
+                }
+
+                _currentTarget = _targetHealthAndDamage.transform;
+            }
+            else
+            {
+                _targetHealthAndDamage = GetClosestEnemy();
+                if (_targetHealthAndDamage == null)
+                {
+                    SetTurretState(TurretState.Idle);
+                    SetTurretTargetingState(TurretTargetingState.None);
+                    return;
+                }
+
+                _currentTarget = _targetHealthAndDamage.transform;
+            }
+
+            _floatData1 = _turretDamageTick;
+            _floatData2 = _stayOnTargetMinDuration;
+            SetTurretTargetingState(TurretTargetingState.TrackAndDamageTarget);
+        }
+
+        private void UpdateTurretTrackAndDamageState()
+        {
+            if (_currentTarget == null || _targetHealthAndDamage == null)
+            {
+                SetTurretState(TurretState.Idle);
+                SetTurretTargetingState(TurretTargetingState.None);
+                return;
+            }
+
+            _floatData2 -= Time.deltaTime;
+            if (_floatData2 <= 0)
+            {
+                SetTurretTargetingState(TurretTargetingState.FindTarget);
+            }
+
+            _floatData1 -= Time.deltaTime;
+            if (_floatData1 <= 0)
+            {
+                _targetHealthAndDamage.TakeDamage(_turretDamage);
+                _floatData1 = _turretDamageTick;
+            }
+
+            var targetPosition = _currentTarget.transform.position;
+            var shootPosition = _shootPoint.position;
+            var direction = targetPosition - shootPosition;
+            var lookRotation = Quaternion.LookRotation(direction);
+
+            _turretTop.rotation = lookRotation;
+            _laserTargetEnd.transform.position = targetPosition;
+            _laserLine.SetPosition(0, shootPosition);
+            _laserLine.SetPosition(1, targetPosition);
+
+            var distance = Vector3.Distance(targetPosition, shootPosition);
+            if (distance > _targetingRadius)
+            {
+                SetTurretState(TurretState.Idle);
+                SetTurretTargetingState(TurretTargetingState.None);
+            }
+        }
+
+        #endregion Turret Targetting State
 
         private void UpdateDestroyState()
         {
@@ -180,6 +309,75 @@ namespace ObjectControllers
         }
 
         #endregion Turret State
+
+        #region Enemy Functions
+
+        private bool HasDirectLineOfSight(Transform target)
+        {
+            var startPosition = _shootPoint.position;
+            var direction = target.position - startPosition;
+            var hit = Physics.Raycast(startPosition, direction, out var hitInfo, _targetingRadius, _targetingMask);
+            return hit && hitInfo.transform.GetComponent<OwnerData>().OwnerId == target.GetComponent<OwnerData>().OwnerId;
+        }
+
+        private HealthAndDamage GetClosestEnemy()
+        {
+            var hitCount = Physics.OverlapSphereNonAlloc(_shootPoint.position, _targetingRadius, _hitColliders, _targetingMask);
+            var closestDistance = float.MaxValue;
+            HealthAndDamage closestEnemy = null;
+
+            for (var i = 0; i < hitCount; i++)
+            {
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
+                {
+                    continue;
+                }
+
+                if (HasDirectLineOfSight(_hitColliders[i].transform) && _hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
+                {
+                    var distance = Vector3.Distance(_hitColliders[i].transform.position, _shootPoint.position);
+                    if (distance < closestDistance && distance <= _targetingRadius)
+                    {
+                        closestEnemy = healthAndDamage;
+                        closestDistance = distance;
+                    }
+                }
+            }
+
+            return closestEnemy;
+        }
+
+        private HealthAndDamage GetLowestHealthEnemy()
+        {
+            var hitCount = Physics.OverlapSphereNonAlloc(_shootPoint.position, _targetingRadius, _hitColliders, _targetingMask);
+            var lowestHealth = float.MaxValue;
+            HealthAndDamage lowestHealthEnemy = null;
+
+            for (var i = 0; i < hitCount; i++)
+            {
+                var hitOwnerData = _hitColliders[i].GetComponent<OwnerData>();
+                if (hitOwnerData == null || hitOwnerData.OwnerId == _ownerIdData.OwnerId)
+                {
+                    continue;
+                }
+
+                if (HasDirectLineOfSight(_hitColliders[i].transform) && _hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
+                {
+                    var health = healthAndDamage.CurrentHealth;
+                    var distance = Vector3.Distance(_hitColliders[i].transform.position, _shootPoint.position);
+                    if (health < lowestHealth && distance <= _targetingRadius)
+                    {
+                        lowestHealth = health;
+                        lowestHealthEnemy = healthAndDamage;
+                    }
+                }
+            }
+
+            return lowestHealthEnemy;
+        }
+
+        #endregion Enemy Functions
 
         #region External Functions
 

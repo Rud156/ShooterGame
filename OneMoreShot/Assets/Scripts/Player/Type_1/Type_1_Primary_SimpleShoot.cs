@@ -4,6 +4,7 @@ using Player.Core;
 using Projectiles;
 using UI.Player;
 using UnityEngine;
+using Utils.Common;
 using World;
 
 namespace Player.Type_1
@@ -49,6 +50,9 @@ namespace Player.Type_1
 
                 var projectile = Instantiate(_abilityProjectile, spawnPosition, Quaternion.identity);
                 var simpleProjectile = projectile.GetComponent<SimpleProjectile>();
+                var ownerData = projectile.GetComponent<OwnerData>();
+
+                ownerData.OwnerId = _ownerData.OwnerId;
                 simpleProjectile.LaunchProjectile(direction);
 
                 _playerAnimator.SetInteger(Type_1_PrimaryAnimParam, Random.Range(1, _attackAnimCount + 1));

@@ -1,8 +1,10 @@
 ﻿using Assets.Scripts.Player.CommonAbilities;
 using CustomCamera;
+using HeallthSystem;
 using Player.Core;
 using Player.Misc;
 using UnityEngine;
+using Utils.Common;
 
 namespace Projectiles
 {
@@ -13,11 +15,18 @@ namespace Projectiles
         [SerializeField] private GameObject _stunPrefab;
         [SerializeField] private GameObject _destroyEffect;
 
+        [Header("Components")]
+        [SerializeField] private OwnerData _ownerData;
+
         [Header("General Grenade Data")]
+        [SerializeField] private float _effectRadius;
         [SerializeField] private float _additionalGravity;
         [SerializeField] private float _launchVelocity;
         [SerializeField] private float _projectileDestroyTime;
+
+        [Header("Damage Data")]
         [SerializeField] private int _damageAmount;
+        [SerializeField] private LayerMask _damageMask;
 
         [Header("Secondary Grenades")]
         [SerializeField] private bool _hasSecondaryGrenades;
@@ -25,7 +34,6 @@ namespace Projectiles
         [SerializeField] private GameObject _secondaryGrenadePrefab;
 
         [Header("Stun Data")]
-        [SerializeField] private float _stunEffectRadius;
         [SerializeField] private LayerMask _stunMask;
 
         [Header("Camera Data")]
@@ -69,12 +77,11 @@ namespace Projectiles
 
         public void ProjectileDestroy()
         {
-            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _stunEffectRadius, _hitColliders, _stunMask);
+            var targetsHit = Physics.OverlapSphereNonAlloc(transform.position, _effectRadius, _hitColliders, _stunMask);
             if (_debugIsActive)
             {
-                DebugExtension.DebugWireSphere(transform.position, Color.red, _stunEffectRadius, _debugDisplayDuration);
+                DebugExtension.DebugWireSphere(transform.position, Color.red, _effectRadius, _debugDisplayDuration);
             }
-
             for (var i = 0; i < targetsHit; i++)
             {
                 if (_hitColliders[i].TryGetComponent(out PlayerController targetController))
@@ -87,6 +94,19 @@ namespace Projectiles
                 }
             }
 
+            var damageTargetsHit = Physics.OverlapSphereNonAlloc(transform.position, _effectRadius, _hitColliders, _damageMask);
+            if (_debugIsActive)
+            {
+                DebugExtension.DebugWireSphere(transform.position, Color.blue, _effectRadius, _debugDisplayDuration);
+            }
+            for (var i = 0; i < damageTargetsHit; i++)
+            {
+                if (_hitColliders[i].TryGetComponent(out HealthAndDamage healthAndDamage))
+                {
+                    healthAndDamage.TakeDamage(_damageAmount);
+                }
+            }
+
             if (_hasSecondaryGrenades)
             {
                 var angleDifference = 360.0f / _secondaryGrenadeCount;
@@ -96,9 +116,11 @@ namespace Projectiles
                 {
                     var secondaryProjectile = Instantiate(_secondaryGrenadePrefab, transform.position, Quaternion.Euler(0, startAngle, 0));
                     var stunGrenade = secondaryProjectile.GetComponent<StunGrenade>();
+                    var ownerData = secondaryProjectile.GetComponent<OwnerData>();
 
                     var forward = secondaryProjectile.transform.forward;
 
+                    ownerData.OwnerId = _ownerData.OwnerId;
                     stunGrenade.LaunchProjectile(forward);
                     startAngle += angleDifference;
                 }

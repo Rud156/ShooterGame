@@ -4,6 +4,7 @@ using Player.Core;
 using Projectiles;
 using UI.Player;
 using UnityEngine;
+using Utils.Common;
 
 namespace Player.Type_4
 {
@@ -31,6 +32,9 @@ namespace Player.Type_4
         {
             var stunGrenade = Instantiate(_stunGrenadePrefab, _playerShootController.GetShootPosition(), Quaternion.identity);
             var projectile = stunGrenade.GetComponent<StunGrenade>();
+            var ownerData = stunGrenade.GetComponent<OwnerData>();
+
+            ownerData.OwnerId = _ownerData.OwnerId;
             projectile.LaunchProjectile(_playerShootController.GetShootLookDirection());
 
             _currentCooldownDuration = _abilityCooldownDuration;
