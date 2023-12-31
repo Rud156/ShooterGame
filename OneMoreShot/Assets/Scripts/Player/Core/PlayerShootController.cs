@@ -16,14 +16,6 @@ namespace Player.Core
         [SerializeField] private bool _debugIsActive;
         [SerializeField] private float _debugDisplayDuration;
 
-        private Transform _mainCamera;
-
-        #region Unity Functions
-
-        private void Start() => _mainCamera = Camera.main!.transform;
-
-        #endregion Unity Functions
-
         #region External Functions
 
         public Vector3 GetShootLookDirection() => GetShootLookDirection(_shootMask);
