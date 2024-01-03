@@ -2818,6 +2818,8 @@ MonoBehaviour:
   _playerAbilities:
   - {fileID: 8310926786640069454}
   - {fileID: 5773909881642169896}
+  _playerRunCameraShaker: {fileID: 11400000, guid: a21a7ba036ec8b349aef7a02f05e07f5,
+    type: 2}
   _tempGround: {fileID: 0}
 --- !u!114 &6668084621884217563
 MonoBehaviour:

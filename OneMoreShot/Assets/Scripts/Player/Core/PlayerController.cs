@@ -1,3 +1,4 @@
+using CustomCamera;
 using Player.Abilities;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,9 @@ namespace Player.Core
         [SerializeField] private OwnerData _ownerData;
         [SerializeField] private List<AbilityBase> _playerAbilities;
 
+        [Header("Camera Data")]
+        [SerializeField] private CameraShaker _playerRunCameraShaker;
+
         [Header("Test")]
         [SerializeField] private Collider _tempGround;
 
@@ -53,7 +57,7 @@ namespace Player.Core
         // Character Controller
         private CharacterController _characterController;
 
-        // Player Rotation
+        // Camera Controls
         private Camera _mainCamera;
 
         // Player Abilities
@@ -88,9 +92,10 @@ namespace Player.Core
         {
             _characterController = GetComponent<CharacterController>();
             _mainCamera = Camera.main;
-            WorldTimeManager.Instance.OnWorldCustomFixedUpdate += PlayerFixedUpdate;
 
+            WorldTimeManager.Instance.OnWorldCustomFixedUpdate += PlayerFixedUpdate;
             InitializeInputEvents();
+
             _jumpKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
             _abilityPrimaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
             _abilitySecondaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
@@ -324,9 +329,15 @@ namespace Player.Core
 
         private void UpdateRunningState()
         {
+            if (!CustomCameraController.Instance.IsShaking)
+            {
+                CustomCameraController.Instance.StartPermanentShake(_playerRunCameraShaker);
+            }
+
             _currentStateVelocity = _runningSpeed;
             if (HasNoDirectionalInput())
             {
+                CustomCameraController.Instance.EndPermanentShake();
                 PopPlayerState();
             }
         }

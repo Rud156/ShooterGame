@@ -2108,7 +2108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934745954286370559}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3213,6 +3213,8 @@ MonoBehaviour:
   _playerAbilities:
   - {fileID: 4674943677519616020}
   - {fileID: 2461496070963759458}
+  _playerRunCameraShaker: {fileID: 11400000, guid: a21a7ba036ec8b349aef7a02f05e07f5,
+    type: 2}
   _tempGround: {fileID: 0}
 --- !u!114 &7502903335594400860
 MonoBehaviour:

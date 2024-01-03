@@ -13,10 +13,18 @@ namespace CustomCamera
         private CinemachineBasicMultiChannelPerlin _cinemachineNoise;
 
         private bool _isShaking;
+        private CameraShakeType _cameraShakeType;
+        public bool IsShaking => _isShaking;
+        public CameraShakeType CustomCameraShakeType => _cameraShakeType;
 
         private float _shakeTimeLeft;
         private float _frequency;
         private float _amplitude;
+
+        public delegate void CameraShakeStarted();
+        public delegate void CameraShakeEnded();
+        public CameraShakeStarted OnCameraShakeStarted;
+        public CameraShakeEnded OnCameraShakeEnded;
 
         #region Unity Scripts
 
@@ -24,11 +32,12 @@ namespace CustomCamera
         {
             _cinemachine = GetComponent<CinemachineVirtualCamera>();
             _cinemachineNoise = _cinemachine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            _cameraShakeType = CameraShakeType.None;
         }
 
         private void Update()
         {
-            if (!_isShaking)
+            if (!_isShaking || _cameraShakeType == CameraShakeType.Permament)
             {
                 return;
             }
@@ -42,6 +51,8 @@ namespace CustomCamera
                 _cinemachineNoise.m_FrequencyGain = 0;
                 _cinemachineNoise.m_AmplitudeGain = 0;
                 _isShaking = false;
+                _cameraShakeType = CameraShakeType.None;
+                OnCameraShakeEnded?.Invoke();
             }
         }
 
@@ -55,15 +66,37 @@ namespace CustomCamera
             _amplitude = cameraShaker.amplitude;
             _shakeTimeLeft = cameraShaker.duration;
             _isShaking = true;
+            _cameraShakeType = CameraShakeType.Temporary;
+            OnCameraShakeStarted?.Invoke();
         }
 
         public void StartShake(CameraShakerInRange cameraShakerInRange, Vector3 spawnPosition)
         {
             _shakeTimeLeft = cameraShakerInRange.duration;
             _isShaking = true;
+            _cameraShakeType = CameraShakeType.Temporary;
+            OnCameraShakeStarted?.Invoke();
 
             var cameraShakerInRangeObject = Instantiate(_cameraShakeInRangePrefab, spawnPosition, Quaternion.identity);
             cameraShakerInRangeObject.GetComponent<CameraShakeInRangeController>().StartShake(cameraShakerInRange);
+        }
+
+        public void StartPermanentShake(CameraShaker cameraShaker)
+        {
+            _cinemachineNoise.m_FrequencyGain = cameraShaker.frequency;
+            _cinemachineNoise.m_AmplitudeGain = cameraShaker.amplitude;
+            _isShaking = true;
+            _cameraShakeType = CameraShakeType.Permament;
+            OnCameraShakeStarted?.Invoke();
+        }
+
+        public void EndPermanentShake()
+        {
+            _cinemachineNoise.m_FrequencyGain = 0;
+            _cinemachineNoise.m_AmplitudeGain = 0;
+            _isShaking = false;
+            _cameraShakeType = CameraShakeType.None;
+            OnCameraShakeEnded?.Invoke();
         }
 
         public void UpdateAmplitude(float changedAmplitude) => _amplitude = changedAmplitude;
@@ -91,5 +124,16 @@ namespace CustomCamera
         }
 
         #endregion Singleton
+
+        #region Enums
+
+        public enum CameraShakeType
+        {
+            None,
+            Temporary,
+            Permament
+        }
+
+        #endregion Enums
     }
 }
