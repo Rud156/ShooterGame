@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace Player.Networking.Structs
 {
-    public struct PlayerReceiveMovementPacket
+    public class PlayerReceiveMovementPacket : CoreNetworkingPacket
     {
-        public float TimeStamp;
-
         public Vector3 Position;
         public float YRotation;
 

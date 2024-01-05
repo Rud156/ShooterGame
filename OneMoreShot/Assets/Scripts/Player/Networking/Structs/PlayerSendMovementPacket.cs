@@ -3,10 +3,8 @@ using Utils.Input;
 
 namespace Player.Networking.Structs
 {
-    public struct PlayerSendMovementPacket
+    public class PlayerSendMovementPacket : CoreNetworkingPacket
     {
-        public float TimeStamp;
-
         public Vector2 CoreInput;
         public Vector2 MousePosition;
 
