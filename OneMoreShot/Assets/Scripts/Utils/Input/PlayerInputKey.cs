@@ -8,6 +8,13 @@ namespace Utils.Input
         public bool KeyReleasedThisFrame;
         public bool KeyPressed;
 
+        public PlayerInputKey(PlayerInputKey input)
+        {
+            KeyPressedThisFrame = input.KeyPressedThisFrame;
+            KeyReleasedThisFrame = input.KeyReleasedThisFrame;
+            KeyPressed = input.KeyPressed;
+        }
+
         public void UpdateInputData(InputAction.CallbackContext context)
         {
             var keyPressedThisFrame = context.started;

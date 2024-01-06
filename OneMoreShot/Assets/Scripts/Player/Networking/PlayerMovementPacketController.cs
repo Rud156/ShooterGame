@@ -7,18 +7,18 @@ namespace Player.Networking
     public class PlayerMovementPacketController : NetworkBehaviour
     {
         private NetworkPacketManager<PlayerSendMovementPacket> _clientToServerPacketManager;
-        public NetworkPacketManager<PlayerSendMovementPacket> ClientToServerPacketManager => _clientToServerPacketManager;
+        protected NetworkPacketManager<PlayerSendMovementPacket> ClientToServerPacketManager => _clientToServerPacketManager;
         private NetworkPacketManager<PlayerReceiveMovementPacket> _serverToClientPacketManager;
-        public NetworkPacketManager<PlayerReceiveMovementPacket> ServerToClientPacketManager => _serverToClientPacketManager;
+        protected NetworkPacketManager<PlayerReceiveMovementPacket> ServerToClientPacketManager => _serverToClientPacketManager;
 
         #region Unity Functions
 
-        private void Start()
+        protected void SetupNetworkObject(float sendRate)
         {
             _clientToServerPacketManager = new NetworkPacketManager<PlayerSendMovementPacket>();
             _serverToClientPacketManager = new NetworkPacketManager<PlayerReceiveMovementPacket>();
-            _clientToServerPacketManager.Setup();
-            _serverToClientPacketManager.Setup();
+            _clientToServerPacketManager.Setup(sendRate);
+            _serverToClientPacketManager.Setup(sendRate);
 
             WorldTimeManager.Instance.OnWorldCustomFixedUpdate += NetworkingFixedUpdate;
             if (IsLocalPlayer)
@@ -32,11 +32,7 @@ namespace Player.Networking
             }
         }
 
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-            WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= NetworkingFixedUpdate;
-        }
+        protected void DestroyNetworkObject() => WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= NetworkingFixedUpdate;
 
         private void NetworkingFixedUpdate(float fixedUpdateTime)
         {

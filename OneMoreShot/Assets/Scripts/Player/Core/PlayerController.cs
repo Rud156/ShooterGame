@@ -1,5 +1,7 @@
 using CustomCamera;
 using Player.Abilities;
+using Player.Networking;
+using Player.Networking.Structs;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +14,7 @@ using World;
 namespace Player.Core
 {
     [RequireComponent(typeof(CharacterController))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : PlayerMovementPacketController
     {
         private const float MaxTerrainRaycastDistance = 1000;
 
@@ -30,6 +32,11 @@ namespace Player.Core
 
         [Header("Camera Data")]
         [SerializeField] private CameraShaker _playerRunCameraShaker;
+
+        [Header("Networking")]
+        [SerializeField][Range(0, 1)] private float _sendRate = 0.1f;
+        [SerializeField] private float maxPositionCorrectionThreshold;
+        [SerializeField] private float maxRotationCorrectionThreshold;
 
         [Header("Test")]
         [SerializeField] private Collider _tempGround;
@@ -70,6 +77,12 @@ namespace Player.Core
         public PlayerShootController PlayerShootController => _playerShootController;
         public OwnerData OwnerData => _ownerData;
 
+        // Networking
+        private PlayerSendMovementPacket _playerSendMovementPacket;
+        private List<PlayerSendMovementPacket> _playerInputs;
+        private List<PlayerReceiveMovementPacket> _playerPredictedPackets;
+        private float _lastInputResolvedTime;
+
         // Delegates
         public delegate void PlayerStatePushed(PlayerState newState);
         public delegate void PlayerStatePopped(PlayerState poppedState);
@@ -90,6 +103,13 @@ namespace Player.Core
 
         private void Start()
         {
+            base.SetupNetworkObject(_sendRate);
+
+            _playerSendMovementPacket = new PlayerSendMovementPacket();
+            _playerInputs = new List<PlayerSendMovementPacket>();
+            _playerPredictedPackets = new List<PlayerReceiveMovementPacket>();
+            _lastInputResolvedTime = 0;
+
             _characterController = GetComponent<CharacterController>();
             _mainCamera = Camera.main;
 
@@ -117,8 +137,11 @@ namespace Player.Core
             PushPlayerState(PlayerState.Idle);
         }
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
+            base.DestroyNetworkObject();
+
             DeInitializeInputEvents();
             WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= PlayerFixedUpdate;
 

@@ -8,8 +8,7 @@ namespace Player.Networking
     public class NetworkPacketManager<T> where T : CoreNetworkingPacket
     {
         private const int MaxPacketsBeforeSending = 10;
-        private const float SendRate = 0.1f;
-
+        private float _sendRate;
         private float _lastSendTime;
 
         private List<T> _packetsToSend = new();
@@ -21,10 +20,11 @@ namespace Player.Networking
 
         #region Packet Data Utils
 
-        public void Setup()
+        public void Setup(float sendRate)
         {
             _packetsToSend = new List<T>();
             _receivedPackets = new List<T>();
+            _sendRate = sendRate;
         }
 
         public void AddPacket(T packet)
