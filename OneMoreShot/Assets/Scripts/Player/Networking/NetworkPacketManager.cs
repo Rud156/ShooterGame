@@ -81,7 +81,7 @@ namespace Player.Networking
         public void FixedUpdate(float fixedDeltaTime)
         {
             _lastSendTime += fixedDeltaTime;
-            if (_lastSendTime >= SendRate && _packetsToSend.Count > 0)
+            if (_lastSendTime >= _sendRate && _packetsToSend.Count > 0)
             {
                 _lastSendTime = 0;
                 SendPackets();
