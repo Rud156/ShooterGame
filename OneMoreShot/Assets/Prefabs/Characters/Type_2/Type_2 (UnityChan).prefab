@@ -2744,6 +2744,7 @@ GameObject:
   - component: {fileID: 1710869872380879692}
   - component: {fileID: -5900319339079454290}
   - component: {fileID: 9217099568929026666}
+  - component: {fileID: 7250826728431498186}
   m_Layer: 6
   m_Name: Type_2 (UnityChan)
   m_TagString: Player
@@ -2938,6 +2939,26 @@ MonoBehaviour:
   _autoSetOwnerIdFromParent: 0
   _parent: {fileID: 0}
   _isSelfOwner: 1
+--- !u!114 &7250826728431498186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3396975120507765240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1757646709
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &3524313073722256383
 GameObject:
   m_ObjectHideFlags: 0

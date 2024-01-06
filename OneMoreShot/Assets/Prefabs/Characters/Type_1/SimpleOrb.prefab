@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 7403433125137499899}
   - component: {fileID: -7179279994823974298}
   - component: {fileID: -7086241743842241280}
+  - component: {fileID: 7632706381952540278}
   m_Layer: 7
   m_Name: SimpleOrb
   m_TagString: Untagged
@@ -267,9 +268,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6ee3e47e389b447a381b7455573a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _autoSetOwnerId: 0
+  _autoSetOwnerIdFromParent: 0
   _parent: {fileID: 0}
   _isSelfOwner: 0
+--- !u!114 &7632706381952540278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093047753733651196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1001 &1445454616167624922
 PrefabInstance:
   m_ObjectHideFlags: 0

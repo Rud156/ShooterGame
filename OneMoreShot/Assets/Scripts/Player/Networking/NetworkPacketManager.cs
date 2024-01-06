@@ -12,39 +12,25 @@ namespace Player.Networking
 
         private float _lastSendTime;
 
-        private List<T> _packetsToSend;
-        private List<T> PacketsToSend
-        {
-            get
-            {
-                _packetsToSend ??= new List<T>();
-                return _packetsToSend;
-            }
-        }
-
-        private List<T> _receivedPackets;
-        public int ReceivedPacketsLength
-        {
-            get
-            {
-                if (_receivedPackets == null)
-                {
-                    return 0;
-                }
-
-                return _receivedPackets.Count;
-            }
-        }
+        private List<T> _packetsToSend = new();
+        private List<T> _receivedPackets = new();
+        public int ReceivedPacketsLength => _receivedPackets.Count;
 
         public delegate void RequireTransmitPackets(byte[] data);
         public RequireTransmitPackets OnRequireTransmitPackets;
 
-        #region Packet Data Uitls
+        #region Packet Data Utils
+
+        public void Setup()
+        {
+            _packetsToSend = new List<T>();
+            _receivedPackets = new List<T>();
+        }
 
         public void AddPacket(T packet)
         {
-            PacketsToSend.Add(packet);
-            if (PacketsToSend.Count >= MaxPacketsBeforeSending)
+            _packetsToSend.Add(packet);
+            if (_packetsToSend.Count >= MaxPacketsBeforeSending)
             {
                 SendPackets();
             }
@@ -52,9 +38,9 @@ namespace Player.Networking
 
         public void SetAllPackets(List<T> packetsToSend)
         {
-            PacketsToSend.Clear();
-            PacketsToSend.AddRange(packetsToSend);
-            if (PacketsToSend.Count >= MaxPacketsBeforeSending)
+            _packetsToSend.Clear();
+            _packetsToSend.AddRange(packetsToSend);
+            if (_packetsToSend.Count >= MaxPacketsBeforeSending)
             {
                 SendPackets();
             }
@@ -62,7 +48,6 @@ namespace Player.Networking
 
         public void ReceivePackets(byte[] data)
         {
-            _receivedPackets ??= new List<T>();
             List<T> receivedPackets = ReadBytes(data);
             _receivedPackets.AddRange(receivedPackets);
             _receivedPackets = _receivedPackets.Distinct(new PacketEqualityComparer()).ToList();
@@ -85,7 +70,7 @@ namespace Player.Networking
 
         public void ClearReceivedQueueOfOldData(float timeStamp) => _receivedPackets?.RemoveAll(_ => _.TimeStamp <= timeStamp);
 
-        #endregion Packet Data Uitls
+        #endregion Packet Data Utils
 
         #region Packet Data Controller
 
@@ -96,7 +81,7 @@ namespace Player.Networking
         public void FixedUpdate(float fixedDeltaTime)
         {
             _lastSendTime += fixedDeltaTime;
-            if (_lastSendTime >= SendRate && PacketsToSend.Count > 0)
+            if (_lastSendTime >= SendRate && _packetsToSend.Count > 0)
             {
                 _lastSendTime = 0;
                 SendPackets();
@@ -105,8 +90,8 @@ namespace Player.Networking
 
         private void SendPackets()
         {
-            byte[] data = CreateBytes(PacketsToSend);
-            PacketsToSend.Clear();
+            byte[] data = CreateBytes(_packetsToSend);
+            _packetsToSend.Clear();
             OnRequireTransmitPackets?.Invoke(data);
         }
 

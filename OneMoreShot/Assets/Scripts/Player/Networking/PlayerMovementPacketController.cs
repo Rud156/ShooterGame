@@ -6,72 +6,61 @@ namespace Player.Networking
 {
     public class PlayerMovementPacketController : NetworkBehaviour
     {
+        private NetworkPacketManager<PlayerSendMovementPacket> _clientToServerPacketManager;
+        public NetworkPacketManager<PlayerSendMovementPacket> ClientToServerPacketManager => _clientToServerPacketManager;
+        private NetworkPacketManager<PlayerReceiveMovementPacket> _serverToClientPacketManager;
+        public NetworkPacketManager<PlayerReceiveMovementPacket> ServerToClientPacketManager => _serverToClientPacketManager;
+
         #region Unity Functions
 
-        private void Start() => WorldTimeManager.Instance.OnWorldCustomFixedUpdate += HandleFixedUpdate;
+        private void Start()
+        {
+            _clientToServerPacketManager = new NetworkPacketManager<PlayerSendMovementPacket>();
+            _serverToClientPacketManager = new NetworkPacketManager<PlayerReceiveMovementPacket>();
+            _clientToServerPacketManager.Setup();
+            _serverToClientPacketManager.Setup();
+
+            WorldTimeManager.Instance.OnWorldCustomFixedUpdate += NetworkingFixedUpdate;
+            if (IsLocalPlayer)
+            {
+                _clientToServerPacketManager.OnRequireTransmitPackets += TransmitPacketsToServer;
+            }
+
+            if (IsServer)
+            {
+                _serverToClientPacketManager.OnRequireTransmitPackets += TransmitPacketsToClient;
+            }
+        }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= HandleFixedUpdate;
+            WorldTimeManager.Instance.OnWorldCustomFixedUpdate -= NetworkingFixedUpdate;
+        }
+
+        private void NetworkingFixedUpdate(float fixedUpdateTime)
+        {
+            _clientToServerPacketManager.FixedUpdate(fixedUpdateTime);
+            _serverToClientPacketManager.FixedUpdate(fixedUpdateTime);
         }
 
         #endregion Unity Functions
 
-        #region Sending Data
-
-        private NetworkPacketManager<PlayerSendMovementPacket> _clientToServerPacketManager;
-        public NetworkPacketManager<PlayerSendMovementPacket> ClientToServerPacketManager
-        {
-            get
-            {
-                _clientToServerPacketManager ??= new NetworkPacketManager<PlayerSendMovementPacket>();
-                if (IsLocalPlayer)
-                {
-                    _clientToServerPacketManager.OnRequireTransmitPackets += TransmitPacketsToServer;
-                }
-
-                return _clientToServerPacketManager;
-            }
-        }
+        #region Client to Server Data
 
         private void TransmitPacketsToServer(byte[] data) => SendMovementDataToServerRpc(data);
 
         [ServerRpc]
         private void SendMovementDataToServerRpc(byte[] data) => ClientToServerPacketManager.ReceivePackets(data);
 
-        #endregion Sending Data
+        #endregion Client to Server Data
 
-        #region Receiving Data
-
-        private NetworkPacketManager<PlayerReceiveMovementPacket> _serverToClientPacketManager;
-        public NetworkPacketManager<PlayerReceiveMovementPacket> ServerToClientPacketManager
-        {
-            get
-            {
-                _serverToClientPacketManager ??= new NetworkPacketManager<PlayerReceiveMovementPacket>();
-                if (IsServer)
-                {
-                    _serverToClientPacketManager.OnRequireTransmitPackets += TransmitPacketsToClient;
-                }
-                return _serverToClientPacketManager;
-            }
-        }
+        #region Server to Client Data
 
         private void TransmitPacketsToClient(byte[] data) => ReceiveMovementDataToClientRpc(data);
 
         [ClientRpc] private void ReceiveMovementDataToClientRpc(byte[] data) => ServerToClientPacketManager.ReceivePackets(data);
 
-        #endregion Receiving Data
-
-        #region Misc
-
-        private void HandleFixedUpdate(float fixedUpdateTime)
-        {
-            ClientToServerPacketManager.FixedUpdate(fixedUpdateTime);
-            ServerToClientPacketManager.FixedUpdate(fixedUpdateTime);
-        }
-
-        #endregion Misc
+        #endregion Server to Client Data
     }
 }

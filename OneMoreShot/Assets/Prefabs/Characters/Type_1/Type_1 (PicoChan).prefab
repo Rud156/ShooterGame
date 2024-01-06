@@ -3139,6 +3139,7 @@ GameObject:
   - component: {fileID: 6028122206542296152}
   - component: {fileID: 7181868164167198480}
   - component: {fileID: 4758944662077041240}
+  - component: {fileID: -7633486223886803618}
   m_Layer: 6
   m_Name: Type_1 (PicoChan)
   m_TagString: Player
@@ -3333,6 +3334,26 @@ MonoBehaviour:
   _autoSetOwnerIdFromParent: 0
   _parent: {fileID: 0}
   _isSelfOwner: 1
+--- !u!114 &-7633486223886803618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103253699236128827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2513164896
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &3147821124406921313
 GameObject:
   m_ObjectHideFlags: 0
