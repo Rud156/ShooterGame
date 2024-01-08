@@ -21,10 +21,6 @@ namespace Assets.Scripts.Player.CommonAbilities
 
         public override void AbilityFixedUpdate(PlayerController playerController, float fixedDeltaTime) => _currentStunDuration -= fixedDeltaTime;
 
-        public override void AbilityUpdate(PlayerController playerController, float deltaTime)
-        {
-        }
-
         public override void AbilityEnd(PlayerController playerController)
         {
             _currentStunDuration = 0;

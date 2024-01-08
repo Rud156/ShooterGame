@@ -7,6 +7,7 @@ TagManager:
   - PlayerEyes
   - PlayerCinemachine
   - UIRoot
+  - Ground
   layers:
   - Default
   - TransparentFX

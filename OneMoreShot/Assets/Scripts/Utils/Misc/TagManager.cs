@@ -6,5 +6,7 @@
 
         public const string Player = "Player";
         public const string PlayerCinemachineController = "PlayerCinemachine";
+
+        public const string WorldGround = "Ground";
     }
 }

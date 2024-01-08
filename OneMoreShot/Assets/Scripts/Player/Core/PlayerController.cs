@@ -38,8 +38,7 @@ namespace Player.Core
         [SerializeField] private float maxPositionCorrectionThreshold;
         [SerializeField] private float maxRotationCorrectionThreshold;
 
-        [Header("Test")]
-        [SerializeField] private Collider _tempGround;
+        private Collider _worldGround;
 
         // Player State
         private List<PlayerState> _playerStateStack;
@@ -54,12 +53,15 @@ namespace Player.Core
         public PlayerState TopPlayerState => _playerStateStack[^1];
 
         // Inputs
+        private Vector2 _rawMovementInput;
         private Vector2 _coreMovementInput;
         private Vector2 _lastNonZeroCoreMovementInput;
+        private Vector2 _mousePosition;
+
         private PlayerInputKey _jumpKey;
         private PlayerInputKey _abilityPrimaryKey;
         private PlayerInputKey _abilitySecondaryKey;
-        public Vector2 CoreMovementInput => _coreMovementInput;
+        public Vector2 CoreMovementInput => _playerSendMovementPacket.CoreInput;
 
         // Character Controller
         private CharacterController _characterController;
@@ -105,6 +107,8 @@ namespace Player.Core
         {
             base.SetupNetworkObject(_sendRate);
 
+            _worldGround = GameObject.FindGameObjectWithTag(TagManager.WorldGround).GetComponent<Collider>();
+
             _playerSendMovementPacket = new PlayerSendMovementPacket();
             _playerInputs = new List<PlayerSendMovementPacket>();
             _playerPredictedPackets = new List<PlayerReceiveMovementPacket>();
@@ -121,8 +125,10 @@ namespace Player.Core
             _abilitySecondaryKey = new PlayerInputKey { KeyPressed = false, KeyReleasedThisFrame = false, KeyPressedThisFrame = false };
 
             _playerStateStack = new List<PlayerState>();
+            _rawMovementInput = Vector2.zero;
             _coreMovementInput = Vector2.zero;
             _lastNonZeroCoreMovementInput = Vector2.zero;
+            _mousePosition = Vector2.zero;
             _characterVelocity = Vector3.zero;
             _jumpReset = true;
             _currentStateVelocity = 0;
@@ -154,27 +160,14 @@ namespace Player.Core
         private void Update()
         {
             UpdateMovementInput();
-            DelegateUnityUpdateAbilities();
-            UpdateAbilities();
+            ComputeSendMovementPacket();
         }
 
         private void PlayerFixedUpdate(float fixedUpdateTime)
         {
-            ProcessNextFrameAbilities();
-            DelegateUnityFixedUpdateAbilities(fixedUpdateTime);
-
-            UpdateGroundedState();
-            if (_playerStateStack[^1] != PlayerState.CustomMovement)
-            {
-                ProcessGlobalGravity(); // This needs to be before Jump since in the same frame the second one will override
-                ProcessJumpInput();
-            }
-
-            CheckAndActivateAbilities();
-            UpdatePlayerMovement(fixedUpdateTime);
-
-            FixedUpdateAbilities(fixedUpdateTime);
-            ApplyFinalMovement(fixedUpdateTime);
+            LocalClientAbilityMovementUpdate(fixedUpdateTime);
+            ServerAbilityMovementUpdate(fixedUpdateTime);
+            RemoteClientAbilityMovementUpdate(fixedUpdateTime);
 
             ResetFrameInputs();
         }
@@ -256,7 +249,7 @@ namespace Player.Core
 
         private void UpdatePlayerRotation()
         {
-            var inputRotation = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+            var inputRotation = _playerSendMovementPacket.RawInput;
             if (inputRotation == Vector2.zero)
             {
                 return;
@@ -273,7 +266,7 @@ namespace Player.Core
 
             if (_playerStateStack[^1] != PlayerState.Falling)
             {
-                var groundedMovement = forward * _coreMovementInput.y;
+                var groundedMovement = forward * _playerSendMovementPacket.CoreInput.y;
 
                 groundedMovement.y = 0;
                 groundedMovement = _currentStateVelocity * groundedMovement.normalized;
@@ -283,7 +276,7 @@ namespace Player.Core
             }
             else
             {
-                var airMovement = forward * _lastNonZeroCoreMovementInput.y;
+                var airMovement = forward * _playerSendMovementPacket.LastNonZeroInput.y;
 
                 airMovement.y = 0;
                 airMovement = airMovement.normalized * (_airMultiplier * _currentStateVelocity);
@@ -309,9 +302,9 @@ namespace Player.Core
                 return;
             }
 
-            var mousePosition = CustomInputManager.Instance.PlayerInput.MousePosition.ReadValue<Vector2>();
+            var mousePosition = _playerSendMovementPacket.MousePosition;
             var rayStartPoint = _mainCamera.ScreenPointToRay(mousePosition);
-            if (_tempGround.Raycast(rayStartPoint, out var hitInfo, MaxTerrainRaycastDistance))
+            if (_worldGround.Raycast(rayStartPoint, out var hitInfo, MaxTerrainRaycastDistance))
             {
                 var worldMousePosition = hitInfo.point;
                 var direction = worldMousePosition - transform.position;
@@ -330,7 +323,7 @@ namespace Player.Core
 
         private void ProcessJumpInput()
         {
-            var jumpPressed = _jumpKey.KeyPressedThisFrame;
+            var jumpPressed = _playerSendMovementPacket.JumpInput.KeyPressedThisFrame;
             if (!jumpPressed || !_jumpReset)
             {
                 return;
@@ -344,7 +337,7 @@ namespace Player.Core
         private void UpdateIdleState()
         {
             _currentStateVelocity = 0;
-            if (!HasNoDirectionalInput())
+            if (!HasNoForwardInput())
             {
                 PushPlayerState(PlayerState.Running);
             }
@@ -358,7 +351,7 @@ namespace Player.Core
             }
 
             _currentStateVelocity = _runningSpeed;
-            if (HasNoDirectionalInput())
+            if (HasNoForwardInput())
             {
                 CustomCameraController.Instance.EndPermanentShake();
                 PopPlayerState();
@@ -414,6 +407,89 @@ namespace Player.Core
         #endregion Player State Input Updates
 
         #endregion Player Movement
+
+        #region Player Networking Updates
+
+        private void RemoteClientAbilityMovementUpdate(float fixedUpdateTime)
+        {
+            if (IsServer)
+            {
+                return;
+            }
+
+            // TODO: Complete this function...
+        }
+
+        private void ServerAbilityMovementUpdate(float fixedUpdateTime)
+        {
+            if (!IsServer || IsLocalPlayer)
+            {
+                return;
+            }
+
+            ClientToServerPacketManager.ClearReceivedQueueOfOldData(_lastInputResolvedTime);
+            if (ClientToServerPacketManager.ReceivedPacketsLength <= NetworkPacketManager<PlayerSendMovementPacket>.MaxPacketsBeforeSending)
+            {
+                ComputeServerAbilityMovementUpdate(fixedUpdateTime);
+            }
+            else
+            {
+                // TODO: Complete this part...
+            }
+        }
+
+        private void ComputeServerAbilityMovementUpdate(float fixedUpdateTime)
+        {
+            PlayerSendMovementPacket sendMovementPacket = ClientToServerPacketManager.GetNextReceivedData();
+            if (sendMovementPacket != null || sendMovementPacket.TimeStamp <= _lastInputResolvedTime)
+            {
+                return;
+            }
+
+            _lastInputResolvedTime = sendMovementPacket.TimeStamp;
+            _playerSendMovementPacket = sendMovementPacket;
+
+            PlayerAllAbilityMovementFixedUpdate(fixedUpdateTime);
+            ComputeServerReceiveMovementPacket(sendMovementPacket.TimeStamp);
+        }
+
+        private void LocalClientAbilityMovementUpdate(float fixedUpdateTime)
+        {
+            // We don't want to process this input for Remote Clients and Server
+            if (!IsLocalPlayer || IsServer)
+            {
+                return;
+            }
+
+            // Reset the time stamp here and everything
+            var timeStamp = Time.time;
+            _playerSendMovementPacket.TimeStamp = timeStamp;
+            _playerInputs.Add(_playerSendMovementPacket);
+
+            PlayerAllAbilityMovementFixedUpdate(fixedUpdateTime);
+            ComputePredictedPacket(timeStamp);
+        }
+
+        private void PlayerAllAbilityMovementFixedUpdate(float fixedUpdateTime)
+        {
+            ProcessNextFrameAbilities();
+            DelegateUnityFixedUpdateAbilities(fixedUpdateTime);
+
+            UpdateGroundedState();
+            if (_playerStateStack[^1] != PlayerState.CustomMovement)
+            {
+                ProcessGlobalGravity(); // This needs to be before Jump since in the same frame the second one will override
+                ProcessJumpInput();
+            }
+
+            CheckAndActivateAbilities();
+            UpdatePlayerMovement(fixedUpdateTime);
+
+            FixedUpdateAbilities(fixedUpdateTime);
+            ApplyFinalMovement(fixedUpdateTime);
+        }
+
+        #endregion Player Networking Updates
 
         #region Ability Controls
 
@@ -482,16 +558,6 @@ namespace Player.Core
             _abilitiesToAddNextFrame.Clear();
         }
 
-        private void UpdateAbilities()
-        {
-            var deltaTime = Time.deltaTime;
-            for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
-            {
-                var currentAbility = _currentActiveAbilities[i];
-                currentAbility.AbilityUpdate(this, deltaTime);
-            }
-        }
-
         private void FixedUpdateAbilities(float fixedDeltaTime)
         {
             for (var i = _currentActiveAbilities.Count - 1; i >= 0; i--)
@@ -525,14 +591,6 @@ namespace Player.Core
         public void AddExternalAbility(AbilityBase ability) => _abilitiesToAddNextFrame.Add(ability);
 
         #region Unity Ability Function Delegates
-
-        private void DelegateUnityUpdateAbilities()
-        {
-            foreach (var ability in _playerAbilities)
-            {
-                ability.UnityUpdateDelegate(this);
-            }
-        }
 
         private void DelegateUnityFixedUpdateAbilities(float fixedDeltaTime)
         {
@@ -592,7 +650,7 @@ namespace Player.Core
             playerInputMaster.AbilitySecondary.canceled -= HandlePlayerPressAbilitySecondary;
         }
 
-        private bool HasNoDirectionalInput() => ExtensionFunctions.IsNearlyZero(_coreMovementInput.y);
+        private bool HasNoForwardInput() => ExtensionFunctions.IsNearlyZero(_playerSendMovementPacket.CoreInput.y);
 
         private void HandlePlayerPressAbilitySecondary(InputAction.CallbackContext context) => _abilitySecondaryKey.UpdateInputData(context);
 
@@ -610,6 +668,8 @@ namespace Player.Core
         private void UpdateMovementInput()
         {
             _coreMovementInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+            _rawMovementInput = CustomInputManager.Instance.PlayerInput.Move.ReadValue<Vector2>();
+            _mousePosition = CustomInputManager.Instance.PlayerInput.MousePosition.ReadValue<Vector2>();
 
             // Normalize Input to always move forward and instead Rotate the Character
             var xMovement = Mathf.Abs(_coreMovementInput.x);
@@ -617,14 +677,64 @@ namespace Player.Core
             _coreMovementInput.x = 0;
             _coreMovementInput.y = Mathf.Max(xMovement, yMovement);
 
-            if (!HasNoDirectionalInput())
+            if (!HasNoForwardInput())
             {
                 _lastNonZeroCoreMovementInput = _coreMovementInput;
             }
-            else if (HasNoDirectionalInput() && ExtensionFunctions.IsNearlyZero(_currentStateVelocity))
+            else if (HasNoForwardInput() && ExtensionFunctions.IsNearlyZero(_currentStateVelocity))
             {
                 _lastNonZeroCoreMovementInput = _coreMovementInput;
             }
+        }
+
+        private void ComputeSendMovementPacket()
+        {
+            PlayerSendMovementPacket sendMovementPacket = new()
+            {
+                RawInput = _rawMovementInput,
+                CoreInput = _coreMovementInput,
+                LastNonZeroInput = _lastNonZeroCoreMovementInput,
+                MousePosition = _mousePosition,
+                JumpInput = _jumpKey,
+                AbilityPrimaryKey = _abilityPrimaryKey,
+                AbilitySecondaryKey = _abilitySecondaryKey,
+                TimeStamp = -1,
+            };
+            _playerSendMovementPacket = sendMovementPacket;
+        }
+
+        private void ComputePredictedPacket(float timeStamp)
+        {
+            PlayerReceiveMovementPacket predictedPacket = new()
+            {
+                Position = transform.position,
+                YRotation = transform.rotation.eulerAngles.y,
+                CurrentPlayerState = _playerStateStack,
+                CharacterVelocity = _characterVelocity,
+                CurrentStateVelocity = _currentStateVelocity,
+                FrozenMovementDuration = _frozenMovementDuration,
+                IsGrounded = _isGrounded,
+                JumpReset = _jumpReset,
+                TimeStamp = timeStamp,
+            };
+            _playerPredictedPackets.Add(predictedPacket);
+        }
+
+        private void ComputeServerReceiveMovementPacket(float timeStamp)
+        {
+            PlayerReceiveMovementPacket serverReceiveMovementPacket = new()
+            {
+                Position = transform.position,
+                YRotation = transform.rotation.eulerAngles.y,
+                CurrentPlayerState = _playerStateStack,
+                CharacterVelocity = _characterVelocity,
+                CurrentStateVelocity = _currentStateVelocity,
+                FrozenMovementDuration = _frozenMovementDuration,
+                IsGrounded = _isGrounded,
+                JumpReset = _jumpReset,
+                TimeStamp = timeStamp,
+            };
+            ServerToClientPacketManager.AddPacket(serverReceiveMovementPacket);
         }
 
         private void ResetFrameInputs()
@@ -638,8 +748,8 @@ namespace Player.Core
         {
             return abilityTrigger switch
             {
-                AbilityTrigger.Primary => _abilityPrimaryKey,
-                AbilityTrigger.Secondary => _abilitySecondaryKey,
+                AbilityTrigger.Primary => _playerSendMovementPacket.AbilityPrimaryKey,
+                AbilityTrigger.Secondary => _playerSendMovementPacket.AbilitySecondaryKey,
                 AbilityTrigger.ExternalAddedAbility => throw new Exception("Invalid Trigger Type"),
                 _ => throw new Exception("Invalid Trigger Type"),
             };

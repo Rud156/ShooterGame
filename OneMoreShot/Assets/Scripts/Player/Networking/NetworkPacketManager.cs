@@ -7,7 +7,7 @@ namespace Player.Networking
 {
     public class NetworkPacketManager<T> where T : CoreNetworkingPacket
     {
-        private const int MaxPacketsBeforeSending = 10;
+        public const int MaxPacketsBeforeSending = 10;
         private float _sendRate;
         private float _lastSendTime;
 

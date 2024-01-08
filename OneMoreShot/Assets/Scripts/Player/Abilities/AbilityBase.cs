@@ -48,8 +48,6 @@ namespace Player.Abilities
         // Ability Updates
         public abstract void AbilityFixedUpdate(PlayerController playerController, float fixedDeltaTime);
 
-        public abstract void AbilityUpdate(PlayerController playerController, float deltaTime);
-
         // Ability Data cleanup here...
         public abstract void AbilityEnd(PlayerController playerController);
 
@@ -115,10 +113,6 @@ namespace Player.Abilities
                 HUD_PlayerAbilityDisplay.Instance.UpdateAbilityIcon(_abilityTrigger, _icon);
                 HUD_PlayerAbilityDisplay.Instance.UpdateAbilityBackground(_abilityTrigger, _background, ExtensionFunctions.AverageColorFromTexture(_icon.texture));
             }
-        }
-
-        public virtual void UnityUpdateDelegate(PlayerController playerController)
-        {
         }
 
         public virtual void UnityFixedUpdateDelegate(PlayerController playerController, float fixedDeltaTime)

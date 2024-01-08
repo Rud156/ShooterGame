@@ -72,10 +72,7 @@ namespace Player.Type_1
                 _currentOverheatTime = 0;
                 _abilityMarkedForEnd = true;
             }
-        }
 
-        public override void AbilityUpdate(PlayerController playerController, float deltaTime)
-        {
             var inputKey = _playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {

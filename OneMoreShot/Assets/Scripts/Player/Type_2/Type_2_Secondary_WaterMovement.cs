@@ -84,9 +84,9 @@ namespace Player.Type_2
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
 
-        public override void AbilityUpdate(PlayerController playerController, float deltaTime) => UpdateAbilityStateTypeSelector(playerController);
+            UpdateAbilityStateTypeSelector(playerController, fixedDeltaTime);
+        }
 
         public override void AbilityEnd(PlayerController playerController)
         {
@@ -146,9 +146,9 @@ namespace Player.Type_2
 
         #region Ability State Updates
 
-        private void UpdateAbilityStateTypeSelector(PlayerController playerController)
+        private void UpdateAbilityStateTypeSelector(PlayerController playerController, float fixedUpdate)
         {
-            _currentTimer -= Time.deltaTime;
+            _currentTimer -= fixedUpdate;
 
             var key = playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             switch (_waterMovementState)

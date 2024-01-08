@@ -72,10 +72,6 @@ namespace Player.Type_3
             _dashComputedVelocity.y = 0;
         }
 
-        public override void AbilityUpdate(PlayerController playerController, float deltaTime)
-        {
-        }
-
         public override void AbilityEnd(PlayerController playerController)
         {
             Assert.IsNotNull(_dashEffectInstance, "Dash effect cannot be NULL here..");
@@ -104,9 +100,9 @@ namespace Player.Type_3
             _currentDashesAvailableCount = _maxDashChargeCount;
         }
 
-        public override void UnityUpdateDelegate(PlayerController playerController)
+        public override void UnityFixedUpdateDelegate(PlayerController playerController, float fixedDeltaTime)
         {
-            base.UnityUpdateDelegate(playerController);
+            base.UnityFixedUpdateDelegate(playerController, fixedDeltaTime);
             UpdateDashCountChanged();
         }
 

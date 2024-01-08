@@ -92,10 +92,7 @@ namespace Player.Type_3
                 _currentOverheatTime = 0;
                 _abilityMarkedForEnd = true;
             }
-        }
 
-        public override void AbilityUpdate(PlayerController playerController, float deltaTime)
-        {
             var inputKey = _playerController.GetKeyForAbilityTrigger(_abilityTrigger);
             if (inputKey.KeyReleasedThisFrame || !inputKey.KeyPressed)
             {
@@ -129,6 +126,8 @@ namespace Player.Type_3
         public override void UnityFixedUpdateDelegate(PlayerController playerController, float fixedDeltaTime)
         {
             base.UnityFixedUpdateDelegate(playerController, fixedDeltaTime);
+            UpdateValidHitTarget();
+
             if (_currentOverheatTime > 0)
             {
                 _currentOverheatTime -= WorldTimeManager.Instance.FixedUpdateTime * _overheatCooldownMultiplier;
@@ -138,12 +137,6 @@ namespace Player.Type_3
             {
                 _nextShootDuration -= fixedDeltaTime;
             }
-        }
-
-        public override void UnityUpdateDelegate(PlayerController playerController)
-        {
-            base.UnityUpdateDelegate(playerController);
-            UpdateValidHitTarget();
         }
 
         #endregion Unity Function Delegates

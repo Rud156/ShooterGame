@@ -2,6 +2,7 @@ using UnityEngine.InputSystem;
 
 namespace Utils.Input
 {
+    [System.Serializable]
     public struct PlayerInputKey
     {
         public bool KeyPressedThisFrame;

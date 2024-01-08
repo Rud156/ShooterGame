@@ -66,10 +66,6 @@ namespace Player.Type_1
             _dashComputedVelocity.y = 0;
         }
 
-        public override void AbilityUpdate(PlayerController playerController, float deltaTime)
-        {
-        }
-
         public override void AbilityEnd(PlayerController playerController)
         {
             Assert.IsNotNull(_dashEffectInstance, "Dash effect cannot be NULL here..");

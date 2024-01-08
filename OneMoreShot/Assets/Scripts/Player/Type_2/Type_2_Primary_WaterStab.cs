@@ -41,10 +41,6 @@ namespace Player.Type_2
         {
         }
 
-        public override void AbilityUpdate(PlayerController playerController, float deltaTime)
-        {
-        }
-
         public override void AbilityEnd(PlayerController playerController)
         {
             _abilityMarkedForEnd = true;
