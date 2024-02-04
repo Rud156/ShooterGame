@@ -4,6 +4,7 @@ using Player.Networking;
 using Player.Networking.Structs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils.Common;
@@ -417,7 +418,52 @@ namespace Player.Core
                 return;
             }
 
-            // TODO: Complete this function...
+            bool didPredictionFail = false;
+            PlayerReceiveMovementPacket lastValidInputFromServer = null;
+            ServerToClientPacketManager.ClearReceivedQueueOfOldData(_lastInputResolvedTime);
+
+            while (ServerToClientPacketManager.ReceivedPacketsLength > 0)
+            {
+                PlayerReceiveMovementPacket receivedPacket = ServerToClientPacketManager.GetNextReceivedData();
+                if (receivedPacket.TimeStamp <= _lastInputResolvedTime)
+                {
+                    continue;
+                }
+
+                _lastInputResolvedTime = receivedPacket.TimeStamp;
+                lastValidInputFromServer = receivedPacket;
+
+                if (IsLocalPlayer)
+                {
+                    PlayerReceiveMovementPacket predictedPacket = _playerPredictedPackets.FirstOrDefault(_ => _.TimeStamp == receivedPacket.TimeStamp);
+                    if (DidPlayerMovementPredictionFail(predictedPacket, receivedPacket))
+                    {
+                        didPredictionFail = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    ResetPlayerToServerData(receivedPacket);
+                }
+            }
+
+            if (lastValidInputFromServer != null)
+            {
+                _playerInputs.RemoveAll(_ => _.TimeStamp <= lastValidInputFromServer.TimeStamp);
+            }
+            if (didPredictionFail)
+            {
+                _playerPredictedPackets.Clear();
+                ResetPlayerToServerData(lastValidInputFromServer);
+
+                for (int i = 0; i < _playerInputs.Count; i++)
+                {
+                    _playerSendMovementPacket = _playerInputs[i];
+                    PlayerAllAbilityMovementFixedUpdate(fixedUpdateTime);
+                    ComputePredictedPacket(_playerSendMovementPacket.TimeStamp);
+                }
+            }
         }
 
         private void ServerAbilityMovementUpdate(float fixedUpdateTime)
@@ -434,7 +480,10 @@ namespace Player.Core
             }
             else
             {
-                // TODO: Complete this part...
+                while (ClientToServerPacketManager.ReceivedPacketsLength > NetworkPacketManager<PlayerSendMovementPacket>.MaxPacketsBeforeSending)
+                {
+                    ComputeServerAbilityMovementUpdate(fixedUpdateTime);
+                }
             }
         }
 
@@ -487,6 +536,17 @@ namespace Player.Core
 
             FixedUpdateAbilities(fixedUpdateTime);
             ApplyFinalMovement(fixedUpdateTime);
+        }
+
+        private bool DidPlayerMovementPredictionFail(PlayerReceiveMovementPacket playerPredictedPacket, PlayerReceiveMovementPacket playerReceiveMovementPacket)
+        {
+            // TODO: Complete this function...
+            return false;
+        }
+
+        private void ResetPlayerToServerData(PlayerReceiveMovementPacket playerReceiveMovementPacket)
+        {
+            // TODO: Complete this function...
         }
 
         #endregion Player Networking Updates
